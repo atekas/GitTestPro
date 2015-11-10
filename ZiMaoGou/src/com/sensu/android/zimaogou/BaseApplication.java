@@ -46,12 +46,12 @@ public class BaseApplication extends Application {
         DisplayUtils.init(this);
         PromptUtils.init(this);
 
-        TelephoneInfoUtils.init(this);
-        WiFiInfoUtils.init(this);
-        NetworkTypeUtils.init(this);
-        LogUtils.setIsLogEnable(true);
+//        TelephoneInfoUtils.init(this);
+//        WiFiInfoUtils.init(this);
+//        NetworkTypeUtils.init(this);
+//        LogUtils.setIsLogEnable(true);
         LogUtils.setIsWriteDisk(true);
-        AppInfoUtils.init(this);
+//        AppInfoUtils.init(this);
         ImageUtils.init(this);
 
     }
