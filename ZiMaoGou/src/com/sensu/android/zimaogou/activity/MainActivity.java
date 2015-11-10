@@ -1,7 +1,8 @@
-package com.sensu.android.zimaogou;
+package com.sensu.android.zimaogou.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import com.sensu.android.zimaogou.R;
 
 public class MainActivity extends Activity {
     /**
