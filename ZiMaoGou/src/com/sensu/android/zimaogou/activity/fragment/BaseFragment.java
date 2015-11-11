@@ -1,34 +1,45 @@
 package com.sensu.android.zimaogou.activity.fragment;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.sensu.android.zimaogou.R;
 
 /**
- * Created by zhangwentao on 2015/11/10.
+ * Created by Administrator on 2015/11/11.
  */
-public class TourBuyFragment extends BaseFragment {
+public abstract class BaseFragment extends Fragment {
+
+    protected Activity mParentActivity;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mParentActivity = getActivity();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.tour_buy_fragment, container, false);
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        initView();
     }
 
     @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (hidden) {
-
-        } else {
-
-        }
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -41,8 +52,5 @@ public class TourBuyFragment extends BaseFragment {
         super.onDestroy();
     }
 
-    @Override
-    protected void initView() {
-
-    }
+    protected abstract void initView();
 }

@@ -16,9 +16,7 @@ import com.sensu.android.zimaogou.utils.PromptUtils;
 /**
  * Created by zhangwentao on 2015/11/10.
  */
-public class MeFragment extends Fragment implements View.OnClickListener {
-
-    private Activity mActivity;
+public class MeFragment extends BaseFragment implements View.OnClickListener {
 
     private ImageView mHeadPicImageView;
 
@@ -31,29 +29,29 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        initViews();
+        initView();
     }
 
-    private void initViews() {
-        mActivity = getActivity();
+    @Override
+    protected void initView() {
 
-        mHeadPicImageView = (ImageView) mActivity.findViewById(R.id.head_pic);
+        mHeadPicImageView = (ImageView) mParentActivity.findViewById(R.id.head_pic);
 
         mHeadPicImageView.setOnClickListener(this);
-        mActivity.findViewById(R.id.login_register).setOnClickListener(this);
-        mActivity.findViewById(R.id.wait_pay).setOnClickListener(this);
-        mActivity.findViewById(R.id.wait_receive).setOnClickListener(this);
-        mActivity.findViewById(R.id.sales_return).setOnClickListener(this);
-        mActivity.findViewById(R.id.all_orders).setOnClickListener(this);
+        mParentActivity.findViewById(R.id.login_register).setOnClickListener(this);
+        mParentActivity.findViewById(R.id.wait_pay).setOnClickListener(this);
+        mParentActivity.findViewById(R.id.wait_receive).setOnClickListener(this);
+        mParentActivity.findViewById(R.id.sales_return).setOnClickListener(this);
+        mParentActivity.findViewById(R.id.all_orders).setOnClickListener(this);
 
-        mActivity.findViewById(R.id.my_coupon).setOnClickListener(this);
-        mActivity.findViewById(R.id.my_collection).setOnClickListener(this);
-        mActivity.findViewById(R.id.take_goods_address).setOnClickListener(this);
+        mParentActivity.findViewById(R.id.my_coupon).setOnClickListener(this);
+        mParentActivity.findViewById(R.id.my_collection).setOnClickListener(this);
+        mParentActivity.findViewById(R.id.take_goods_address).setOnClickListener(this);
 
-        mActivity.findViewById(R.id.recommend_friends).setOnClickListener(this);
-        mActivity.findViewById(R.id.online_service).setOnClickListener(this);
-        mActivity.findViewById(R.id.service_phone).setOnClickListener(this);
-        mActivity.findViewById(R.id.setting).setOnClickListener(this);
+        mParentActivity.findViewById(R.id.recommend_friends).setOnClickListener(this);
+        mParentActivity.findViewById(R.id.online_service).setOnClickListener(this);
+        mParentActivity.findViewById(R.id.service_phone).setOnClickListener(this);
+        mParentActivity.findViewById(R.id.setting).setOnClickListener(this);
     }
 
     @Override

@@ -10,7 +10,7 @@ import com.sensu.android.zimaogou.R;
 /**
  * Created by zhangwentao on 2015/11/10.
  */
-public class ShoppingBagFragment extends Fragment {
+public class ShoppingBagFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.shopping_bag_fragment, container, false);
@@ -39,5 +39,10 @@ public class ShoppingBagFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    protected void initView() {
+
     }
 }

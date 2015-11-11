@@ -11,7 +11,7 @@ import com.sensu.android.zimaogou.utils.PromptUtils;
 /**
  * Created by zhangwentao on 2015/11/10.
  */
-public class HomePageFragment extends Fragment {
+public class HomePageFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,6 +36,11 @@ public class HomePageFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+    }
+
+    @Override
+    protected void initView() {
+
     }
 
 

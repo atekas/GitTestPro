@@ -11,7 +11,7 @@ import com.sensu.android.zimaogou.utils.PromptUtils;
 /**
  * Created by zhangwentao on 2015/11/10.
  */
-public class ClassificationFragment extends Fragment {
+public class ClassificationFragment extends BaseFragment {
 
 
     @Override
@@ -44,5 +44,10 @@ public class ClassificationFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    protected void initView() {
+
     }
 }
