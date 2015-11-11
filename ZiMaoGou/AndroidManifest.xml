@@ -7,6 +7,7 @@
 
     <!-- 权限 -->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="ANDROID.PERMISSION.CALL_PHONE"/>
 
     <application android:label="@string/app_name" android:name="com.sensu.android.zimaogou.BaseApplication">
 

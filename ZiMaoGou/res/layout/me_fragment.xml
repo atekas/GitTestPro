@@ -34,6 +34,7 @@
                         android:src="@drawable/head_pic_default"/>
 
                 <TextView
+                        android:id="@+id/login_register"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="注册/登陆"
@@ -51,6 +52,7 @@
                 android:background="@color/white">
 
             <TextView
+                    android:id="@+id/wait_pay"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -66,6 +68,7 @@
                     android:background="#e5e5e5"/>
 
             <TextView
+                    android:id="@+id/wait_receive"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -81,6 +84,7 @@
                     android:background="#e5e5e5"/>
 
             <TextView
+                    android:id="@+id/sales_return"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -96,6 +100,7 @@
                     android:background="#e5e5e5"/>
 
             <TextView
+                    android:id="@+id/all_orders"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -119,6 +124,7 @@
                 android:background="#e5e5e5"/>
 
         <LinearLayout
+                android:id="@+id/my_coupon"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="center_vertical"
@@ -154,6 +160,7 @@
                 android:background="#e5e5e5"/>
 
         <LinearLayout
+                android:id="@+id/my_collection"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="center_vertical"
@@ -189,6 +196,7 @@
                 android:background="#e5e5e5"/>
 
         <LinearLayout
+                android:id="@+id/take_goods_address"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="center_vertical"
@@ -229,6 +237,7 @@
                 android:background="#e5e5e5"/>
 
         <LinearLayout
+                android:id="@+id/recommend_friends"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="center_vertical"
@@ -264,6 +273,7 @@
                 android:background="#e5e5e5"/>
 
         <LinearLayout
+                android:id="@+id/online_service"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="center_vertical"
@@ -299,6 +309,7 @@
                 android:background="#e5e5e5"/>
 
         <LinearLayout
+                android:id="@+id/service_phone"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="center_vertical"
@@ -320,11 +331,12 @@
                     android:text="@string/service_phone"/>
 
             <TextView
+                    android:id="@+id/service_phone_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:textColor="#444444"
-                    android:text="021 83294532"/>
+                    android:text="02183294532"/>
 
             <ImageView
                     android:layout_width="wrap_content"
@@ -341,6 +353,7 @@
                 android:background="#e5e5e5"/>
 
         <LinearLayout
+                android:id="@+id/setting"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="center_vertical"
