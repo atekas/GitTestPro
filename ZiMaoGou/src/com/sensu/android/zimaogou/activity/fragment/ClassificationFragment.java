@@ -16,6 +16,7 @@ public class ClassificationFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        PromptUtils.showToast("classification---------onCreateView");
         return inflater.inflate(R.layout.classification_fragment, container, false);
     }
 
@@ -23,6 +24,16 @@ public class ClassificationFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         PromptUtils.showToast("classification------onActivityCreated");
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden) {
+
+        } else {
+
+        }
     }
 
     @Override

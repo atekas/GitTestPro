@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.utils.PromptUtils;
 
 /**
  * Created by zhangwentao on 2015/11/10.
@@ -23,7 +24,19 @@ public class HomePageFragment extends Fragment {
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden) {
+            PromptUtils.showToast("home隐藏");
+        } else {
+            PromptUtils.showToast("home显示");
+        }
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
     }
+
+
 }

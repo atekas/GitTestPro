@@ -21,8 +21,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private FragmentManager mFragmentManager;
 
-    private FrameLayout mFrameLayout;
-
     //底层按钮
     private TextView mHomePageBottomView;
     private TextView mClassificationBottomView;
@@ -52,15 +50,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mShoppingBagBottomView.setOnClickListener(this);
         mMeBottomView.setOnClickListener(this);
 
-        mFrameLayout = (FrameLayout) findViewById(R.id.content);
-
         mFragmentManager = getFragmentManager();
-
-        mHomePageFm = (HomePageFragment) mFragmentManager.findFragmentById(R.id.home_page_fm);
-        mClassificationFm = (ClassificationFragment) mFragmentManager.findFragmentById(R.id.classification_fm);
-        mTourBuyFm = (TourBuyFragment) mFragmentManager.findFragmentById(R.id.tour_buy_fm);
-        mShoppingBagFm = (ShoppingBagFragment) mFragmentManager.findFragmentById(R.id.shopping_bag_fm);
-        mMeFm = (MeFragment) mFragmentManager.findFragmentById(R.id.me_fm);
 
         mHomePageBottomView.setSelected(true);
         showFragment(0);
@@ -71,31 +61,47 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         hideFragment(ft);
         switch (index) {
             case 0:
-                if (mHomePageFm != null) {
-                    ft.show(mHomePageFm).commit();
+                if (mHomePageFm == null) {
+                    mHomePageFm = new HomePageFragment();
+                    ft.add(R.id.content, mHomePageFm);
+                } else {
+                    ft.show(mHomePageFm);
                 }
                 break;
             case 1:
-                if (mClassificationFm != null) {
-                    ft.show(mClassificationFm).commit();
+                if (mClassificationFm == null) {
+                    mClassificationFm = new ClassificationFragment();
+                    ft.add(R.id.content, mClassificationFm);
+                } else {
+                    ft.show(mClassificationFm);
                 }
                 break;
             case 2:
-                if (mTourBuyFm != null) {
-                    ft.show(mTourBuyFm).commit();
+                if (mTourBuyFm == null) {
+                    mTourBuyFm = new TourBuyFragment();
+                    ft.add(R.id.content, mTourBuyFm);
+                } else {
+                    ft.show(mTourBuyFm);
                 }
                 break;
             case 3:
-                if (mShoppingBagFm != null) {
-                    ft.show(mShoppingBagFm).commit();
+                if (mShoppingBagFm == null) {
+                    mShoppingBagFm = new ShoppingBagFragment();
+                    ft.add(R.id.content, mShoppingBagFm);
+                } else {
+                    ft.show(mShoppingBagFm);
                 }
                 break;
             case 4:
-                if (mMeFm != null) {
-                    ft.show(mMeFm).commit();
+                if (mMeFm == null) {
+                    mMeFm = new MeFragment();
+                    ft.add(R.id.content, mMeFm);
+                } else {
+                    ft.show(mMeFm);
                 }
                 break;
         }
+        ft.commit();
     }
 
     private void hideFragment(FragmentTransaction ft) {

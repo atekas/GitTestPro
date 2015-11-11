@@ -22,6 +22,16 @@ public class ShoppingBagFragment extends Fragment {
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden) {
+
+        } else {
+
+        }
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
     }
