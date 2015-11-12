@@ -27,10 +27,11 @@
                     android:gravity="center"
                     android:layout_centerInParent="true">
 
-                <ImageView
+                <com.sensu.android.zimaogou.widget.RoundImageView
                         android:id="@+id/head_pic"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/head_pic_default"/>
 
                 <TextView

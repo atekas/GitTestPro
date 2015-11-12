@@ -25,6 +25,7 @@
                 android:drawableTop="@drawable/drawable_home_page_select"
                 android:textColor="@color/color_bottom_text_select"
                 android:gravity="center"
+                android:textSize="@dimen/bottom_text_size"
                 android:text="首页"/>
 
         <TextView
@@ -35,6 +36,7 @@
                 android:drawableTop="@drawable/drawable_classification_select"
                 android:textColor="@color/color_bottom_text_select"
                 android:gravity="center"
+                android:textSize="@dimen/bottom_text_size"
                 android:text="分类"/>
 
         <TextView
@@ -45,6 +47,7 @@
                 android:drawableTop="@drawable/drawable_tour_buy_select"
                 android:textColor="@color/color_bottom_text_select"
                 android:gravity="center"
+                android:textSize="@dimen/bottom_text_size"
                 android:text="游购"/>
 
         <TextView
@@ -55,6 +58,7 @@
                 android:drawableTop="@drawable/drawable_shopping_bag_select"
                 android:textColor="@color/color_bottom_text_select"
                 android:gravity="center"
+                android:textSize="@dimen/bottom_text_size"
                 android:text="购物袋"/>
 
         <TextView
@@ -65,6 +69,7 @@
                 android:drawableTop="@drawable/drawable_me_select"
                 android:textColor="@color/color_bottom_text_select"
                 android:gravity="center"
+                android:textSize="@dimen/bottom_text_size"
                 android:text="我"/>
 
     </LinearLayout>
