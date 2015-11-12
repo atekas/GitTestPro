@@ -129,7 +129,7 @@
                 android:layout_height="50dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:background="@color/white">
+                android:background="@drawable/drawable_me_click">
 
             <ImageView
                     android:layout_width="wrap_content"
@@ -165,7 +165,7 @@
                 android:layout_height="50dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:background="@color/white">
+                android:background="@drawable/drawable_me_click">
 
             <ImageView
                     android:layout_width="wrap_content"
@@ -201,7 +201,7 @@
                 android:layout_height="50dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:background="@color/white">
+                android:background="@drawable/drawable_me_click">
 
             <ImageView
                     android:layout_width="wrap_content"
@@ -242,7 +242,7 @@
                 android:layout_height="50dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:background="@color/white">
+                android:background="@drawable/drawable_me_click">
 
             <ImageView
                     android:layout_width="wrap_content"
@@ -278,7 +278,7 @@
                 android:layout_height="50dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:background="@color/white">
+                android:background="@drawable/drawable_me_click">
 
             <ImageView
                     android:layout_width="wrap_content"
@@ -314,7 +314,7 @@
                 android:layout_height="50dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:background="@color/white">
+                android:background="@drawable/drawable_me_click">
 
             <ImageView
                     android:layout_width="wrap_content"
@@ -358,7 +358,7 @@
                 android:layout_height="50dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:background="@color/white">
+                android:background="@drawable/drawable_me_click">
 
             <ImageView
                     android:layout_width="wrap_content"

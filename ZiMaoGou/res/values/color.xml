@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="white">#ffffff</color>
+    <drawable name="white">#ffffff</drawable>
+
     <color name="red">#dc283c</color>
     <color name="black">#000000</color>
 
@@ -9,4 +11,6 @@
     <color name="black_222222">#222222</color>
     <color name="black_333333">#333333</color>
     <color name="gray_9b9b9b">#9b9b9b</color>
+
+    <drawable name="pressed">#f4f7f8</drawable>
 </resources>
