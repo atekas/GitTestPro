@@ -2,26 +2,43 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:background="@color/app_background_color">
 
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/red">
+            android:background="@color/white">
 
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="#222222"
                 android:layout_centerInParent="true"
                 android:textSize="20sp"
-                android:textStyle="bold"
                 android:text="游购"/>
+
+        <ImageView
+                android:id="@+id/tour_buy_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:padding="10dp"
+                android:src="@drawable/tour_buy_send"/>
 
     </RelativeLayout>
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="游购"/>
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="#e5e5e5" />
+
+    <ListView
+            android:id="@+id/tour_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"/>
 </LinearLayout>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp">
+
+        <ImageView
+                android:id="@+id/user_head_pic"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/head_pic_default"/>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/user_head_pic">
+
+            <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black_222222"
+                    android:text="小美美"/>
+
+            <TextView
+                    android:id="@+id/send_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/user_name"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/gray_9b9b9b"
+                    android:text="1天前"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/user_name"
+                    android:layout_toRightOf="@+id/send_time"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="8dp"
+                    android:text="大学路"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <ImageView
+                android:id="@+id/content_pic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/red"/>
+
+        <ImageView
+                android:id="@+id/video_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/video_icon"
+                android:layout_gravity="center"/>
+
+    </com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout>
+
+    <TextView
+            android:id="@+id/content_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/black_333333"
+            android:textSize="16sp"
+            android:text="首款首款好东西"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/marks"/>
+
+        <TextView
+                android:id="@+id/marks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red"
+                android:layout_marginLeft="5dp"
+                android:text="美国 美食"/>
+
+    </LinearLayout>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:background="#e5e5e5"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+        <RelativeLayout
+                android:id="@+id/review_layout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1">
+
+            <TextView
+                    android:id="@+id/review_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/review_icon"
+                    android:drawablePadding="5dp"
+                    android:gravity="center"
+                    android:text="3"/>
+        </RelativeLayout>
+
+        <View
+                android:layout_width="2px"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="#e5e5e5"/>
+
+        <RelativeLayout
+                android:id="@+id/praise_layout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1">
+
+            <TextView
+                    android:id="@+id/praise_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:drawablePadding="5dp"
+                    android:drawableLeft="@drawable/drawable_praise_select"
+                    android:text="10"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View android:layout_width="match_parent" android:layout_height="20dp" android:background="#e5e5e5" />
+
+</LinearLayout>

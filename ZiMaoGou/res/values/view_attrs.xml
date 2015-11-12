@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  固定宽高比的属性 -->
+    <declare-styleable name="FixedAspectRatio">
+        <attr name="fixOrientation">
+            <enum name="fixWidth" value="0"/>
+            <enum name="fixHeight" value="1"/>
+        </attr>
+        <attr name="aspectRatio" format="float"/>
+    </declare-styleable>
+
+    <declare-styleable name="CustomProgressBar">
+        <attr name="progressDrawable" format="reference"/>
+    </declare-styleable>
+
+    <!--  圆角控件属性 -->
+    <declare-styleable name="RoundAngleImageView">
+        <attr name="xRadius" format="dimension" />
+        <attr name="yRadius" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="RoundImageView">
+        <attr name="left_top" format="dimension" />
+        <attr name="right_top" format="dimension" />
+        <attr name="left_bottom" format="dimension" />
+        <attr name="right_bottom" format="dimension" />
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+        <attr name="oval" format="boolean" />
+        <attr name="android:scaleType" />
+    </declare-styleable>
+
+    <declare-styleable name="VolumeSizeView">
+        <attr name="color" format="color"/>
+    </declare-styleable>
+</resources>
