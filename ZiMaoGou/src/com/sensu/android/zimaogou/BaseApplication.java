@@ -1,8 +1,12 @@
 package com.sensu.android.zimaogou;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.Environment;
+import com.sensu.android.zimaogou.external.greendao.dao.DaoMaster;
+import com.sensu.android.zimaogou.external.greendao.dao.DaoSession;
 import com.sensu.android.zimaogou.utils.*;
+import org.apache.http.auth.NTUserPrincipal;
 
 import java.io.File;
 
@@ -13,6 +17,8 @@ import java.io.File;
  */
 public class BaseApplication extends Application {
 
+    public static String DB_NAME = "zimaogou_db";
+
     private String mUserDir;
     private String mCacheDir;
     private String mExternalCacheDir;
@@ -20,6 +26,9 @@ public class BaseApplication extends Application {
     private String mSavePicPath;
 
     private static BaseApplication mBaseApplication;
+
+    private DaoMaster mDaoMaster;
+    private DaoSession mDaoSession;
 
     @Override
     public void onCreate() {
@@ -90,6 +99,33 @@ public class BaseApplication extends Application {
 
     public void exit() {
         ActivityManager.getInstance().finishActivities();
+    }
+
+    /**
+     * 获取DaoMaster
+     * @return
+     */
+    public DaoMaster getDaoMaster(Context context) {
+        if (mDaoMaster == null) {
+            DaoMaster.OpenHelper helper = new DaoMaster.DevOpenHelper(context, DB_NAME, null);
+            mDaoMaster = new DaoMaster(helper.getWritableDatabase());
+        }
+        return mDaoMaster;
+    }
+
+    /**
+     * 获取DaoSession
+     * @param context
+     * @return
+     */
+    public DaoSession getDaoSession(Context context) {
+        if (mDaoSession == null) {
+            if (mDaoMaster == null) {
+                mDaoMaster = getDaoMaster(context);
+            }
+            mDaoSession = mDaoMaster.newSession();
+        }
+        return mDaoSession;
     }
 
     @Override

@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
+import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.PromptUtils;
 
 /**
@@ -78,10 +80,17 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             case R.id.head_pic:
                 //TODO 登陆或者更换头像
                 PromptUtils.showToast("登陆或者更换头像");
+                UserInfo userInfo = new UserInfo();
+                userInfo.setName("张三");
+                userInfo.setSex("男");
+                userInfo.setPhoneNum("138888888");
+                GDUserInfoHelper.getInstance(mParentActivity).insertUserInfo(userInfo);
                 break;
             case R.id.login_register:
                 //TODO 登陆
                 PromptUtils.showToast("登陆");
+                UserInfo userInfo1 = GDUserInfoHelper.getInstance(mParentActivity).getUserInfo();
+                PromptUtils.showToast(userInfo1.getName() + userInfo1.getSex() + userInfo1.getPhoneNum());
                 break;
             case R.id.wait_pay:
                 //TODO 进入待付款页面
