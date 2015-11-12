@@ -16,4 +16,5 @@
     <file url="file://$PROJECT_DIR$/src/com/sensu/android/zimaogou/widget/FixedAspectRatioRelativeLayout.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/com/sensu/android/zimaogou/widget/RoundImageView.java" charset="UTF-8" />
   </component>
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
 </project>

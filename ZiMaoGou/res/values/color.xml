@@ -14,4 +14,8 @@
     <color name="gray_9b9b9b">#9b9b9b</color>
 
     <drawable name="pressed">#f4f7f8</drawable>
+    <color name="home_line">#e5e5e5</color><!--主页下划线颜色-->
+    <color name="home_bg">#eaeaed</color><!--主页背景色-->
+    <color name="light_black">#333333</color><!--浅黑色-->
+    <color name="dark_black">#222222</color><!--深黑色-->
 </resources>

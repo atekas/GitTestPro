@@ -12,4 +12,10 @@
     <string name="wait_receive_goods">待收货</string>
     <string name="sales_reture">退货单</string>
     <string name="all_orders">全部订单</string>
+    <string name="buyRead">购物须知</string>
+    <string name="hotGoods">人气商品</string>
+    <string name="Latest">最新上架</string>
+    <string name="featureVideos">精选视频</string>
+    <string name="daily_recommend">每日推荐</string>
+    <string name="group_special">拼单特价</string>
 </resources>

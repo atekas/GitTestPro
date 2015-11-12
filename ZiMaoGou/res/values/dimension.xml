@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="home_banner_height">150dp</dimen><!--首页banner高度-->
+    <dimen name="home_distance">15dp</dimen><!--首页栏目间距-->
+    <dimen name="text_size_normal">15sp</dimen><!--22px-->
+    <dimen name="text_size_big">17sp</dimen><!--26px-->
+
+
+</resources>
