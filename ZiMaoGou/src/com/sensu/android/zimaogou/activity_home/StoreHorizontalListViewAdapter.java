@@ -9,34 +9,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.sensu.android.zimaogou.Mode.ProductMode;
+import com.sensu.android.zimaogou.Mode.StoreMode;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.utils.DisplayUtils;
 
 import java.util.ArrayList;
 
-public class HorizontalListViewAdapter extends BaseAdapter {
+public class StoreHorizontalListViewAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
     Bitmap iconBitmap;
     private int selectIndex = -1;
-    int Size = 1; //一屏显示多少个
-    int Type = 1;//哪个部分调用 1，每日推荐 2，拼单特价，3.发现好店铺
-    ArrayList<ProductMode> pros = new ArrayList<ProductMode>();
+    int Size = 3;
+    ArrayList<StoreMode> stors = new ArrayList<StoreMode>();
 
-    public HorizontalListViewAdapter(Context context, ArrayList<ProductMode> pros, int type) {
+    public StoreHorizontalListViewAdapter(Context context, ArrayList<StoreMode> stores) {
         this.mContext = context;
-        this.pros = pros;
-        if (type == 1) {
-            this.Size = 3;
-        }
-
-        this.Type = type;
+        this.stors = stores;
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);//LayoutInflater.from(mContext);
     }
 
     @Override
     public int getCount() {
-        return pros.size();
+        return stors.size();
     }
 
     @Override
@@ -53,14 +48,14 @@ public class HorizontalListViewAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         DailyRecViewHolder holder;
-        GroupSpeViewHolder gsHolder;
-        if (Type == 1) {
             if (convertView == null) {
                 holder = new DailyRecViewHolder();
-                convertView = mInflater.inflate(R.layout.dailyrecommend_list_item, null);
+                convertView = mInflater.inflate(R.layout.findstore_list_item, null);
                 holder.mImage = (ImageView) convertView.findViewById(R.id.img_pro);
                 holder.mTitle = (TextView) convertView.findViewById(R.id.tv_pro);
                 holder.mRl_img = (RelativeLayout) convertView.findViewById(R.id.rl_img);
+                holder.mCountryImage = (ImageView) convertView.findViewById(R.id.img_country);
+                holder.mCountryName = (TextView) convertView.findViewById(R.id.tv_countryName);
                 DisplayMetrics metric = new DisplayMetrics();
                 int width = DisplayUtils.getDisplayWidth();//获得屏幕宽度
                 LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) holder.mRl_img.getLayoutParams();
@@ -81,54 +76,26 @@ public class HorizontalListViewAdapter extends BaseAdapter {
                 convertView.setSelected(false);
             }
 
-            holder.mTitle.setText(pros.get(position).getTestTitle());
-            holder.mImage.setImageResource(pros.get(position).getTestImg());
+            holder.mTitle.setText(stors.get(position).getStoreName());
+            holder.mImage.setImageResource(stors.get(position).getTestStoreImage());
+            holder.mCountryImage.setImageResource(stors.get(position).getTestCountryImage());
+            holder.mCountryName.setText(stors.get(position).getTestCountryName());
 //		iconBitmap = getPropThumnail(mIconIDs[position]);
 //		holder.mImage.setImageBitmap(iconBitmap);
 //		holder.mImage.setim
-        }else {
-            if (Type == 2) {
-                if (convertView == null) {
-                    gsHolder = new GroupSpeViewHolder();
-                    convertView = mInflater.inflate(R.layout.groupspecial_list_item, null);
-                    gsHolder.mImage = (ImageView) convertView.findViewById(R.id.img_pro);
-                    gsHolder.mTitle = (TextView) convertView.findViewById(R.id.tv_title);
-                    gsHolder.mPersons = (TextView) convertView.findViewById(R.id.tv_persons);
-                    gsHolder.mSalePrice = (TextView) convertView.findViewById(R.id.tv_salePrice);
-                    gsHolder.mOrigPrice = (TextView) convertView.findViewById(R.id.tv_origPrice);
-                    gsHolder.mOrigPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG); //中划线
-                    gsHolder.mOrigPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
-                    gsHolder.mOrigPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG);//抗锯齿
-                    convertView.setTag(gsHolder);
-                }else{
-                    gsHolder = (GroupSpeViewHolder) convertView.getTag();
-                }
 
-                gsHolder.mTitle.setText(pros.get(position).getTestTitle());
-                gsHolder.mImage.setImageResource(pros.get(position).getTestImg());
-            }
-
-        }
         return convertView;
     }
 
 
-    /**
-     * 每日推荐ViewHolder
-     */
+
     private static class DailyRecViewHolder {
-        private TextView mTitle;
-        private ImageView mImage;
+        private TextView mTitle,mCountryName;
+        private ImageView mImage,mCountryImage;
         private RelativeLayout mRl_img;
     }
 
-    /**
-     * 拼单特价ViewHolder
-     */
-    private static class GroupSpeViewHolder {
-        private ImageView mImage;
-        private TextView mPersons, mTitle, mSalePrice, mOrigPrice;
-    }
+
 
     //	private Bitmap getPropThumnail(int id){
 //		Drawable d = mContext.getResources().getDrawable(id);

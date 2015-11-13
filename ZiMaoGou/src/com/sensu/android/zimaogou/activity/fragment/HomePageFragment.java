@@ -4,9 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import com.sensu.android.zimaogou.R;
-import com.sensu.android.zimaogou.activity_home.DailyRecLinearLayout;
+import com.sensu.android.zimaogou.activity_home.HomeHorizontalLinearLayout;
+import com.sensu.android.zimaogou.activity_home.HomeVerticalLinearLayout;
 import com.sensu.android.zimaogou.utils.PromptUtils;
 
 /**
@@ -14,13 +14,13 @@ import com.sensu.android.zimaogou.utils.PromptUtils;
  */
 public class HomePageFragment extends BaseFragment {
 
-    DailyRecLinearLayout mDailyLinearLayout;
-    //how many images for the screen
-    int sDailyCommendSize = 3;
-    int sGroupSpecialSize = 2;
+    HomeHorizontalLinearLayout mDailyLinearLayout,mGroupLinearLayout,mFindStoreLinearLayout;
+    HomeVerticalLinearLayout mLivelyLinearLayout;
     //the value for the type
     int sDailyCommendType = 1;
     int sGroupSpecialType = 2;
+    int sFindStoreType = 3;
+    int sLivelyStoreType = 4;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,8 +49,14 @@ public class HomePageFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        mDailyLinearLayout = (DailyRecLinearLayout) mParentActivity.findViewById(R.id.ll_dailyRecommend);
-        mDailyLinearLayout.setData(sDailyCommendSize, sDailyCommendType);
+        mDailyLinearLayout = (HomeHorizontalLinearLayout) mParentActivity.findViewById(R.id.ll_dailyRecommend);
+        mGroupLinearLayout = (HomeHorizontalLinearLayout) mParentActivity.findViewById(R.id.ll_groupSpecial);
+        mFindStoreLinearLayout = (HomeHorizontalLinearLayout) mParentActivity.findViewById(R.id.ll_findStore);
+        mLivelyLinearLayout = (HomeVerticalLinearLayout) mParentActivity.findViewById(R.id.ll_lively);
+        mDailyLinearLayout.setData(sDailyCommendType);
+        mGroupLinearLayout.setData(sGroupSpecialType);
+        mFindStoreLinearLayout.setData(sFindStoreType);
+        mLivelyLinearLayout.setData(sLivelyStoreType);
     }
 
 

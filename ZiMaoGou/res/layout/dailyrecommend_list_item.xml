@@ -30,7 +30,7 @@
             android:id="@+id/tv_pro"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="@dimen/text_size_normal"
             android:layout_marginTop="5dp"
             android:paddingRight="5dp"
             android:paddingLeft="5dp"

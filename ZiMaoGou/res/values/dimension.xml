@@ -2,8 +2,9 @@
 <resources>
     <dimen name="home_banner_height">150dp</dimen><!--首页banner高度-->
     <dimen name="home_distance">15dp</dimen><!--首页栏目间距-->
-    <dimen name="text_size_normal">15sp</dimen><!--22px-->
-    <dimen name="text_size_big">17sp</dimen><!--26px-->
-
+    <dimen name="text_size_normal">14sp</dimen><!--22px-->
+    <dimen name="text_size_medial">15sp</dimen><!--24px-->
+    <dimen name="text_size_big">16sp</dimen><!--26px-->
+    <dimen name="text_size_large">17sp</dimen><!--28px-->
 
 </resources>

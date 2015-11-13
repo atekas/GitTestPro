@@ -31,4 +31,6 @@
     <string name="next">下一步</string>
     <string name="finish">完成</string>
     <string name="password_rules">不少于6位的数字字母</string>
+    <string name="find_shop">发现好店铺</string>
+    <string name="lively">推荐专题</string>
 </resources>

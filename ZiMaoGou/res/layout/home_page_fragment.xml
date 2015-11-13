@@ -124,7 +124,19 @@
             <View android:layout_width="fill_parent" android:layout_height="1px" android:background="@color/home_line"/>
             <View android:layout_width="fill_parent" android:layout_height="1px" android:background="@color/home_line"
                   android:layout_marginTop="@dimen/home_distance"/>
-            <include layout="@layout/home_item_layout" android:id="@+id/ll_dailyRecommend"/>
+            <include
+                    layout="@layout/home_item1_layout"
+                    android:id="@+id/ll_dailyRecommend"
+                    />
+            <View android:layout_width="fill_parent" android:layout_height="1px" android:background="@color/home_line"
+                  android:layout_marginTop="@dimen/home_distance"/>
+            <include layout="@layout/home_item1_layout" android:id="@+id/ll_groupSpecial"/>
+            <View android:layout_width="fill_parent" android:layout_height="1px" android:background="@color/home_line"
+                  android:layout_marginTop="@dimen/home_distance"/>
+            <include layout="@layout/home_item1_layout" android:id="@+id/ll_findStore"/>
+            <View android:layout_width="fill_parent" android:layout_height="1px" android:background="@color/home_line"
+                  android:layout_marginTop="@dimen/home_distance"/>
+            <include layout="@layout/home_item2_layout" android:id="@+id/ll_lively"/>
         </LinearLayout>
 
     </ScrollView>

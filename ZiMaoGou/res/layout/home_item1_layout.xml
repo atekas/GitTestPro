@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <com.sensu.android.zimaogou.activity_home.DailyRecLinearLayout
+    <com.sensu.android.zimaogou.activity_home.HomeHorizontalLinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/d"
             android:layout_width="fill_parent"
@@ -41,8 +41,7 @@
         <com.sensu.android.zimaogou.activity_home.HorizontalListView
                 android:id="@+id/lv_recommend"
                 android:layout_width="match_parent"
-                android:paddingRight="6dp"
                 android:layout_height="150dp">
 
         </com.sensu.android.zimaogou.activity_home.HorizontalListView>
-    </com.sensu.android.zimaogou.activity_home.DailyRecLinearLayout>
+    </com.sensu.android.zimaogou.activity_home.HomeHorizontalLinearLayout>
