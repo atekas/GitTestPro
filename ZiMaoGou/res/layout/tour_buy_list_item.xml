@@ -117,7 +117,6 @@
             android:layout_height="50dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="20dp"
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
@@ -164,6 +163,9 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <View android:layout_width="match_parent" android:layout_height="20dp" android:background="#e5e5e5" />
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="#e5e5e5" />
 
 </LinearLayout>
