@@ -44,6 +44,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             case R.id.next:
                 break;
             case R.id.get_auth_code:
+                //TODO 调用获取验证码接口，成功后下面两方法在返回成功里面调用
                 mGetAuthCode.setEnabled(false);
                 mUpdateTimeHandler.sendEmptyMessage(UpdateTimeHandler.UPDATE_TIME_CODE);
                 break;

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/app_background_color">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+        <TextView
+                android:id="@+id/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dip_10"
+                android:textSize="@dimen/text_size_18"
+                android:padding="@dimen/dip_5"
+                android:textColor="@color/black_444444"
+                android:text="@string/cancel"/>
+
+        <TextView
+                android:id="@+id/release"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dip_10"
+                android:textSize="@dimen/text_size_18"
+                android:padding="@dimen/dip_5"
+                android:textColor="@color/black_444444"
+                android:text="@string/release"/>
+    </RelativeLayout>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/home_line"/>
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dip_20"
+                    android:layout_marginRight="@dimen/dip_20"
+                    android:layout_marginTop="20dp"
+                    android:hint="@string/release_hint"
+                    android:textColorHint="@color/release_hint_color"
+                    android:background="@null"/>
+
+            <GridView
+                    android:id="@+id/grid_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dip_20"
+                    android:layout_marginRight="@dimen/dip_20"
+                    android:layout_marginTop="@dimen/dip_20"
+                    android:scrollbars="none"
+                    android:numColumns="4"/>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:layout_marginLeft="@dimen/dip_50"
+                    android:layout_marginTop="@dimen/dip_20"
+                    android:background="@color/home_line"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:background="@drawable/drawable_me_click">
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:src="@drawable/location"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:textColor="@color/black"
+                        android:text="@string/location"/>
+
+                <TextView
+                        android:id="@+id/location"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="@dimen/dip_20"
+                        android:textColor="@color/black"
+                        android:text="@string/location"/>
+
+                <ImageView
+                        android:id="@+id/location_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp"
+                        android:src="@drawable/arrow_right"/>
+
+            </LinearLayout>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:background="@color/app_background_color"/>
+
+            <LinearLayout
+                    android:id="@+id/choose_country"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:background="@drawable/drawable_me_click">
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:src="@drawable/country"/>
+
+                <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="15dp"
+                        android:textColor="@color/black"
+                        android:text="@string/country"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_marginRight="@dimen/dip_2"
+                        android:text="韩国"/>
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp"
+                        android:src="@drawable/arrow_right"/>
+
+            </LinearLayout>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:layout_marginLeft="@dimen/dip_50"
+                    android:background="@color/home_line"/>
+
+            <LinearLayout
+                    android:id="@+id/mark_pic"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:background="@drawable/drawable_me_click">
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:src="@drawable/mark"/>
+
+                <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="15dp"
+                        android:textColor="@color/black"
+                        android:text="@string/mark"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

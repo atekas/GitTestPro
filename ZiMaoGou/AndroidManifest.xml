@@ -5,13 +5,39 @@
           android:versionName="1.0">
     <uses-sdk android:minSdkVersion="14"/>
 
-    <!-- 权限 -->
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="ANDROID.PERMISSION.CALL_PHONE"/>
-    <!-- 在SDCard中创建与删除文件权限 -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
-    <!-- 往SDCard写入数据权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+    <!-- 听筒模式 -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.FLASHLIGHT"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+
+    <uses-feature android:name="android.hardware.camera"/>
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
+    <uses-feature android:name="android.hardware.microphone"/>
+
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="permission.WRITE_APN_SETTINGS"/>
+    <!-- 设置新消息提示音读取系统通知音的读磁盘操作 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application android:label="@string/app_name"
                  android:allowBackup="false"
@@ -34,6 +60,13 @@
 
         <activity android:name=".activity.login.InputPasswordActivity" android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <activity android:name=".activity.login.ForgetPasswordActivity" android:screenOrientation="portrait" />
+
+        <activity android:name=".activity.tour.TourBuySendActivity" android:screenOrientation="portrait"
+                  android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <activity android:name=".activity.LocalPhotoActivity" android:screenOrientation="portrait" />
 
     </application>
 </manifest>

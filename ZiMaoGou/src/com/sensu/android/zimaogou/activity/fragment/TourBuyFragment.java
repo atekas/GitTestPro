@@ -1,12 +1,14 @@
 package com.sensu.android.zimaogou.activity.fragment;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.activity.tour.TourBuySendActivity;
 import com.sensu.android.zimaogou.adapter.TourBuyAdapter;
 
 /**
@@ -61,6 +63,7 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
         switch (view.getId()) {
             case R.id.tour_buy_send:
                 //TODO 进入发布界面
+                mParentActivity.startActivity(new Intent(mParentActivity, TourBuySendActivity.class));
                 break;
         }
     }
