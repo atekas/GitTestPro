@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">zimaogou</string>
+    <string name="app_name">自贸购</string>
     <string name="my_coupon">我的优惠券</string>
     <string name="my_collection">我的收藏</string>
     <string name="take_goods_address">收货地址</string>
