@@ -9,9 +9,15 @@ import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.fragment.*;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
-    /**
-     * Called when the activity is first created.
-     */
+
+    public static final int HOME_PAGE_FM_CODE = 0;
+    public static final int CLASSIFICATION_FM_CODE = HOME_PAGE_FM_CODE + 1;
+    public static final int TOUR_BUT_FM_CODE = CLASSIFICATION_FM_CODE + 1;
+    public static final int SHOPPING_BAG_FM_CODE = TOUR_BUT_FM_CODE + 1;
+    public static final int ME_FM_CODE = SHOPPING_BAG_FM_CODE + 1;
+
+    private int mCurrentIndex;
+
     private HomePageFragment mHomePageFm;
     private ClassificationFragment mClassificationFm;
     private TourBuyFragment mTourBuyFm;
@@ -33,7 +39,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.main);
 
         initViews();
-
     }
 
     private void initViews() {
@@ -51,53 +56,58 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         mFragmentManager = getFragmentManager();
 
-        mHomePageBottomView.setSelected(true);
-        showFragment(0);
+        mCurrentIndex = HOME_PAGE_FM_CODE;
+        viewPerformClick();
     }
 
     private void showFragment(int index) {
         FragmentTransaction ft = mFragmentManager.beginTransaction();
         hideFragment(ft);
         switch (index) {
-            case 0:
+            case HOME_PAGE_FM_CODE:
                 if (mHomePageFm == null) {
                     mHomePageFm = new HomePageFragment();
                     ft.add(R.id.content, mHomePageFm);
                 } else {
                     ft.show(mHomePageFm);
                 }
+                mCurrentIndex = HOME_PAGE_FM_CODE;
                 break;
-            case 1:
+            case CLASSIFICATION_FM_CODE:
                 if (mClassificationFm == null) {
                     mClassificationFm = new ClassificationFragment();
                     ft.add(R.id.content, mClassificationFm);
                 } else {
                     ft.show(mClassificationFm);
                 }
+                mCurrentIndex = CLASSIFICATION_FM_CODE;
                 break;
-            case 2:
+            case TOUR_BUT_FM_CODE:
                 if (mTourBuyFm == null) {
                     mTourBuyFm = new TourBuyFragment();
                     ft.add(R.id.content, mTourBuyFm);
                 } else {
                     ft.show(mTourBuyFm);
                 }
+                mCurrentIndex = TOUR_BUT_FM_CODE;
                 break;
-            case 3:
+            case SHOPPING_BAG_FM_CODE:
                 if (mShoppingBagFm == null) {
                     mShoppingBagFm = new ShoppingBagFragment();
                     ft.add(R.id.content, mShoppingBagFm);
                 } else {
                     ft.show(mShoppingBagFm);
                 }
+                mCurrentIndex = SHOPPING_BAG_FM_CODE;
                 break;
-            case 4:
+            case ME_FM_CODE:
                 if (mMeFm == null) {
                     mMeFm = new MeFragment();
                     ft.add(R.id.content, mMeFm);
                 } else {
                     ft.show(mMeFm);
                 }
+                mCurrentIndex = ME_FM_CODE;
                 break;
         }
         ft.commit();
@@ -126,23 +136,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         clearBottomStatus();
         switch (view.getId()) {
             case R.id.bottom_home_page:
-                showFragment(0);
+                showFragment(HOME_PAGE_FM_CODE);
                 mHomePageBottomView.setSelected(true);
                 break;
             case R.id.bottom_classification:
-                showFragment(1);
+                showFragment(CLASSIFICATION_FM_CODE);
                 mClassificationBottomView.setSelected(true);
                 break;
             case R.id.bottom_tour_buy:
-                showFragment(2);
+                showFragment(TOUR_BUT_FM_CODE);
                 mTourBuyBottomView.setSelected(true);
                 break;
             case R.id.bottom_shopping_bag:
-                showFragment(3);
+                showFragment(SHOPPING_BAG_FM_CODE);
                 mShoppingBagBottomView.setSelected(true);
                 break;
             case R.id.bottom_me:
-                showFragment(4);
+                showFragment(ME_FM_CODE);
                 mMeBottomView.setSelected(true);
                 break;
         }
@@ -154,5 +164,25 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mTourBuyBottomView.setSelected(false);
         mShoppingBagBottomView.setSelected(false);
         mMeBottomView.setSelected(false);
+    }
+
+    private void viewPerformClick() {
+        switch (mCurrentIndex) {
+            case HOME_PAGE_FM_CODE:
+                mHomePageBottomView.performClick();
+                break;
+            case CLASSIFICATION_FM_CODE:
+                mClassificationBottomView.performClick();
+                break;
+            case TOUR_BUT_FM_CODE:
+                mTourBuyBottomView.performClick();
+                break;
+            case SHOPPING_BAG_FM_CODE:
+                mShoppingBagBottomView.performClick();
+                break;
+            case ME_FM_CODE:
+                mMeBottomView.performClick();
+                break;
+        }
     }
 }

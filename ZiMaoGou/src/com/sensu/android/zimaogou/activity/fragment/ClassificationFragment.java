@@ -16,7 +16,6 @@ public class ClassificationFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        PromptUtils.showToast("classification---------onCreateView");
         return inflater.inflate(R.layout.classification_fragment, container, false);
     }
 
