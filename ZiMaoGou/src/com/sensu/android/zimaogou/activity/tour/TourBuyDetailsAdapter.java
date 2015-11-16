@@ -1,0 +1,51 @@
+package com.sensu.android.zimaogou.activity.tour;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.adapter.SimpleBaseAdapter;
+
+import static com.sensu.android.zimaogou.R.id.review_time;
+
+/**
+ * Created by zhangwentao on 2015/11/16.
+ */
+public class TourBuyDetailsAdapter extends SimpleBaseAdapter {
+
+    public TourBuyDetailsAdapter (Context context) {
+        super(context);
+    }
+
+    @Override
+    public int getCount() {
+        return 0;
+    }
+
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup) {
+        ViewHolder viewHolder;
+        if (view == null) {
+            view = LayoutInflater.from(mContext).inflate(R.layout.tour_details_item, null);
+            viewHolder = new ViewHolder();
+            viewHolder.mImageView = (ImageView) view.findViewById(R.id.review_user_head_pic);
+            viewHolder.mUserName = (TextView) view.findViewById(R.id.review_user_name);
+            viewHolder.mTime = (TextView) view.findViewById(review_time);
+            viewHolder.mReview = (TextView) view.findViewById(R.id.review_content);
+            view.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) view.getTag();
+        }
+        return view;
+    }
+
+    private class ViewHolder {
+        ImageView mImageView;
+        TextView mUserName;
+        TextView mTime;
+        TextView mReview;
+    }
+}

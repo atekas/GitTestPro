@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white">
+
+    <com.sensu.android.zimaogou.widget.RoundImageView
+            android:id="@+id/review_user_head_pic"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/dip_20"
+            android:layout_marginBottom="@dimen/dip_20"
+            android:layout_marginLeft="@dimen/dip_20"
+            android:background="@color/black_333333"
+            android:src="@drawable/head_pic_default"/>
+
+    <TextView
+            android:id="@+id/review_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_16"
+            android:layout_toRightOf="@+id/review_user_head_pic"
+            android:layout_marginTop="@dimen/dip_20"
+            android:layout_marginLeft="@dimen/dip_20"
+            android:textColor="#a7a7a7"
+            android:text="孙立人"/>
+
+    <TextView
+            android:id="@+id/review_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/review_user_name"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dip_20"
+            android:textSize="@dimen/text_size_16"
+            android:textColor="#a7a7a7"
+            android:text="1天前"/>
+
+    <TextView
+            android:id="@+id/review_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_16"
+            android:textColor="@color/black_333333"
+            android:layout_toRightOf="@+id/review_user_head_pic"
+            android:layout_marginLeft="@dimen/dip_20"
+            android:layout_marginRight="@dimen/dip_20"
+            android:layout_marginBottom="@dimen/dip_20"
+            android:layout_marginTop="@dimen/dip_5"
+            android:layout_below="@+id/review_user_name"
+            android:text="1天前1天前"/>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_toRightOf="@+id/review_user_head_pic"
+            android:layout_marginLeft="@dimen/dip_20"
+            android:layout_alignParentBottom="true"
+            android:background="#e5e5e5"/>
+
+
+</RelativeLayout>

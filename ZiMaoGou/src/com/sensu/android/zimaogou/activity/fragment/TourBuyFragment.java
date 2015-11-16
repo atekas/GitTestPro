@@ -6,7 +6,9 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.activity.tour.TourBuyDetailsActivity;
 import com.sensu.android.zimaogou.activity.tour.TourBuySendActivity;
 import com.sensu.android.zimaogou.adapter.TourBuyAdapter;
 import com.sensu.android.zimaogou.widget.OnRefreshListener;
@@ -15,7 +17,7 @@ import com.sensu.android.zimaogou.widget.RefreshListView;
 /**
  * Created by zhangwentao on 2015/11/10.
  */
-public class TourBuyFragment extends BaseFragment implements View.OnClickListener {
+public class TourBuyFragment extends BaseFragment implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     private RefreshListView mTourBuyListView;
     private TourBuyAdapter mTourBuyAdapter;
@@ -40,6 +42,7 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
         mTourBuyListView.setAdapter(mTourBuyAdapter);
 
         mTourBuyListView.setOnRefreshListener(mOnRefreshListener);
+        mTourBuyListView.setOnItemClickListener(this);
     }
 
     private OnRefreshListener mOnRefreshListener = new OnRefreshListener() {
@@ -94,6 +97,13 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
                 //TODO 进入发布界面
                 mParentActivity.startActivity(new Intent(mParentActivity, TourBuySendActivity.class));
                 break;
+        }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        if (i == 1) {
+            startActivity(new Intent(mParentActivity, TourBuyDetailsActivity.class));
         }
     }
 }
