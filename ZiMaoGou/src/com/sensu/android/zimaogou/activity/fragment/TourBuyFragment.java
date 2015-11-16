@@ -1,22 +1,21 @@
 package com.sensu.android.zimaogou.activity.fragment;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.tour.TourBuySendActivity;
 import com.sensu.android.zimaogou.adapter.TourBuyAdapter;
+import com.sensu.android.zimaogou.widget.RefreshListView;
 
 /**
  * Created by zhangwentao on 2015/11/10.
  */
 public class TourBuyFragment extends BaseFragment implements View.OnClickListener {
 
-    private ListView mTourBuyListView;
+    private RefreshListView mTourBuyListView;
     private TourBuyAdapter mTourBuyAdapter;
 
     @Override
@@ -32,7 +31,7 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
     @Override
     protected void initView() {
         mParentActivity.findViewById(R.id.tour_buy_send).setOnClickListener(this);
-        mTourBuyListView = (ListView) mParentActivity.findViewById(R.id.tour_list);
+        mTourBuyListView = (RefreshListView) mParentActivity.findViewById(R.id.tour_list);
         mTourBuyAdapter = new TourBuyAdapter(mParentActivity);
         mTourBuyListView.setAdapter(mTourBuyAdapter);
     }

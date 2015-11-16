@@ -35,10 +35,11 @@
             android:layout_height="2px"
             android:background="#e5e5e5" />
 
-    <ListView
+    <com.sensu.android.zimaogou.widget.RefreshListView
             android:id="@+id/tour_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
+            android:divider="@null"
             android:background="@color/white"/>
 </LinearLayout>

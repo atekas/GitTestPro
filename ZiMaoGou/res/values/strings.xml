@@ -40,4 +40,10 @@
     <string name="country">国家</string>
     <string name="mark">标签</string>
     <string name="all_photos">所有照片</string>
+
+    <string name="pull_to_refresh_pull_label">下拉刷新…</string>
+    <string name="pull_to_refresh_release_label">放开以刷新…</string>
+    <string name="pull_to_refresh_refreshing_label">正在载入…</string>
+    <string name="pull_to_refresh_last_time">最后刷新时间: </string>
+    <string name="loading_more">加载更多...</string>
 </resources>
