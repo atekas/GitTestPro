@@ -2,12 +2,14 @@ package com.sensu.android.zimaogou.activity.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.tour.TourBuySendActivity;
 import com.sensu.android.zimaogou.adapter.TourBuyAdapter;
+import com.sensu.android.zimaogou.widget.OnRefreshListener;
 import com.sensu.android.zimaogou.widget.RefreshListView;
 
 /**
@@ -17,6 +19,8 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
 
     private RefreshListView mTourBuyListView;
     private TourBuyAdapter mTourBuyAdapter;
+
+    private Handler mHandler = new Handler();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,7 +38,33 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
         mTourBuyListView = (RefreshListView) mParentActivity.findViewById(R.id.tour_list);
         mTourBuyAdapter = new TourBuyAdapter(mParentActivity);
         mTourBuyListView.setAdapter(mTourBuyAdapter);
+
+        mTourBuyListView.setOnRefreshListener(mOnRefreshListener);
     }
+
+    private OnRefreshListener mOnRefreshListener = new OnRefreshListener() {
+        @Override
+        public void onDownPullRefresh() {
+            //下拉刷新接口
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mTourBuyListView.hideHeaderView();
+                }
+            }, 2000);
+        }
+
+        @Override
+        public void onLoadingMore() {
+            //上拉加载接口
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mTourBuyListView.hideFooterView();
+                }
+            }, 2000);
+        }
+    };
 
     @Override
     public void onHiddenChanged(boolean hidden) {
