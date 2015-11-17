@@ -3,23 +3,54 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/app_background_color">
+              android:background="@color/white">
 
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/red">
+            android:background="#f8f8f8">
 
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:layout_centerInParent="true"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:text="分类"/>
+        <LinearLayout
+                android:id="@+id/search"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dip_20"
+                android:layout_marginRight="@dimen/dip_20"
+                android:layout_marginTop="@dimen/dip_10"
+                android:layout_marginBottom="@dimen/dip_10"
+                android:gravity="center"
+                android:background="@drawable/search_back">
 
+            <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/search_icon"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#8e8e93"
+                    android:layout_marginLeft="@dimen/dip_10"
+                    android:textSize="16sp"
+                    android:text="健康食品"/>
+
+            <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+        </LinearLayout>
     </RelativeLayout>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/home_line"/>
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -45,6 +76,7 @@
                 android:layout_height="wrap_content"
                 android:listSelector="@color/transparent"
                 android:verticalSpacing="@dimen/dip_20"
+                android:layout_marginTop="@dimen/dip_20"
                 android:gravity="center"
                 android:scrollbars="none"
                 android:background="@color/white"

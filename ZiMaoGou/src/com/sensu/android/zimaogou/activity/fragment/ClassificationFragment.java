@@ -8,9 +8,6 @@ import android.widget.*;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.adapter.ClassificationGridAdapter;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Created by zhangwentao on 2015/11/10.
  */
