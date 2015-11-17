@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="80dp">
+
+    <View
+            android:id="@+id/line"
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/drawable_classification_view_select"/>
+
+    <TextView
+            android:id="@+id/classification_name"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:gravity="center"
+            android:textSize="@dimen/text_size_18"
+            android:textColor="@color/color_classification_text_select"
+            android:background="@drawable/drawable_classification_text_back_select"
+            android:text="美容养颜"/>
+
+</LinearLayout>

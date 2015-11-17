@@ -34,4 +34,7 @@
 
     <color name="hint_color">#c7c7c7</color>
     <color name="release_hint_color">#d9d9d9</color>
+
+    <drawable name="red_dc293a">#dc293a</drawable>
+    <drawable name="gray_f6f6f6">#f6f6f6</drawable>
 </resources>
