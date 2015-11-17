@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.LocalPhotoActivity;
 import com.sensu.android.zimaogou.adapter.SimpleBaseAdapter;
+import com.sensu.android.zimaogou.photoalbum.PhotoInfo;
 import com.sensu.android.zimaogou.utils.ImageUtils;
 
 import java.util.ArrayList;
@@ -22,16 +23,18 @@ public class TourBuySendAdapter extends SimpleBaseAdapter {
     private List mList = new ArrayList();
     private Object mAdd;
 
-    public TourBuySendAdapter(Context context){
+    public TourBuySendAdapter(Context context) {
         super(context);
     }
 
     public void setList(List list) {
-        for (Object object : list) {
-            mList.add(object);
+        if (mList != list) {
+            for (int i = 0; i < list.size(); i++) {
+                mList.add(list.get(i));
+            }
+            mList.add(mAdd);
+            notifyDataSetChanged();
         }
-        mList.add(mAdd);
-        notifyDataSetChanged();
     }
 
     @Override
@@ -56,6 +59,7 @@ public class TourBuySendAdapter extends SimpleBaseAdapter {
         if (object == mAdd) {
             viewHolder.mImageView.setImageResource(R.drawable.add_photos);
         } else {
+            ImageUtils.displayImage(((PhotoInfo) object).getPicPath(), viewHolder.mImageView);
         }
 
         viewHolder.mImageView.setOnClickListener(new View.OnClickListener() {

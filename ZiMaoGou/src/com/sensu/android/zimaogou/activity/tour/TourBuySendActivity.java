@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.GridView;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.BaseActivity;
+import com.sensu.android.zimaogou.activity.LocalPhotoActivity;
+import com.sensu.android.zimaogou.photoalbum.PhotoInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +19,7 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
     private GridView mGridView;
     private TourBuySendAdapter mTourBuySendAdapter;
 
-    private List mPhotoList = new ArrayList();
+    private List<PhotoInfo> mPhotoList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,13 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initViews() {
+
+        mPhotoList = (List<PhotoInfo>) getIntent().getSerializableExtra(LocalPhotoActivity.SELECT_PHOTOS);
+
+        if (mPhotoList == null) {
+            mPhotoList = new ArrayList<PhotoInfo>();
+        }
+
         mGridView = (GridView) findViewById(R.id.grid_view);
         mTourBuySendAdapter = new TourBuySendAdapter(this);
         mGridView.setAdapter(mTourBuySendAdapter);

@@ -1,33 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <RelativeLayout
             android:id="@+id/layout_title"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
-            android:background="@color/white">
+            android:background="#f8f8f8">
 
-        <LinearLayout
-                android:id="@+id/layout_back"
+        <ImageView
+                android:id="@+id/back"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:paddingRight="@dimen/dip_10"
-                android:gravity="center"
-                android:orientation="horizontal">
-            <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:scaleType="centerInside"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_16"
-                    android:layout_marginLeft="@dimen/dip_3"/>
-        </LinearLayout>
+                android:layout_centerVertical="true"
+                android:padding="@dimen/dip_5"
+                android:layout_marginLeft="@dimen/dip_5"
+                android:src="@drawable/back"/>
 
         <TextView
                 android:id="@+id/local_photo_title"
@@ -50,8 +40,56 @@
     <ListView
             android:id="@+id/local_photo_grid"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_title"
+            android:layout_above="@+id/bottom_layout"
             android:listSelector="@color/transparent"
+            android:background="@color/white"
+            android:divider="@null"
             android:dividerHeight="0dp"/>
 
-</LinearLayout>
+    <LinearLayout
+            android:id="@+id/bottom_layout"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+
+        <TextView
+                android:id="@+id/photo_count"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/white"
+                android:textSize="@dimen/text_size_18"
+                android:textColor="#7f7f7f"
+                android:gravity="center"
+                android:text="000"/>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/home_line" />
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#f7fafa">
+
+            <TextView
+                    android:id="@+id/sure"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_sure"
+                    android:textColor="@color/white"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dip_10"
+                    android:gravity="center"
+                    android:text="@string/sure"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -19,6 +19,15 @@
                 android:layout_marginRight="1dp"
                 android:scaleType="centerCrop"
                 android:layout_marginBottom="1dp"/>
+
+        <ImageView
+                android:id="@+id/left_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dip_10"
+                android:layout_gravity="right"
+                android:src="@drawable/drawable_choose_pic_select"/>
+
     </com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout>
 
     <com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout
@@ -35,6 +44,14 @@
                 android:layout_marginBottom="1dp"
                 android:scaleType="centerCrop"
                 android:layout_marginRight="1dp"/>
+
+        <ImageView
+                android:id="@+id/center_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dip_10"
+                android:layout_gravity="right"
+                android:src="@drawable/drawable_choose_pic_select"/>
     </com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout>
 
     <com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout
@@ -50,5 +67,13 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:layout_marginBottom="1dp"/>
+
+        <ImageView
+                android:id="@+id/right_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dip_10"
+                android:layout_gravity="right"
+                android:src="@drawable/drawable_choose_pic_select"/>
     </com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout>
 </LinearLayout>
