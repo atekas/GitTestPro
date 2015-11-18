@@ -52,4 +52,6 @@
 
     <drawable name="account_button_focused_color">#b41f30</drawable><!--结算Button按下时颜色-->
     <drawable name="account_button_color">#dc283c</drawable><!--结算Button颜色-->
+    <string name="newest">最新</string>
+    <string name="moods">人气</string>
 </resources>

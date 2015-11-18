@@ -1,17 +1,19 @@
 package com.sensu.android.zimaogou.activity.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.activity.ProductsDetailsActivity;
 import com.sensu.android.zimaogou.adapter.ClassificationGridAdapter;
 
 /**
  * Created by zhangwentao on 2015/11/10.
  */
-public class ClassificationFragment extends BaseFragment {
+public class ClassificationFragment extends BaseFragment implements AdapterView.OnItemClickListener {
 
     String[] toolsList = new String[]{"常用分类", "潮流女装", "品牌男装", "内衣配饰", "家用电器"
             , "手机数码", "电脑办公", "个护化妆", "母婴频道", "食物生鲜", "酒水饮料", "家居家纺", "整车车品"
@@ -76,6 +78,8 @@ public class ClassificationFragment extends BaseFragment {
         mGridView = (GridView) mParentActivity.findViewById(R.id.small_classification_grid);
         mClassificationGridAdapter = new ClassificationGridAdapter(mParentActivity);
         mGridView.setAdapter(mClassificationGridAdapter);
+
+        mGridView.setOnItemClickListener(this);
     }
 
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -101,5 +105,10 @@ public class ClassificationFragment extends BaseFragment {
     private void changTextLocation(int position) {
         int x = mViews[position].getTop();
         mScrollView.smoothScrollTo(0, x);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        startActivity(new Intent(mParentActivity, ProductsDetailsActivity.class));
     }
 }
