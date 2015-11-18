@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.login.LoginActivity;
+import com.sensu.android.zimaogou.activity.mycenter.OrderActivity;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.PromptUtils;
@@ -97,18 +98,22 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             case R.id.wait_pay:
                 //TODO 进入待付款页面
                 PromptUtils.showToast("进入待付款页面");
+                startActivity(new Intent(mParentActivity, OrderActivity.class).putExtra("type",1));
                 break;
             case R.id.wait_receive:
                 //TODO 进入待收货界面
                 PromptUtils.showToast("进入待收货界面");
+                startActivity(new Intent(mParentActivity, OrderActivity.class).putExtra("type",2));
                 break;
             case R.id.sales_return:
                 //TODO 退货单
                 PromptUtils.showToast("退货单");
+                startActivity(new Intent(mParentActivity, OrderActivity.class).putExtra("type",3));
                 break;
             case R.id.all_orders:
                 //TODO 所有订单
                 PromptUtils.showToast("所有订单");
+                startActivity(new Intent(mParentActivity, OrderActivity.class).putExtra("type",4));
                 break;
             case R.id.my_coupon:
                 //TODO 我的优惠券

@@ -71,6 +71,7 @@
         <activity android:name=".activity.LocalPhotoActivity" android:screenOrientation="portrait" />
 
         <activity android:name=".activity.tour.TourBuyDetailsActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.mycenter.OrderActivity" android:screenOrientation="portrait" />
 
         <activity android:name=".activity.ProductsDetailsActivity" android:screenOrientation="portrait" />
 
