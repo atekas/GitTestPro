@@ -54,4 +54,7 @@
     <drawable name="account_button_color">#dc283c</drawable><!--结算Button颜色-->
     <string name="newest">最新</string>
     <string name="moods">人气</string>
+    <string name="good_food">美食</string>
+    <string name="buy">购物</string>
+    <string name="sight_spot">景点</string>
 </resources>
