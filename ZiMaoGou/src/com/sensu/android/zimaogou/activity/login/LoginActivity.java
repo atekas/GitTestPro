@@ -3,8 +3,11 @@ package com.sensu.android.zimaogou.activity.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.BaseActivity;
+import com.sensu.android.zimaogou.utils.HttpUtil;
 
 /**
  * Created by zhangwentao on 2015/11/13.
@@ -41,6 +44,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.login:
                 //TODO 调用登陆接口
+                RequestParams requestParams = new RequestParams();
+                requestParams.put("phone", "13888888888");
+                requestParams.put("password", "123546");
+                HttpUtil.get("http://192.168.1.125 :8080", requestParams, new AsyncHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(String content) {
+                        super.onSuccess(content);
+                    }
+                });
                 break;
         }
     }

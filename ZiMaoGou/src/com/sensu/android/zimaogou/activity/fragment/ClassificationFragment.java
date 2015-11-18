@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.ProductsDetailsActivity;
+import com.sensu.android.zimaogou.activity.SpecialActivity;
 import com.sensu.android.zimaogou.adapter.ClassificationGridAdapter;
 
 /**
@@ -109,6 +110,10 @@ public class ClassificationFragment extends BaseFragment implements AdapterView.
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        startActivity(new Intent(mParentActivity, ProductsDetailsActivity.class));
+        if (i ==0) {
+            startActivity(new Intent(mParentActivity, ProductsDetailsActivity.class));
+        } else {
+            startActivity(new Intent(mParentActivity, SpecialActivity.class));
+        }
     }
 }
