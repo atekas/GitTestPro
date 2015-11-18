@@ -8,22 +8,119 @@
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/red">
+            android:background="@color/gray_f7f7f7">
 
         <TextView
+                android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="@color/black_222222"
                 android:layout_centerInParent="true"
-                android:textSize="20sp"
+                android:textSize="@dimen/title_size"
                 android:textStyle="bold"
                 android:text="购物袋"/>
+        <TextView
+                android:id="@+id/tv_function"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black_444444"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="18dp"
+                android:layout_alignBottom="@+id/tv_title"
+                android:textSize="@dimen/text_size_x_large"
+                android:text="编辑" />
 
+        <View android:layout_width="fill_parent"
+              android:layout_height="1px"
+              android:layout_alignParentBottom="true"
+              android:background="@color/title_line"/>
     </RelativeLayout>
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="购物袋"/>
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+        <com.sensu.android.zimaogou.widget.RefreshListView
+                android:id="@+id/lv_goods"
+                android:layout_above="@+id/rl_bottom"
+                android:layout_alignParentTop="true"
+                android:scrollbars="none"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+
+                >
+
+        </com.sensu.android.zimaogou.widget.RefreshListView>
+
+        <RelativeLayout
+                android:id="@+id/rl_bottom"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/white"
+                >
+                <LinearLayout
+                        android:id="@+id/ll_bottom_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:paddingLeft="@dimen/account_left_distance"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+                    <ImageView
+                            android:id="@+id/img_allChoose"
+                            android:layout_width="@dimen/account_chose_width"
+                            android:layout_height="@dimen/account_chose_width"
+                            android:scaleType="centerCrop"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/d_06"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/text_size_large"
+                            android:layout_marginLeft="10dp"
+                            android:textColor="@color/black_222222"
+                            android:text="全选"
+                            />
+                </LinearLayout>
+            <LinearLayout
+                    android:id="@+id/ll_bottom_center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_toRightOf="@+id/ll_bottom_left"
+                    android:layout_marginLeft="50dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_large"
+                        android:textColor="@color/black_222222"
+                        android:text="合计:"
+                        />
+                <TextView
+                        android:id="@+id/tv_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_x_large"
+                        android:textColor="@color/red"
+
+                        android:text="￥108"
+                        />
+            </LinearLayout>
+            <Button
+                    android:id="@+id/bt_submit"
+                    android:layout_width="120dp"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/account_button_selector"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_x_large"
+                    android:text="去结算"
+                    />
+
+        </RelativeLayout>
+    </RelativeLayout>
 
 </LinearLayout>

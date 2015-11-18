@@ -49,4 +49,7 @@
     <string name="pic_details">图片详情</string>
     <string name="review">评论</string>
     <string name="sure">确定</string>
+
+    <drawable name="account_button_focused_color">#b41f30</drawable><!--结算Button按下时颜色-->
+    <drawable name="account_button_color">#dc283c</drawable><!--结算Button颜色-->
 </resources>

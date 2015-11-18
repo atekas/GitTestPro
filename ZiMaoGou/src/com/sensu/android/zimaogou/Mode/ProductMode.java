@@ -15,6 +15,33 @@ public class ProductMode implements Serializable {
      *
      */
     private String testTitle;
+    private boolean isChoose;//是否选择该商品
+    private double price;
+    private int num;//商品数量
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public boolean isChoose() {
+        return isChoose;
+    }
+
+    public void setChoose(boolean isChoose) {
+        this.isChoose = isChoose;
+    }
 
     public int getTestImg() {
         return testImg;
