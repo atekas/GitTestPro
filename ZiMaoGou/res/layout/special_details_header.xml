@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white">
+
+    <ImageView
+            android:id="@+id/special_introduce_pic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dip_20"
+            android:layout_marginRight="@dimen/dip_20"
+            android:layout_marginTop="@dimen/dip_20"
+            android:src="@drawable/special_1"
+            android:scaleType="fitXY"
+            android:layout_gravity="center_horizontal"/>
+
+    <TextView
+            android:id="@+id/special_introduce_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dip_25"
+            android:layout_marginRight="@dimen/dip_25"
+            android:layout_marginTop="@dimen/dip_10"
+            android:textSize="@dimen/text_size_16"
+            android:textColor="@color/black_222222"
+            android:text="奶白肌肤养成记"/>
+
+    <TextView
+            android:id="@+id/special_introduce_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dip_25"
+            android:layout_marginRight="@dimen/dip_25"
+            android:layout_marginTop="@dimen/dip_10"
+            android:layout_marginBottom="28dp"
+            android:textSize="@dimen/text_size_14"
+            android:textColor="@color/black_444444"
+            android:text="奶白肌肤养成记"/>
+
+</LinearLayout>
