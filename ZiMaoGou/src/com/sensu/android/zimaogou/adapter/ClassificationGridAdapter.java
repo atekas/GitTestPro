@@ -37,7 +37,7 @@ public class ClassificationGridAdapter extends SimpleBaseAdapter {
         return view;
     }
 
-    public static class ViewHolder {
+    private class ViewHolder {
         ImageView mImageView;
         TextView mTextView;
     }

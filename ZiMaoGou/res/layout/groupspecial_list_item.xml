@@ -24,7 +24,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
-                android:background="@drawable/index_25"
+                android:background="@drawable/group_white_red"
                 android:orientation="horizontal"
                 >
             <TextView
