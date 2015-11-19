@@ -57,4 +57,14 @@
     <string name="good_food">美食</string>
     <string name="buy">购物</string>
     <string name="sight_spot">景点</string>
+    <string name="verify_order">确认订单</string>
+    <string name="shipping_address">配送地址</string>
+    <string name="products_list">货品清单</string>
+    <string name="pay_way">支付方式</string>
+    <string name="zhifubao">支付宝</string>
+    <string name="we_chat">微信</string>
+    <string name="discount_coupon">优惠券</string>
+    <string name="products_price">商品金额</string>
+    <string name="shuifei">税费</string>
+    <string name="yunfei">运费</string>
 </resources>

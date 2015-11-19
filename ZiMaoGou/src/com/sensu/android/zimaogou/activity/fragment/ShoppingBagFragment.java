@@ -2,6 +2,7 @@ package com.sensu.android.zimaogou.activity.fragment;
 
 import android.annotation.TargetApi;
 import android.app.Fragment;
+import android.content.Intent;
 import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.*;
 import com.sensu.android.zimaogou.Mode.ProductMode;
 import com.sensu.android.zimaogou.Mode.Warehouse;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.activity.VerifyOrderActivity;
 import com.sensu.android.zimaogou.utils.DisplayUtils;
 import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.sensu.android.zimaogou.utils.UiUtils;
@@ -92,6 +94,7 @@ public class ShoppingBagFragment extends BaseFragment {
                     goodsAdapter.reFlush();
                 }else{
                     PromptUtils.showToast("购买成功");
+                    startActivity(new Intent(mParentActivity, VerifyOrderActivity.class));
                 }
             }
         });

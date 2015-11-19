@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="@dimen/dip_20"
+            android:layout_marginBottom="@dimen/dip_20">
+
+        <ImageView
+                android:id="@+id/product_pic"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/product2"/>
+
+        <TextView
+                android:id="@+id/product_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="13dp"
+                android:layout_toRightOf="@+id/product_pic"
+                android:layout_marginRight="@dimen/dip_20"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textSize="@dimen/text_size_18"
+                android:textColor="@color/black_444444"
+                android:text="亨博士 玛咖精片玛咖精片玛咖精片玛咖精片玛咖精片"/>
+
+        <TextView
+                android:id="@+id/product_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@+id/product_pic"
+                android:layout_alignLeft="@+id/product_name"
+                android:textSize="@dimen/text_size_18"
+                android:textColor="@color/black_222222"
+                android:text="¥ 108" />
+
+        <TextView
+                android:id="@+id/product_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dip_20"
+                android:textSize="@dimen/text_size_17"
+                android:textColor="@color/black_222222"
+                android:text="×1" />
+
+            <TextView
+                    android:id="@+id/product_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dip_60"
+                    android:layout_alignRight="@+id/product_count"
+                    android:textSize="@dimen/text_size_18"
+                    android:textColor="@color/gray_9b9b9b"
+                    android:text="M"/>
+
+    </RelativeLayout>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/home_line" />
+
+</LinearLayout>
