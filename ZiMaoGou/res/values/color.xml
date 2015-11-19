@@ -44,4 +44,7 @@
     <drawable name="red_dc293a">#dc293a</drawable>
     <drawable name="gray_f6f6f6">#f6f6f6</drawable>
     <color name="account_disClick_color">#c2c5c5</color><!--结算Button不可点击颜色-->
+    <color name="invalid_color">#d5d5d5</color><!--过期优惠券字体颜色-->
+    <color name="coupon_line">#cccccc</color><!--优惠券下划线颜色-->
+    <color name="coupon_bg">#eff4f5</color><!--优惠券背景颜色-->
 </resources>

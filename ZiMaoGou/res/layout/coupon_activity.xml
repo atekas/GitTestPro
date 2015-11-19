@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/coupon_bg"
+        >
+    <RelativeLayout
+            android:id="@+id/title_layout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#f8f8f8">
+
+        <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dip_10"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dip_10"
+                android:src="@drawable/back"/>
+
+        <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black_222222"
+                android:layout_centerInParent="true"
+                android:textSize="@dimen/title_size"
+                android:textStyle="bold"
+                android:text="优惠券"/>
+        <TextView
+                android:id="@+id/tv_function"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black_444444"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="18dp"
+                android:layout_alignBottom="@+id/tv_title"
+                android:textSize="@dimen/text_size_x_large"
+                android:text="激活"/>
+        <View android:layout_width="fill_parent"
+              android:layout_height="1px"
+              android:layout_alignParentBottom="true"
+              android:background="@color/title_line"/>
+    </RelativeLayout>
+    <ScrollView android:layout_width="match_parent" android:layout_height="match_parent" android:scrollbars="none">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                      android:orientation="vertical">
+            <ListView
+                    android:id="@+id/lv_valid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none">
+
+            </ListView>
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginRight="32dp"
+                    >
+                <View android:layout_width="match_parent"
+                      android:layout_height="1px"
+                      android:background="@color/coupon_line"
+                      android:layout_centerVertical="true"
+                        />
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:textSize="@dimen/text_size_medial"
+                        android:textColor="@color/black_666666"
+                        android:text="已使用"
+                        android:background="@color/coupon_bg"
+                        android:layout_centerInParent="true"
+                        />
+            </RelativeLayout>
+            <ListView
+                    android:id="@+id/lv_invalid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none">
+
+            </ListView>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

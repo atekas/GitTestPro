@@ -7,6 +7,8 @@
     <dimen name="text_size_big">16sp</dimen><!--26px-->
     <dimen name="text_size_large">17sp</dimen><!--28px-->
     <dimen name="text_size_x_large">18sp</dimen>
+    <dimen name="text_size_coupon_small">28sp</dimen>
+    <dimen name="text_size_coupon_big">45sp</dimen>
     <dimen name="title_size">20sp</dimen><!--标题字的大小-->
     <dimen name="account_left_distance">10dp</dimen><!--结算左边距-->
     <dimen name="account_contentLeft_distance">49dp</dimen><!--结算内容左边距-->

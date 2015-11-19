@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.login.LoginActivity;
+import com.sensu.android.zimaogou.activity.mycenter.CouponActivity;
 import com.sensu.android.zimaogou.activity.mycenter.OrderActivity;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
@@ -118,6 +119,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             case R.id.my_coupon:
                 //TODO 我的优惠券
                 PromptUtils.showToast("我的优惠券");
+                startActivity(new Intent(mParentActivity, CouponActivity.class));
                 break;
             case R.id.my_collection:
                 //TODO 我的收藏
