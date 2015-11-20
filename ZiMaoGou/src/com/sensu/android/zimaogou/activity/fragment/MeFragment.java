@@ -14,6 +14,7 @@ import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.login.LoginActivity;
 import com.sensu.android.zimaogou.activity.mycenter.CouponActivity;
 import com.sensu.android.zimaogou.activity.mycenter.OrderActivity;
+import com.sensu.android.zimaogou.activity.mycenter.ReceiverAddressActivity;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.PromptUtils;
@@ -128,6 +129,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             case R.id.take_goods_address:
                 //TODO 收货地址
                 PromptUtils.showToast("收货地址");
+                startActivity(new Intent(mParentActivity, ReceiverAddressActivity.class));
                 break;
             case R.id.recommend_friends:
                 //TODO 推荐给好友

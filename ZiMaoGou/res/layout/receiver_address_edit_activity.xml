@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/coupon_bg"
+        >
+    <RelativeLayout
+            android:id="@+id/title_layout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#f8f8f8">
+
+        <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dip_10"
+                android:layout_centerVertical="true"
+                android:src="@drawable/back"/>
+
+        <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black_222222"
+                android:layout_centerInParent="true"
+                android:textSize="@dimen/title_size"
+                android:textStyle="bold"
+                android:text="@string/edit_address"/>
+        <TextView
+                android:id="@+id/tv_function"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black_444444"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="18dp"
+                android:layout_alignBottom="@+id/tv_title"
+                android:textSize="@dimen/text_size_x_large"
+                android:text="完成"/>
+        <View android:layout_width="fill_parent"
+              android:layout_height="1px"
+              android:layout_alignParentBottom="true"
+              android:background="@color/title_line"/>
+    </RelativeLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:orientation="vertical"
+            android:background="@color/white"
+            >
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="@dimen/dip_50">
+            <EditText android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:textSize="@dimen/text_size_large"
+                      android:textColor="@color/black_333333"
+                      android:textColorHint="@color/gray_9b9b9b"
+                      android:gravity="center_vertical"
+                      android:hint="收货人姓名"
+                      android:background="@null"
+                    />
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/home_line"
+                    android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="@dimen/dip_50">
+            <EditText android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:textSize="@dimen/text_size_large"
+                      android:textColor="@color/black_333333"
+                      android:textColorHint="@color/gray_9b9b9b"
+                      android:gravity="center_vertical"
+                      android:hint="联系电话"
+                      android:background="@null"
+                    />
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/home_line"
+                    android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="@dimen/dip_50">
+            <EditText android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:textSize="@dimen/text_size_large"
+                      android:textColor="@color/black_333333"
+                      android:textColorHint="@color/gray_9b9b9b"
+                      android:gravity="center_vertical"
+                      android:hint="身份证号码"
+                      android:background="@null"
+                    />
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/home_line"
+                    android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="@dimen/dip_50">
+            <TextView android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:textSize="@dimen/text_size_large"
+                      android:textColor="@color/black_333333"
+                      android:textColorHint="@color/gray_9b9b9b"
+                      android:gravity="center_vertical"
+                      android:hint="省/市/区"
+                      android:background="@null"
+                    />
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/home_line"
+                    android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="@dimen/dip_50">
+            <EditText android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:textSize="@dimen/text_size_large"
+                      android:textColor="@color/black_333333"
+                      android:textColorHint="@color/gray_9b9b9b"
+                      android:gravity="center_vertical"
+                      android:hint="小区、街道、门牌等详细信息"
+                      android:background="@null"
+                    />
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/home_line"
+                    android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="@dimen/dip_50">
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="match_parent"
+                      android:textSize="@dimen/text_size_large"
+                      android:textColor="@color/black_444444"
+                      android:textColorHint="@color/gray_9b9b9b"
+                      android:gravity="center_vertical"
+                      android:text="设为默认地址"
+                      android:background="@null"
+                    />
+            <ImageView
+                    android:id="@+id/img_switch"
+                    android:layout_width="55dp"
+                    android:layout_height="43dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/kg_03"
+                    />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

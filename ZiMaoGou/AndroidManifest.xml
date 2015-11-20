@@ -71,8 +71,22 @@
         <activity android:name=".activity.LocalPhotoActivity" android:screenOrientation="portrait" />
 
         <activity android:name=".activity.tour.TourBuyDetailsActivity" android:screenOrientation="portrait" />
+
+        <!--######################################### 我的 #########################################################-->
         <activity android:name=".activity.mycenter.OrderActivity" android:screenOrientation="portrait" />
+
         <activity android:name=".activity.mycenter.CouponActivity" android:screenOrientation="portrait" />
+
+        <activity android:name=".activity.mycenter.ReceiverAddressActivity" android:screenOrientation="portrait" />
+
+        <activity android:name=".activity.mycenter.ReceiverAddressEditActivity" android:screenOrientation="portrait" />
+
+
+
+
+
+
+
 
         <activity android:name=".activity.ProductsDetailsActivity" android:screenOrientation="portrait" />
 

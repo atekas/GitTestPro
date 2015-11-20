@@ -67,4 +67,7 @@
     <string name="products_price">商品金额</string>
     <string name="shuifei">税费</string>
     <string name="yunfei">运费</string>
+    
+    <string name="receiver_address">收货地址</string>
+    <string name="edit_address">编辑收货地址</string>
 </resources>

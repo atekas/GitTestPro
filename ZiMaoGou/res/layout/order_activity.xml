@@ -17,7 +17,6 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dip_10"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dip_10"
                 android:src="@drawable/back"/>
 
         <TextView
