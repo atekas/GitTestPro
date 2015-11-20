@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#eff4f5">
+
+    <RelativeLayout
+            android:id="@+id/layout_title"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="#f8f8f8">
+
+        <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/dip_5"
+                android:layout_marginLeft="@dimen/dip_5"
+                android:src="@drawable/back"/>
+
+        <TextView
+                android:id="@+id/spell_order_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dip_20"
+                android:layout_toRightOf="@+id/back"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:text="银杏精华120毫克"/>
+
+    </RelativeLayout>
+
+    <View
+            android:id="@+id/title_line"
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_below="@+id/layout_title"
+            android:background="@color/home_line"/>
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/title_line"
+            android:scrollbars="none">
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white">
+
+                <ImageView
+                        android:id="@+id/group_pic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dip_20"
+                        android:layout_marginRight="@dimen/dip_20"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/special_2"/>
+
+                <TextView
+                        android:id="@+id/product_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dip_30"
+                        android:layout_marginRight="@dimen/dip_30"
+                        android:layout_marginTop="15dp"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textSize="@dimen/text_size_18"
+                        android:textColor="@color/black_222222"
+                        android:text="降血压健脑银杏进化120毫克"/>
+
+                <TextView
+                        android:id="@+id/product_describe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dip_30"
+                        android:layout_marginRight="@dimen/dip_30"
+                        android:layout_marginBottom="@dimen/dip_20"
+                        android:layout_marginTop="15dp"
+                        android:textSize="@dimen/text_size_16"
+                        android:textColor="#666666"
+                        android:text="降血压健脑银杏进化降血压健脑银杏进化"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/white">
+
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:gravity="center"
+                        android:background="@color/red">
+
+                    <TextView
+                            android:id="@+id/group_min_size"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/text_size_16"
+                            android:textColor="#ffdd56"
+                            android:text="3人成团"/>
+
+                    <TextView
+                            android:id="@+id/group_info"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dip_10"
+                            android:textSize="@dimen/text_size_16"
+                            android:textColor="@color/white"
+                            android:text="已有1人参团,上线6人"/>
+
+                </LinearLayout>
+
+                <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dip_20">
+
+
+                    <LinearLayout
+                            android:id="@+id/user_photo_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center"/>
+                </ScrollView>
+
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dip_20"
+                        android:gravity="center">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/text_size_18"
+                            android:textColor="#666666"
+                            android:text="团购价:"/>
+
+                    <TextView
+                            android:id="@+id/group_buy_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dip_5"
+                            android:textSize="@dimen/text_size_20"
+                            android:textColor="@color/red"
+                            android:text="¥68"/>
+
+                    <TextView
+                            android:id="@+id/old_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dip_10"
+                            android:textSize="@dimen/text_size_16"
+                            android:textColor="#666666"
+                            android:text="¥98"/>
+
+                    <TextView
+                            android:id="@+id/save_money"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dip_20"
+                            android:textSize="@dimen/text_size_16"
+                            android:textColor="@color/white"
+                            android:padding="@dimen/dip_5"
+                            android:background="@drawable/save_money"
+                            android:text="立省¥30"/>
+
+                </LinearLayout>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dip_20"
+                        android:layout_marginBottom="@dimen/dip_25"
+                        android:layout_gravity="center_horizontal"
+                        android:textSize="@dimen/text_size_16"
+                        android:textColor="#666666"
+                        android:text="团购不参加满减,满赠活动"/>
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2px"
+                        android:background="@color/home_line"/>
+
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dip_60">
+
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textColor="@color/black_222222"
+                            android:textSize="@dimen/text_size_18"
+                            android:text="自贸购特价¥179"/>
+
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textColor="@color/gray_9b9b9b"
+                            android:textSize="@dimen/text_size_18"
+                            android:text="直接特价购买"/>
+
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/dip_10"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/arrow_right"/>
+
+                </LinearLayout>
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2px"
+                        android:layout_marginBottom="120dp"
+                        android:background="@color/home_line"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/translucence_black_35">
+        
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textSize="@dimen/text_size_16"
+                android:textColor="@color/white"
+                android:layout_marginTop="@dimen/dip_10"
+                android:text="距离结束还有6天5小时3分钟11秒"/>
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical">
+
+            <View android:layout_width="0dp" android:layout_height="1px" android:layout_weight="1" />
+
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:padding="@dimen/dip_10"
+                    android:background="@drawable/input_word_back">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_15"
+                        android:text="我有口令"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:textSize="@dimen/text_size_18"
+                        android:textColor="@color/white"
+                        android:text="我要参团"/>
+
+            </LinearLayout>
+
+            <View android:layout_width="0dp" android:layout_height="1px" android:layout_weight="1" />
+
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:padding="@dimen/dip_10"
+                    android:gravity="center"
+                    android:background="@drawable/no_have_word">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_15"
+                        android:text="没有口令"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:textSize="@dimen/text_size_18"
+                        android:textColor="@color/white"
+                        android:text="我要组团"/>
+
+            </LinearLayout>
+
+            <View android:layout_width="0dp" android:layout_height="1px" android:layout_weight="1" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

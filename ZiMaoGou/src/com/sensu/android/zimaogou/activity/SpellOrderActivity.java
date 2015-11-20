@@ -1,7 +1,9 @@
 package com.sensu.android.zimaogou.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.adapter.SpellOrderAdapter;
@@ -9,7 +11,7 @@ import com.sensu.android.zimaogou.adapter.SpellOrderAdapter;
 /**
  * Created by zhangwentao on 2015/11/19.
  */
-public class SpellOrderActivity extends BaseActivity implements View.OnClickListener {
+public class SpellOrderActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     private ListView mListView;
     private SpellOrderAdapter mSpellOrderAdapter;
@@ -32,6 +34,7 @@ public class SpellOrderActivity extends BaseActivity implements View.OnClickList
         mListView = (ListView) findViewById(R.id.group_buy_list);
         mSpellOrderAdapter = new SpellOrderAdapter(this);
         mListView.setAdapter(mSpellOrderAdapter);
+        mListView.setOnItemClickListener(this);
     }
 
     @Override
@@ -49,5 +52,10 @@ public class SpellOrderActivity extends BaseActivity implements View.OnClickList
                 findViewById(R.id.my_group_buy_text).setSelected(true);
                 break;
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        startActivity(new Intent(this, SpellOrderDetailsActivity.class));
     }
 }
