@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.sensu.android.zimaogou.widget.PullPushScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <com.sensu.android.zimaogou.widget.FixedAspectRatioRelativeLayout
+                android:id="@+id/head_pics"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:aspectRatio="1">
+
+            <!--<android.support.v4.view.ViewPager-->
+                    <!--android:id="@+id/viewpager"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_gravity="center"/>-->
+
+                <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/product1"/>
+
+        </com.sensu.android.zimaogou.widget.FixedAspectRatioRelativeLayout>
+
+
+        <LinearLayout
+                android:id="@+id/layout_content"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="26dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="24dp"
+                    android:gravity="bottom">
+
+                <TextView
+                        android:id="@+id/now_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="25sp"
+                        android:textColor="@color/red"
+                        android:text="¥68"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/dip_17"
+                        android:textColor="@color/gray_999999"
+                        android:layout_marginLeft="10dp"
+                        android:text="¥98"/>
+
+                <View android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"/>
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/product_collect_gray"/>
+
+            </LinearLayout>
+
+            <TextView
+                    android:id="@+id/product_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="17dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginTop="20dp"
+                    android:textSize="@dimen/text_size_18"
+                    android:textColor="@color/black_222222"
+                    android:text="小狗印花头套小狗心花头套小狗印花头套小狗心花头套小狗印花头套小狗心花头套"/>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:layout_marginTop="13dp"
+                    android:background="@color/home_line"/>
+
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/drawable_me_click">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_18"
+                        android:textColor="@color/black_333333"
+                        android:layout_marginLeft="16dp"
+                        android:drawablePadding="16dp"
+                        android:drawableLeft="@drawable/choose_color"
+                        android:text="选择颜色 型号"/>
+
+                <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/dip_20"
+                        android:src="@drawable/arrow_right"/>
+
+            </LinearLayout>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="@color/home_line"/>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="25dp"
+                    android:textSize="@dimen/text_size_20"
+                    android:textColor="@color/black_333333"
+                    android:text="承诺服务"/>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginRight="14dp"
+                    android:layout_marginTop="15dp"
+                    android:background="#656565"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp">
+
+                <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/promise_icon"
+                        android:drawablePadding="@dimen/dip_5"
+                        android:textSize="@dimen/text_size_16"
+                        android:textColor="@color/black_333333"
+                        android:text="正品保证"/>
+
+                <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/promise_icon"
+                        android:drawablePadding="@dimen/dip_5"
+                        android:textSize="@dimen/text_size_16"
+                        android:textColor="@color/black_333333"
+                        android:text="视频直播原地直采"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp">
+
+                <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/promise_icon"
+                        android:drawablePadding="@dimen/dip_5"
+                        android:textSize="@dimen/text_size_16"
+                        android:textColor="@color/black_333333"
+                        android:text="14天无忧退货"/>
+
+                <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/promise_icon"
+                        android:drawablePadding="@dimen/dip_5"
+                        android:textSize="@dimen/text_size_16"
+                        android:textColor="@color/black_333333"
+                        android:text="清关保税无忧售后"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="@dimen/dip_36"
+                    android:layout_marginBottom="@dimen/dip_30"
+                    android:gravity="center">
+
+                <View
+                        android:layout_width="0dp"
+                        android:layout_height="2px"
+                        android:layout_weight="1"
+                        android:background="@color/home_line"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_16"
+                        android:textColor="@color/black_444444"
+                        android:text="继续拖动,查看商品描述"/>
+
+                <View
+                        android:layout_width="0dp"
+                        android:layout_height="2px"
+                        android:layout_weight="1"
+                        android:background="@color/home_line"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.sensu.android.zimaogou.widget.PullPushScrollView>

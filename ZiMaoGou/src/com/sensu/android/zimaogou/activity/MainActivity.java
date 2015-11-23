@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.fragment.*;
+import com.sensu.android.zimaogou.utils.DisplayUtils;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -183,6 +184,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case ME_FM_CODE:
                 mMeBottomView.performClick();
                 break;
+        }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            DisplayUtils.setActivity(this);
         }
     }
 }

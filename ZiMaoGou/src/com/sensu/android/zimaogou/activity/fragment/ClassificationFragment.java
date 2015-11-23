@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.activity.ProductDetailsActivity;
 import com.sensu.android.zimaogou.activity.ProductsDetailsActivity;
 import com.sensu.android.zimaogou.activity.SpecialActivity;
 import com.sensu.android.zimaogou.activity.SpellOrderActivity;
@@ -117,6 +118,8 @@ public class ClassificationFragment extends BaseFragment implements AdapterView.
             startActivity(new Intent(mParentActivity, SpecialActivity.class));
         } else if (i == 2) {
             startActivity(new Intent(mParentActivity, SpellOrderActivity.class));
+        } else if (i ==3) {
+            startActivity(new Intent(mParentActivity, ProductDetailsActivity.class));
         }
     }
 }

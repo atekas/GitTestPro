@@ -102,5 +102,7 @@
 
         <activity android:name=".activity.SpellOrderDetailsActivity" android:screenOrientation="portrait" />
 
+        <activity android:name=".activity.ProductDetailsActivity" android:screenOrientation="portrait" />
+
     </application>
 </manifest>
