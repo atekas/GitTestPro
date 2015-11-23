@@ -58,7 +58,7 @@
                     android:textColorHint="@color/release_hint_color"
                     android:background="@null"/>
 
-            <GridView
+            <com.sensu.android.zimaogou.widget.NoScrollGridView
                     android:id="@+id/grid_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

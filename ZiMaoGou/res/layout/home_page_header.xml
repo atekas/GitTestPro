@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/home_bg">
+
+    <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/home_banner_height"
+            android:scaleType="fitXY"
+            android:visibility="gone"
+            android:src="@drawable/special_3"/>
+
+    <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="@color/home_line"/>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="90dp"
+            android:visibility="gone"
+            android:background="@color/white">
+
+        <LinearLayout
+                android:id="@+id/ll_buyRead"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/a_03"
+                    android:textSize="@dimen/text_size_normal"
+                    android:text="@string/buyRead"
+                    android:textColor="@color/light_black"/>
+
+        </LinearLayout>
+
+        <View
+                android:layout_width="1px"
+                android:layout_height="fill_parent"
+                android:background="@color/home_line"/>
+
+        <LinearLayout
+                android:id="@+id/ll_hotGoods"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/a_05"
+                    android:textSize="@dimen/text_size_normal"
+                    android:text="@string/hotGoods"
+                    android:textColor="@color/light_black"/>
+
+        </LinearLayout>
+
+        <View
+                android:layout_width="1px"
+                android:layout_height="fill_parent"
+                android:background="@color/home_line"/>
+
+        <LinearLayout
+                android:id="@+id/ll_latest"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/a_07"
+                    android:textSize="@dimen/text_size_normal"
+                    android:text="@string/Latest"
+                    android:textColor="@color/light_black"/>
+
+        </LinearLayout>
+        <View
+                android:layout_width="1px"
+                android:layout_height="fill_parent"
+                android:background="@color/home_line"/>
+
+        <LinearLayout
+                android:id="@+id/ll_featureVideos"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/a_09"
+                    android:textSize="@dimen/text_size_normal"
+                    android:text="@string/featureVideos"
+                    android:textColor="@color/light_black"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="@color/home_line"/>
+
+    <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="@color/home_line"
+            android:layout_marginTop="@dimen/home_distance"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+        <com.sensu.android.zimaogou.activity_home.HorizontalListView
+                android:id="@+id/lv_recommend"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:scrollbars="none"/>
+
+    </LinearLayout>
+
+    <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="@color/home_line"
+            android:layout_marginTop="@dimen/home_distance"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+        <com.sensu.android.zimaogou.widget.NoScrollGridView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:numColumns="3"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

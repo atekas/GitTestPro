@@ -36,6 +36,7 @@ import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.Scroller;
@@ -64,6 +65,7 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
 
 	public HorizontalListView(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
 		initView();
 	}
 	
@@ -291,9 +293,53 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
 		mScroller.startScroll(mNextX, 0, x - mNextX, 0);
 		requestLayout();
 	}
+
+	private float mXDown;// 记录手指按下时的横坐标。
+	private float mYDown;// 记录手指按下时的纵坐标。
+	private boolean mHorizontalScroll = false;// 当前是否是viewpager滑动
+	private boolean mVerticalScroll = false;
+	private int mTouchSlop;
+
+	private boolean isChecked() {
+		return mHorizontalScroll || mVerticalScroll;
+	}
 	
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent ev) {
+		getParent().requestDisallowInterceptTouchEvent(true);
+		switch (ev.getAction()) {
+			case MotionEvent.ACTION_DOWN:
+				getParent().requestDisallowInterceptTouchEvent(true);
+				mXDown = ev.getX();
+				mYDown = ev.getY();
+				mHorizontalScroll = false;
+				mVerticalScroll = false;
+				break;
+			case MotionEvent.ACTION_MOVE:
+				if (!isChecked()) {
+					float x = ev.getX();
+					float y = ev.getY();
+					if (Math.abs(x - mXDown) > mTouchSlop) {
+						if (Math.abs(y - mYDown) > Math.abs(x - mXDown)) {
+							getParent().requestDisallowInterceptTouchEvent(false);
+						}
+						mHorizontalScroll = true;
+					} else if (Math.abs(y - mYDown) > mTouchSlop) {
+						if (Math.abs(y - mYDown) > Math.abs(x - mXDown)) {
+							getParent().requestDisallowInterceptTouchEvent(false);
+						}
+						mVerticalScroll = true;
+					}
+				}
+				if (mHorizontalScroll) {
+					getParent().requestDisallowInterceptTouchEvent(true);
+				}
+				break;
+			default:
+				getParent().requestDisallowInterceptTouchEvent(false);
+				break;
+		}
+
 		boolean handled = super.dispatchTouchEvent(ev);
 		handled |= mGesture.onTouchEvent(ev);
 		return handled;
@@ -385,6 +431,6 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
         }
 	};
 
-	
+
 
 }
