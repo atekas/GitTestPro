@@ -14,15 +14,16 @@ import com.sensu.android.zimaogou.utils.PromptUtils;
  */
 public class HomePageFragment extends BaseFragment {
 
+    //the value for the type
+    public static int DAILY_COMMEND_TYPE = 1;
+    public static int GROUP_SPECIAL_TYPE = 2;
+    public static int FIND_STORE_TYPE = 3;
+    public static int LIVELY_STORE_TYPE = 4;
+    //推荐单品
+    public static int RECOMMEND_ITEM_TYPE = 5;
+
     HomeHorizontalLinearLayout mDailyLinearLayout,mGroupLinearLayout,mFindStoreLinearLayout;
     HomeVerticalLinearLayout mLivelyLinearLayout, mRecommendItemLayout;
-    //the value for the type
-    int sDailyCommendType = 1;
-    int sGroupSpecialType = 2;
-    int sFindStoreType = 3;
-    int sLivelyStoreType = 4;
-    //推荐单品
-    int sRecommendItemType = 5;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,11 +57,11 @@ public class HomePageFragment extends BaseFragment {
         mFindStoreLinearLayout = (HomeHorizontalLinearLayout) mParentActivity.findViewById(R.id.ll_findStore);
         mLivelyLinearLayout = (HomeVerticalLinearLayout) mParentActivity.findViewById(R.id.ll_lively);
         mRecommendItemLayout = (HomeVerticalLinearLayout) mParentActivity.findViewById(R.id.recommend_item);
-        mDailyLinearLayout.setData(sDailyCommendType);
-        mGroupLinearLayout.setData(sGroupSpecialType);
-        mFindStoreLinearLayout.setData(sFindStoreType);
-        mLivelyLinearLayout.setData(sLivelyStoreType);
-        mRecommendItemLayout.setData(sRecommendItemType);
+        mDailyLinearLayout.setData(DAILY_COMMEND_TYPE);
+        mGroupLinearLayout.setData(GROUP_SPECIAL_TYPE);
+        mFindStoreLinearLayout.setData(FIND_STORE_TYPE);
+        mLivelyLinearLayout.setData(LIVELY_STORE_TYPE);
+        mRecommendItemLayout.setData(RECOMMEND_ITEM_TYPE);
     }
 
 

@@ -166,9 +166,12 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             case R.id.service_phone:
                 //TODO 客服电话
                 PromptUtils.showToast("客服电话");
-//                String tel = ((TextView) mActivity.findViewById(R.id.service_phone_num)).getText().toString().trim();
-//                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + tel));
-//                mActivity.startActivity(intent);
+                String tel = ((TextView) mParentActivity.findViewById(R.id.service_phone_num)).getText().toString().trim();
+                Uri uri = Uri.parse("tel:" + tel);
+                //跳入到拨号界面  ACTION_DIAL     直接拨号 ACTION_CALL
+                Intent intent = new Intent(Intent.ACTION_DIAL, uri);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mParentActivity.startActivity(intent);
                 break;
             case R.id.setting:
                 //TODO 设置

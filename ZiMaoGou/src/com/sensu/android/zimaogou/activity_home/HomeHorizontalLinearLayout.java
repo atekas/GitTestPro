@@ -2,6 +2,8 @@ package com.sensu.android.zimaogou.activity_home;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -9,13 +11,14 @@ import com.sensu.android.zimaogou.Mode.ProductMode;
 import com.sensu.android.zimaogou.Mode.StoreMode;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.utils.DisplayUtils;
+import com.sensu.android.zimaogou.utils.PromptUtils;
 
 import java.util.ArrayList;
 
 /**
  * Created by qi.yang on 2015/11/12.
  */
-public class HomeHorizontalLinearLayout extends LinearLayout{
+public class HomeHorizontalLinearLayout extends LinearLayout implements AdapterView.OnItemClickListener, View.OnClickListener {
     HorizontalListView mhListView;
     HorizontalListViewAdapter mhListViewAdapter;
     StoreHorizontalListViewAdapter mStoreListAdapter;
@@ -33,13 +36,14 @@ public class HomeHorizontalLinearLayout extends LinearLayout{
         mhListView = (HorizontalListView) findViewById(R.id.lv_recommend);
         mTitle = (TextView) findViewById(R.id.tv_title);
 
+        findViewById(R.id.more).setOnClickListener(this);
 
-
-
-
+        mhListView.setOnItemClickListener(this);
     }
 
     public void setData(int Type){
+        mType = Type;
+
         LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) mhListView.getLayoutParams();
         int width = DisplayUtils.getDisplayWidth();//获得屏幕宽度
 
@@ -109,8 +113,35 @@ public class HomeHorizontalLinearLayout extends LinearLayout{
                 break;
 
         }
+    }
 
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        switch (mType) {
+            case 1:
+                PromptUtils.showToast("游购详情");
+                break;
+            case 2:
+                PromptUtils.showToast("拼单详情");
+                break;
+            case 3:
+                PromptUtils.showToast("游购详情");
+                break;
+        }
+    }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.more:
+                if (mType == 1) {
 
+                } else if (mType == 2) {
+
+                } else if (mType ==3) {
+
+                }
+                break;
+        }
     }
 }
