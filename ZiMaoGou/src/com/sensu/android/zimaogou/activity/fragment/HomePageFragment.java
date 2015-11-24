@@ -15,12 +15,14 @@ import com.sensu.android.zimaogou.utils.PromptUtils;
 public class HomePageFragment extends BaseFragment {
 
     HomeHorizontalLinearLayout mDailyLinearLayout,mGroupLinearLayout,mFindStoreLinearLayout;
-    HomeVerticalLinearLayout mLivelyLinearLayout;
+    HomeVerticalLinearLayout mLivelyLinearLayout, mRecommendItemLayout;
     //the value for the type
     int sDailyCommendType = 1;
     int sGroupSpecialType = 2;
     int sFindStoreType = 3;
     int sLivelyStoreType = 4;
+    //推荐单品
+    int sRecommendItemType = 5;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,10 +55,12 @@ public class HomePageFragment extends BaseFragment {
         mGroupLinearLayout = (HomeHorizontalLinearLayout) mParentActivity.findViewById(R.id.ll_groupSpecial);
         mFindStoreLinearLayout = (HomeHorizontalLinearLayout) mParentActivity.findViewById(R.id.ll_findStore);
         mLivelyLinearLayout = (HomeVerticalLinearLayout) mParentActivity.findViewById(R.id.ll_lively);
+        mRecommendItemLayout = (HomeVerticalLinearLayout) mParentActivity.findViewById(R.id.recommend_item);
         mDailyLinearLayout.setData(sDailyCommendType);
         mGroupLinearLayout.setData(sGroupSpecialType);
         mFindStoreLinearLayout.setData(sFindStoreType);
         mLivelyLinearLayout.setData(sLivelyStoreType);
+        mRecommendItemLayout.setData(sRecommendItemType);
     }
 
 

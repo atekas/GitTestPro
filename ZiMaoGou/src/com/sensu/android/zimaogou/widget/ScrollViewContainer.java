@@ -236,7 +236,7 @@ public class ScrollViewContainer extends RelativeLayout{
 
             isMeasured = true;
             //通知栏高度以及头部高度
-            mViewHeight = getMeasuredHeight() - DisplayUtils.dp2px(118);
+            mViewHeight = getMeasuredHeight() - DisplayUtils.dp2px(168);
             mViewWidth = getMeasuredWidth();
 
             topView = getChildAt(0);

@@ -51,6 +51,10 @@ public class HomeVerticalLinearLayout extends LinearLayout{
                 mTitle.setText(getResources().getText(R.string.lively));
                 mListView.setAdapter(new LivelyVerticalListViewAdapter(getContext(),lives));
                 break;
+            case 5:
+                mTitle.setText("推荐单品");
+                mListView.setAdapter(new RecommendItemAdapter(getContext()));
+                break;
         }
         UiUtils.setListViewHeightBasedOnChilds(mListView);
     }

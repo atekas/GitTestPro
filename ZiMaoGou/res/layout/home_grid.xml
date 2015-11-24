@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.sensu.android.zimaogou.activity.home.HomeGrid
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="152dp"
+            android:layout_marginTop="16dp">
+
+        <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+            <TextView
+                    android:id="@+id/name_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="@dimen/text_size_17"
+                    android:textColor="@color/black_222222"
+                    android:text="韩国必买"/>
+
+            <TextView
+                    android:id="@+id/type_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/name_1"
+                    android:layout_marginTop="5dp"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="@dimen/text_size_15"
+                    android:textColor="@color/gray_9b9b9b"
+                    android:text="凝胶指甲贴"/>
+
+            <ImageView
+                    android:layout_width="85dp"
+                    android:layout_height="75dp"
+                    android:layout_below="@+id/type_1"
+                    android:layout_marginTop="@dimen/dip_17"
+                    android:scaleType="centerCrop"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/store1"/>
+
+        </RelativeLayout>
+
+        <View
+                android:layout_width="2px"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/dip_10"
+                android:layout_marginBottom="@dimen/dip_10"
+                android:background="@color/home_line"/>
+
+        <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_weight="1">
+
+            <TextView
+                    android:id="@+id/name_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="@dimen/text_size_17"
+                    android:textColor="@color/black_222222"
+                    android:text="韩国必买"/>
+
+            <TextView
+                    android:id="@+id/type_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/name_2"
+                    android:layout_marginTop="5dp"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="@dimen/text_size_15"
+                    android:textColor="@color/gray_9b9b9b"
+                    android:text="凝胶指甲贴"/>
+
+            <ImageView
+                    android:layout_width="85dp"
+                    android:layout_height="75dp"
+                    android:layout_below="@+id/type_2"
+                    android:layout_marginTop="@dimen/dip_17"
+                    android:scaleType="centerCrop"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/store1"/>
+
+        </RelativeLayout>
+
+        <View
+                android:layout_width="2px"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/dip_10"
+                android:layout_marginBottom="@dimen/dip_10"
+                android:background="@color/home_line"/>
+
+        <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_weight="1">
+
+            <TextView
+                    android:id="@+id/name_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="@dimen/text_size_17"
+                    android:textColor="@color/black_222222"
+                    android:text="韩国必买"/>
+
+            <TextView
+                    android:id="@+id/type_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/name_3"
+                    android:layout_marginTop="5dp"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="@dimen/text_size_15"
+                    android:textColor="@color/gray_9b9b9b"
+                    android:text="凝胶指甲贴"/>
+
+            <ImageView
+                    android:layout_width="85dp"
+                    android:layout_height="75dp"
+                    android:layout_below="@+id/type_3"
+                    android:layout_marginTop="@dimen/dip_17"
+                    android:scaleType="centerCrop"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/store1"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginTop="10dp"
+            android:background="@color/home_line"/>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="152dp"
+            android:layout_marginTop="16dp">
+
+        <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+            <TextView
+                    android:id="@+id/name_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="@dimen/text_size_17"
+                    android:textColor="@color/black_222222"
+                    android:text="韩国必买"/>
+
+            <TextView
+                    android:id="@+id/type_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/name_4"
+                    android:layout_marginTop="5dp"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="@dimen/text_size_15"
+                    android:textColor="@color/gray_9b9b9b"
+                    android:text="凝胶指甲贴"/>
+
+            <ImageView
+                    android:layout_width="85dp"
+                    android:layout_height="75dp"
+                    android:layout_below="@+id/type_4"
+                    android:layout_marginTop="@dimen/dip_17"
+                    android:scaleType="centerCrop"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/store1"/>
+
+        </RelativeLayout>
+
+        <View
+                android:layout_width="2px"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/dip_10"
+                android:layout_marginBottom="@dimen/dip_10"
+                android:background="@color/home_line"/>
+
+        <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_weight="1">
+
+            <TextView
+                    android:id="@+id/name_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="@dimen/text_size_17"
+                    android:textColor="@color/black_222222"
+                    android:text="韩国必买"/>
+
+            <TextView
+                    android:id="@+id/type_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/name_5"
+                    android:layout_marginTop="5dp"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="@dimen/text_size_15"
+                    android:textColor="@color/gray_9b9b9b"
+                    android:text="凝胶指甲贴"/>
+
+            <ImageView
+                    android:layout_width="85dp"
+                    android:layout_height="75dp"
+                    android:layout_below="@+id/type_5"
+                    android:layout_marginTop="@dimen/dip_17"
+                    android:scaleType="centerCrop"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/store1"/>
+
+        </RelativeLayout>
+
+        <View
+                android:layout_width="2px"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/dip_10"
+                android:layout_marginBottom="@dimen/dip_10"
+                android:background="@color/home_line"/>
+
+        <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_weight="1">
+
+            <TextView
+                    android:id="@+id/name_6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="@dimen/text_size_17"
+                    android:textColor="@color/black_222222"
+                    android:text="韩国必买"/>
+
+            <TextView
+                    android:id="@+id/type_6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/name_6"
+                    android:layout_marginTop="5dp"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="@dimen/text_size_15"
+                    android:textColor="@color/gray_9b9b9b"
+                    android:text="凝胶指甲贴"/>
+
+            <ImageView
+                    android:layout_width="85dp"
+                    android:layout_height="75dp"
+                    android:layout_below="@+id/type_6"
+                    android:layout_marginTop="@dimen/dip_17"
+                    android:scaleType="centerCrop"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/store1"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginTop="10dp"
+            android:background="@color/home_line"/>
+
+</com.sensu.android.zimaogou.activity.home.HomeGrid>

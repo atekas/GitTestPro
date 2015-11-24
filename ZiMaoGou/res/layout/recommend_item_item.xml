@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:paddingLeft="12dp"
+              android:paddingRight="12dp"
+              android:background="@color/white"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+    <ImageView
+            android:id="@+id/first_frame"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/special_1"/>
+
+        <ImageView
+                android:id="@+id/video_player"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/video"/>
+
+    </FrameLayout>
+
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dip_10"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+        <ImageView
+                android:id="@+id/country"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/country"/>
+
+        <TextView
+                android:id="@+id/name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="8dp"
+                android:textSize="@dimen/text_size_medial"
+                android:textColor="@color/black_333333"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:text="日本FANCL营养特卖"/>
+
+        <TextView
+                android:id="@+id/price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_18"
+                android:textColor="@color/red"
+                android:singleLine="true"
+                android:text="¥ 63.4"/>
+
+    </LinearLayout>
+
+    <TextView
+            android:id="@+id/describe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:textSize="@dimen/text_size_medial"
+            android:textColor="@color/gray_9b9b9b"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:text="连续N年被评为优秀先进单位成为国家一流企业"/>
+
+</LinearLayout>

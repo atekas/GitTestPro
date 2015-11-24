@@ -85,6 +85,7 @@ public class HomeHorizontalLinearLayout extends LinearLayout{
         switch (Type){
             case 1://每日推荐
                 mTitle.setText(getResources().getText(R.string.daily_recommend));
+                findViewById(R.id.title_layout).setVisibility(GONE);
                 //设置水平listview的高度
                 linearParams.height = width/3 + DisplayUtils.dp2px(28);
                 mhListView.setLayoutParams(linearParams);
