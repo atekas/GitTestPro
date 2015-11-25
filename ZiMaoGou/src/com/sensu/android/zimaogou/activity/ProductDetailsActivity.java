@@ -75,7 +75,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
 
         Display d = m.getDefaultDisplay(); // 获取屏幕宽、高用
         WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 获取对话框当前的参数值
-        p.height = (int) d.getHeight() ; // 高度设置为屏幕
+//        p.height = (int) d.getHeight() ; // 高度设置为屏幕
         p.width = (int) d.getWidth() ; // 宽度设置为屏幕
         dialogWindow.setAttributes(p);
         mChooseDialog.show();

@@ -1,12 +1,12 @@
 package com.sensu.android.zimaogou.activity.fragment;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.tour.TourBuyDetailsActivity;
 import com.sensu.android.zimaogou.activity.tour.TourBuySendActivity;
@@ -95,7 +95,8 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
         switch (view.getId()) {
             case R.id.tour_buy_send:
                 //TODO 进入发布界面
-                mParentActivity.startActivity(new Intent(mParentActivity, TourBuySendActivity.class));
+                chooseDialog();
+//                mParentActivity.startActivity(new Intent(mParentActivity, TourBuySendActivity.class));
                 break;
         }
     }
@@ -105,5 +106,39 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
         if (i == 1) {
             startActivity(new Intent(mParentActivity, TourBuyDetailsActivity.class));
         }
+    }
+
+    /**
+     *
+     * 选择对话框
+     *
+     */
+    Dialog mTourBuyChooseDialog;
+    public void chooseDialog(){
+        mTourBuyChooseDialog = new Dialog(mParentActivity,R.style.notParentDialog);
+        mTourBuyChooseDialog.setCancelable(true);
+        mTourBuyChooseDialog.setContentView(R.layout.tour_buy_choose_dialog);
+        TextView tv_cancel = (TextView) mTourBuyChooseDialog.findViewById(R.id.tv_cancel);
+        tv_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mTourBuyChooseDialog.dismiss();
+            }
+        });
+        WindowManager m = mParentActivity.getWindowManager();
+
+        Window dialogWindow = mTourBuyChooseDialog.getWindow();
+
+//        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+//        dialogWindow.setGravity(Gravity.TOP);
+//        lp.y = DisplayUtils.dp2px(50);
+//        dialogWindow.setAttributes(lp);
+
+        Display d = m.getDefaultDisplay(); // 获取屏幕宽、高用
+        WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 获取对话框当前的参数值
+//        p.height = (int) d.getHeight() ; // 高度设置为屏幕
+        p.width = (int) d.getWidth() ; // 宽度设置为屏幕
+        dialogWindow.setAttributes(p);
+        mTourBuyChooseDialog.show();
     }
 }
