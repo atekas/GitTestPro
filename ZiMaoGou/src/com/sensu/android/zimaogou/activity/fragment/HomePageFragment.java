@@ -12,7 +12,7 @@ import com.sensu.android.zimaogou.utils.PromptUtils;
 /**
  * Created by zhangwentao on 2015/11/10.
  */
-public class HomePageFragment extends BaseFragment {
+public class HomePageFragment extends BaseFragment implements View.OnClickListener {
 
     //the value for the type
     public static int DAILY_COMMEND_TYPE = 1;
@@ -62,7 +62,29 @@ public class HomePageFragment extends BaseFragment {
         mFindStoreLinearLayout.setData(FIND_STORE_TYPE);
         mLivelyLinearLayout.setData(LIVELY_STORE_TYPE);
         mRecommendItemLayout.setData(RECOMMEND_ITEM_TYPE);
+
+        mParentActivity.findViewById(R.id.ll_buyRead).setOnClickListener(this);
+        mParentActivity.findViewById(R.id.ll_hotGoods).setOnClickListener(this);
+        mParentActivity.findViewById(R.id.ll_latest).setOnClickListener(this);
+        mParentActivity.findViewById(R.id.ll_featureVideos).setOnClickListener(this);
     }
 
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.ll_buyRead:
+                PromptUtils.showToast("购物须知");
+                break;
+            case R.id.ll_hotGoods:
+                PromptUtils.showToast("人气商品");
+                break;
+            case R.id.ll_latest:
+                PromptUtils.showToast("最新上架");
+                break;
+            case R.id.ll_featureVideos:
+                PromptUtils.showToast("精选视频");
+                break;
+        }
+    }
 }

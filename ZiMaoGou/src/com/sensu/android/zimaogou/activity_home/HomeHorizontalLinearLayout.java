@@ -1,6 +1,7 @@
 package com.sensu.android.zimaogou.activity_home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,6 +11,11 @@ import android.widget.TextView;
 import com.sensu.android.zimaogou.Mode.ProductMode;
 import com.sensu.android.zimaogou.Mode.StoreMode;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.activity.GoodShopActivity;
+import com.sensu.android.zimaogou.activity.SpellOrderActivity;
+import com.sensu.android.zimaogou.activity.SpellOrderDetailsActivity;
+import com.sensu.android.zimaogou.activity.tour.TourBuyDetailsActivity;
+import com.sensu.android.zimaogou.activity.tour.TourBuyDetailsAdapter;
 import com.sensu.android.zimaogou.utils.DisplayUtils;
 import com.sensu.android.zimaogou.utils.PromptUtils;
 
@@ -120,12 +126,15 @@ public class HomeHorizontalLinearLayout extends LinearLayout implements AdapterV
         switch (mType) {
             case 1:
                 PromptUtils.showToast("游购详情");
+                getContext().startActivity(new Intent(getContext(), TourBuyDetailsActivity.class));
                 break;
             case 2:
                 PromptUtils.showToast("拼单详情");
+                getContext().startActivity(new Intent(getContext(), SpellOrderDetailsActivity.class));
                 break;
             case 3:
-                PromptUtils.showToast("游购详情");
+                PromptUtils.showToast("好店铺详情");
+                getContext().startActivity(new Intent(getContext(), TourBuyDetailsActivity.class));
                 break;
         }
     }
@@ -135,11 +144,11 @@ public class HomeHorizontalLinearLayout extends LinearLayout implements AdapterV
         switch (view.getId()) {
             case R.id.more:
                 if (mType == 1) {
-
+                    //没有更多按钮
                 } else if (mType == 2) {
-
+                    getContext().startActivity(new Intent(getContext(), SpellOrderActivity.class));
                 } else if (mType ==3) {
-
+                    getContext().startActivity(new Intent(getContext(), GoodShopActivity.class));
                 }
                 break;
         }

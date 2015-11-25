@@ -122,7 +122,7 @@
 
 
 
-        <activity android:name=".activity.ProductsDetailsActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.ProductListActivity" android:screenOrientation="portrait" />
 
         <activity android:name=".activity.SpecialActivity" android:screenOrientation="portrait" />
 
@@ -137,6 +137,8 @@
         <activity android:name=".activity.SpellOrderDetailsActivity" android:screenOrientation="portrait" />
 
         <activity android:name=".activity.ProductDetailsActivity" android:screenOrientation="portrait" />
+
+        <activity android:name=".activity.GoodShopActivity" android:screenOrientation="portrait" />
 
         <!--###################################### 友盟分享 ############################################-->
         <meta-data
@@ -224,7 +226,6 @@
                 android:name="UMENG_CHANNEL"
                 android:value="Umeng" >
         </meta-data>
->>>>>>> Stashed changes
 
     </application>
 </manifest>

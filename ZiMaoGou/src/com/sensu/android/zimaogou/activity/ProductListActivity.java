@@ -10,7 +10,7 @@ import com.sensu.android.zimaogou.utils.DisplayUtils;
 /**
  * Created by zhangwentao on 2015/11/17.
  */
-public class ProductsDetailsActivity extends BaseActivity implements View.OnClickListener {
+public class ProductListActivity extends BaseActivity implements View.OnClickListener {
 
     private GridView mGridView;
     private ProductsDetailsAdapter mProductsDetailsAdapter;
@@ -19,7 +19,7 @@ public class ProductsDetailsActivity extends BaseActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.products_details_activity);
+        setContentView(R.layout.product_list_activity);
         intiViews();
     }
 
