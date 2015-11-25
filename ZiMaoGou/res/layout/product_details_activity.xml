@@ -61,6 +61,7 @@
             android:id="@+id/scroll_view_title"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:gravity="center_vertical"
             android:visibility="gone"
             android:layout_below="@+id/title_line">
 
@@ -87,11 +88,18 @@
 
     </LinearLayout>
 
+    <View
+            android:id="@+id/scroll_view_line"
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_below="@+id/scroll_view_title"
+            android:background="@color/home_line"/>
+
     <com.sensu.android.zimaogou.widget.ScrollViewContainer
             android:id="@+id/scroll_view_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/scroll_view_title"
+            android:layout_below="@+id/scroll_view_line"
             android:layout_above="@+id/bottom_line">
 
         <include
@@ -100,49 +108,12 @@
         <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#000000">
+                android:background="@color/white">
 
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
 
-                <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/product1"/>
-
-                <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/product1"/>
-
-                <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/product1"/>
-
-                <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/product1"/>
-
-                <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/product1"/>
-
-                <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/product1"/>
-
-                <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/product1"/>
-            </LinearLayout>
         </ScrollView>
 
     </com.sensu.android.zimaogou.widget.ScrollViewContainer>

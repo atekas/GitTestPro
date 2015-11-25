@@ -31,11 +31,9 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
             @Override
             public void slideFinish(boolean isBottomView) {
                 if (isBottomView) {
-                    PromptUtils.showToast("显示头");
                     findViewById(R.id.scroll_view_title).setVisibility(View.VISIBLE);
 
                 } else {
-                    PromptUtils.showToast("隐藏头");
                     findViewById(R.id.scroll_view_title).setVisibility(View.GONE);
                 }
             }

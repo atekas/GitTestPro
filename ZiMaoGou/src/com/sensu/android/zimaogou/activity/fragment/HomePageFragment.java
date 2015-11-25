@@ -83,7 +83,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
                 PromptUtils.showToast("最新上架");
                 break;
             case R.id.ll_featureVideos:
-                PromptUtils.showToast("精选视频");
+                PromptUtils.showToast("");
                 break;
         }
     }

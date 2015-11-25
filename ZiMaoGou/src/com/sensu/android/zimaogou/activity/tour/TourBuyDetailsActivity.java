@@ -10,7 +10,7 @@ import com.sensu.android.zimaogou.activity.BaseActivity;
 /**
  * Created by zhangwentao on 2015/11/16.
  */
-public class TourBuyDetailsActivity extends BaseActivity {
+public class TourBuyDetailsActivity extends BaseActivity implements View.OnClickListener {
 
     private ListView mTourDetailsListView;
     private TourBuyDetailsAdapter mTourBuyDetailsAdapter;
@@ -33,10 +33,21 @@ public class TourBuyDetailsActivity extends BaseActivity {
         mTourBuyDetailsAdapter = new TourBuyDetailsAdapter(this);
         mTourDetailsListView.setAdapter(mTourBuyDetailsAdapter);
 
+        findViewById(R.id.back).setOnClickListener(this);
+
         initHeader();
     }
 
     private void initHeader() {
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.back:
+                finish();
+                break;
+        }
     }
 }

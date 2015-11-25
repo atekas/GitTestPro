@@ -1,9 +1,11 @@
 package com.sensu.android.zimaogou.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.activity.mycenter.ReceiverAddressActivity;
 import com.sensu.android.zimaogou.adapter.VerifyOrderAdapter;
 import com.sensu.android.zimaogou.utils.PromptUtils;
 
@@ -15,6 +17,8 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
     //默认0 为支付宝付款 1 为微信支付
     public static final int ZFB_PAY = 0;
     public static final int WE_CHAT_PAY = 1;
+    //确认订单中选择地址
+    public static final int CHOOSE_ADDRESS_CODE = 100;
 
     private int mPayWay;
     private ListView mListView;
@@ -55,6 +59,8 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.into_address_list:
                 PromptUtils.showToast("修改收货地址,进入地址列表页面");
+                Intent intent = new Intent(this, ReceiverAddressActivity.class);
+                startActivityForResult(intent, CHOOSE_ADDRESS_CODE);
                 break;
             case R.id.zhifubao_pay:
                 PromptUtils.showToast("支付宝支付");
@@ -79,5 +85,10 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
                 }
                 break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
