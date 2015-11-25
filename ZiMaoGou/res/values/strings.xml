@@ -70,4 +70,6 @@
     
     <string name="receiver_address">收货地址</string>
     <string name="edit_address">编辑收货地址</string>
+    
+    <string name="command_group_tip">你是团长哦，赶快招呼朋友们来参团吧</string>
 </resources>
