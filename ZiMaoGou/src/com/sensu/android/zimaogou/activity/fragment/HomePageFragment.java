@@ -79,6 +79,13 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
 
         mImageRollView.initImageRollView(list, true);
 
+        mImageRollView.setOnImageRollViewClickListener(new ImageRollView.OnImageRollViewClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                PromptUtils.showToast("你点击了第" + position + "张图片");
+            }
+        });
+
         mParentActivity.findViewById(R.id.ll_buyRead).setOnClickListener(this);
         mParentActivity.findViewById(R.id.ll_hotGoods).setOnClickListener(this);
         mParentActivity.findViewById(R.id.ll_latest).setOnClickListener(this);

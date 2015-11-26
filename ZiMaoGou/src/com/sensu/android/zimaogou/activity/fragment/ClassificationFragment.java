@@ -7,16 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.sensu.android.zimaogou.R;
-import com.sensu.android.zimaogou.activity.ProductDetailsActivity;
-import com.sensu.android.zimaogou.activity.ProductListActivity;
-import com.sensu.android.zimaogou.activity.SpecialActivity;
-import com.sensu.android.zimaogou.activity.SpellOrderActivity;
+import com.sensu.android.zimaogou.activity.*;
 import com.sensu.android.zimaogou.adapter.ClassificationGridAdapter;
 
 /**
  * Created by zhangwentao on 2015/11/10.
  */
-public class ClassificationFragment extends BaseFragment implements AdapterView.OnItemClickListener {
+public class ClassificationFragment extends BaseFragment implements AdapterView.OnItemClickListener, View.OnClickListener {
 
     String[] toolsList = new String[]{"常用分类", "潮流女装", "品牌男装", "内衣配饰", "家用电器"
             , "手机数码", "电脑办公", "个护化妆", "母婴频道", "食物生鲜", "酒水饮料", "家居家纺", "整车车品"
@@ -64,6 +61,7 @@ public class ClassificationFragment extends BaseFragment implements AdapterView.
 
         LinearLayout containerLayout = (LinearLayout) mParentActivity.findViewById(R.id.classification_list);
         mScrollView = (ScrollView) mParentActivity.findViewById(R.id.scroll_view);
+        mParentActivity.findViewById(R.id.search).setOnClickListener(this);
 
         mViews = new View[toolsList.length];
         for (int i = 0; i < toolsList.length; i++) {
@@ -120,6 +118,15 @@ public class ClassificationFragment extends BaseFragment implements AdapterView.
             startActivity(new Intent(mParentActivity, SpellOrderActivity.class));
         } else if (i ==3) {
             startActivity(new Intent(mParentActivity, ProductDetailsActivity.class));
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.search:
+                startActivity(new Intent(mParentActivity, SearchActivity.class));
+                break;
         }
     }
 }
