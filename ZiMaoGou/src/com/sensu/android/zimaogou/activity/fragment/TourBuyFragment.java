@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.tour.TourBuyDetailsActivity;
 import com.sensu.android.zimaogou.activity.tour.TourBuySendActivity;
+import com.sensu.android.zimaogou.activity.video.CameraActivity;
 import com.sensu.android.zimaogou.adapter.TourBuyAdapter;
 import com.sensu.android.zimaogou.widget.OnRefreshListener;
 import com.sensu.android.zimaogou.widget.RefreshListView;
@@ -98,6 +99,14 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
                 chooseDialog();
 //                mParentActivity.startActivity(new Intent(mParentActivity, TourBuySendActivity.class));
                 break;
+            case R.id.take_video:
+                mParentActivity.startActivity(new Intent(mParentActivity, CameraActivity.class));
+                break;
+            case R.id.take_photo:
+                mParentActivity.startActivity(new Intent(mParentActivity, TourBuySendActivity.class));
+                break;
+            case R.id.choose_from_photo_album:
+                break;
         }
     }
 
@@ -125,6 +134,11 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
                 mTourBuyChooseDialog.dismiss();
             }
         });
+
+        mTourBuyChooseDialog.findViewById(R.id.take_video).setOnClickListener(this);
+        mTourBuyChooseDialog.findViewById(R.id.take_photo).setOnClickListener(this);
+        mTourBuyChooseDialog.findViewById(R.id.choose_from_photo_album).setOnClickListener(this);
+
         WindowManager m = mParentActivity.getWindowManager();
 
         Window dialogWindow = mTourBuyChooseDialog.getWindow();

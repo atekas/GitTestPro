@@ -1,7 +1,10 @@
 package com.sensu.android.zimaogou.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,6 +32,7 @@ import java.util.List;
 public class LocalPhotoActivity extends BaseActivity implements LocationPhotoListener, View.OnClickListener, LocalPhotoAdapter.OnPhotoSelectChanged {
 
     public static final String SELECT_PHOTOS = "select_photos";
+    public static final int TAKE_PHOTO_CODE = 1;
 
     private LocalPhotoAdapter mLocalPhotoAdapter;
     private List<PhotoInfo> mPhotoInfoList = new ArrayList<PhotoInfo>();
@@ -51,6 +55,7 @@ public class LocalPhotoActivity extends BaseActivity implements LocationPhotoLis
         listView.addHeaderView(mHeadView);
         mHeadView.findViewById(R.id.right_select).setOnClickListener(this);
         mHeadView.findViewById(R.id.center_select).setOnClickListener(this);
+        mHeadView.findViewById(R.id.frame_left).setOnClickListener(this);
         findViewById(R.id.sure).setOnClickListener(this);
 
         mLocalPhotoAdapter = new LocalPhotoAdapter(this);
@@ -152,6 +157,10 @@ public class LocalPhotoActivity extends BaseActivity implements LocationPhotoLis
                 intent.putExtra(SELECT_PHOTOS, (Serializable) mSelectPhotoList);
                 startActivity(intent);
                 break;
+            case R.id.frame_left:
+                Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent1, TAKE_PHOTO_CODE);
+                break;
         }
     }
 
@@ -173,7 +182,14 @@ public class LocalPhotoActivity extends BaseActivity implements LocationPhotoLis
         }
     }
 
-    public interface OnSelectPhotoChanged {
-        public void onSelectPhotoChanged(List<PhotoInfo> photoInfoList);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == TAKE_PHOTO_CODE) {
+                Bundle bundle = data.getExtras();
+                Bitmap bitmap = (Bitmap) bundle.get("data");
+            }
+        }
     }
 }
