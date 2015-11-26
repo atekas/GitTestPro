@@ -1,10 +1,12 @@
 package com.sensu.android.zimaogou.activity.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.activity.ShowImageActivity;
 import com.sensu.android.zimaogou.activity_home.HomeHorizontalLinearLayout;
 import com.sensu.android.zimaogou.activity_home.HomeVerticalLinearLayout;
 import com.sensu.android.zimaogou.utils.PromptUtils;
@@ -83,6 +85,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
             @Override
             public void onClick(View view, int position) {
                 PromptUtils.showToast("你点击了第" + position + "张图片");
+                startActivity(new Intent(mParentActivity, ShowImageActivity.class));
             }
         });
 

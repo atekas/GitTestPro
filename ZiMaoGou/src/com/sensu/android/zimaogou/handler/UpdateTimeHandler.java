@@ -2,7 +2,6 @@ package com.sensu.android.zimaogou.handler;
 
 
 import android.os.Message;
-import android.widget.Button;
 import android.widget.TextView;
 import com.sensu.android.zimaogou.BaseApplication;
 import com.sensu.android.zimaogou.R;
@@ -11,7 +10,7 @@ import com.sensu.android.zimaogou.activity.login.RegisterActivity;
 /**
  * Created by zhangwentao on 2015/11/13.
  */
-public class UpdateTimeHandler extends SoftReferenceHandler<RegisterActivity> {
+public class UpdateTimeHandler extends SoftReferenceActivityHandler<RegisterActivity> {
 
     public final static int UPDATE_TIME_CODE = 0;
     public int mMaxTime = 120;

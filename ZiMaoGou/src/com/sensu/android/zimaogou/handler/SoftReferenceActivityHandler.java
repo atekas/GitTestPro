@@ -9,10 +9,10 @@ import java.lang.ref.SoftReference;
 /**
  * Created by zhangwentao on 2015/11/6.
  */
-public abstract class SoftReferenceHandler<T> extends Handler {
+public abstract class SoftReferenceActivityHandler<T> extends Handler {
     private SoftReference<T> mSoftReference;
 
-    public SoftReferenceHandler(T weakReference) {
+    public SoftReferenceActivityHandler(T weakReference) {
         mSoftReference = new SoftReference<T>(weakReference);
     }
 
