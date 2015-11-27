@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="20dp">
+
+        <com.sensu.android.zimaogou.widget.RoundImageView
+                android:id="@+id/user_photo"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/head_pic_default"/>
+
+        <TextView
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_16"
+                android:textColor="@color/black_222222"
+                android:layout_marginLeft="10dp"
+                android:text="ZHF_13545610"/>
+
+    </LinearLayout>
+
+    <TextView
+            android:id="@+id/evaluate_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:textSize="@dimen/text_size_16"
+            android:textColor="#555555"
+            android:text="衣服质量真的很好,看起来很有档次,假期便宜了很多,物超所值,知得购买"/>
+
+
+    <LinearLayout
+            android:id="@+id/photos_layout"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="20dp">
+
+        <com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout
+                android:id="@+id/frame_1"
+                android:layout_width="75dp"
+                android:layout_height="75dp">
+
+            <ImageView
+                    android:id="@+id/photo_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/product1"/>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="#bfbfbf"/>
+
+            <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="#bfbfbf"/>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="#bfbfbf"
+                    android:layout_gravity="bottom"/>
+
+            <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="#bfbfbf"
+                    android:layout_gravity="right"/>
+
+        </com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout>
+
+        <com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout
+                android:id="@+id/frame_2"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginLeft="@dimen/dip_4">
+
+            <ImageView
+                    android:id="@+id/photo_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/product1"/>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="#bfbfbf"/>
+
+            <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="#bfbfbf"/>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="#bfbfbf"
+                    android:layout_gravity="bottom"/>
+
+            <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="#bfbfbf"
+                    android:layout_gravity="right"/>
+
+        </com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout>
+
+        <com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout
+                android:id="@+id/frame_3"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginLeft="@dimen/dip_4">
+
+            <ImageView
+                    android:id="@+id/photo_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/product1"/>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="#bfbfbf"/>
+
+            <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="#bfbfbf"/>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="#bfbfbf"
+                    android:layout_gravity="bottom"/>
+
+            <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="#bfbfbf"
+                    android:layout_gravity="right"/>
+
+        </com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout>
+
+        <com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout
+                android:id="@+id/frame_4"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginLeft="@dimen/dip_4">
+
+            <ImageView
+                    android:id="@+id/photo_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/product1"/>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="#bfbfbf"/>
+
+            <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="#bfbfbf"/>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="#bfbfbf"
+                    android:layout_gravity="bottom"/>
+
+            <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="#bfbfbf"
+                    android:layout_gravity="right"/>
+
+        </com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout>
+
+    </LinearLayout>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginTop="@dimen/dip_20"
+            android:background="@color/home_line"/>
+
+</LinearLayout>

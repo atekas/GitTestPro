@@ -110,9 +110,12 @@
                 android:layout_height="match_parent"
                 android:background="@color/white">
 
-                <ListView
+                <com.sensu.android.zimaogou.widget.NoScrollListView
+                        android:id="@+id/product_evaluate_list"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:divider="@null"
+                        android:dividerHeight="0dp"/>
 
         </ScrollView>
 

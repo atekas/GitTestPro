@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#eff3f5">
+
+    <RelativeLayout
+            android:id="@+id/layout_title"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="#f8f8f8">
+
+        <TextView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/dip_5"
+                android:textSize="@dimen/text_size_16"
+                android:textColor="@color/black_444444"
+                android:layout_marginLeft="@dimen/dip_5"
+                android:text="取消"/>
+
+        <TextView
+                android:id="@+id/local_photo_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:text="评价"/>
+
+    </RelativeLayout>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/home_line"/>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="center_vertical"
+            android:background="@color/white">
+
+        <com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout
+                android:id="@+id/frame_product_pic"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="18dp">
+
+            <ImageView
+                    android:id="@+id/product_pic"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/a_03"/>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/home_line"/>
+
+            <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="@color/home_line"/>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/home_line"
+                    android:layout_gravity="bottom"/>
+
+            <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="@color/home_line"
+                    android:layout_gravity="right"/>
+
+        </com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout>
+
+        <ImageView
+                android:id="@+id/star_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dip_20"
+                android:src="@drawable/drawable_star_select"/>
+
+        <ImageView
+                android:id="@+id/star_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/drawable_star_select"/>
+
+        <ImageView
+                android:id="@+id/star_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/drawable_star_select"/>
+
+        <ImageView
+                android:id="@+id/star_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dip_20"
+                android:src="@drawable/drawable_star_select"/>
+
+        <ImageView
+                android:id="@+id/star_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/drawable_star_select"/>
+    </LinearLayout>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/home_line"/>
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/white">
+
+            <EditText
+                    android:id="@+id/edit_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dip_20"
+                    android:layout_marginRight="@dimen/dip_20"
+                    android:layout_marginTop="20dp"
+                    android:hint="@string/release_hint"
+                    android:textColorHint="@color/release_hint_color"
+                    android:background="@null"/>
+
+            <com.sensu.android.zimaogou.widget.NoScrollGridView
+                    android:id="@+id/grid_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dip_20"
+                    android:layout_marginRight="@dimen/dip_20"
+                    android:layout_marginTop="@dimen/dip_20"
+                    android:scrollbars="none"
+                    android:numColumns="4"/>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:layout_marginLeft="@dimen/dip_60"
+                    android:layout_marginTop="@dimen/dip_20"
+                    android:background="@color/home_line"/>
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dip_10"
+                android:layout_marginBottom="@dimen/dip_10"
+                android:gravity="center_vertical">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dip_20"
+                    android:textColor="@color/black_222222"
+                    android:textSize="@dimen/text_size_16"
+                    android:text="匿名"/>
+
+            <ImageView
+                    android:id="@+id/is_show_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/drawable_toggle_on_off"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View android:layout_width="1dp" android:layout_height="0dp" android:layout_weight="1" />
+
+    <TextView
+            android:id="@+id/submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_20"
+            android:padding="@dimen/dip_10"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:background="@drawable/drawable_submit_back"
+            android:text="提交"/>
+</LinearLayout>

@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.activity.ProductCommentActivity;
 import com.sensu.android.zimaogou.activity.ProductDetailsActivity;
 
 /**
@@ -36,7 +37,7 @@ public class HomeGrid extends LinearLayout implements View.OnClickListener {
                 getContext().startActivity(new Intent(getContext(), ProductDetailsActivity.class));
                 break;
             case R.id.product_2:
-                getContext().startActivity(new Intent(getContext(), ProductDetailsActivity.class));
+                getContext().startActivity(new Intent(getContext(), ProductCommentActivity.class));
                 break;
             case R.id.product_3:
                 getContext().startActivity(new Intent(getContext(), ProductDetailsActivity.class));

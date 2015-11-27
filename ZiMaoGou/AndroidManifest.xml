@@ -152,6 +152,8 @@
 
         <activity android:name=".activity.ShowImageActivity" android:screenOrientation="portrait" />
 
+        <activity android:name=".activity.ProductCommentActivity" android:screenOrientation="portrait" />
+
         <!--###################################### 友盟分享 ############################################-->
         <meta-data
                 android:name="UMENG_APPKEY"

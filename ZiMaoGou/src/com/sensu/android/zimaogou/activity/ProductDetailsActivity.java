@@ -6,7 +6,9 @@ import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ListView;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.adapter.ProductEvaluateAdapter;
 import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.sensu.android.zimaogou.widget.ScrollViewContainer;
 
@@ -40,6 +42,9 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         });
 
         findViewById(R.id.back).setOnClickListener(this);
+
+        ListView listView = (ListView) findViewById(R.id.product_evaluate_list);
+        listView.setAdapter(new ProductEvaluateAdapter(this));
     }
 
     @Override

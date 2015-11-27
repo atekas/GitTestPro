@@ -52,9 +52,12 @@
     <color name="command_hint_color">#ccccd2</color><!--输入口令文本框默认颜色-->
     <color name="command_line_color">#dddddd</color><!--输入口令下划线颜色-->
     <color name="command_group_red_color">#dd273c</color><!--组团口令颜色-->
+    <drawable name="dd27c3">#dd273c</drawable>
     <color name="command_group_line_color">#dedede</color><!--组团下划线颜色-->
 
     <color name="product_details_line_color">#dddddd</color>
     <color name="product_disSelect_color">#777777</color>
     <color name="product_selected_color">#f65c6d</color>
+
+    <drawable name="c2c5c5">#c2c5c5</drawable>
 </resources>
