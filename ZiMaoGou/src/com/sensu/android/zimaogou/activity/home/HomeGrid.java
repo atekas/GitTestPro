@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.ProductCommentActivity;
 import com.sensu.android.zimaogou.activity.ProductDetailsActivity;
+import com.sensu.android.zimaogou.activity.ProductListActivity;
 
 /**
  * Created by zhangwentao on 2015/11/24.
@@ -34,22 +35,22 @@ public class HomeGrid extends LinearLayout implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.product_1:
-                getContext().startActivity(new Intent(getContext(), ProductDetailsActivity.class));
+                getContext().startActivity(new Intent(getContext(), ProductListActivity.class));
                 break;
             case R.id.product_2:
                 getContext().startActivity(new Intent(getContext(), ProductCommentActivity.class));
                 break;
             case R.id.product_3:
-                getContext().startActivity(new Intent(getContext(), ProductDetailsActivity.class));
+                getContext().startActivity(new Intent(getContext(), ProductListActivity.class));
                 break;
             case R.id.product_4:
-                getContext().startActivity(new Intent(getContext(), ProductDetailsActivity.class));
+                getContext().startActivity(new Intent(getContext(), ProductListActivity.class));
                 break;
             case R.id.product_5:
-                getContext().startActivity(new Intent(getContext(), ProductDetailsActivity.class));
+                getContext().startActivity(new Intent(getContext(), ProductListActivity.class));
                 break;
             case R.id.product_6:
-                getContext().startActivity(new Intent(getContext(), ProductDetailsActivity.class));
+                getContext().startActivity(new Intent(getContext(), ProductListActivity.class));
                 break;
         }
     }

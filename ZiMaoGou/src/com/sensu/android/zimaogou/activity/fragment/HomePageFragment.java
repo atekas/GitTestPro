@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.activity.ProductListActivity;
 import com.sensu.android.zimaogou.activity.ShowImageActivity;
 import com.sensu.android.zimaogou.activity_home.HomeHorizontalLinearLayout;
 import com.sensu.android.zimaogou.activity_home.HomeVerticalLinearLayout;
@@ -104,12 +105,15 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
                 break;
             case R.id.ll_hotGoods:
                 PromptUtils.showToast("人气商品");
+                startActivity(new Intent(mParentActivity, ProductListActivity.class));
                 break;
             case R.id.ll_latest:
                 PromptUtils.showToast("最新上架");
+                startActivity(new Intent(mParentActivity, ProductListActivity.class));
                 break;
             case R.id.ll_featureVideos:
                 PromptUtils.showToast("");
+                startActivity(new Intent(mParentActivity, ProductListActivity.class));
                 break;
         }
     }
