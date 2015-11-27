@@ -116,6 +116,12 @@
 
         <activity android:name=".activity.mycenter.ReceiverAddressEditActivity" android:screenOrientation="portrait" />
 
+        <activity android:name=".activity.mycenter.CollectActivity" android:screenOrientation="portrait" />
+
+        <activity android:name=".activity.mycenter.SettingActivity" android:screenOrientation="portrait" />
+
+        <activity android:name=".activity.mycenter.MyInformationActivity" android:screenOrientation="portrait" />
+
 
 
 

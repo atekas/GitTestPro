@@ -12,9 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.login.LoginActivity;
-import com.sensu.android.zimaogou.activity.mycenter.CouponActivity;
-import com.sensu.android.zimaogou.activity.mycenter.OrderActivity;
-import com.sensu.android.zimaogou.activity.mycenter.ReceiverAddressActivity;
+import com.sensu.android.zimaogou.activity.mycenter.*;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.PromptUtils;
@@ -107,7 +105,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 //                userInfo.setSex("男");
 //                userInfo.setPhoneNum("138888888");
 //                GDUserInfoHelper.getInstance(mParentActivity).insertUserInfo(userInfo);
-
+                startActivity(new Intent(mParentActivity, MyInformationActivity.class));
                 break;
             case R.id.login_register:
 //                UserInfo userInfo1 = GDUserInfoHelper.getInstance(mParentActivity).getUserInfo();
@@ -143,6 +141,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             case R.id.my_collection:
                 //TODO 我的收藏
                 PromptUtils.showToast("我的收藏");
+                startActivity(new Intent(mParentActivity, CollectActivity.class));
                 break;
             case R.id.take_goods_address:
                 //TODO 收货地址
@@ -176,6 +175,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             case R.id.setting:
                 //TODO 设置
                 PromptUtils.showToast("设置");
+                startActivity(new Intent(mParentActivity, SettingActivity.class));
                 break;
         }
     }

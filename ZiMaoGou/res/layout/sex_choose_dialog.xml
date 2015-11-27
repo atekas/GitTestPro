@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true">
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:gravity="center"
+                android:background="@color/white"
+                android:textSize="@dimen/text_size_large"
+                android:textColor="@color/black_444444"
+                android:text="请选择性别"/>
+        <View android:layout_width="match_parent" android:layout_height="1px" android:background="@color/home_line"/>
+        <TextView
+                android:id="@+id/tv_man"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:gravity="center"
+                android:background="@drawable/drawable_me_click"
+                android:textSize="@dimen/text_size_large"
+                android:textColor="@color/black_444444"
+                android:text="男"/>
+        <View android:layout_width="match_parent" android:layout_height="1px" android:background="@color/home_line"/>
+        <TextView
+                android:id="@+id/tv_woman"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:gravity="center"
+                android:background="@drawable/drawable_me_click"
+                android:textSize="@dimen/text_size_large"
+                android:textColor="@color/black_444444"
+                android:text="女"/>
+        <TextView
+                android:id="@+id/tv_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/drawable_me_click"
+                android:textSize="@dimen/text_size_large"
+                android:textColor="@color/black_444444"
+                android:text="取消"/>
+        <View android:layout_width="match_parent" android:layout_height="1px" android:background="@color/home_line"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
