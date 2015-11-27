@@ -122,6 +122,8 @@
 
         <activity android:name=".activity.mycenter.MyInformationActivity" android:screenOrientation="portrait" />
 
+        <activity android:name=".activity.mycenter.ApplySalesAfterActivity" android:screenOrientation="portrait" />
+
 
 
 

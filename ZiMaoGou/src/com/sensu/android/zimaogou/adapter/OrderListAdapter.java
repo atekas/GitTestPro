@@ -1,6 +1,7 @@
 package com.sensu.android.zimaogou.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.sensu.android.zimaogou.Mode.OrderMode;
 import com.sensu.android.zimaogou.Mode.ProductMode;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.activity.mycenter.ApplySalesAfterActivity;
 import com.sensu.android.zimaogou.utils.UiUtils;
 
 import java.util.ArrayList;
@@ -80,6 +82,12 @@ public class OrderListAdapter extends SimpleBaseAdapter {
                 viewHolder.tv_orderType.setText("待退款");
                 break;
         }
+        viewHolder.bt_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mContext.startActivity(new Intent(mContext, ApplySalesAfterActivity.class));
+            }
+        });
         viewHolder.tv_showNum.setText("共"+mOrders.size()+"件商品，合计:");
         viewHolder.tv_amount.setText(amountMoney(mOrders.get(i))+"");
         OrderChildListAdapter adapter = new OrderChildListAdapter(mContext,mOrders.get(i).getPros(),mOrders.get(i).getType());
