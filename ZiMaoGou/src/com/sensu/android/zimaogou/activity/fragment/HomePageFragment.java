@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.activity.BuyReadingActivity;
 import com.sensu.android.zimaogou.activity.ProductListActivity;
 import com.sensu.android.zimaogou.activity.ShowImageActivity;
 import com.sensu.android.zimaogou.activity_home.HomeHorizontalLinearLayout;
@@ -102,6 +103,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         switch (view.getId()) {
             case R.id.ll_buyRead:
                 PromptUtils.showToast("购物须知");
+                startActivity(new Intent(mParentActivity, BuyReadingActivity.class));
                 break;
             case R.id.ll_hotGoods:
                 PromptUtils.showToast("人气商品");

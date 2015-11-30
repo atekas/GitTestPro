@@ -3,6 +3,7 @@ package com.sensu.android.zimaogou.activity.tour;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.BaseActivity;
@@ -30,6 +31,9 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
     private LinearLayout mBuyLayout;
     private LinearLayout mSightSpotLayout;
 
+    private ImageView mLocationSwitch;
+    private boolean mIsPosition = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,14 +58,16 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
         mFoodLayout = (LinearLayout) findViewById(R.id.food_layout);
         mBuyLayout = (LinearLayout) findViewById(R.id.buy_layout);
         mSightSpotLayout = (LinearLayout) findViewById(R.id.sight_spot_layout);
+        mLocationSwitch = (ImageView) findViewById(R.id.location_switch);
+        mLocationSwitch.setSelected(mIsPosition);
 
         mFoodLayout.setOnClickListener(this);
         mBuyLayout.setOnClickListener(this);
         mSightSpotLayout.setOnClickListener(this);
+        mLocationSwitch.setOnClickListener(this);
         findViewById(R.id.cancel).setOnClickListener(this);
         findViewById(R.id.release).setOnClickListener(this);
         findViewById(R.id.choose_country).setOnClickListener(this);
-        findViewById(R.id.location_switch).setOnClickListener(this);
     }
 
     @Override
@@ -78,6 +84,14 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.location_switch:
                 //todo 定位开关
+                if (mIsPosition) {
+                    //关闭定位
+                    mIsPosition = false;
+                } else {
+                    //开启定位并进行定位
+                    mIsPosition = true;
+                }
+                mLocationSwitch.setSelected(mIsPosition);
                 break;
             case R.id.food_layout:
                 if (mIsSelectFood) {
