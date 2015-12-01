@@ -23,7 +23,12 @@ public class SelectCountryPopup extends BasePopupWindow implements View.OnClickL
     public SelectCountryPopup(Context context) {
         View view = LayoutInflater.from(context).inflate(R.layout.select_country_pop, null);
         mCountryListView = (ListView) view.findViewById(R.id.country_list);
-        mCountryListAdapter = new CountryListAdapter(context);
+        mCountryListAdapter = new CountryListAdapter(context, new CountryListAdapter.OnCountrySelect() {
+            @Override
+            public void onCountrySelect() {
+                dismiss();
+            }
+        });
         mCountryListView.setAdapter(mCountryListAdapter);
         view.findViewById(R.id.finish).setOnClickListener(this);
 

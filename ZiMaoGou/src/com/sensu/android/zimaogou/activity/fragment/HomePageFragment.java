@@ -9,6 +9,7 @@ import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.BuyReadingActivity;
 import com.sensu.android.zimaogou.activity.ProductListActivity;
 import com.sensu.android.zimaogou.activity.ShowImageActivity;
+import com.sensu.android.zimaogou.activity.mycenter.WebViewActivity;
 import com.sensu.android.zimaogou.activity_home.HomeHorizontalLinearLayout;
 import com.sensu.android.zimaogou.activity_home.HomeVerticalLinearLayout;
 import com.sensu.android.zimaogou.utils.PromptUtils;
@@ -87,7 +88,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
             @Override
             public void onClick(View view, int position) {
                 PromptUtils.showToast("你点击了第" + position + "张图片");
-                startActivity(new Intent(mParentActivity, ShowImageActivity.class));
+                startActivity(new Intent(mParentActivity, BuyReadingActivity.class));
             }
         });
 

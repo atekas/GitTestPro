@@ -14,10 +14,12 @@ import com.sensu.android.zimaogou.R;
 public class CountryListAdapter extends SimpleBaseAdapter {
 
     private CountryListAdapter2 mCountryListAdapter2;
+    private OnCountrySelect mOnCountrySelect;
 
-    public CountryListAdapter(Context context) {
+    public CountryListAdapter(Context context, OnCountrySelect onCountrySelect) {
         super(context);
         mCountryListAdapter2 = new CountryListAdapter2(context);
+        mOnCountrySelect = onCountrySelect;
     }
 
     @Override
@@ -44,5 +46,39 @@ public class CountryListAdapter extends SimpleBaseAdapter {
     private class ViewHolder{
         TextView mAreaText;
         ListView mCountryList;
+    }
+
+    class CountryListAdapter2 extends SimpleBaseAdapter {
+
+        public CountryListAdapter2(Context context) {
+            super(context);
+        }
+
+        @Override
+        public int getCount() {
+            return 4;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            if (view == null) {
+                view = LayoutInflater.from(mContext).inflate(R.layout.country_select_item2, null);
+            }
+
+            view.findViewById(R.id.country_select).setSelected(false);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    view.findViewById(R.id.country_select).setSelected(true);
+                    mOnCountrySelect.onCountrySelect();
+                }
+            });
+
+            return view;
+        }
+    }
+
+    public interface OnCountrySelect {
+        public void onCountrySelect();
     }
 }

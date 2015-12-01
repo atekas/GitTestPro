@@ -12,6 +12,7 @@ import com.sensu.android.zimaogou.Mode.ProductMode;
 import com.sensu.android.zimaogou.Mode.StoreMode;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.GoodShopActivity;
+import com.sensu.android.zimaogou.activity.ProductDetailsActivity;
 import com.sensu.android.zimaogou.activity.SpellOrderActivity;
 import com.sensu.android.zimaogou.activity.SpellOrderDetailsActivity;
 import com.sensu.android.zimaogou.activity.tour.TourBuyDetailsActivity;
@@ -125,8 +126,8 @@ public class HomeHorizontalLinearLayout extends LinearLayout implements AdapterV
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         switch (mType) {
             case 1:
-                PromptUtils.showToast("游购详情");
-                getContext().startActivity(new Intent(getContext(), TourBuyDetailsActivity.class));
+                PromptUtils.showToast("商品详情");
+                getContext().startActivity(new Intent(getContext(), ProductDetailsActivity.class));
                 break;
             case 2:
                 PromptUtils.showToast("拼单详情");
