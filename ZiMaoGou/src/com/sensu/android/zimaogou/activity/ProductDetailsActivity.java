@@ -11,8 +11,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.adapter.ProductEvaluateAdapter;
+import com.sensu.android.zimaogou.external.umeng.share.UmengShare;
 import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.sensu.android.zimaogou.widget.ScrollViewContainer;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 /**
  * Created by zhangwentao on 2015/11/20.
@@ -21,6 +23,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
 
     private ScrollViewContainer mScrollViewContainer;
     private int mProductCount = 1;
+    private UmengShare mUmengShare;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
     }
 
     private void initViews() {
+        mUmengShare = UmengShare.getInstance(this);
         mScrollViewContainer = (ScrollViewContainer) findViewById(R.id.scroll_view_container);
         mScrollViewContainer.setOnSlideFinish(new ScrollViewContainer.OnSlideFinish() {
             @Override
@@ -66,6 +70,11 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.product_share:
                 PromptUtils.showToast("分享");
+                mUmengShare.configPlatforms();
+                mUmengShare.setShareContent();
+                mUmengShare.mController.getConfig().setPlatforms(SHARE_MEDIA.WEIXIN,
+                        SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.SINA);
+                mUmengShare.mController.openShare(this, false);
                 break;
             case R.id.cancel:
                 mChooseDialog.dismiss();
