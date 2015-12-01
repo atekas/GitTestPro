@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/translucence_black_35">
+
+    <View android:layout_width="1dp" android:layout_height="0dp" android:layout_weight="1"/>
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:background="@color/white">
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+            <ImageView
+                    android:id="@+id/finish"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dip_10"
+                    android:layout_marginLeft="@dimen/dip_5"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/finish"/>
+
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dip_10"
+                    android:layout_marginRight="@dimen/dip_10"
+                    android:drawableLeft="@drawable/search_icon"
+                    android:paddingLeft="@dimen/dip_5"
+                    android:hint="搜索"
+                    android:textSize="@dimen/text_size_14"
+                    android:drawablePadding="@dimen/dip_5"
+                    android:background="@drawable/country_search_back"/>
+
+        </LinearLayout>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="#d5d8d9"/>
+
+        <ListView
+                android:id="@+id/country_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@null"
+                android:dividerHeight="0dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

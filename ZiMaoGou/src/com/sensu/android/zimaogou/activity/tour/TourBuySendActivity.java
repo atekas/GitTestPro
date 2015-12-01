@@ -1,6 +1,7 @@
 package com.sensu.android.zimaogou.activity.tour;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -9,6 +10,7 @@ import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.BaseActivity;
 import com.sensu.android.zimaogou.activity.LocalPhotoActivity;
 import com.sensu.android.zimaogou.photoalbum.PhotoInfo;
+import com.sensu.android.zimaogou.popup.SelectCountryPopup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +83,8 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.choose_country:
                 //TODO 选择国家 弹出对话框
+                SelectCountryPopup selectCountryPopup = new SelectCountryPopup(this);
+                selectCountryPopup.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
                 break;
             case R.id.location_switch:
                 //todo 定位开关
