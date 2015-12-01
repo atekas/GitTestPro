@@ -2,10 +2,12 @@ package com.sensu.android.zimaogou.activity.mycenter;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.BaseActivity;
+import com.sensu.android.zimaogou.activity.VerifyOrderActivity;
 import com.sensu.android.zimaogou.adapter.CouponInvalidListAdapter;
 import com.sensu.android.zimaogou.adapter.CouponValidListAdapter;
 import com.sensu.android.zimaogou.utils.UiUtils;
@@ -14,7 +16,7 @@ import com.sensu.android.zimaogou.utils.UiUtils;
  * 优惠券
  * Created by qi.yang on 2015/11/19.
  */
-public class CouponActivity extends BaseActivity{
+public class CouponActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
     ListView mValidListView,mInvalidListView;
     ImageView mBackImageView;
@@ -42,5 +44,13 @@ public class CouponActivity extends BaseActivity{
                 onBackPressed();
             }
         });
+
+        mValidListView.setOnItemClickListener(this);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        setResult(RESULT_OK);
+        finish();
     }
 }

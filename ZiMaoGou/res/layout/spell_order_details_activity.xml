@@ -201,6 +201,7 @@
                         android:background="@color/home_line"/>
 
                 <LinearLayout
+                        android:id="@+id/buy_directly"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dip_60">

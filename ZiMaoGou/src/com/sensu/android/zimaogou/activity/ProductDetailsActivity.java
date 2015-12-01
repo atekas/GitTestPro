@@ -1,6 +1,7 @@
 package com.sensu.android.zimaogou.activity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.View;
@@ -42,6 +43,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         });
 
         findViewById(R.id.back).setOnClickListener(this);
+        findViewById(R.id.shopping_bag).setOnClickListener(this);
 
         ListView listView = (ListView) findViewById(R.id.product_evaluate_list);
         listView.setAdapter(new ProductEvaluateAdapter(this));
@@ -52,6 +54,8 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         switch (view.getId()) {
             case R.id.back:
                 finish();
+                break;
+            case R.id.shopping_bag:
                 break;
         }
     }

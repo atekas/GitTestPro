@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.activity.mycenter.CouponActivity;
 import com.sensu.android.zimaogou.activity.mycenter.ReceiverAddressActivity;
 import com.sensu.android.zimaogou.adapter.VerifyOrderAdapter;
 import com.sensu.android.zimaogou.utils.PromptUtils;
@@ -19,6 +20,7 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
     public static final int WE_CHAT_PAY = 1;
     //确认订单中选择地址
     public static final int CHOOSE_ADDRESS_CODE = 100;
+    public static final int CHOOSE_COUPON_CODE = 101;
 
     private int mPayWay;
     private ListView mListView;
@@ -76,6 +78,7 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.coupon:
                 PromptUtils.showToast("进入到我的优惠券页面");
+                startActivityForResult(new Intent(this, CouponActivity.class), CHOOSE_COUPON_CODE);
                 break;
             case R.id.verify_order:
                 if (mPayWay == ZFB_PAY) {

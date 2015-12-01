@@ -1,8 +1,10 @@
 package com.sensu.android.zimaogou.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.adapter.SpecialDetailsAdapter;
@@ -12,7 +14,7 @@ import com.sensu.android.zimaogou.adapter.SpecialDetailsAdapter;
  *
  * 专题详情页
  */
-public class SpecialDetailsActivity extends BaseActivity implements View.OnClickListener {
+public class SpecialDetailsActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     private ListView mListView;
     private SpecialDetailsAdapter mSpecialDetailsAdapter;
@@ -35,6 +37,7 @@ public class SpecialDetailsActivity extends BaseActivity implements View.OnClick
         mSpecialDetailsAdapter = new SpecialDetailsAdapter(this);
         mListView.setAdapter(mSpecialDetailsAdapter);
 
+        mListView.setOnItemClickListener(this);
         findViewById(R.id.back).setOnClickListener(this);
     }
 
@@ -44,6 +47,13 @@ public class SpecialDetailsActivity extends BaseActivity implements View.OnClick
             case R.id.back:
                 finish();
                 break;
+        }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        if (i > 1) {
+            startActivity(new Intent(this, ProductDetailsActivity.class));
         }
     }
 }

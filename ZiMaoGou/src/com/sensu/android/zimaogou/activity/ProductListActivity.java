@@ -12,8 +12,10 @@ import com.sensu.android.zimaogou.utils.DisplayUtils;
  */
 public class ProductListActivity extends BaseActivity implements View.OnClickListener {
 
+    public static final String IS_NO_TITLE = "is_no_title";
     private GridView mGridView;
     private ProductsDetailsAdapter mProductsDetailsAdapter;
+    private boolean mIsNoTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +26,14 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void intiViews() {
+
+        mIsNoTitle = getIntent().getBooleanExtra(IS_NO_TITLE, false);
+        if (mIsNoTitle) {
+            findViewById(R.id.sort_rules_layout).setVisibility(View.GONE);
+        } else {
+            findViewById(R.id.sort_rules_layout).setVisibility(View.VISIBLE);
+        }
+
         findViewById(R.id.newest).setOnClickListener(this);
         findViewById(R.id.moods).setOnClickListener(this);
         findViewById(R.id.back).setOnClickListener(this);
@@ -31,7 +41,6 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
 
         mGridView = (GridView) findViewById(R.id.product_list);
         mProductsDetailsAdapter = new ProductsDetailsAdapter(this);
-        mGridView.setColumnWidth(DisplayUtils.getDisplayWidth() / 2);
         mGridView.setAdapter(mProductsDetailsAdapter);
     }
 

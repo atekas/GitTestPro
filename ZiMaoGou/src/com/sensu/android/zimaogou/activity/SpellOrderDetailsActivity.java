@@ -1,12 +1,16 @@
 package com.sensu.android.zimaogou.activity;
 
 import android.app.Dialog;
+import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.utils.DisplayUtils;
+import com.sensu.android.zimaogou.utils.TextUtils;
 import com.sensu.android.zimaogou.widget.RoundImageView;
 
 /**
@@ -15,6 +19,7 @@ import com.sensu.android.zimaogou.widget.RoundImageView;
 public class SpellOrderDetailsActivity extends BaseActivity implements View.OnClickListener {
 
     private LinearLayout mUserHeadContainer;
+    private TextView mOldPriceText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +31,10 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
 
     private void initViews() {
         findViewById(R.id.back).setOnClickListener(this);
+        findViewById(R.id.buy_directly).setOnClickListener(this);
 
+        mOldPriceText = (TextView) findViewById(R.id.old_price);
+        TextUtils.addLineCenter(mOldPriceText);
         mUserHeadContainer = (LinearLayout) findViewById(R.id.user_photo_container);
         addUserPhoto();
     }
@@ -36,6 +44,9 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
         switch (view.getId()) {
             case R.id.back:
                 finish();
+                break;
+            case R.id.buy_directly:
+                startActivity(new Intent(this, ProductDetailsActivity.class));
                 break;
         }
     }

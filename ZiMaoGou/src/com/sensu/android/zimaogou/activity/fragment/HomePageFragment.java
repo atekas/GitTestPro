@@ -75,11 +75,11 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         mImageRollView = (ImageRollView) mParentActivity.findViewById(R.id.banner);
 
         ArrayList<String> list = new ArrayList<String>();
-        list.add("http://img.taodiantong.cn/v55183/infoimg/2013-07/130720115322ky.jpg");
-        list.add("http://pic30.nipic.com/20130626/8174275_085522448172_2.jpg");
-        list.add("http://pic18.nipic.com/20111215/577405_080531548148_2.jpg");
-        list.add("http://pic15.nipic.com/20110722/2912365_092519919000_2.jpg");
-        list.add("http://pic.58pic.com/58pic/12/64/27/55U58PICrdX.jpg");
+        list.add("http://www.lesvin.net/Lesvin/leadings/img/1.png");
+        list.add("http://www.lesvin.net/Lesvin/leadings/img/2.png");
+        list.add("http://www.lesvin.net/Lesvin/leadings/img/3.png");
+        list.add("http://www.lesvin.net/Lesvin/leadings/img/4.png");
+        list.add("http://www.lesvin.net/Lesvin/leadings/img/5.png");
 
         mImageRollView.initImageRollView(list, true);
 
@@ -100,6 +100,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
+        Intent intent;
         switch (view.getId()) {
             case R.id.ll_buyRead:
                 PromptUtils.showToast("购物须知");
@@ -107,15 +108,21 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
                 break;
             case R.id.ll_hotGoods:
                 PromptUtils.showToast("人气商品");
-                startActivity(new Intent(mParentActivity, ProductListActivity.class));
+                intent = new Intent(mParentActivity, ProductListActivity.class);
+                intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
+                startActivity(intent);
                 break;
             case R.id.ll_latest:
                 PromptUtils.showToast("最新上架");
-                startActivity(new Intent(mParentActivity, ProductListActivity.class));
+                intent = new Intent(mParentActivity, ProductListActivity.class);
+                intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
+                startActivity(intent);
                 break;
             case R.id.ll_featureVideos:
                 PromptUtils.showToast("");
-                startActivity(new Intent(mParentActivity, ProductListActivity.class));
+                intent = new Intent(mParentActivity, ProductListActivity.class);
+                intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
+                startActivity(intent);
                 break;
         }
     }

@@ -110,15 +110,7 @@ public class ClassificationFragment extends BaseFragment implements AdapterView.
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        if (i == 0) {
-            startActivity(new Intent(mParentActivity, ProductListActivity.class));
-        } else if (i == 1) {
-            startActivity(new Intent(mParentActivity, SpecialActivity.class));
-        } else if (i == 2) {
-            startActivity(new Intent(mParentActivity, SpellOrderActivity.class));
-        } else if (i ==3) {
-            startActivity(new Intent(mParentActivity, ProductDetailsActivity.class));
-        }
+        startActivity(new Intent(mParentActivity, ProductListActivity.class));
     }
 
     @Override
