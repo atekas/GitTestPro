@@ -57,6 +57,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/title_line"
             android:layout_above="@+id/bottom_line"
+            android:divider="@null"
+            android:dividerHeight="0dp"
             android:background="@color/white"/>
 
     <View

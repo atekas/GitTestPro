@@ -22,7 +22,7 @@ public class TourBuyDetailsAdapter extends SimpleBaseAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        return 5;
     }
 
     @Override
