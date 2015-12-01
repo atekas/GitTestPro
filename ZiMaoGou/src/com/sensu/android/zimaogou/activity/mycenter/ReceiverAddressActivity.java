@@ -1,5 +1,6 @@
 package com.sensu.android.zimaogou.activity.mycenter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -34,5 +35,9 @@ public class ReceiverAddressActivity extends BaseActivity {
         });
         mReceiverAddressListView.setDivider(null);
         mReceiverAddressListView.setAdapter(new ReceiverListAdapter(this));
+    }
+
+    public void AddAddressClick(View v){
+        startActivity(new Intent(this,ReceiverAddressEditActivity.class).putExtra("title","新增收货地址"));
     }
 }

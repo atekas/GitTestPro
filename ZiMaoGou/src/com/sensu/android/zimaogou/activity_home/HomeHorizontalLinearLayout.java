@@ -97,9 +97,9 @@ public class HomeHorizontalLinearLayout extends LinearLayout implements AdapterV
                 mTitle.setText(getResources().getText(R.string.daily_recommend));
                 findViewById(R.id.title_layout).setVisibility(GONE);
                 //设置水平listview的高度
-                linearParams.height = width/3 + DisplayUtils.dp2px(28);
+                linearParams.height = width/3 + DisplayUtils.dp2px(48);
                 mhListView.setLayoutParams(linearParams);
-                mhListView.setPadding(0,0,DisplayUtils.dp2px(6),0);
+//                mhListView.setPadding(0,0,DisplayUtils.dp2px(6),0);
                 mhListViewAdapter = new HorizontalListViewAdapter(getContext(),pros,Type);
                 mhListView.setAdapter(mhListViewAdapter);
                 break;
@@ -113,7 +113,7 @@ public class HomeHorizontalLinearLayout extends LinearLayout implements AdapterV
                 mTitle.setText(getResources().getText(R.string.find_shop));
                 linearParams.height = width/3 + DisplayUtils.dp2px(28);
                 mhListView.setLayoutParams(linearParams);
-                mhListView.setPadding(0,0,DisplayUtils.dp2px(6),0);
+//                mhListView.setPadding(DisplayUtils.dp2px(6),0,0,0);
                 mStoreListAdapter = new StoreHorizontalListViewAdapter(getContext(),stors);
                 mhListView.setAdapter(mStoreListAdapter);
                 break;

@@ -100,8 +100,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:divider="#eff4f5"
-                android:dividerHeight="@dimen/dip_20"
-                android:layout_marginTop="@dimen/dip_25"
+                android:dividerHeight="15dp"
                 android:layout_marginLeft="@dimen/dip_20"
                 android:layout_marginRight="@dimen/dip_20"/>
 

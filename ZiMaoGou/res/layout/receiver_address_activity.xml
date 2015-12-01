@@ -57,7 +57,8 @@
                     android:scrollbars="none">
 
             </ListView>
-        <TextView
+        <Button
+                android:onClick="AddAddressClick"
                 android:id="@+id/tv_addAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

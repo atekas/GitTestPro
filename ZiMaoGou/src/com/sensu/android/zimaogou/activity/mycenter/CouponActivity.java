@@ -87,4 +87,6 @@ public class CouponActivity extends BaseActivity implements AdapterView.OnItemCl
         });
         mInvokeCouponDialog.show();
     }
+
+
 }

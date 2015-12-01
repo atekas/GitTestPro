@@ -22,7 +22,7 @@ public class HorizontalListViewAdapter extends BaseAdapter {
     int Size = 1; //一屏显示多少个
     int Type = 1;//哪个部分调用 1，每日推荐 2，拼单特价，3.发现好店铺
     ArrayList<ProductMode> pros = new ArrayList<ProductMode>();
-
+    int width = DisplayUtils.getDisplayWidth();
     public HorizontalListViewAdapter(Context context, ArrayList<ProductMode> pros, int type) {
         this.mContext = context;
         this.pros = pros;
@@ -41,7 +41,7 @@ public class HorizontalListViewAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return position;
+        return pros.get(position);
     }
 
     @Override
@@ -61,25 +61,33 @@ public class HorizontalListViewAdapter extends BaseAdapter {
                 holder.mImage = (ImageView) convertView.findViewById(R.id.img_pro);
                 holder.mTitle = (TextView) convertView.findViewById(R.id.tv_pro);
                 holder.mRl_img = (RelativeLayout) convertView.findViewById(R.id.rl_img);
+
+                holder.mSalePrice = (TextView) convertView.findViewById(R.id.tv_salePrice);
+                holder.mOrigPrice = (TextView) convertView.findViewById(R.id.tv_origPrice);
+                holder.mOrigPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG); //中划线
+                holder.mOrigPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
+                holder.mOrigPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG);//抗锯齿
+
                 DisplayMetrics metric = new DisplayMetrics();
-                int width = DisplayUtils.getDisplayWidth();//获得屏幕宽度
+                //获得屏幕宽度
+
                 LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) holder.mRl_img.getLayoutParams();
-                linearParams.width = (width - (DisplayUtils.dp2px((Size + 1) * 6))) / Size;
+                linearParams.width = (width - (DisplayUtils.dp2px((Size + 1 ) * 6))) / Size;
                 linearParams.height = (width - (DisplayUtils.dp2px((Size + 1) * 6))) / Size;
                 holder.mRl_img.setLayoutParams(linearParams);
                 LinearLayout.LayoutParams linearParams1 = (LinearLayout.LayoutParams) holder.mTitle.getLayoutParams();
                 linearParams1.width = (width - (DisplayUtils.dp2px((Size + 1) * 6))) / Size;
                 holder.mTitle.setLayoutParams(linearParams1);
-
+                if (position == selectIndex) {
+                    convertView.setSelected(true);
+                } else {
+                    convertView.setSelected(false);
+                }
                 convertView.setTag(holder);
             } else {
                 holder = (DailyRecViewHolder) convertView.getTag();
             }
-            if (position == selectIndex) {
-                convertView.setSelected(true);
-            } else {
-                convertView.setSelected(false);
-            }
+
 
             holder.mTitle.setText(pros.get(position).getTestTitle());
             holder.mImage.setImageResource(pros.get(position).getTestImg());
@@ -117,7 +125,7 @@ public class HorizontalListViewAdapter extends BaseAdapter {
      * 每日推荐ViewHolder
      */
     private static class DailyRecViewHolder {
-        private TextView mTitle;
+        private TextView mTitle,mSalePrice,mOrigPrice;
         private ImageView mImage;
         private RelativeLayout mRl_img;
     }
