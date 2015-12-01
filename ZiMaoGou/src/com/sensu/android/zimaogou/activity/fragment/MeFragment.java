@@ -131,7 +131,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             case R.id.all_orders:
                 //TODO 所有订单
                 PromptUtils.showToast("所有订单");
-                startActivity(new Intent(mParentActivity, OrderActivity.class).putExtra("type",4));
+                startActivity(new Intent(mParentActivity, OrderActivity.class));
                 break;
             case R.id.my_coupon:
                 //TODO 我的优惠券

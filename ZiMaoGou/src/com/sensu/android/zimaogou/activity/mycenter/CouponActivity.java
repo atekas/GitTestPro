@@ -1,13 +1,14 @@
 package com.sensu.android.zimaogou.activity.mycenter;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.BaseActivity;
-import com.sensu.android.zimaogou.activity.VerifyOrderActivity;
 import com.sensu.android.zimaogou.adapter.CouponInvalidListAdapter;
 import com.sensu.android.zimaogou.adapter.CouponValidListAdapter;
 import com.sensu.android.zimaogou.utils.UiUtils;
@@ -52,5 +53,38 @@ public class CouponActivity extends BaseActivity implements AdapterView.OnItemCl
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         setResult(RESULT_OK);
         finish();
+    }
+
+    /**
+     * 激活优惠券
+     * @param v
+     */
+    public void InvokeCouponClick(View v){
+        LoginOutDialog();
+    }
+
+    Dialog mInvokeCouponDialog;
+    private void LoginOutDialog(){
+        mInvokeCouponDialog = new Dialog(this,R.style.dialog);
+        mInvokeCouponDialog.setCancelable(true);
+        mInvokeCouponDialog.setContentView(R.layout.invoke_coupon_dialog);
+
+        Button bt_sure = (Button) mInvokeCouponDialog.findViewById(R.id.bt_sure);
+        Button bt_cancel = (Button) mInvokeCouponDialog.findViewById(R.id.bt_cancel);
+
+        bt_sure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                mInvokeCouponDialog.dismiss();
+            }
+        });
+        bt_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mInvokeCouponDialog.dismiss();
+            }
+        });
+        mInvokeCouponDialog.show();
     }
 }

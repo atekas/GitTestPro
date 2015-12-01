@@ -13,6 +13,7 @@ import com.sensu.android.zimaogou.Mode.OrderMode;
 import com.sensu.android.zimaogou.Mode.ProductMode;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.mycenter.ApplySalesAfterActivity;
+import com.sensu.android.zimaogou.activity.mycenter.RefundOrCommentActivity;
 import com.sensu.android.zimaogou.utils.UiUtils;
 
 import java.util.ArrayList;
@@ -52,6 +53,7 @@ public class OrderListAdapter extends SimpleBaseAdapter {
             viewHolder.rl_button = (RelativeLayout) view.findViewById(R.id.rl_button);
             viewHolder.bt_cancel = (Button) view.findViewById(R.id.bt_cancel);
             viewHolder.bt_submit = (Button) view.findViewById(R.id.bt_submit);
+            viewHolder.bt_comment = (Button) view.findViewById(R.id.bt_comment);
             view.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder) view.getTag();
@@ -62,6 +64,7 @@ public class OrderListAdapter extends SimpleBaseAdapter {
                 viewHolder.rl_button.setVisibility(View.VISIBLE);
                 viewHolder.rl_amount.setVisibility(View.VISIBLE);
                 viewHolder.bt_cancel.setVisibility(View.GONE);
+                viewHolder.bt_comment.setVisibility(View.GONE);
                 viewHolder.bt_submit.setText("付款");
                 viewHolder.tv_orderType.setText("待付款");
                 break;
@@ -69,6 +72,7 @@ public class OrderListAdapter extends SimpleBaseAdapter {
                 viewHolder.rl_button.setVisibility(View.VISIBLE);
                 viewHolder.rl_amount.setVisibility(View.VISIBLE);
                 viewHolder.bt_cancel.setVisibility(View.VISIBLE);
+                viewHolder.bt_comment.setVisibility(View.GONE);
                 viewHolder.bt_cancel.setText("查看物流");
                 viewHolder.bt_submit.setText("确认收货");
                 viewHolder.tv_orderType.setText("待收货");
@@ -77,15 +81,32 @@ public class OrderListAdapter extends SimpleBaseAdapter {
                 viewHolder.rl_button.setVisibility(View.VISIBLE);
                 viewHolder.rl_amount.setVisibility(View.GONE);
                 viewHolder.bt_cancel.setVisibility(View.VISIBLE);
+                viewHolder.bt_comment.setVisibility(View.GONE);
                 viewHolder.bt_cancel.setText("取消订单");
                 viewHolder.bt_submit.setText("撤销退款");
                 viewHolder.tv_orderType.setText("待退款");
+                break;
+            case 5:
+                viewHolder.rl_button.setVisibility(View.VISIBLE);
+                viewHolder.rl_amount.setVisibility(View.VISIBLE);
+                viewHolder.bt_cancel.setVisibility(View.VISIBLE);
+                viewHolder.bt_comment.setVisibility(View.VISIBLE);
+                viewHolder.bt_cancel.setText("查看物流");
+                viewHolder.bt_submit.setText("申请售后");
+                viewHolder.tv_orderType.setText("交易成功");
                 break;
         }
         viewHolder.bt_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mContext.startActivity(new Intent(mContext, ApplySalesAfterActivity.class));
+                mContext.startActivity(new Intent(mContext, RefundOrCommentActivity.class).putExtra("type",0));
+            }
+        });
+        viewHolder.bt_comment.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                mContext.startActivity(new Intent(mContext, RefundOrCommentActivity.class).putExtra("type",1));
             }
         });
         viewHolder.tv_showNum.setText("共"+mOrders.size()+"件商品，合计:");
@@ -102,7 +123,7 @@ public class OrderListAdapter extends SimpleBaseAdapter {
         public TextView tv_orderNo,tv_orderType,tv_showNum,tv_amount,tv_freight;
         public ListView lv_products;
         public RelativeLayout rl_amount,rl_button;
-        public Button bt_cancel,bt_submit;
+        public Button bt_cancel,bt_submit,bt_comment;
     }
 
     private double amountMoney(OrderMode order){

@@ -26,7 +26,6 @@
                                 android:id="@+id/tv_productName"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
-                                android:paddingRight="80dp"
                                 android:layout_marginTop="17dp"
                                 android:layout_toRightOf="@+id/img_pro"
                                 android:textColor="@color/black_222222"
@@ -37,6 +36,7 @@
                                 />
                         <TextView
                                 android:id="@+id/tv_productPrice"
+                                android:visibility="gone"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
@@ -45,32 +45,7 @@
                                 android:textSize="@dimen/text_size_medial"
                                 android:text="￥108"
                                 />
-                        <LinearLayout
-                                android:id="@+id/ll_refund"
-                                android:visibility="visible"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_marginTop="18dp"
-                                android:orientation="vertical"
-                                android:gravity="center_horizontal"
-                                >
-                                <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textColor="@color/black_444444"
-                                        android:textSize="@dimen/text_size_medial"
-                                        android:text="退款金额"
-                                        />
-                                <TextView
-                                        android:id="@+id/tv_refundMoney"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textColor="@color/red"
-                                        android:textSize="@dimen/text_size_medial"
-                                        android:text="￥108"
-                                        />
-                        </LinearLayout>
+
 
                         <TextView
                                 android:layout_width="wrap_content"
@@ -90,17 +65,20 @@
                                 android:layout_height="wrap_content"
                                 android:layout_toRightOf="@+id/img_pro"
                                 android:layout_alignParentBottom="true"
-                                android:layout_marginBottom="20dp"
+                                android:layout_marginBottom="16dp"
                                 >
-                                <TextView
-                                        android:id="@+id/tv_productNum"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+
+
+                                <Button
+                                        android:id="@+id/bt_submit"
+                                        android:layout_width="110dp"
+                                        android:layout_height="40dp"
                                         android:layout_alignParentRight="true"
-                                        android:textColor="@color/black_222222"
-                                        android:textSize="@dimen/text_size_big"
-                                        android:text="x1"
-                                        />
+                                        android:layout_centerVertical="true"
+                                        android:text="退货退款"
+                                        android:textSize="@dimen/text_size_medial"
+                                        android:textColor="@color/white"
+                                        android:background="@drawable/bt_commit"/>
                         </RelativeLayout>
 
                 </RelativeLayout>

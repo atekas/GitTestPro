@@ -27,8 +27,9 @@ public class OrderActivity extends BaseActivity {
     int sUnpaid = 1;//待付款
     int sUnreceived = 2;//待收货
     int sRefund = 3;//退款单
-    int sAllOrder = 4;//全部订单
-    int type = 1;
+    int sAllOrder = 0;//全部订单
+
+    int type = 0;
     OrderListAdapter adapter = new OrderListAdapter(this,mOrders);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class OrderActivity extends BaseActivity {
         if(getIntent().getExtras() != null){
             type = getIntent().getExtras().getInt("type");
         }
-        if(type < 4) {
+        if(type != 0) {
             changeType();
         }
         adapter.flush(mOrders);
@@ -131,7 +132,7 @@ public class OrderActivity extends BaseActivity {
         orderMode3.setType(3);
         orderMode3.setPros(pros3);
         OrderMode orderMode4 = new OrderMode();
-        orderMode4.setType(1);
+        orderMode4.setType(5);
         orderMode4.setPros(pros4);
         OrderMode orderMode5 = new OrderMode();
         orderMode5.setType(2);

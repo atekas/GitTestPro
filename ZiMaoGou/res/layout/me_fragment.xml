@@ -43,6 +43,27 @@
                         android:layout_marginTop="20dp"
                         android:background="@drawable/login_register"/>
             </LinearLayout>
+            <RelativeLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginRight="25dp"
+                    >
+                <ImageView android:layout_width="25dp"
+                           android:layout_height="25dp"
+                           android:layout_centerInParent="true"
+                           android:src="@drawable/img_message"/>
+                <TextView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:textSize="@dimen/text_size_medial"
+                        android:textColor="@color/white"
+                        android:gravity="center"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/message_num"
+                        android:text="1"/>
+            </RelativeLayout>
         </RelativeLayout>
 
         <LinearLayout
@@ -51,65 +72,114 @@
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:background="@color/white">
-
-            <TextView
-                    android:id="@+id/wait_pay"
+            <RelativeLayout
                     android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:gravity="center"
-                    android:drawableTop="@drawable/wait_pay_icon"
-                    android:drawablePadding="10dp"
-                    android:text="@string/wait_pay"/>
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                <TextView
+                        android:id="@+id/wait_pay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:drawableTop="@drawable/wait_pay_icon"
+                        android:drawablePadding="10dp"
+                        android:text="@string/wait_pay"/>
+                <TextView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:textSize="@dimen/text_size_medial"
+                        android:textColor="@color/white"
+                        android:gravity="center"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="25dp"
+                        android:background="@drawable/message_num"
+                        android:text="1"/>
+            </RelativeLayout>
 
             <View
                     android:layout_width="2px"
                     android:layout_height="wrap_content"
                     android:background="#e5e5e5"/>
-
-            <TextView
-                    android:id="@+id/wait_receive"
+            <RelativeLayout
                     android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:gravity="center_horizontal"
-                    android:drawableTop="@drawable/wait_receive_goods"
-                    android:drawablePadding="10dp"
-                    android:text="@string/wait_receive_goods"/>
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                <TextView
+                        android:id="@+id/wait_receive"
+                        android:layout_width="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:gravity="center_horizontal"
+                        android:drawableTop="@drawable/wait_receive_goods"
+                        android:drawablePadding="10dp"
+                        android:text="@string/wait_receive_goods"/>
+                <TextView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:textSize="@dimen/text_size_medial"
+                        android:textColor="@color/white"
+                        android:gravity="center"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="25dp"
+                        android:background="@drawable/message_num"
+                        android:text="13"/>
+            </RelativeLayout>
 
             <View
                     android:layout_width="2px"
                     android:layout_height="wrap_content"
                     android:background="#e5e5e5"/>
-
-            <TextView
-                    android:id="@+id/sales_return"
+            <RelativeLayout
                     android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:gravity="center_horizontal"
-                    android:drawableTop="@drawable/sales_return"
-                    android:drawablePadding="10dp"
-                    android:text="@string/sales_reture"/>
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                <TextView
+                        android:id="@+id/sales_return"
+                        android:layout_width="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:gravity="center_horizontal"
+                        android:drawableTop="@drawable/sales_return"
+                        android:drawablePadding="10dp"
+                        android:text="@string/sales_reture"/>
+                <TextView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:textSize="@dimen/text_size_medial"
+                        android:textColor="@color/white"
+                        android:gravity="center"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="25dp"
+                        android:background="@drawable/message_num"
+                        android:text="1"/>
+            </RelativeLayout>
 
             <View
                     android:layout_width="2px"
                     android:layout_height="wrap_content"
                     android:background="#e5e5e5"/>
-
-            <TextView
-                    android:id="@+id/all_orders"
+            <RelativeLayout
                     android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:gravity="center_horizontal"
-                    android:drawableTop="@drawable/all_orders"
-                    android:drawablePadding="10dp"
-                    android:text="@string/all_orders"/>
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                <TextView
+                        android:id="@+id/all_orders"
+                        android:layout_width="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:gravity="center_horizontal"
+                        android:drawableTop="@drawable/all_orders"
+                        android:drawablePadding="10dp"
+                        android:text="@string/all_orders"/>
+            </RelativeLayout>
 
         </LinearLayout>
 

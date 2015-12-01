@@ -28,13 +28,15 @@
                 android:textSize="@dimen/title_size"
                 android:textStyle="bold"
                 android:text="优惠券"/>
-        <TextView
+        <Button
+                android:onClick="InvokeCouponClick"
                 android:id="@+id/tv_function"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black_444444"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="18dp"
+                android:background="@null"
                 android:layout_alignBottom="@+id/tv_title"
                 android:textSize="@dimen/text_size_x_large"
                 android:text="激活"/>

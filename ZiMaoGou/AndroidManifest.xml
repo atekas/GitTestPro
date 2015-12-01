@@ -124,7 +124,11 @@
 
         <activity android:name=".activity.mycenter.ApplySalesAfterActivity" android:screenOrientation="portrait" />
 
+        <activity android:name=".activity.mycenter.RefundOrCommentActivity" android:screenOrientation="portrait" />
 
+        <activity android:name=".activity.mycenter.WebViewActivity" android:screenOrientation="portrait" />
+
+        <activity android:name=".activity.mycenter.UpdatePasswordActivity" android:screenOrientation="portrait" />
 
 
 
