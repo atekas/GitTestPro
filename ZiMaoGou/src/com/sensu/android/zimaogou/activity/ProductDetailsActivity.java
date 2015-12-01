@@ -7,6 +7,7 @@ import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ListView;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.adapter.ProductEvaluateAdapter;
@@ -19,6 +20,7 @@ import com.sensu.android.zimaogou.widget.ScrollViewContainer;
 public class ProductDetailsActivity extends BaseActivity implements View.OnClickListener {
 
     private ScrollViewContainer mScrollViewContainer;
+    private int mProductCount = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
 
         findViewById(R.id.back).setOnClickListener(this);
         findViewById(R.id.shopping_bag).setOnClickListener(this);
+        findViewById(R.id.product_share).setOnClickListener(this);
 
         ListView listView = (ListView) findViewById(R.id.product_evaluate_list);
         listView.setAdapter(new ProductEvaluateAdapter(this));
@@ -56,36 +59,65 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 finish();
                 break;
             case R.id.shopping_bag:
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.putExtra(MainActivity.SELECT_TAB, MainActivity.SHOPPING_BAG_FM_CODE);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                break;
+            case R.id.product_share:
+                PromptUtils.showToast("分享");
+                break;
+            case R.id.cancel:
+                mChooseDialog.dismiss();
+                break;
+            case R.id.sure:
+                mChooseDialog.dismiss();
+                break;
+            case R.id.type_1:
+                mChooseDialog.findViewById(R.id.type_1).setSelected(true);
+                mChooseDialog.findViewById(R.id.type_2).setSelected(false);
+                break;
+            case R.id.type_2:
+                mChooseDialog.findViewById(R.id.type_1).setSelected(false);
+                mChooseDialog.findViewById(R.id.type_2).setSelected(true);
+                break;
+            case R.id.bt_subtract:
+                if (mProductCount > 1) {
+                    mProductCount--;
+                    ((EditText) mChooseDialog.findViewById(R.id.product_num)).setText(mProductCount + "");
+                }
+                break;
+            case R.id.bt_add:
+                mProductCount++;
+                ((EditText) mChooseDialog.findViewById(R.id.product_num)).setText(mProductCount + "");
                 break;
         }
     }
     /**
-     *
-     *
      * 选择型号和颜色
-     *
      */
     Dialog mChooseDialog;
     public void ChooseTypeAndColorClick(View v){
         mChooseDialog = new Dialog(this,R.style.dialog);
         mChooseDialog.setCancelable(true);
         mChooseDialog.setContentView(R.layout.product_details_choose_dialog);
-
         WindowManager m = getWindowManager();
-
         Window dialogWindow = mChooseDialog.getWindow();
-
-//        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-//        dialogWindow.setGravity(Gravity.TOP);
-//        lp.y = DisplayUtils.dp2px(50);
-//        dialogWindow.setAttributes(lp);
 
         Display d = m.getDefaultDisplay(); // 获取屏幕宽、高用
         WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 获取对话框当前的参数值
-//        p.height = (int) d.getHeight() ; // 高度设置为屏幕
         p.width = (int) d.getWidth() ; // 宽度设置为屏幕
         dialogWindow.setAttributes(p);
         mChooseDialog.show();
+
+        mChooseDialog.findViewById(R.id.cancel).setOnClickListener(this);
+        mChooseDialog.findViewById(R.id.type_1).setSelected(true);
+        mChooseDialog.findViewById(R.id.type_2).setSelected(false);
+        mChooseDialog.findViewById(R.id.sure).setOnClickListener(this);
+        mChooseDialog.findViewById(R.id.type_1).setOnClickListener(this);
+        mChooseDialog.findViewById(R.id.type_2).setOnClickListener(this);
+        mChooseDialog.findViewById(R.id.bt_subtract).setOnClickListener(this);
+        mChooseDialog.findViewById(R.id.bt_add).setOnClickListener(this);
     }
 
 }

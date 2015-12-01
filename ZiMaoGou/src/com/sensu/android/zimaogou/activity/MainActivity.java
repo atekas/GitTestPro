@@ -11,6 +11,8 @@ import com.sensu.android.zimaogou.utils.DisplayUtils;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
+    public static final String SELECT_TAB = "select_tab";
+
     public static final int HOME_PAGE_FM_CODE = 0;
     public static final int CLASSIFICATION_FM_CODE = HOME_PAGE_FM_CODE + 1;
     public static final int TOUR_BUT_FM_CODE = CLASSIFICATION_FM_CODE + 1;
@@ -42,6 +44,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         initViews();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initViews();
+    }
+
     private void initViews() {
         mHomePageBottomView = (TextView) findViewById(R.id.bottom_home_page);
         mClassificationBottomView = (TextView) findViewById(R.id.bottom_classification);
@@ -57,7 +65,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         mFragmentManager = getFragmentManager();
 
-        mCurrentIndex = HOME_PAGE_FM_CODE;
         viewPerformClick();
     }
 
@@ -168,6 +175,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void viewPerformClick() {
+        mCurrentIndex = getIntent().getIntExtra(SELECT_TAB, HOME_PAGE_FM_CODE);
         switch (mCurrentIndex) {
             case HOME_PAGE_FM_CODE:
                 mHomePageBottomView.performClick();
