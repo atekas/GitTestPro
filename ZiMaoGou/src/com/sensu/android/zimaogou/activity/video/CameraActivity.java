@@ -31,6 +31,8 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
         mRecorderView = (MovieRecorderView) findViewById(R.id.movieRecorderView);
         mShootBtn = (Button) findViewById(R.id.shoot_button);
 
+        findViewById(R.id.finish).setOnClickListener(this);
+
         if (mVideoPathList == null) {
             mVideoPathList = new ArrayList<String>();
         }
@@ -110,6 +112,11 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.finish:
+                finish();
+                break;
+        }
     }
 
     /**

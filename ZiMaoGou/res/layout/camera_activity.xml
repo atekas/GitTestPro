@@ -5,6 +5,16 @@
               android:background="@android:color/black"
               android:orientation="vertical">
 
+    <TextView
+            android:id="@+id/finish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dip_5"
+            android:layout_marginLeft="@dimen/dip_5"
+            android:textSize="@dimen/text_size_18"
+            android:textColor="#ffcc00"
+            android:text="取消"/>
+
     <com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -17,6 +27,11 @@
 
     </com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout>
 
+    <View
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
     <Button
             android:id="@+id/shoot_button"
             android:layout_width="wrap_content"
@@ -25,5 +40,10 @@
             android:text="按住拍"
             android:background="@drawable/bg_movie_add_shoot"
             android:textColor="#ECEBF1"/>
+
+    <View
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
 </LinearLayout>

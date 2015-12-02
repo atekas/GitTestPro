@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.activity.OnlineServiceActivity;
 import com.sensu.android.zimaogou.activity.login.LoginActivity;
 import com.sensu.android.zimaogou.activity.mycenter.*;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
@@ -161,6 +162,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             case R.id.online_service:
                 //TODO 在线客服
                 PromptUtils.showToast("在线客服");
+                startActivity(new Intent(mParentActivity, OnlineServiceActivity.class));
                 break;
             case R.id.service_phone:
                 //TODO 客服电话

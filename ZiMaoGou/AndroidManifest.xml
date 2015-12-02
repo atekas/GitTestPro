@@ -162,6 +162,8 @@
 
         <activity android:name=".activity.BuyReadingActivity" android:screenOrientation="portrait" />
 
+        <activity android:name=".activity.OnlineServiceActivity" android:screenOrientation="portrait" />
+
         <!--###################################### 友盟分享 ############################################-->
         <meta-data
                 android:name="UMENG_APPKEY"
