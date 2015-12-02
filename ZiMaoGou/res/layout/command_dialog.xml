@@ -30,7 +30,7 @@
                 android:layout_margin="7dp"
                 android:gravity="center"
                 android:textSize="@dimen/text_size_x_large"
-                android:textColor="@color/black_111111"
+                android:textColor="@color/red"
                 android:text="确定"
                 />
     </LinearLayout>
