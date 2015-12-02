@@ -3,128 +3,134 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-        <LinearLayout android:layout_width="fill_parent" android:layout_height="120dp">
-    <RelativeLayout
+
+    <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="120dp"
-            android:paddingRight="13dp"
-            android:background="@color/white"
-            >
-        <ImageView
-                android:id="@+id/img_choose"
-                android:layout_width="@dimen/account_chose_width"
-                android:layout_height="@dimen/account_chose_width"
-                android:src="@drawable/d_06"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
-                />
-        <ImageView
-                android:id="@+id/img_pro"
-                android:layout_width="86dp"
-                android:layout_height="86dp"
-                android:layout_marginRight="10dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/account_contentLeft_distance"
-                android:src="@drawable/product2"
-                />
+            android:layout_height="120dp">
 
+        <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="120dp"
+                android:paddingRight="13dp"
+                android:background="@color/white">
+
+            <ImageView
+                    android:id="@+id/img_choose"
+                    android:layout_width="@dimen/account_chose_width"
+                    android:layout_height="@dimen/account_chose_width"
+                    android:src="@drawable/drawable_pay_way_select"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"/>
+
+            <ImageView
+                    android:id="@+id/img_pro"
+                    android:layout_width="86dp"
+                    android:layout_height="86dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/account_contentLeft_distance"
+                    android:src="@drawable/product2"
+                    />
+
+
+            <TextView
+                    android:id="@+id/tv_productName"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="20dp"
+                    android:layout_marginTop="17dp"
+                    android:layout_toLeftOf="@+id/tv_productPrice"
+                    android:layout_toRightOf="@+id/img_pro"
+                    android:textColor="@color/black_222222"
+                    android:textSize="@dimen/text_size_big"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:text="MACROPUS 立体机理系列单肩款包" />
+            <TextView
+                    android:id="@+id/tv_productPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="18dp"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/text_size_medial"
+                    android:text="￥108"
+                    />
+
+
+            <RelativeLayout
+                    android:id="@+id/rl_showType"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/img_pro"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="20dp" >
 
                 <TextView
-                        android:id="@+id/tv_productName"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingRight="20dp"
-                        android:layout_marginTop="17dp"
-                        android:layout_toLeftOf="@+id/tv_productPrice"
-                        android:layout_toRightOf="@+id/img_pro"
-                        android:textColor="@color/black_222222"
-                        android:textSize="@dimen/text_size_big"
-                        android:maxLines="2"
-                        android:ellipsize="end"
-                        android:text="MACROPUS 立体机理系列单肩款包"
-                        />
-                <TextView
-                        android:id="@+id/tv_productPrice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="18dp"
-                        android:textColor="@color/red"
-                        android:textSize="@dimen/text_size_medial"
-                        android:text="￥108"
-                        />
-                
-
-
-                <RelativeLayout
-                        android:id="@+id/rl_showType"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/img_pro"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="20dp"
-                        >
-                <TextView
+                        android:id="@+id/product_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:layout_toLeftOf="@+id/tv_productNum"
                         android:textColor="@color/gray_9b9b9b"
+                        android:layout_toLeftOf="@+id/tv_productNum"
                         android:textSize="@dimen/text_size_medial"
                         android:singleLine="true"
                         android:text="型号：M；颜色：白色"
                         />
 
-                    <TextView
-                            android:id="@+id/tv_productNum"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:textColor="@color/black_222222"
-                            android:textSize="@dimen/text_size_big"
-                            android:text="x1"
-                            />
-                </RelativeLayout>
-                <LinearLayout
-                        android:id="@+id/ll_editNum"
-                        android:visibility="gone"
-                        android:layout_width="fill_parent"
+                <TextView
+                        android:id="@+id/tv_productNum"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/img_pro"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="10dp">
-                    <Button
-                            android:id="@+id/bt_subtract"
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:background="@drawable/c_26"
-                            />
-                    <LinearLayout
-                            android:layout_width="55dp"
-                            android:layout_height="35dp"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"
-                            android:background="@drawable/account_border"
-                            >
-                        <EditText
-                                android:id="@+id/et_productNum"
-                                android:layout_width="fill_parent"
-                                android:layout_height="fill_parent"
-                                android:textSize="@dimen/text_size_x_large"
-                                android:textColor="@color/black_333333"
-                                android:gravity="center"
-                                android:inputType="number"
-                                android:singleLine="true"
-                                android:text="1"
-                                android:background="@null"/>
-                    </LinearLayout>
-                    <Button
-                            android:id="@+id/bt_add"
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:background="@drawable/c_28"
-                            />
+                        android:layout_alignParentRight="true"
+                        android:textColor="@color/black_222222"
+                        android:textSize="@dimen/text_size_big"
+                        android:text="x1"
+                        />
+            </RelativeLayout>
+            <LinearLayout
+                    android:id="@+id/ll_editNum"
+                    android:visibility="gone"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/img_pro"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="10dp">
+                <Button
+                        android:id="@+id/bt_subtract"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:background="@drawable/c_26"
+                        />
+                <LinearLayout
+                        android:layout_width="55dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/account_border">
+
+                    <EditText
+                            android:id="@+id/et_productNum"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:textSize="@dimen/text_size_x_large"
+                            android:textColor="@color/black_333333"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:singleLine="true"
+                            android:focusable="false"
+                            android:text="1"
+                            android:background="@null"/>
+
                 </LinearLayout>
-    </RelativeLayout>
-        </LinearLayout>
+
+                <Button
+                        android:id="@+id/bt_add"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:background="@drawable/c_28"
+                        />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>
