@@ -98,7 +98,6 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         mParentActivity.findViewById(R.id.ll_featureVideos).setOnClickListener(this);
     }
 
-
     @Override
     public void onClick(View view) {
         Intent intent;

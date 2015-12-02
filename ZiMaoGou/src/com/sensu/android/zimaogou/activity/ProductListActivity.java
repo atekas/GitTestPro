@@ -1,7 +1,9 @@
 package com.sensu.android.zimaogou.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.adapter.ProductsDetailsAdapter;
@@ -10,7 +12,7 @@ import com.sensu.android.zimaogou.utils.DisplayUtils;
 /**
  * Created by zhangwentao on 2015/11/17.
  */
-public class ProductListActivity extends BaseActivity implements View.OnClickListener {
+public class ProductListActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     public static final String IS_NO_TITLE = "is_no_title";
     private GridView mGridView;
@@ -42,6 +44,8 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
         mGridView = (GridView) findViewById(R.id.product_list);
         mProductsDetailsAdapter = new ProductsDetailsAdapter(this);
         mGridView.setAdapter(mProductsDetailsAdapter);
+
+        mGridView.setOnItemClickListener(this);
     }
 
     @Override
@@ -59,5 +63,10 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
                 findViewById(R.id.newest_text).setSelected(false);
                 break;
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        startActivity(new Intent(this, ProductDetailsActivity.class));
     }
 }

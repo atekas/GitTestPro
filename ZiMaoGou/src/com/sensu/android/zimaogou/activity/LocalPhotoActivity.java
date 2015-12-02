@@ -52,7 +52,7 @@ public class LocalPhotoActivity extends BaseActivity implements LocationPhotoLis
         findViewById(R.id.back).setOnClickListener(this);
         ListView listView = (ListView) findViewById(R.id.local_photo_grid);
         mHeadView = LayoutInflater.from(this).inflate(R.layout.local_photo_head_item, null);
-        listView.addHeaderView(mHeadView);
+//        listView.addHeaderView(mHeadView);
         mHeadView.findViewById(R.id.right_select).setOnClickListener(this);
         mHeadView.findViewById(R.id.center_select).setOnClickListener(this);
         mHeadView.findViewById(R.id.frame_left).setOnClickListener(this);

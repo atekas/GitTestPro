@@ -37,9 +37,15 @@ public class LocalPhotoAdapter extends SimpleBaseAdapter {
     @Override
     public int getCount() {
         int count = 0;
-        if (mLocalPhotoList != null && mLocalPhotoList.size() > 2) {
-            count = (mLocalPhotoList.size() - 2) / 3;
-            if ((mLocalPhotoList.size() - 2) % 3 != 0) {
+//        if (mLocalPhotoList != null && mLocalPhotoList.size() > 2) {
+//            count = (mLocalPhotoList.size() - 2) / 3;
+//            if ((mLocalPhotoList.size() - 2) % 3 != 0) {
+//                count++;
+//            }
+//        }
+        if (mLocalPhotoList != null) {
+            count = mLocalPhotoList.size() / 3;
+            if (mLocalPhotoList.size() % 3 != 0) {
                 count++;
             }
         }
@@ -65,11 +71,11 @@ public class LocalPhotoAdapter extends SimpleBaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
 
-        final int leftIndex = position * 3 + 2;
+        final int leftIndex = position * 3 + 2 - 2;
         setPhotoInfo(leftIndex, viewHolder.mLeftImageView);
         setPhotoSelect(leftIndex, viewHolder.mLeftChoose);
 
-        final int centerIndex = position * 3 + 3;
+        final int centerIndex = position * 3 + 3 - 2;
         if (centerIndex < (mLocalPhotoList.size())) {
             viewHolder.mCenterImageView.setVisibility(View.VISIBLE);
             viewHolder.mCenterChoose.setVisibility(View.VISIBLE);
@@ -80,7 +86,7 @@ public class LocalPhotoAdapter extends SimpleBaseAdapter {
             viewHolder.mCenterChoose.setVisibility(View.GONE);
         }
 
-        final int rightIndex = position * 3 + 4;
+        final int rightIndex = position * 3 + 4 - 2;
         if (rightIndex < (mLocalPhotoList.size())) {
             viewHolder.mRightImageView.setVisibility(View.VISIBLE);
             viewHolder.mRightChoose.setVisibility(View.VISIBLE);

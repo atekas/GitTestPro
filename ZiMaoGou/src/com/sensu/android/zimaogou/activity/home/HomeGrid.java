@@ -38,7 +38,7 @@ public class HomeGrid extends LinearLayout implements View.OnClickListener {
                 getContext().startActivity(new Intent(getContext(), ProductListActivity.class));
                 break;
             case R.id.product_2:
-                getContext().startActivity(new Intent(getContext(), ProductCommentActivity.class));
+                getContext().startActivity(new Intent(getContext(), ProductListActivity.class));
                 break;
             case R.id.product_3:
                 getContext().startActivity(new Intent(getContext(), ProductListActivity.class));

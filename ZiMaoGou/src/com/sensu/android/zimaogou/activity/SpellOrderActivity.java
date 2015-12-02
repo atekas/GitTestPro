@@ -46,10 +46,12 @@ public class SpellOrderActivity extends BaseActivity implements View.OnClickList
             case R.id.group_buy_selection:
                 findViewById(R.id.group_buy_selection_text).setSelected(true);
                 findViewById(R.id.my_group_buy_text).setSelected(false);
+                findViewById(R.id.bottom_layout).setVisibility(View.VISIBLE);
                 break;
             case R.id.my_group_buy:
                 findViewById(R.id.group_buy_selection_text).setSelected(false);
                 findViewById(R.id.my_group_buy_text).setSelected(true);
+                findViewById(R.id.bottom_layout).setVisibility(View.GONE);
                 break;
         }
     }

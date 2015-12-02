@@ -1,13 +1,19 @@
 package com.sensu.android.zimaogou.activity.fragment;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.TextView;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.activity.LocalPhotoActivity;
 import com.sensu.android.zimaogou.activity.tour.TourBuyDetailsActivity;
 import com.sensu.android.zimaogou.activity.tour.TourBuySendActivity;
 import com.sensu.android.zimaogou.activity.video.CameraActivity;
@@ -15,13 +21,17 @@ import com.sensu.android.zimaogou.adapter.TourBuyAdapter;
 import com.sensu.android.zimaogou.widget.OnRefreshListener;
 import com.sensu.android.zimaogou.widget.RefreshListView;
 
+import java.io.File;
+
 /**
  * Created by zhangwentao on 2015/11/10.
  */
 public class TourBuyFragment extends BaseFragment implements View.OnClickListener, AdapterView.OnItemClickListener {
 
+    public static final int TAKE_PHOTO_CODE = 1;
     private RefreshListView mTourBuyListView;
     private TourBuyAdapter mTourBuyAdapter;
+    String path;
 
     private Handler mHandler = new Handler();
 
@@ -95,17 +105,23 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tour_buy_send:
-                //TODO 进入发布界面
                 chooseDialog();
-//                mParentActivity.startActivity(new Intent(mParentActivity, TourBuySendActivity.class));
                 break;
             case R.id.take_video:
                 mParentActivity.startActivity(new Intent(mParentActivity, CameraActivity.class));
+                mTourBuyChooseDialog.dismiss();
                 break;
             case R.id.take_photo:
-                mParentActivity.startActivity(new Intent(mParentActivity, TourBuySendActivity.class));
+                Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                path = Environment.getExternalStorageDirectory() + File.separator + "im/pic/0000.jpg";
+                File mTempCapturePicFile = new File(path);
+                intent1.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mTempCapturePicFile));
+                mParentActivity.startActivityForResult(intent1, TAKE_PHOTO_CODE);
+                mTourBuyChooseDialog.dismiss();
                 break;
             case R.id.choose_from_photo_album:
+                startActivity(new Intent(mParentActivity, LocalPhotoActivity.class));
+                mTourBuyChooseDialog.dismiss();
                 break;
         }
     }
@@ -118,9 +134,7 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
     }
 
     /**
-     *
      * 选择对话框
-     *
      */
     Dialog mTourBuyChooseDialog;
     public void chooseDialog(){
@@ -154,5 +168,17 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
         p.width = (int) d.getWidth() ; // 宽度设置为屏幕
         dialogWindow.setAttributes(p);
         mTourBuyChooseDialog.show();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == TAKE_PHOTO_CODE) {
+                Intent intent = new Intent(mParentActivity, TourBuySendActivity.class);
+                intent.putExtra("photo_path", path);
+                mParentActivity.startActivity(intent);
+            }
+        }
     }
 }

@@ -105,6 +105,7 @@
                 android:layout_marginRight="@dimen/dip_20"/>
 
         <RelativeLayout
+                android:id="@+id/bottom_layout"
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
                 android:background="@color/translucence_black_35"
