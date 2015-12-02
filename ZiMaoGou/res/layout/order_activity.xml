@@ -29,6 +29,7 @@
                 android:text="@string/all_orders"/>
 
         <ImageView
+                android:visibility="gone"
                 android:id="@+id/share"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

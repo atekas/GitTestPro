@@ -3,11 +3,17 @@ package com.sensu.android.zimaogou.activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.fragment.*;
 import com.sensu.android.zimaogou.utils.DisplayUtils;
+import com.umeng.common.message.UmengMessageDeviceConfig;
+import com.umeng.message.IUmengRegisterCallback;
+import com.umeng.message.MsgConstant;
+import com.umeng.message.PushAgent;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -35,15 +41,61 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private TextView mTourBuyBottomView;
     private TextView mShoppingBagBottomView;
     private TextView mMeBottomView;
-
+    private PushAgent mPushAgent;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        mPushAgent = PushAgent.getInstance(this);
+		mPushAgent.setPushCheck(true);    //默认不检查集成配置文件
+//		mPushAgent.setLocalNotificationIntervalLimit(false);  //默认本地通知间隔最少是10分钟
 
+        //应用程序启动统计
+        //参考集成文档的1.5.1.2
+        //http://dev.umeng.com/push/android/integration#1_5_1
+        mPushAgent.onAppStart();
+
+        //开启推送并设置注册的回调处理
+        mPushAgent.enable(mRegisterCallback);
         initViews();
     }
+    public Handler handler = new Handler();
 
+    //此处是注册的回调处理
+    //参考集成文档的1.7.10
+    //http://dev.umeng.com/push/android/integration#1_7_10
+    public IUmengRegisterCallback mRegisterCallback = new IUmengRegisterCallback() {
+
+        @Override
+        public void onRegistered(String registrationId) {
+            // TODO Auto-generated method stub
+            handler.post(new Runnable() {
+
+                @Override
+                public void run() {
+                    // TODO Auto-generated method stub
+                    updateStatus();
+                }
+            });
+        }
+    };
+    private void updateStatus() {
+        String pkgName = getApplicationContext().getPackageName();
+        String info = String.format("enabled:%s  isRegistered:%s  DeviceToken:%s " +
+                        "SdkVersion:%s AppVersionCode:%s AppVersionName:%s",
+                mPushAgent.isEnabled(), mPushAgent.isRegistered(),
+                mPushAgent.getRegistrationId(), MsgConstant.SDK_VERSION,
+                UmengMessageDeviceConfig.getAppVersionCode(this), UmengMessageDeviceConfig.getAppVersionName(this));
+//        tvStatus.setText("应用包名："+pkgName+"\n"+info);
+//
+//        btnEnable.setImageResource(mPushAgent.isEnabled()?R.drawable.open_button:R.drawable.close_button);
+//        btnEnable.setClickable(true);
+//        copyToClipBoard();
+//
+//        Log.i(TAG, "updateStatus:" + String.format("enabled:%s  isRegistered:%s",
+//                mPushAgent.isEnabled(), mPushAgent.isRegistered()));
+//        Log.i(TAG, "=============================");
+    }
     @Override
     protected void onResume() {
         super.onResume();

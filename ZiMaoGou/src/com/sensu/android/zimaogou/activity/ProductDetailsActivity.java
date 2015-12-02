@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ListView;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.activity.video.ProductShopCarActivity;
 import com.sensu.android.zimaogou.adapter.ProductEvaluateAdapter;
 import com.sensu.android.zimaogou.external.umeng.share.UmengShare;
 import com.sensu.android.zimaogou.utils.PromptUtils;
@@ -63,9 +64,9 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 finish();
                 break;
             case R.id.shopping_bag:
-                Intent intent = new Intent(this, MainActivity.class);
-                intent.putExtra(MainActivity.SELECT_TAB, MainActivity.SHOPPING_BAG_FM_CODE);
-                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                Intent intent = new Intent(this, ProductShopCarActivity.class);
+//                intent.putExtra(MainActivity.SELECT_TAB, MainActivity.SHOPPING_BAG_FM_CODE);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
                 break;
             case R.id.product_share:

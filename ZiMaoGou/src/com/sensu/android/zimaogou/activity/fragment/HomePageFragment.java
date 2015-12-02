@@ -88,7 +88,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
             @Override
             public void onClick(View view, int position) {
                 PromptUtils.showToast("你点击了第" + position + "张图片");
-                startActivity(new Intent(mParentActivity, BuyReadingActivity.class));
+                startActivity(new Intent(mParentActivity, WebViewActivity.class).putExtra("title","广告"));
             }
         });
 
@@ -105,7 +105,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         switch (view.getId()) {
             case R.id.ll_buyRead:
                 PromptUtils.showToast("购物须知");
-                startActivity(new Intent(mParentActivity, BuyReadingActivity.class));
+                startActivity(new Intent(mParentActivity, WebViewActivity.class).putExtra("title","购物须知"));
                 break;
             case R.id.ll_hotGoods:
                 PromptUtils.showToast("人气商品");
