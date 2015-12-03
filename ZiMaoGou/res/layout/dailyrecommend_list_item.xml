@@ -23,7 +23,7 @@
                 android:layout_height="50dp"
                 android:layout_centerInParent="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/video_icon"/>
+                android:src="@drawable/recommend_video"/>
 
     </RelativeLayout>
 
@@ -31,7 +31,7 @@
             android:id="@+id/tv_pro"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_normal"
+            android:textSize="12sp"
             android:layout_marginTop="5dp"
             android:paddingRight="5dp"
             android:paddingLeft="10dp"

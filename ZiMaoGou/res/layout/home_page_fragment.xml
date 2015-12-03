@@ -65,7 +65,7 @@
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_size_normal"
+                            android:textSize="12sp"
                             android:text="@string/buyRead"
                             android:textColor="@color/light_black"/>
 
@@ -93,7 +93,7 @@
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_size_normal"
+                            android:textSize="12sp"
                             android:text="@string/hotGoods"
                             android:textColor="@color/light_black"/>
 
@@ -121,7 +121,7 @@
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_size_normal"
+                            android:textSize="12sp"
                             android:text="@string/Latest"
                             android:textColor="@color/light_black"/>
 
@@ -149,7 +149,7 @@
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_size_normal"
+                            android:textSize="12sp"
                             android:text="@string/featureVideos"
                             android:textColor="@color/light_black"/>
 
@@ -171,7 +171,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="1px"
                     android:background="@color/home_line"
-                    android:layout_marginTop="@dimen/home_distance"/>
+                    android:layout_marginTop="10dp"/>
 
             <include
                     layout="@layout/home_item1_layout"
@@ -181,7 +181,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="1px"
                     android:background="@color/home_line"
-                    android:layout_marginTop="@dimen/home_distance"/>
+                    android:layout_marginTop="10dp"/>
 
             <include
                     layout="@layout/home_grid"/>
@@ -190,7 +190,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="1px"
                     android:background="@color/home_line"
-                    android:layout_marginTop="@dimen/home_distance"/>
+                    android:layout_marginTop="10dp"/>
 
             <include
                     layout="@layout/home_item1_layout"
@@ -200,7 +200,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="1px"
                     android:background="@color/home_line"
-                    android:layout_marginTop="@dimen/home_distance"/>
+                    android:layout_marginTop="10dp"/>
 
             <include
                     layout="@layout/home_item1_layout"
@@ -210,7 +210,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="1px"
                     android:background="@color/home_line"
-                    android:layout_marginTop="@dimen/home_distance"/>
+                    android:layout_marginTop="10dp"/>
 
             <include
                     layout="@layout/home_item2_layout"
@@ -220,7 +220,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="1px"
                     android:background="@color/home_line"
-                    android:layout_marginTop="@dimen/home_distance"/>
+                    android:layout_marginTop="10dp"/>
 
             <include
                     layout="@layout/home_item2_layout"

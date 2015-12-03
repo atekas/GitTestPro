@@ -26,7 +26,7 @@
                 <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@drawable/product1"/>
+                        android:src="@drawable/dp_2"/>
 
         </com.sensu.android.zimaogou.widget.FixedAspectRatioRelativeLayout>
 

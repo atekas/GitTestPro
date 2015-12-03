@@ -6,11 +6,11 @@
 
     <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="120dp">
+            android:layout_height="wrap_content">
 
         <RelativeLayout
                 android:layout_width="fill_parent"
-                android:layout_height="120dp"
+                android:layout_height="100dp"
                 android:paddingRight="13dp"
                 android:background="@color/white">
 
@@ -29,7 +29,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/account_contentLeft_distance"
-                    android:src="@drawable/product2"
+                    android:src="@drawable/product3"
                     />
 
 
@@ -42,7 +42,7 @@
                     android:layout_toLeftOf="@+id/tv_productPrice"
                     android:layout_toRightOf="@+id/img_pro"
                     android:textColor="@color/black_222222"
-                    android:textSize="@dimen/text_size_big"
+                    android:textSize="14sp"
                     android:maxLines="2"
                     android:ellipsize="end"
                     android:text="MACROPUS 立体机理系列单肩款包" />
@@ -53,7 +53,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="18dp"
                     android:textColor="@color/red"
-                    android:textSize="@dimen/text_size_medial"
+                    android:textSize="13sp"
                     android:text="￥108"
                     />
 
@@ -73,7 +73,7 @@
                         android:layout_alignParentLeft="true"
                         android:textColor="@color/gray_9b9b9b"
                         android:layout_toLeftOf="@+id/tv_productNum"
-                        android:textSize="@dimen/text_size_medial"
+                        android:textSize="13sp"
                         android:singleLine="true"
                         android:text="型号：M；颜色：白色"
                         />
@@ -84,7 +84,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:textColor="@color/black_222222"
-                        android:textSize="@dimen/text_size_big"
+                        android:textSize="14sp"
                         android:text="x1"
                         />
             </RelativeLayout>

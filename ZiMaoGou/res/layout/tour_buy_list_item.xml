@@ -7,15 +7,15 @@
 
     <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp">
+            android:layout_height="60dp">
 
-        <ImageView
+        <com.sensu.android.zimaogou.widget.RoundImageView
                 android:id="@+id/user_head_pic"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:src="@drawable/head_pic_default"/>
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/head_photo_02"/>
 
         <RelativeLayout
                 android:layout_width="match_parent"
@@ -28,6 +28,7 @@
                     android:id="@+id/user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_15"
                     android:textColor="@color/black_222222"
                     android:text="小美美"/>
 
@@ -59,7 +60,7 @@
                 android:id="@+id/content_pic"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/red"/>
+                android:background="@drawable/yglist"/>
 
         <ImageView
                 android:id="@+id/video_icon"
@@ -75,17 +76,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:textColor="@color/black_333333"
-            android:textSize="16sp"
-            android:text="首款首款好东西"/>
+            android:textSize="15sp"
+            android:text="产品大升级啦！ 明明白白消费！按国家旅游法规定：一价全包！拥抱大海，岛海相映，海天相依，度假首选！—来韩国最美海岛—济州岛旅游吧！"/>
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:gravity="center_vertical">
 
@@ -107,8 +108,8 @@
     <View
             android:layout_width="match_parent"
             android:layout_height="2px"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:background="#e5e5e5"/>
 
@@ -165,7 +166,7 @@
 
     <View
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="10dp"
             android:background="#e5e5e5" />
 
 </LinearLayout>

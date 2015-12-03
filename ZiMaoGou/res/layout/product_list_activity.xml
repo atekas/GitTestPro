@@ -95,8 +95,6 @@
             android:layout_height="match_parent"
             android:numColumns="2"
             android:horizontalSpacing="2dp"
-            android:verticalSpacing="2dp"
-            android:layout_marginTop="2dp"
             android:background="#e8e8e8"/>
 
 </LinearLayout>

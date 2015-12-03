@@ -9,8 +9,8 @@
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="152dp"
-            android:layout_marginTop="16dp">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp">
 
         <RelativeLayout
                 android:id="@+id/product_1"
@@ -23,9 +23,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:textSize="@dimen/text_size_17"
+                    android:textSize="13sp"
                     android:textColor="@color/black_222222"
-                    android:text="韩国必买"/>
+                    android:text="免费使用"/>
 
             <TextView
                     android:id="@+id/type_1"
@@ -34,18 +34,18 @@
                     android:layout_below="@+id/name_1"
                     android:layout_marginTop="5dp"
                     android:layout_centerHorizontal="true"
-                    android:textSize="@dimen/text_size_15"
+                    android:textSize="12sp"
                     android:textColor="@color/gray_9b9b9b"
-                    android:text="凝胶指甲贴"/>
+                    android:text="冬季火辣爆款"/>
 
             <ImageView
                     android:layout_width="85dp"
                     android:layout_height="75dp"
                     android:layout_below="@+id/type_1"
-                    android:layout_marginTop="@dimen/dip_17"
+                    android:layout_marginTop="13dp"
                     android:scaleType="centerCrop"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/store1"/>
+                    android:src="@drawable/discount_1"/>
 
         </RelativeLayout>
 
@@ -68,9 +68,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:textSize="@dimen/text_size_17"
+                    android:textSize="13sp"
                     android:textColor="@color/black_222222"
-                    android:text="韩国必买"/>
+                    android:text="免费使用"/>
 
             <TextView
                     android:id="@+id/type_2"
@@ -79,18 +79,18 @@
                     android:layout_below="@+id/name_2"
                     android:layout_marginTop="5dp"
                     android:layout_centerHorizontal="true"
-                    android:textSize="@dimen/text_size_15"
+                    android:textSize="12sp"
                     android:textColor="@color/gray_9b9b9b"
-                    android:text="凝胶指甲贴"/>
+                    android:text="冬季火辣爆款"/>
 
             <ImageView
                     android:layout_width="85dp"
                     android:layout_height="75dp"
                     android:layout_below="@+id/type_2"
-                    android:layout_marginTop="@dimen/dip_17"
+                    android:layout_marginTop="13dp"
                     android:scaleType="centerCrop"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/store1"/>
+                    android:src="@drawable/discount_2"/>
 
         </RelativeLayout>
 
@@ -113,9 +113,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:textSize="@dimen/text_size_17"
+                    android:textSize="13sp"
                     android:textColor="@color/black_222222"
-                    android:text="韩国必买"/>
+                    android:text="免费使用"/>
 
             <TextView
                     android:id="@+id/type_3"
@@ -124,18 +124,18 @@
                     android:layout_below="@+id/name_3"
                     android:layout_marginTop="5dp"
                     android:layout_centerHorizontal="true"
-                    android:textSize="@dimen/text_size_15"
+                    android:textSize="12sp"
                     android:textColor="@color/gray_9b9b9b"
-                    android:text="凝胶指甲贴"/>
+                    android:text="冬季火辣爆款"/>
 
             <ImageView
                     android:layout_width="85dp"
                     android:layout_height="75dp"
                     android:layout_below="@+id/type_3"
-                    android:layout_marginTop="@dimen/dip_17"
+                    android:layout_marginTop="13dp"
                     android:scaleType="centerCrop"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/store1"/>
+                    android:src="@drawable/discount_3"/>
 
         </RelativeLayout>
 
@@ -150,8 +150,8 @@
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="152dp"
-            android:layout_marginTop="16dp">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp">
 
         <RelativeLayout
                 android:id="@+id/product_4"
@@ -164,9 +164,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:textSize="@dimen/text_size_17"
+                    android:textSize="13sp"
                     android:textColor="@color/black_222222"
-                    android:text="韩国必买"/>
+                    android:text="免费使用"/>
 
             <TextView
                     android:id="@+id/type_4"
@@ -175,18 +175,18 @@
                     android:layout_below="@+id/name_4"
                     android:layout_marginTop="5dp"
                     android:layout_centerHorizontal="true"
-                    android:textSize="@dimen/text_size_15"
+                    android:textSize="12sp"
                     android:textColor="@color/gray_9b9b9b"
-                    android:text="凝胶指甲贴"/>
+                    android:text="冬季火辣爆款"/>
 
             <ImageView
                     android:layout_width="85dp"
                     android:layout_height="75dp"
                     android:layout_below="@+id/type_4"
-                    android:layout_marginTop="@dimen/dip_17"
+                    android:layout_marginTop="13dp"
                     android:scaleType="centerCrop"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/store1"/>
+                    android:src="@drawable/discount_4"/>
 
         </RelativeLayout>
 
@@ -209,9 +209,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:textSize="@dimen/text_size_17"
+                    android:textSize="13sp"
                     android:textColor="@color/black_222222"
-                    android:text="韩国必买"/>
+                    android:text="免费使用"/>
 
             <TextView
                     android:id="@+id/type_5"
@@ -220,18 +220,18 @@
                     android:layout_below="@+id/name_5"
                     android:layout_marginTop="5dp"
                     android:layout_centerHorizontal="true"
-                    android:textSize="@dimen/text_size_15"
+                    android:textSize="12sp"
                     android:textColor="@color/gray_9b9b9b"
-                    android:text="凝胶指甲贴"/>
+                    android:text="冬季火辣爆款"/>
 
             <ImageView
                     android:layout_width="85dp"
                     android:layout_height="75dp"
                     android:layout_below="@+id/type_5"
-                    android:layout_marginTop="@dimen/dip_17"
+                    android:layout_marginTop="13dp"
                     android:scaleType="centerCrop"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/store1"/>
+                    android:src="@drawable/discount_5"/>
 
         </RelativeLayout>
 
@@ -254,9 +254,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:textSize="@dimen/text_size_17"
+                    android:textSize="13sp"
                     android:textColor="@color/black_222222"
-                    android:text="韩国必买"/>
+                    android:text="免费使用"/>
 
             <TextView
                     android:id="@+id/type_6"
@@ -265,18 +265,18 @@
                     android:layout_below="@+id/name_6"
                     android:layout_marginTop="5dp"
                     android:layout_centerHorizontal="true"
-                    android:textSize="@dimen/text_size_15"
+                    android:textSize="12sp"
                     android:textColor="@color/gray_9b9b9b"
-                    android:text="凝胶指甲贴"/>
+                    android:text="冬季火辣爆款"/>
 
             <ImageView
                     android:layout_width="85dp"
                     android:layout_height="75dp"
                     android:layout_below="@+id/type_6"
-                    android:layout_marginTop="@dimen/dip_17"
+                    android:layout_marginTop="13dp"
                     android:scaleType="centerCrop"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/store1"/>
+                    android:src="@drawable/discount_6"/>
 
         </RelativeLayout>
 

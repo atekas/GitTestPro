@@ -10,7 +10,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
-            android:src="@drawable/product1"/>
+            android:src="@drawable/product3"/>
 
     <TextView
             android:id="@+id/product_detail_name"
@@ -18,18 +18,18 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dip_10"
             android:layout_marginRight="@dimen/dip_10"
-            android:layout_marginTop="13dp"
+            android:layout_marginTop="10dp"
             android:maxLines="2"
             android:ellipsize="end"
-            android:textSize="@dimen/text_size_17"
+            android:textSize="14sp"
             android:textColor="@color/black_333333"
-            android:text="立体肌理系挎包休闲鞋"/>
+            android:text="MACROPUS立体肌理系列单肩挎包夏休闲鞋系列之一之一"/>
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dip_20"
-            android:layout_marginBottom="@dimen/dip_10">
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="@dimen/dip_5">
 
         <TextView
                 android:layout_width="wrap_content"

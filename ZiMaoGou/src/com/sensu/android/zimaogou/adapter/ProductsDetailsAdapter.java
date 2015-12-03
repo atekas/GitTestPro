@@ -20,7 +20,7 @@ public class ProductsDetailsAdapter extends SimpleBaseAdapter {
 
     public ProductsDetailsAdapter(Context context) {
         super(context);
-        mPicSize = (DisplayUtils.getDisplayWidth() - DisplayUtils.dp2px(2)) / 2;
+        mPicSize = (DisplayUtils.getDisplayWidth()) / 2;
     }
 
     @Override

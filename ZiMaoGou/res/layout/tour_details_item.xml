@@ -10,13 +10,13 @@
             android:layout_height="45dp"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="@dimen/dip_10"
-            android:src="@drawable/head_pic_default"/>
+            android:src="@drawable/head_photo_04"/>
 
     <TextView
             android:id="@+id/review_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_16"
+            android:textSize="13sp"
             android:textColor="#a7a7a7"
             android:text="孙立人"
             android:layout_marginTop="10dp"
@@ -29,7 +29,7 @@
             android:layout_alignTop="@+id/review_user_name"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/dip_20"
-            android:textSize="@dimen/text_size_16"
+            android:textSize="13sp"
             android:textColor="#a7a7a7"
             android:text="1天前"/>
 
@@ -37,14 +37,14 @@
             android:id="@+id/review_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_16"
+            android:textSize="13sp"
             android:textColor="@color/black_333333"
             android:layout_toRightOf="@+id/review_user_head_pic"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="@dimen/dip_20"
             android:layout_marginTop="@dimen/dip_5"
             android:layout_below="@+id/review_user_name"
-            android:text="1天前1天前"/>
+            android:text="产品大升级啦！ 明明白白消费！按国家旅游法规定：一价全包！拥抱大海，岛海相映，海天相依，产品大升级啦！ 明明白白消费"/>
 
     <View
             android:layout_width="match_parent"

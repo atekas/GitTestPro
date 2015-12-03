@@ -55,24 +55,24 @@ public class HomeHorizontalLinearLayout extends LinearLayout implements AdapterV
         int width = DisplayUtils.getDisplayWidth();//获得屏幕宽度
 
         ProductMode mode1 = new ProductMode();
-        mode1.setTestImg(R.drawable.product1);
-        mode1.setTestTitle("懒人支架，给你最好的体验");
+        mode1.setTestImg(R.drawable.pt_1);
+        mode1.setTestTitle("抹茶手工皂精油");
         pros.add(mode1);
         ProductMode mode2 = new ProductMode();
-        mode2.setTestImg(R.drawable.product2);
+        mode2.setTestImg(R.drawable.pt_2);
         mode2.setTestTitle("抹茶手工皂精油");
         pros.add(mode2);
         ProductMode mode3 = new ProductMode();
-        mode3.setTestImg(R.drawable.product3);
-        mode3.setTestTitle("YEASALAND——your best partner");
+        mode3.setTestImg(R.drawable.pt_1);
+        mode3.setTestTitle("抹茶手工皂精油");
         pros.add(mode3);
         ProductMode mode4 = new ProductMode();
-        mode4.setTestImg(R.drawable.product1);
-        mode4.setTestTitle("可伤过的痛过的我，向谁述说");
+        mode4.setTestImg(R.drawable.pt_2);
+        mode4.setTestTitle("抹茶手工皂精油");
         pros.add(mode4);
         ProductMode mode5 = new ProductMode();
-        mode5.setTestImg(R.drawable.product2);
-        mode5.setTestTitle("还是放开了说好不分的手");
+        mode5.setTestImg(R.drawable.pt_1);
+        mode5.setTestTitle("抹茶手工皂精油");
         pros.add(mode5);
 
         StoreMode store1 = new StoreMode();
@@ -106,7 +106,7 @@ public class HomeHorizontalLinearLayout extends LinearLayout implements AdapterV
                 break;
             case 2://拼单特价
                 mTitle.setText(getResources().getText(R.string.group_special));
-                linearParams.height = DisplayUtils.dp2px(245);
+                linearParams.height = DisplayUtils.dp2px(235);
                 mhListViewAdapter = new HorizontalListViewAdapter(getContext(),pros,Type);
                 mhListView.setAdapter(mhListViewAdapter);
                 break;

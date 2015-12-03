@@ -14,7 +14,6 @@
                 android:id="@+id/back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/dip_10"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/dip_10"
                 android:src="@drawable/back"/>
@@ -24,8 +23,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/black_222222"
                 android:layout_centerInParent="true"
-                android:textSize="20sp"
-                android:textStyle="bold"
+                android:textSize="18sp"
                 android:text="@string/pic_details"/>
 
         <ImageView
@@ -47,7 +45,7 @@
     <View
             android:id="@+id/title_line"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="10dp"
             android:layout_below="@+id/title_layout"
             android:background="#eff3f5"/>
 
@@ -87,7 +85,9 @@
                     android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:gravity="center"
+                    android:textSize="15sp"
                     android:drawableRight="@drawable/drawable_praise_select_40"
+                    android:drawablePadding="5dp"
                     android:text="赞"/>
 
         </RelativeLayout>
@@ -101,6 +101,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableRight="@drawable/review_40"
+                    android:drawablePadding="5dp"
+                    android:textSize="15sp"
                     android:text="评论"/>
 
         </RelativeLayout>
@@ -115,6 +117,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableRight="@drawable/drawable_collect_select_40"
+                    android:drawablePadding="5dp"
+                    android:textSize="15sp"
                     android:text="收藏"/>
         </RelativeLayout>
     </LinearLayout>

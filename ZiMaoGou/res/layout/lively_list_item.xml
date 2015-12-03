@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:textSize="@dimen/text_size_medial"
+                android:textSize="13sp"
                 android:textColor="@color/red"
                 android:text=""
                 />
@@ -33,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:textSize="@dimen/text_size_medial"
+                android:textSize="13sp"
                 android:textColor="@color/black_333333"
                 android:singleLine="true"
                 android:text="日本FANCL营养特卖"

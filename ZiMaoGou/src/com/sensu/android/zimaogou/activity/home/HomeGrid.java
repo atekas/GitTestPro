@@ -33,24 +33,37 @@ public class HomeGrid extends LinearLayout implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+        Intent intent;
         switch (view.getId()) {
             case R.id.product_1:
-                getContext().startActivity(new Intent(getContext(), ProductListActivity.class));
+                intent = new Intent(getContext(), ProductListActivity.class);
+                intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
+                getContext().startActivity(intent);
                 break;
             case R.id.product_2:
-                getContext().startActivity(new Intent(getContext(), ProductListActivity.class));
+                intent = new Intent(getContext(), ProductListActivity.class);
+                intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
+                getContext().startActivity(intent);
                 break;
             case R.id.product_3:
-                getContext().startActivity(new Intent(getContext(), ProductListActivity.class));
+                intent = new Intent(getContext(), ProductListActivity.class);
+                intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
+                getContext().startActivity(intent);
                 break;
             case R.id.product_4:
-                getContext().startActivity(new Intent(getContext(), ProductListActivity.class));
+                intent = new Intent(getContext(), ProductListActivity.class);
+                intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
+                getContext().startActivity(intent);
                 break;
             case R.id.product_5:
-                getContext().startActivity(new Intent(getContext(), ProductListActivity.class));
+                intent = new Intent(getContext(), ProductListActivity.class);
+                intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
+                getContext().startActivity(intent);
                 break;
             case R.id.product_6:
-                getContext().startActivity(new Intent(getContext(), ProductListActivity.class));
+                intent = new Intent(getContext(), ProductListActivity.class);
+                intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
+                getContext().startActivity(intent);
                 break;
         }
     }

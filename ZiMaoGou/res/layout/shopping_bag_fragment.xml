@@ -28,7 +28,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="18dp"
                 android:layout_alignBottom="@+id/tv_title"
-                android:textSize="@dimen/text_size_x_large"
+                android:textSize="17sp"
                 android:text="编辑" />
 
         <View android:layout_width="fill_parent"
@@ -80,7 +80,7 @@
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_size_large"
+                            android:textSize="15sp"
                             android:layout_marginLeft="10dp"
                             android:textColor="@color/black_222222"
                             android:text="全选" />
@@ -99,7 +99,7 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_size_large"
+                        android:textSize="15sp"
                         android:textColor="@color/black_222222"
                         android:text="合计:" />
 
@@ -107,7 +107,7 @@
                         android:id="@+id/total_money"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_size_x_large"
+                        android:textSize="17sp"
                         android:textColor="@color/red"
                         android:text="￥108" />
             </LinearLayout>
@@ -120,7 +120,7 @@
                     android:background="@drawable/account_button_selector"
                     android:gravity="center"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_x_large"
+                    android:textSize="17sp"
                     android:text="去结算" />
 
         </RelativeLayout>

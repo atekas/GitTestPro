@@ -58,7 +58,7 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
             int size = DisplayUtils.dp2px(50);
             roundImageView.setLayoutParams(new ViewGroup.LayoutParams(size, size));
             roundImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            roundImageView.setImageResource(R.drawable.product1);
+            roundImageView.setImageResource(R.drawable.head_photo_02);
             mUserHeadContainer.addView(roundImageView);
         }
     }

@@ -29,7 +29,7 @@
                 android:layout_toRightOf="@+id/img_left"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="16dp"
-                android:textSize="@dimen/text_size_big"
+                android:textSize="14sp"
                 android:textColor="@color/black_222222"
                 android:text="" />
 

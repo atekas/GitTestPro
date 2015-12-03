@@ -6,7 +6,7 @@
 
     <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="10dp"
             android:layout_height="55dp"
             android:background="@color/white" >
 
@@ -33,7 +33,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/img_warehouse"
                 android:layout_marginLeft="8dp"
-                android:textSize="@dimen/text_size_large"
+                android:textSize="15sp"
                 android:textColor="@color/black_666666"
                 android:text="天津保税仓发货" />
 

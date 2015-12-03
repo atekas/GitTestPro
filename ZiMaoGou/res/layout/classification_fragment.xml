@@ -37,7 +37,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="#8e8e93"
                     android:layout_marginLeft="@dimen/dip_10"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:text="健康食品"/>
 
             <View
