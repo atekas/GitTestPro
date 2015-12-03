@@ -1,18 +1,31 @@
 package com.sensu.android.zimaogou.activity.tour;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
+import android.net.Uri;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.View;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.view.*;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.BaseActivity;
+import com.sensu.android.zimaogou.activity.LocalPhotoActivity;
+import com.sensu.android.zimaogou.activity.fragment.TourBuyFragment;
+import com.sensu.android.zimaogou.adapter.SimpleBaseAdapter;
 import com.sensu.android.zimaogou.photoalbum.PhotoInfo;
 import com.sensu.android.zimaogou.popup.SelectCountryPopup;
+import com.sensu.android.zimaogou.utils.DisplayUtils;
+import com.sensu.android.zimaogou.utils.ImageUtils;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,9 +36,14 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
     public static final String IS_VIDEO = "is_video";
     public static final String VIDEO_PATH = "video_path";
 
+    String path;
+
+    private Object mAdd;
+    private List<Object> mObjectList = new ArrayList<Object>();
+
     private boolean mIsVideo;
     private GridView mGridView;
-    private TourBuySendAdapter mTourBuySendAdapter;
+    private TourPicAdapter mTourPicAdapter;
 
     private List<PhotoInfo> mPhotoList = TourSendData.picDataList;
 
@@ -40,6 +58,8 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
     private ImageView mLocationSwitch;
     private boolean mIsPosition = true;
 
+    private int mPicSize;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,11 +69,14 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initViews() {
+
+        mPicSize = (DisplayUtils.getDisplayWidth() - DisplayUtils.dp2px(55)) / 4;
+
         mIsVideo = getIntent().getBooleanExtra(IS_VIDEO, false);
 
         mGridView = (GridView) findViewById(R.id.grid_view);
-        mTourBuySendAdapter = new TourBuySendAdapter(this);
-        mGridView.setAdapter(mTourBuySendAdapter);
+        mTourPicAdapter = new TourPicAdapter();
+        mGridView.setAdapter(mTourPicAdapter);
 
         if (mIsVideo) {
             //视频
@@ -88,7 +111,7 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onResume() {
         super.onResume();
-        mTourBuySendAdapter.setList(mPhotoList);
+        mTourPicAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -161,6 +184,129 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
                     mIsSelectSightSpot = true;
                 }
                 break;
+            case R.id.take_photo:
+                mObjectList.clear();
+                Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                path = Environment.getExternalStorageDirectory() + File.separator + "im/" +System.currentTimeMillis() +".jpg";
+                File mTempCapturePicFile = new File(path);
+                intent1.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mTempCapturePicFile));
+                startActivityForResult(intent1, TourBuyFragment.TAKE_PHOTO_CODE);
+                mTourBuyChooseDialog.dismiss();
+                break;
+            case R.id.choose_from_photo_album:
+                mObjectList.clear();
+                Intent intent = new Intent(this, LocalPhotoActivity.class);
+                startActivityForResult(intent, TourBuyFragment.CHOOSE_PHOTO_CODE);
+                mTourBuyChooseDialog.dismiss();
+                break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == TourBuyFragment.TAKE_PHOTO_CODE) {
+                PhotoInfo photoInfo = new PhotoInfo();
+                photoInfo.setPathPath("file://" + path);
+                TourSendData.picDataList.add(photoInfo);
+
+//                mTourPicAdapter.notifyDataSetChanged();
+            } else if (requestCode == TourBuyFragment.CHOOSE_PHOTO_CODE) {
+//                mTourPicAdapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+    class TourPicAdapter extends SimpleBaseAdapter {
+
+        @Override
+        public void notifyDataSetChanged() {
+            for (PhotoInfo photoInfo : mPhotoList) {
+                mObjectList.add(photoInfo);
+            }
+            if (mPhotoList.size() < 5) {
+                mObjectList.add(mAdd);
+            }
+            super.notifyDataSetChanged();
+        }
+
+        @Override
+        public int getCount() {
+            return mObjectList == null ? 0 : mObjectList.size();
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            ViewHolder viewHolder;
+            if (view == null) {
+                view = LayoutInflater.from(TourBuySendActivity.this).inflate(R.layout.tour_send_grid_item, null);
+                viewHolder = new ViewHolder();
+                viewHolder.mImageView = (ImageView) view.findViewById(R.id.image);
+                viewHolder.mImageView.setLayoutParams(new LinearLayout.LayoutParams(mPicSize, mPicSize));
+                view.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) view.getTag();
+            }
+
+            final Object object = mObjectList.get(i);
+
+            if (object == mAdd) {
+                viewHolder.mImageView.setImageResource(R.drawable.add_photos);
+            } else {
+                ImageUtils.displayImage(((PhotoInfo) object).getPicPath(), viewHolder.mImageView);
+            }
+
+            viewHolder.mImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (object == mAdd) {
+                        chooseDialog();
+                    }
+                }
+            });
+            return view;
+        }
+    }
+
+    private class ViewHolder {
+        ImageView mImageView;
+    }
+
+    /**
+     * 选择对话框
+     */
+    Dialog mTourBuyChooseDialog;
+    public void chooseDialog(){
+        mTourBuyChooseDialog = new Dialog(this,R.style.notParentDialog);
+        mTourBuyChooseDialog.setCancelable(true);
+        mTourBuyChooseDialog.setContentView(R.layout.tour_buy_choose_dialog);
+        TextView tv_cancel = (TextView) mTourBuyChooseDialog.findViewById(R.id.tv_cancel);
+        tv_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mTourBuyChooseDialog.dismiss();
+            }
+        });
+
+        mTourBuyChooseDialog.findViewById(R.id.take_video).setVisibility(View.GONE);
+        mTourBuyChooseDialog.findViewById(R.id.take_photo).setOnClickListener(this);
+        mTourBuyChooseDialog.findViewById(R.id.choose_from_photo_album).setOnClickListener(this);
+
+        WindowManager m = getWindowManager();
+
+        Window dialogWindow = mTourBuyChooseDialog.getWindow();
+
+//        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+//        dialogWindow.setGravity(Gravity.TOP);
+//        lp.y = DisplayUtils.dp2px(50);
+//        dialogWindow.setAttributes(lp);
+
+        Display d = m.getDefaultDisplay(); // 获取屏幕宽、高用
+        WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 获取对话框当前的参数值
+//        p.height = (int) d.getHeight() ; // 高度设置为屏幕
+        p.width = (int) d.getWidth() ; // 宽度设置为屏幕
+        dialogWindow.setAttributes(p);
+        mTourBuyChooseDialog.show();
     }
 }

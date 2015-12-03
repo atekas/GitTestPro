@@ -31,6 +31,7 @@ import java.io.File;
 public class TourBuyFragment extends BaseFragment implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     public static final int TAKE_PHOTO_CODE = 1;
+    public static final int CHOOSE_PHOTO_CODE = 2;
     private RefreshListView mTourBuyListView;
     private TourBuyAdapter mTourBuyAdapter;
     String path;
@@ -115,14 +116,15 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
                 break;
             case R.id.take_photo:
                 Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                path = Environment.getExternalStorageDirectory() + File.separator + "im/0000.jpg";
+                path = Environment.getExternalStorageDirectory() + File.separator + "im/" + System.currentTimeMillis() + ".jpg";
                 File mTempCapturePicFile = new File(path);
                 intent1.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mTempCapturePicFile));
                 TourBuyFragment.this.startActivityForResult(intent1, TAKE_PHOTO_CODE);
                 mTourBuyChooseDialog.dismiss();
                 break;
             case R.id.choose_from_photo_album:
-                startActivity(new Intent(mParentActivity, LocalPhotoActivity.class));
+                Intent intent = new Intent(mParentActivity, LocalPhotoActivity.class);
+                TourBuyFragment.this.startActivityForResult(intent, CHOOSE_PHOTO_CODE);
                 mTourBuyChooseDialog.dismiss();
                 break;
         }
@@ -181,6 +183,10 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
                 photoInfo.setPathPath("file://" + path);
                 TourSendData.picDataList.add(photoInfo);
 
+                Intent intent = new Intent(mParentActivity, TourBuySendActivity.class);
+                intent.putExtra(TourBuySendActivity.IS_VIDEO, false);
+                startActivity(intent);
+            } else if (requestCode == CHOOSE_PHOTO_CODE) {
                 Intent intent = new Intent(mParentActivity, TourBuySendActivity.class);
                 intent.putExtra(TourBuySendActivity.IS_VIDEO, false);
                 startActivity(intent);

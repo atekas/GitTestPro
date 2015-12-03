@@ -2,7 +2,6 @@ package com.sensu.android.zimaogou.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -124,30 +123,30 @@ public class LocalPhotoActivity extends BaseActivity implements LocationPhotoLis
             case R.id.back:
                 finish();
                 break;
-            case R.id.center_select:
-                if (mPhotoInfoList.get(0).isChoose()) {
-                    mHeadView.findViewById(R.id.center_select).setSelected(false);
-                    mPhotoInfoList.get(0).setChoose(false);
-                    mSelectPhotoList.remove(mPhotoInfoList.get(0));
-                } else {
-                    mHeadView.findViewById(R.id.center_select).setSelected(true);
-                    mPhotoInfoList.get(0).setChoose(true);
-                    mSelectPhotoList.add(mPhotoInfoList.get(0));
-                }
-                setText();
-                break;
-            case R.id.right_select:
-                if (mPhotoInfoList.get(1).isChoose()) {
-                    mHeadView.findViewById(R.id.right_select).setSelected(false);
-                    mPhotoInfoList.get(1).setChoose(false);
-                    mSelectPhotoList.remove(mPhotoInfoList.get(1));
-                } else {
-                    mHeadView.findViewById(R.id.right_select).setSelected(true);
-                    mPhotoInfoList.get(1).setChoose(true);
-                    mSelectPhotoList.add(mPhotoInfoList.get(1));
-                }
-                setText();
-                break;
+//            case R.id.center_select:
+//                if (mPhotoInfoList.get(0).isChoose()) {
+//                    mHeadView.findViewById(R.id.center_select).setSelected(false);
+//                    mPhotoInfoList.get(0).setChoose(false);
+//                    mSelectPhotoList.remove(mPhotoInfoList.get(0));
+//                } else {
+//                    mHeadView.findViewById(R.id.center_select).setSelected(true);
+//                    mPhotoInfoList.get(0).setChoose(true);
+//                    mSelectPhotoList.add(mPhotoInfoList.get(0));
+//                }
+//                setText();
+//                break;
+//            case R.id.right_select:
+//                if (mPhotoInfoList.get(1).isChoose()) {
+//                    mHeadView.findViewById(R.id.right_select).setSelected(false);
+//                    mPhotoInfoList.get(1).setChoose(false);
+//                    mSelectPhotoList.remove(mPhotoInfoList.get(1));
+//                } else {
+//                    mHeadView.findViewById(R.id.right_select).setSelected(true);
+//                    mPhotoInfoList.get(1).setChoose(true);
+//                    mSelectPhotoList.add(mPhotoInfoList.get(1));
+//                }
+//                setText();
+//                break;
             case R.id.sure:
                 if (mSelectPhotoList.size() == 0) {
                     PromptUtils.showToast("请选择照片");
@@ -159,8 +158,9 @@ public class LocalPhotoActivity extends BaseActivity implements LocationPhotoLis
 
                 Intent intent = new Intent(this, TourBuySendActivity.class);
                 intent.putExtra(TourBuySendActivity.IS_VIDEO, false);
-                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//                startActivity(intent);
+                setResult(RESULT_OK, intent);
                 finish();
                 break;
             case R.id.frame_left:
