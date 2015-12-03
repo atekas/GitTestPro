@@ -16,8 +16,10 @@ import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.LocalPhotoActivity;
 import com.sensu.android.zimaogou.activity.tour.TourBuyDetailsActivity;
 import com.sensu.android.zimaogou.activity.tour.TourBuySendActivity;
+import com.sensu.android.zimaogou.activity.tour.TourSendData;
 import com.sensu.android.zimaogou.activity.video.CameraActivity;
 import com.sensu.android.zimaogou.adapter.TourBuyAdapter;
+import com.sensu.android.zimaogou.photoalbum.PhotoInfo;
 import com.sensu.android.zimaogou.widget.OnRefreshListener;
 import com.sensu.android.zimaogou.widget.RefreshListView;
 
@@ -113,10 +115,10 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
                 break;
             case R.id.take_photo:
                 Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                path = Environment.getExternalStorageDirectory() + File.separator + "im/pic/0000.jpg";
+                path = Environment.getExternalStorageDirectory() + File.separator + "im/0000.jpg";
                 File mTempCapturePicFile = new File(path);
                 intent1.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mTempCapturePicFile));
-                mParentActivity.startActivityForResult(intent1, TAKE_PHOTO_CODE);
+                TourBuyFragment.this.startActivityForResult(intent1, TAKE_PHOTO_CODE);
                 mTourBuyChooseDialog.dismiss();
                 break;
             case R.id.choose_from_photo_album:
@@ -175,9 +177,13 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == TAKE_PHOTO_CODE) {
+                PhotoInfo photoInfo = new PhotoInfo();
+                photoInfo.setPathPath("file://" + path);
+                TourSendData.picDataList.add(photoInfo);
+
                 Intent intent = new Intent(mParentActivity, TourBuySendActivity.class);
-                intent.putExtra("photo_path", path);
-                mParentActivity.startActivity(intent);
+                intent.putExtra(TourBuySendActivity.IS_VIDEO, false);
+                startActivity(intent);
             }
         }
     }

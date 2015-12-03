@@ -1,5 +1,7 @@
 package com.sensu.android.zimaogou.activity.tour;
 
+import com.sensu.android.zimaogou.photoalbum.PhotoInfo;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,9 +10,5 @@ import java.util.List;
  */
 public class TourSendData {
 
-    public List<PicData> picDataList = new ArrayList<PicData>();
-
-    public static class PicData {
-        public String mPicPath;
-    }
+    public static List<PhotoInfo> picDataList = new ArrayList<PhotoInfo>();
 }

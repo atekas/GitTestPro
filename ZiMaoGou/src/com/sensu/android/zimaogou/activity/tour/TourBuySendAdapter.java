@@ -32,7 +32,9 @@ public class TourBuySendAdapter extends SimpleBaseAdapter {
             for (int i = 0; i < list.size(); i++) {
                 mList.add(list.get(i));
             }
-            mList.add(mAdd);
+            if (list.size() < 5) {
+                mList.add(mAdd);
+            }
             notifyDataSetChanged();
         }
     }
@@ -66,7 +68,9 @@ public class TourBuySendAdapter extends SimpleBaseAdapter {
             @Override
             public void onClick(View view) {
                 if (object == mAdd) {
-                    mContext.startActivity(new Intent(mContext, LocalPhotoActivity.class));
+                    Intent intent = new Intent(mContext, LocalPhotoActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    mContext.startActivity(intent);
                 }
             }
         });

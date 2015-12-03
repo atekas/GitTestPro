@@ -1,5 +1,8 @@
 package com.sensu.android.zimaogou.activity.video;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,6 +13,7 @@ import android.widget.Button;
 import android.widget.Toast;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.BaseActivity;
+import com.sensu.android.zimaogou.activity.tour.TourBuySendActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,6 +109,11 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
                     mRecorderView.stop();
                     mVideoPathList.add(mRecorderView.getVecordFile().getAbsolutePath());
                     Toast.makeText(CameraActivity.this, "视频录制完成，地址" + mRecorderView.getVecordFile(), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(CameraActivity.this, TourBuySendActivity.class);
+                    intent.putExtra(TourBuySendActivity.IS_VIDEO, true);
+                    intent.putExtra(TourBuySendActivity.VIDEO_PATH, mRecorderView.getVecordFile().getAbsolutePath());
+                    startActivity(intent);
+                    finish();
                     break;
             }
         }

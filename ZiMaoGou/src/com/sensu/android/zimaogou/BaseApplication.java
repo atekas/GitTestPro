@@ -49,7 +49,7 @@ public class BaseApplication extends Application {
         mBaseApplication = this;
 
         // /storage/emulated/0/general/
-        mUserDir = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "general" + File.separator;
+        mUserDir = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "zimaogou" + File.separator;
         // /storage/emulated/0/general/image/
         mSavePicPath = mUserDir + "image" + File.separator;
         // /data/data/com.personal.android.general/cache/

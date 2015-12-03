@@ -1,7 +1,9 @@
 package com.sensu.android.zimaogou.activity;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -244,6 +246,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 mMeBottomView.performClick();
                 break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

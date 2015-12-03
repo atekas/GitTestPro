@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.sensu.android.zimaogou.BaseApplication;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.tour.TourBuySendActivity;
+import com.sensu.android.zimaogou.activity.tour.TourSendData;
 import com.sensu.android.zimaogou.adapter.LocalPhotoAdapter;
 import com.sensu.android.zimaogou.photoalbum.AlbumInfo;
 import com.sensu.android.zimaogou.photoalbum.LocalAlbumAsyncRequest;
@@ -152,10 +153,15 @@ public class LocalPhotoActivity extends BaseActivity implements LocationPhotoLis
                     PromptUtils.showToast("请选择照片");
                 }
 
+                for (PhotoInfo photoInfo : mSelectPhotoList) {
+                    TourSendData.picDataList.add(photoInfo);
+                }
+
                 Intent intent = new Intent(this, TourBuySendActivity.class);
+                intent.putExtra(TourBuySendActivity.IS_VIDEO, false);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                intent.putExtra(SELECT_PHOTOS, (Serializable) mSelectPhotoList);
                 startActivity(intent);
+                finish();
                 break;
             case R.id.frame_left:
                 Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

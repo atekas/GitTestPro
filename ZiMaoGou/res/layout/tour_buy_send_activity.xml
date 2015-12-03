@@ -65,8 +65,31 @@
                     android:layout_marginLeft="@dimen/dip_20"
                     android:layout_marginRight="@dimen/dip_20"
                     android:layout_marginTop="@dimen/dip_20"
+                    android:verticalSpacing="@dimen/dip_10"
                     android:scrollbars="none"
                     android:numColumns="4"/>
+
+            <com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout
+                    android:id="@+id/video_layout"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:visibility="gone"
+                    android:layout_marginLeft="@dimen/dip_20"
+                    android:layout_marginTop="@dimen/dip_20">
+
+                <ImageView
+                        android:id="@+id/video_cover"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"/>
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/video"/>
+
+            </com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout>
 
             <View
                     android:layout_width="match_parent"

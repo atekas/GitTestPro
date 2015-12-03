@@ -1,5 +1,7 @@
 package com.sensu.android.zimaogou.activity.tour;
 
+import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -8,11 +10,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.BaseActivity;
-import com.sensu.android.zimaogou.activity.LocalPhotoActivity;
 import com.sensu.android.zimaogou.photoalbum.PhotoInfo;
 import com.sensu.android.zimaogou.popup.SelectCountryPopup;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,10 +20,14 @@ import java.util.List;
  */
 public class TourBuySendActivity extends BaseActivity implements View.OnClickListener {
 
+    public static final String IS_VIDEO = "is_video";
+    public static final String VIDEO_PATH = "video_path";
+
+    private boolean mIsVideo;
     private GridView mGridView;
     private TourBuySendAdapter mTourBuySendAdapter;
 
-    private List<PhotoInfo> mPhotoList;
+    private List<PhotoInfo> mPhotoList = TourSendData.picDataList;
 
     private boolean mIsSelectFood;
     private boolean mIsSelectBuy;
@@ -45,17 +49,26 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initViews() {
-
-        mPhotoList = (List<PhotoInfo>) getIntent().getSerializableExtra(LocalPhotoActivity.SELECT_PHOTOS);
-
-        if (mPhotoList == null) {
-            mPhotoList = new ArrayList<PhotoInfo>();
-        }
+        mIsVideo = getIntent().getBooleanExtra(IS_VIDEO, false);
 
         mGridView = (GridView) findViewById(R.id.grid_view);
         mTourBuySendAdapter = new TourBuySendAdapter(this);
         mGridView.setAdapter(mTourBuySendAdapter);
-        mTourBuySendAdapter.setList(mPhotoList);
+
+        if (mIsVideo) {
+            //视频
+            mGridView.setVisibility(View.GONE);
+            findViewById(R.id.video_layout).setVisibility(View.VISIBLE);
+            String videoPath = getIntent().getStringExtra(VIDEO_PATH);
+            MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+            mediaMetadataRetriever.setDataSource(videoPath);
+            Bitmap bitmap = mediaMetadataRetriever.getFrameAtTime();
+            ((ImageView) findViewById(R.id.video_cover)).setImageBitmap(bitmap);
+        } else {
+            //图片
+            mGridView.setVisibility(View.VISIBLE);
+            findViewById(R.id.video_layout).setVisibility(View.GONE);
+        }
 
         mFoodLayout = (LinearLayout) findViewById(R.id.food_layout);
         mBuyLayout = (LinearLayout) findViewById(R.id.buy_layout);
@@ -70,6 +83,18 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
         findViewById(R.id.cancel).setOnClickListener(this);
         findViewById(R.id.release).setOnClickListener(this);
         findViewById(R.id.choose_country).setOnClickListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mTourBuySendAdapter.setList(mPhotoList);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        TourSendData.picDataList.clear();
     }
 
     @Override
