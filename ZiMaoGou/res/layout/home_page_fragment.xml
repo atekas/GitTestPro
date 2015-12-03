@@ -33,6 +33,7 @@
 
             <com.sensu.android.zimaogou.widget.ImageRollView
                     android:id="@+id/banner"
+
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/home_banner_height"
                     android:src="@drawable/special_3"/>

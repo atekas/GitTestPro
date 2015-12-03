@@ -55,6 +55,7 @@ public class ShoppingBagFragment extends BaseFragment implements View.OnClickLis
         mTitleEdit = (TextView) mParentActivity.findViewById(R.id.goods_edit);
         mSubmit = (TextView) mParentActivity.findViewById(R.id.bt_submit);
         mTotalLayout = (LinearLayout) mParentActivity.findViewById(R.id.ll_bottom_center);
+
         mTotalMoney = (TextView) mParentActivity.findViewById(R.id.total_money);
         mIsAllSelectView = (ImageView) mParentActivity.findViewById(R.id.is_all_select);
         mGoodsListView = (RefreshListView) mParentActivity.findViewById(R.id.bag_goods_list);

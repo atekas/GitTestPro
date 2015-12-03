@@ -80,29 +80,13 @@ public class CollectActivity extends BaseActivity {
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 //        int screenW = dm.widthPixels;
-        int screenW = DisplayUtils.dp2px(140);
+        int screenW = DisplayUtils.dp2px(180);
         offset = (screenW / 2 - bmpW) / 2;
         Matrix matrix = new Matrix();
         matrix.postTranslate(offset, 0);
         mCursorImageView.setImageMatrix(matrix);
 
-        mCollectViewPage.setAdapter(new MyPagerAdapter(mListView));
-        mCollectViewPage.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int i, float v, int i1) {
 
-            }
-
-            @Override
-            public void onPageSelected(int i) {
-                startAnimation(i);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int i) {
-
-            }
-        });
 
     }
     private Handler mHandler = new Handler();
@@ -125,6 +109,23 @@ public class CollectActivity extends BaseActivity {
         mTourBuyListView.setOnRefreshListener(mOnRefreshListener);
         mListView.add(tourView);
 
+        mCollectViewPage.setAdapter(new MyPagerAdapter(mListView));
+        mCollectViewPage.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                startAnimation(i);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
     }
     private OnRefreshListener mOnRefreshListener = new OnRefreshListener() {
         @Override
