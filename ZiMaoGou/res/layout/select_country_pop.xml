@@ -37,7 +37,7 @@
                     android:drawableLeft="@drawable/search_icon"
                     android:paddingLeft="@dimen/dip_5"
                     android:hint="搜索"
-                    android:textSize="@dimen/text_size_14"
+                    android:textSize="@dimen/text_size_15"
                     android:drawablePadding="@dimen/dip_5"
                     android:background="@drawable/country_search_back"/>
 

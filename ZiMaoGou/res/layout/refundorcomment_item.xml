@@ -3,84 +3,83 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-        <LinearLayout android:layout_width="fill_parent" android:layout_height="120dp">
-                <RelativeLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="120dp"
-                        android:paddingRight="@dimen/order_right_distance"
-                        android:background="@color/white"
-                        >
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="120dp">
+        <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="120dp"
+                android:paddingRight="@dimen/order_right_distance"
+                android:background="@color/white"
+                >
 
-                        <ImageView
-                                android:id="@+id/img_pro"
-                                android:layout_width="86dp"
-                                android:layout_height="86dp"
-                                android:layout_marginRight="10dp"
-                                android:layout_centerVertical="true"
-                                android:layout_marginLeft="@dimen/order_left_distance"
-                                android:src="@drawable/product2"
-                                />
-
-
-                        <TextView
-                                android:id="@+id/tv_productName"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="17dp"
-                                android:layout_toRightOf="@+id/img_pro"
-                                android:textColor="@color/black_222222"
-                                android:textSize="@dimen/text_size_big"
-                                android:maxLines="2"
-                                android:ellipsize="end"
-                                android:text="MACROPUS 立体机理系列单肩款包"
-                                />
-                        <TextView
-                                android:id="@+id/tv_productPrice"
-                                android:visibility="gone"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_marginTop="18dp"
-                                android:textColor="@color/black_222222"
-                                android:textSize="@dimen/text_size_medial"
-                                android:text="￥108"
-                                />
+            <ImageView
+                    android:id="@+id/img_pro"
+                    android:layout_width="86dp"
+                    android:layout_height="86dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/order_left_distance"
+                    android:src="@drawable/product2"
+                    />
 
 
-                        <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_toRightOf="@+id/img_pro"
-                                android:layout_below="@+id/tv_productName"
-                                android:layout_marginTop="10dp"
-                                android:textColor="@color/gray_9b9b9b"
-                                android:textSize="@dimen/text_size_medial"
-                                android:singleLine="true"
-                                android:text="型号:M；颜色:白色"
-                                />
+            <TextView
+                    android:id="@+id/tv_productName"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="17dp"
+                    android:layout_toRightOf="@+id/img_pro"
+                    android:textColor="@color/black_222222"
+                    android:textSize="14sp"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:text="MACROPUS 立体机理系列单肩款包"
+                    />
+            <TextView
+                    android:id="@+id/tv_productPrice"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="18dp"
+                    android:textColor="@color/black_222222"
+                    android:textSize="@dimen/text_size_medial"
+                    android:text="￥108"
+                    />
 
-                        <RelativeLayout
-                                android:id="@+id/rl_showType"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_toRightOf="@+id/img_pro"
-                                android:layout_alignParentBottom="true"
-                                android:layout_marginBottom="16dp"
-                                >
 
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/img_pro"
+                    android:layout_below="@+id/tv_productName"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/gray_9b9b9b"
+                    android:textSize="13sp"
+                    android:singleLine="true"
+                    android:text="型号:M；颜色:白色"
+                    />
 
-                                <Button
-                                        android:id="@+id/bt_submit"
-                                        android:layout_width="110dp"
-                                        android:layout_height="40dp"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_centerVertical="true"
-                                        android:text="退货退款"
-                                        android:textSize="@dimen/text_size_medial"
-                                        android:textColor="@color/white"
-                                        android:background="@drawable/bt_commit"/>
-                        </RelativeLayout>
+            <RelativeLayout
+                    android:id="@+id/rl_showType"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/img_pro"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="16dp"
+                    >
 
-                </RelativeLayout>
-        </LinearLayout>
+                <Button
+                        android:id="@+id/bt_submit"
+                        android:layout_width="110dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:text="退货退款"
+                        android:textSize="13sp"
+                        android:textColor="@color/white"
+                        android:background="@drawable/bt_commit"/>
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>

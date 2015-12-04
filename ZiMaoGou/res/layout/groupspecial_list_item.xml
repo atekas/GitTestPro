@@ -87,7 +87,7 @@
                 android:textSize="@dimen/text_size_medial"
                 android:layout_marginLeft="2dp"
                 android:textColor="@color/red"
-                android:gravity="center"
+                android:gravity="bottom"
                 android:singleLine="true"
                 android:text="￥"
                 />
@@ -107,11 +107,10 @@
                     android:id="@+id/tv_origPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_normal"
+                    android:textSize="12sp"
                     android:textColor="@color/gray_9b9b9b"
                     android:layout_marginLeft="6dp"
                     android:gravity="bottom"
-
                     android:singleLine="true"
                     android:layout_alignParentBottom="true"
                     android:text="￥106"

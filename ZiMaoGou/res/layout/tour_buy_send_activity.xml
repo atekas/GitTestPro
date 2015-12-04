@@ -15,7 +15,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/dip_10"
-                android:textSize="@dimen/text_size_18"
+                android:textSize="@dimen/text_size_17"
                 android:padding="@dimen/dip_5"
                 android:textColor="@color/black_444444"
                 android:text="@string/cancel"/>
@@ -27,7 +27,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/dip_10"
-                android:textSize="@dimen/text_size_18"
+                android:textSize="@dimen/text_size_17"
                 android:padding="@dimen/dip_5"
                 android:textColor="@color/black_444444"
                 android:text="@string/release"/>
@@ -51,9 +51,10 @@
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dip_20"
-                    android:layout_marginRight="@dimen/dip_20"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp"
+                    android:textSize="@dimen/text_size_13"
                     android:hint="@string/release_hint"
                     android:textColorHint="@color/release_hint_color"
                     android:background="@null"/>
@@ -62,9 +63,9 @@
                     android:id="@+id/grid_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/dip_20"
-                    android:layout_marginRight="@dimen/dip_20"
-                    android:layout_marginTop="@dimen/dip_20"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp"
                     android:verticalSpacing="@dimen/dip_5"
                     android:horizontalSpacing="@dimen/dip_5"
                     android:scrollbars="none"
@@ -233,7 +234,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:textSize="@dimen/text_size_18"
+                            android:textSize="@dimen/text_size_16"
                             android:textColor="@color/color_product_text_select"
                             android:text="@string/good_food"/>
                 </LinearLayout>
@@ -258,7 +259,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:textSize="@dimen/text_size_18"
+                            android:textSize="@dimen/text_size_16"
                             android:textColor="@color/color_product_text_select"
                             android:text="@string/buy"/>
 
@@ -283,7 +284,7 @@
                             android:id="@+id/sight_spot_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_size_18"
+                            android:textSize="@dimen/text_size_16"
                             android:textColor="@color/color_product_text_select"
                             android:text="@string/sight_spot"/>
                 </LinearLayout>

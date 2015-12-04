@@ -42,7 +42,6 @@ public class RefundOrCommentAdapter extends SimpleBaseAdapter {
                             mContext.startActivity(new Intent(mContext, ApplySalesAfterActivity.class));
                             break;
                         case 1:
-
                             mContext.startActivity(new Intent(mContext, ProductCommentActivity.class));
                             break;
                     }

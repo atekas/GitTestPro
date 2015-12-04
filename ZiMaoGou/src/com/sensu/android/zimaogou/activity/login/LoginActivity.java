@@ -44,15 +44,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.login:
                 //TODO 调用登陆接口
-                RequestParams requestParams = new RequestParams();
-                requestParams.put("phone", "13888888888");
-                requestParams.put("password", "123546");
-                HttpUtil.get("http://192.168.1.125 :8080", requestParams, new AsyncHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(String content) {
-                        super.onSuccess(content);
-                    }
-                });
+//                RequestParams requestParams = new RequestParams();
+//                requestParams.put("phone", "13888888888");
+//                requestParams.put("password", "123546");
+//                HttpUtil.get("http://192.168.1.125 :8080", requestParams, new AsyncHttpResponseHandler() {
+//                    @Override
+//                    public void onSuccess(String content) {
+//                        super.onSuccess(content);
+//                    }
+//                });
                 break;
         }
     }

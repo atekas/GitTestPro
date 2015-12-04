@@ -35,7 +35,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/dip_10"
-                android:textSize="@dimen/text_size_18"
+                android:textSize="@dimen/text_size_17"
                 android:padding="@dimen/dip_5"
                 android:textColor="@color/red"
                 android:text="@string/register"/>
@@ -68,7 +68,7 @@
                     android:layout_width="@dimen/dip_60"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dip_20"
-                    android:textSize="@dimen/text_size_16"
+                    android:textSize="@dimen/text_size_15"
                     android:textColor="@color/black_222222"
                     android:text="@string/phone_num"/>
 
@@ -77,6 +77,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/dip_20"
+                    android:textSize="@dimen/text_size_15"
                     android:padding="@dimen/dip_10"
                     android:hint="@string/please_input_phone"
                     android:inputType="phone"
@@ -102,7 +103,7 @@
                     android:layout_width="@dimen/dip_60"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dip_20"
-                    android:textSize="@dimen/text_size_16"
+                    android:textSize="@dimen/text_size_15"
                     android:textColor="@color/black_222222"
                     android:text="@string/password"/>
 
@@ -111,6 +112,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/dip_20"
+                    android:textSize="@dimen/text_size_15"
                     android:padding="@dimen/dip_10"
                     android:hint="@string/please_input_password"
                     android:inputType="textPassword"
@@ -128,7 +130,7 @@
             android:layout_marginLeft="@dimen/dip_17"
             android:layout_marginRight="@dimen/dip_17"
             android:layout_marginTop="@dimen/dip_20"
-            android:textSize="@dimen/text_size_18"
+            android:textSize="@dimen/text_size_17"
             android:gravity="center"
             android:textColor="@color/color_login_press"
             android:text="@string/login"/>

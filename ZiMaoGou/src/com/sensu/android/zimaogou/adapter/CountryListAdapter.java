@@ -65,6 +65,12 @@ public class CountryListAdapter extends SimpleBaseAdapter {
                 view = LayoutInflater.from(mContext).inflate(R.layout.country_select_item2, null);
             }
 
+            if (i == getCount()) {
+                view.findViewById(R.id.bottom_line).setVisibility(View.GONE);
+            } else {
+                view.findViewById(R.id.bottom_line).setVisibility(View.VISIBLE);
+            }
+
             view.findViewById(R.id.country_select).setSelected(false);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
