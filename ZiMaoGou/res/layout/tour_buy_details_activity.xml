@@ -184,7 +184,7 @@
                     android:layout_height="39dp"
                     android:layout_alignParentRight="true"
                     android:background="@drawable/drawable_login_pressed"
-                    android:textSize="@dimen/text_size_18"
+                    android:textSize="@dimen/text_size_17"
                     android:gravity="center"
                     android:textColor="@color/color_login_press"
                     android:text="确定"/>

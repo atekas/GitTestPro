@@ -5,6 +5,7 @@
               android:layout_height="match_parent">
 
     <RelativeLayout
+            android:id="@+id/rl_top"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:background="@color/white"
@@ -41,12 +42,7 @@
                 android:textColor="@color/red"
                 android:text="待收货"/>
 
-        <View
-                android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:layout_marginLeft="2dp"
-                android:layout_alignParentBottom="true"
-                android:background="@color/home_line"/>
+        
 
     </RelativeLayout>
 
@@ -62,7 +58,7 @@
             android:layout_width="fill_parent"
             android:layout_height="55dp"
             android:background="@color/white"
-            android:paddingLeft="@dimen/order_left_distance">
+            android:paddingLeft="10dp">
 
         <TextView
                 android:id="@+id/tv_showNum"

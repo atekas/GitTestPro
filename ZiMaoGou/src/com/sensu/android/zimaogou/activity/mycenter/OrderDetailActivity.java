@@ -4,17 +4,18 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import com.sensu.android.zimaogou.Mode.OrderMode;
 import com.sensu.android.zimaogou.Mode.ProductMode;
-import com.sensu.android.zimaogou.Mode.Warehouse;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.BaseActivity;
+import com.sensu.android.zimaogou.adapter.OrderDetailListAdapter;
 import com.sensu.android.zimaogou.adapter.OrderListAdapter;
-import com.sensu.android.zimaogou.external.greendao.helper.GDBaseHelper;
+import com.sensu.android.zimaogou.utils.UiUtils;
 import com.sensu.android.zimaogou.widget.OnRefreshListener;
 import com.sensu.android.zimaogou.widget.RefreshListView;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -22,9 +23,10 @@ import java.util.ArrayList;
  * 订单页面
  * Created by qi.yang on 2015/11/18.
  */
-public class OrderActivity extends BaseActivity {
+public class OrderDetailActivity extends BaseActivity {
     ImageView mBackImageView;
-    RefreshListView mOrderListView;
+    ListView mOrderListView;
+    ScrollView mOrderDetailScrollView;
     ArrayList<OrderMode> mOrders = new ArrayList<OrderMode>();
     int sUnpaid = 1;//待付款
     int sUnreceived = 2;//待收货
@@ -32,11 +34,11 @@ public class OrderActivity extends BaseActivity {
     int sAllOrder = 0;//全部订单
     TextView mTitleTextView;
     int type = 0;
-    OrderListAdapter adapter = new OrderListAdapter(this,mOrders);
+    OrderDetailListAdapter adapter = new OrderDetailListAdapter(this,mOrders);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.order_activity);
+        setContentView(R.layout.order_detail_activity);
 
 
         if(getIntent().getExtras() != null){
@@ -53,11 +55,15 @@ public class OrderActivity extends BaseActivity {
 
     private void initView(){
         mBackImageView = (ImageView) findViewById(R.id.back);
-        mOrderListView = (RefreshListView) findViewById(R.id.lv_orders);
+        mOrderListView = (ListView) findViewById(R.id.lv_orders);
         mTitleTextView = (TextView) findViewById(R.id.tv_title);
+        mOrderDetailScrollView = (ScrollView) findViewById(R.id.sv_orderDetail);
+
+
         mOrderListView.setDivider(null);
-        mOrderListView.setOnRefreshListener(mOnRefreshListener);
         mOrderListView.setAdapter(adapter);
+        UiUtils.setListViewHeightBasedOnChilds(mOrderListView);
+        mOrderDetailScrollView.smoothScrollTo(0,0);
         mBackImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,30 +83,7 @@ public class OrderActivity extends BaseActivity {
 
         }
     }
-    private Handler mHandler = new Handler();
-    private OnRefreshListener mOnRefreshListener = new OnRefreshListener() {
-        @Override
-        public void onDownPullRefresh() {
-            //下拉刷新接口
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mOrderListView.hideHeaderView();
-                }
-            }, 2000);
-        }
 
-        @Override
-        public void onLoadingMore() {
-            //上拉加载接口
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mOrderListView.hideFooterView();
-                }
-            }, 2000);
-        }
-    };
 
     private void setData(){
         ArrayList<ProductMode> pros1 = new ArrayList<ProductMode>();
@@ -157,10 +140,6 @@ public class OrderActivity extends BaseActivity {
         orderMode5.setPros(pros1);
 
         mOrders.add(orderMode1);
-        mOrders.add(orderMode2);
-        mOrders.add(orderMode3);
-        mOrders.add(orderMode4);
-        mOrders.add(orderMode5);
 
     }
     /**

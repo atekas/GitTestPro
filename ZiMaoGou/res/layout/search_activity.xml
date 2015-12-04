@@ -3,7 +3,7 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/white">
+              android:background="@color/home_bg">
 
     <RelativeLayout
             android:layout_width="match_parent"
@@ -33,9 +33,10 @@
                 android:drawableLeft="@drawable/search_icon"
                 android:drawablePadding="@dimen/dip_5"
                 android:paddingLeft="@dimen/dip_5"
+                android:textSize="@dimen/text_size_normal"
                 android:hint="请输入要搜索的物品"
                 android:textColorHint="@color/gray_999999"
-                android:background="@drawable/search_back" />
+                android:background="@drawable/search_back"/>
 
         <TextView
                 android:id="@+id/search"
@@ -46,8 +47,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
                 android:padding="@dimen/dip_5"
-                android:textSize="@dimen/text_size_x_large"
-                android:text="搜索" />
+                android:textSize="@dimen/text_size_big"
+                android:text="搜索"/>
 
     </RelativeLayout>
 
@@ -55,6 +56,59 @@
             android:layout_width="match_parent"
             android:layout_height="2px"
             android:background="@color/home_line"/>
+    <ScrollView android:layout_width="match_parent" android:layout_height="wrap_content">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:orientation="vertical">
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:textSize="@dimen/text_size_small"
+                    android:textColor="@color/search_text_tip_color"
+                    android:paddingLeft="15dp"
+                    android:gravity="center_vertical"
+                    android:text="热门搜索"/>
+            <View android:layout_width="match_parent" android:layout_height="1px"
+                  android:background="@color/home_line"/>
+            <com.sensu.android.zimaogou.widget.NoScrollGridView
+                    android:id="@+id/gv_hot_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:listSelector="@null"
+                    android:numColumns="3"></com.sensu.android.zimaogou.widget.NoScrollGridView>
+            <View android:layout_width="match_parent" android:layout_height="1px"
+                  android:background="@color/home_line"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:textSize="@dimen/text_size_small"
+                    android:textColor="@color/search_text_tip_color"
+                    android:paddingLeft="15dp"
+                    android:gravity="center_vertical"
+                    android:text="最近搜过"/>
+            <View android:layout_width="match_parent" android:layout_height="1px"
+                  android:background="@color/home_line"/>
+            <com.sensu.android.zimaogou.widget.NoScrollListView
+                    android:id="@+id/lv_search"
+                    android:divider="@null"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></com.sensu.android.zimaogou.widget.NoScrollListView>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:textSize="@dimen/text_size_normal"
+                    android:textColor="@color/black_666666"
+                    android:gravity="center"
+                    android:text="清除搜索历史"/>
+            <View android:layout_width="match_parent" android:layout_height="1px"
+                  android:background="@color/home_line"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 
 </LinearLayout>

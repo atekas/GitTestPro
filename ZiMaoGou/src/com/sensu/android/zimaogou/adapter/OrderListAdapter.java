@@ -13,6 +13,7 @@ import com.sensu.android.zimaogou.Mode.OrderMode;
 import com.sensu.android.zimaogou.Mode.ProductMode;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.mycenter.ApplySalesAfterActivity;
+import com.sensu.android.zimaogou.activity.mycenter.OrderDetailActivity;
 import com.sensu.android.zimaogou.activity.mycenter.RefundOrCommentActivity;
 import com.sensu.android.zimaogou.utils.UiUtils;
 
@@ -54,11 +55,23 @@ public class OrderListAdapter extends SimpleBaseAdapter {
             viewHolder.bt_cancel = (Button) view.findViewById(R.id.bt_cancel);
             viewHolder.bt_submit = (Button) view.findViewById(R.id.bt_submit);
             viewHolder.bt_comment = (Button) view.findViewById(R.id.bt_comment);
+            viewHolder.rl_top = (RelativeLayout) view.findViewById(R.id.rl_top);
             view.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder) view.getTag();
         }
-
+        viewHolder.rl_top.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mContext.startActivity(new Intent(mContext, OrderDetailActivity.class));
+            }
+        });
+        viewHolder.rl_amount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mContext.startActivity(new Intent(mContext, OrderDetailActivity.class));
+            }
+        });
         switch (mOrders.get(i).getType()){
             case 1:
                 viewHolder.rl_button.setVisibility(View.VISIBLE);
@@ -122,7 +135,7 @@ public class OrderListAdapter extends SimpleBaseAdapter {
     public static class  ViewHolder{
         public TextView tv_orderNo,tv_orderType,tv_showNum,tv_amount,tv_freight;
         public ListView lv_products;
-        public RelativeLayout rl_amount,rl_button;
+        public RelativeLayout rl_amount,rl_button,rl_top;
         public Button bt_cancel,bt_submit,bt_comment;
     }
 

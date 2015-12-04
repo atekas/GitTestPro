@@ -158,6 +158,8 @@
 
         <activity android:name=".activity.mycenter.UpdatePasswordActivity" android:screenOrientation="portrait" />
 
+        <activity android:name=".activity.mycenter.OrderDetailActivity" android:screenOrientation="portrait" />
+
 
 
 

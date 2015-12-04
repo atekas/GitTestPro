@@ -15,12 +15,12 @@
                 android:paddingRight="@dimen/order_right_distance"
                 android:background="@color/white"
                 >
-                <View
-                        android:layout_width="fill_parent"
-                        android:layout_height="1px"
-                        android:layout_marginLeft="12dp"
-                        android:layout_alignParentTop="true"
-                        android:background="@color/home_line"/>
+            <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="12dp"
+                    android:layout_alignParentTop="true"
+                    android:background="@color/home_line"/>
             <ImageView
                     android:id="@+id/img_pro"
                     android:layout_width="86dp"
@@ -55,33 +55,17 @@
                     android:textSize="13sp"
                     android:text="￥108"
                     />
-            <LinearLayout
-                    android:id="@+id/ll_refund"
-                    android:visibility="visible"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="18dp"
-                    android:orientation="vertical"
-                    android:gravity="center_horizontal"
-                    >
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black_444444"
-                        android:textSize="@dimen/text_size_medial"
-                        android:text="退款金额"
-                        />
-                <TextView
-                        android:id="@+id/tv_refundMoney"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/red"
-                        android:textSize="@dimen/text_size_medial"
-                        android:text="￥108"
-                        />
-            </LinearLayout>
 
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/gray_888888"
+                        android:textSize="15sp"
+                        android:singleLine="true"
+                        android:text="金色"
+                        android:layout_alignParentRight="true"
+                        android:layout_above="@+id/rl_showType"
+                        />
             <RelativeLayout
                     android:id="@+id/rl_showType"
                     android:layout_width="fill_parent"
@@ -100,13 +84,25 @@
                         android:text="x1"
                         />
                 <TextView
+                        android:id="@+id/tv_moneyType"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/gray_9b9b9b"
+                        android:textColor="@color/black_222222"
                         android:textSize="13sp"
                         android:singleLine="true"
-                        android:text="型号:M；颜色:白色"
-                        android:layout_alignParentTop="true" android:layout_alignParentLeft="true"/>
+                        android:text="￥"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black_222222"
+                        android:layout_toRightOf="@+id/tv_moneyType"
+                        android:textSize="15sp"
+                        android:singleLine="true"
+                        android:text="108"
+                        android:layout_alignParentTop="true"
+                        />
             </RelativeLayout>
 
         </RelativeLayout>
