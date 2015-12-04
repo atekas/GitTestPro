@@ -101,6 +101,7 @@
                 android:background="@color/home_line"/>
 
         <RelativeLayout
+                android:onClick="CommentClick"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -134,4 +135,59 @@
                     android:text="收藏"/>
         </RelativeLayout>
     </LinearLayout>
+
+    <RelativeLayout
+            android:id="@+id/rl_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone">
+
+
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:paddingLeft="10dp"
+                android:paddingTop="15dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="15dp"
+                android:layout_alignParentBottom="true">
+                <Button
+                        android:id="@+id/bt_close"
+                        android:layout_width="15dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/product_arrow_red"/>
+            <EditText
+                    android:layout_toLeftOf="@+id/bt_sure"
+                    android:layout_toRightOf="@+id/bt_close"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:background="@drawable/command_input_box"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:layout_marginRight="10dp"
+                    android:textColorHint="@color/command_hint_color"
+                    android:textColor="@color/black_222222"
+                    android:textSize="@dimen/text_size_normal"
+                    android:hint="输入评论"
+                    />
+            <Button
+                    android:id="@+id/bt_sure"
+                    android:layout_width="60dp"
+                    android:layout_height="39dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/drawable_login_pressed"
+                    android:textSize="@dimen/text_size_18"
+                    android:gravity="center"
+                    android:textColor="@color/color_login_press"
+                    android:text="确定"/>
+        </RelativeLayout>
+    </RelativeLayout>
 </RelativeLayout>
