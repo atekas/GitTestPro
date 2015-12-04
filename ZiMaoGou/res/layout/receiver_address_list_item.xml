@@ -2,99 +2,103 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              android:layout_height="wrap_content">
 
-        >
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                  android:orientation="vertical"
-                  android:background="@color/white"
-                  android:layout_marginBottom="10dp">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_marginBottom="10dp">
+
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
+                android:orientation="horizontal">
 
-                >
             <TextView
                     android:id="@+id/tv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_large"
+                    android:textSize="15sp"
                     android:layout_marginLeft="12dp"
                     android:textColor="@color/black_333333"
-                    android:text="朱琳"
-                    />
+                    android:text="朱琳"/>
+
             <TextView
                     android:id="@+id/tv_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_large"
+                    android:textSize="15sp"
                     android:layout_marginLeft="5dp"
                     android:textColor="@color/black_333333"
-                    android:text="13852052052"
-                    />
+                    android:text="13852052052"/>
+
         </LinearLayout>
+
         <TextView
                 android:id="@+id/tv_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_big"
+                android:textSize="14sp"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="16dp"
                 android:textColor="@color/black_666666"
-                android:text="江苏省扬州市宝应县安义镇 油坊街粮食宿舍1幢301"
-                />
+                android:text="江苏省扬州市宝应县安义镇 油坊街粮食宿舍1幢301"/>
+
         <ImageView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"
                 android:src="@drawable/dash_line"/>
+
         <RelativeLayout
+                android:id="@+id/edit_address"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                >
+                android:layout_height="40dp">
+
             <ImageView
                     android:id="@+id/img_choose"
                     android:layout_width="@dimen/account_chose_width"
                     android:layout_height="@dimen/account_chose_width"
                     android:src="@drawable/d_06"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
-                    />
+                    android:layout_marginLeft="15dp"/>
+
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_normal"
+                    android:textSize="13sp"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/img_choose"
                     android:layout_marginLeft="10dp"
                     android:textColor="@color/black_333333"
-                    android:text="设为默认地址"
-                    />
+                    android:text="设为默认地址"/>
+
             <TextView
                     android:id="@+id/tv_edit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_normal"
+                    android:textSize="13sp"
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@+id/tv_delete"
                     android:layout_marginRight="27dp"
                     android:textColor="@color/gray_9b9b9b"
-                    android:text="编辑"
-                    />
+                    android:text="编辑"/>
+
             <TextView
                     android:id="@+id/tv_delete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_normal"
+                    android:textSize="13sp"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="25dp"
                     android:textColor="@color/gray_9b9b9b"
-                    android:text="删除"
-                    />
+                    android:text="删除"/>
+
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

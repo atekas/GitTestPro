@@ -18,20 +18,20 @@
                 app:aspectRatio="1">
 
             <!--<android.support.v4.view.ViewPager-->
-                    <!--android:id="@+id/viewpager"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_gravity="center"/>-->
+            <!--android:id="@+id/viewpager"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_gravity="center"/>-->
 
-                <!--<ImageView-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:src="@drawable/dp_2"/>-->
-                <!--<ImageView-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:src="@drawable/product1"/>-->
-                <include layout="@layout/video_linearlayout" />
+            <!--<ImageView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:src="@drawable/dp_2"/>-->
+            <!--<ImageView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:src="@drawable/product1"/>-->
+            <!--<include layout="@layout/video_linearlayout"/>-->
 
         </com.sensu.android.zimaogou.widget.FixedAspectRatioRelativeLayout>
 
@@ -45,32 +45,47 @@
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="26dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="19dp"
                     android:gravity="bottom">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="22sp"
+                        android:textColor="@color/red"
+                        android:layout_gravity="bottom"
+                        android:text="¥"/>
 
                 <TextView
                         android:id="@+id/now_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="25sp"
+                        android:layout_gravity="bottom"
+                        android:textSize="26sp"
                         android:textColor="@color/red"
-                        android:text="¥68"/>
+                        android:text="68"/>
 
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/dip_17"
+                        android:layout_gravity="bottom"
+                        android:textSize="14sp"
                         android:textColor="@color/gray_999999"
                         android:layout_marginLeft="10dp"
                         android:text="¥98"/>
 
-                <View android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"/>
+                <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
 
                 <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:padding="@dimen/dip_5"
                         android:src="@drawable/product_collect_gray"/>
 
             </LinearLayout>
@@ -79,31 +94,33 @@
                     android:id="@+id/product_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="17dp"
-                    android:layout_marginRight="25dp"
-                    android:layout_marginTop="20dp"
-                    android:textSize="@dimen/text_size_18"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginRight="13dp"
+                    android:layout_marginTop="13dp"
+                    android:textSize="14sp"
                     android:textColor="@color/black_222222"
                     android:text="小狗印花头套小狗心花头套小狗印花头套小狗心花头套小狗印花头套小狗心花头套"/>
 
             <View
                     android:layout_width="match_parent"
                     android:layout_height="2px"
-                    android:layout_marginTop="13dp"
+                    android:layout_marginTop="11dp"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginRight="14dp"
                     android:background="@color/home_line"/>
 
             <LinearLayout
                     android:onClick="ChooseTypeAndColorClick"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="50dp"
                     android:gravity="center_vertical"
                     android:background="@drawable/drawable_me_click">
 
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_size_18"
+                        android:textSize="15sp"
                         android:textColor="@color/black_333333"
                         android:layout_marginLeft="16dp"
                         android:drawablePadding="16dp"
@@ -126,14 +143,16 @@
             <View
                     android:layout_width="match_parent"
                     android:layout_height="2px"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginRight="14dp"
                     android:background="@color/home_line"/>
 
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:layout_marginTop="25dp"
-                    android:textSize="@dimen/text_size_20"
+                    android:layout_marginTop="21dp"
+                    android:textSize="16sp"
                     android:textColor="@color/black_333333"
                     android:text="承诺服务"/>
 
@@ -142,7 +161,7 @@
                     android:layout_height="2px"
                     android:layout_marginLeft="14dp"
                     android:layout_marginRight="14dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="12dp"
                     android:background="#656565"/>
 
             <LinearLayout
@@ -158,7 +177,7 @@
                         android:layout_weight="1"
                         android:drawableLeft="@drawable/promise_icon"
                         android:drawablePadding="@dimen/dip_5"
-                        android:textSize="@dimen/text_size_16"
+                        android:textSize="13sp"
                         android:textColor="@color/black_333333"
                         android:text="正品保证"/>
 
@@ -168,7 +187,7 @@
                         android:layout_weight="1"
                         android:drawableLeft="@drawable/promise_icon"
                         android:drawablePadding="@dimen/dip_5"
-                        android:textSize="@dimen/text_size_16"
+                        android:textSize="13sp"
                         android:textColor="@color/black_333333"
                         android:text="视频直播原地直采"/>
 
@@ -179,7 +198,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginTop="15dp">
 
                 <TextView
                         android:layout_width="0dp"
@@ -187,7 +206,7 @@
                         android:layout_weight="1"
                         android:drawableLeft="@drawable/promise_icon"
                         android:drawablePadding="@dimen/dip_5"
-                        android:textSize="@dimen/text_size_16"
+                        android:textSize="13sp"
                         android:textColor="@color/black_333333"
                         android:text="14天无忧退货"/>
 
@@ -197,7 +216,7 @@
                         android:layout_weight="1"
                         android:drawableLeft="@drawable/promise_icon"
                         android:drawablePadding="@dimen/dip_5"
-                        android:textSize="@dimen/text_size_16"
+                        android:textSize="13sp"
                         android:textColor="@color/black_333333"
                         android:text="清关保税无忧售后"/>
 
@@ -209,7 +228,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:layout_marginTop="@dimen/dip_36"
+                    android:layout_marginTop="29dp"
                     android:layout_marginBottom="@dimen/dip_30"
                     android:gravity="center">
 
@@ -222,7 +241,7 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_size_16"
+                        android:textSize="13sp"
                         android:textColor="@color/black_444444"
                         android:text="继续拖动,查看商品描述"/>
 

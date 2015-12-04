@@ -8,14 +8,14 @@
 
     <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dip_20"
+            android:layout_height="@dimen/dip_10"
             android:background="#eff4f5"/>
 
     <TextView
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginLeft="@dimen/dip_20"
+            android:layout_marginLeft="@dimen/dip_10"
             android:textColor="@color/black_222222"
             android:textSize="@dimen/text_size_16"
             android:gravity="center_vertical"
@@ -24,8 +24,8 @@
     <com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dip_20"
-            android:layout_marginRight="@dimen/dip_20"
+            android:layout_marginLeft="@dimen/dip_10"
+            android:layout_marginRight="@dimen/dip_10"
             app:aspectRatio="1">
 
         <ImageView
@@ -40,17 +40,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/video"/>
+                android:src="@drawable/video_icon"/>
 
     </com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout>
 
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dip_20"
-            android:layout_marginRight="@dimen/dip_20"
+            android:layout_marginLeft="@dimen/dip_10"
+            android:layout_marginRight="@dimen/dip_10"
             android:layout_marginTop="@dimen/dip_10"
-            android:textSize="@dimen/text_size_16"
+            android:textSize="@dimen/text_size_14"
             android:textColor="@color/black_444444"
             android:text="一款纯天然的手工香皂,橄榄油,月硅油一款纯天然的手工香皂,橄榄油,月硅油一款纯天然的手工香皂,橄榄油,月硅油一款纯天然的手工香皂,橄榄油,月硅油"/>
 
@@ -69,7 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/red"
-                android:textSize="@dimen/text_size_18"
+                android:textSize="@dimen/text_size_20"
                 android:text="¥68"/>
 
         <TextView
@@ -78,7 +78,7 @@
                 android:layout_marginLeft="@dimen/dip_10"
                 android:layout_height="wrap_content"
                 android:textColor="#666666"
-                android:textSize="@dimen/text_size_14"
+                android:textSize="@dimen/text_size_16"
                 android:text="¥68"/>
 
         <View android:layout_width="0dp" android:layout_height="1px" android:layout_weight="1" />

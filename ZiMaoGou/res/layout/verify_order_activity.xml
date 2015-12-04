@@ -55,16 +55,16 @@
                     android:id="@+id/into_address_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dip_20"
-                    android:layout_marginTop="@dimen/dip_20"
-                    android:layout_marginBottom="@dimen/dip_20"
+                    android:layout_marginLeft="@dimen/dip_10"
+                    android:layout_marginTop="@dimen/dip_10"
+                    android:layout_marginBottom="13dp"
                     android:layout_marginRight="@dimen/dip_10">
 
                 <TextView
                         android:id="@+id/shipping_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_size_16"
+                        android:textSize="15sp"
                         android:textColor="@color/black_222222"
                         android:text="@string/shipping_address"/>
 
@@ -74,7 +74,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/shipping_address"
                         android:layout_marginLeft="@dimen/dip_22"
-                        android:textSize="@dimen/text_size_16"
+                        android:textSize="15sp"
                         android:textColor="@color/black_222222"
                         android:text="朱琳"/>
 
@@ -84,7 +84,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/name"
                         android:layout_marginLeft="@dimen/dip_8"
-                        android:textSize="@dimen/text_size_16"
+                        android:textSize="15sp"
                         android:textColor="@color/black_222222"
                         android:text="1388888888"/>
 
@@ -94,7 +94,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/name"
                         android:layout_alignLeft="@+id/name"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="7dp"
                         android:textSize="@dimen/text_size_14"
                         android:textColor="#666666"
                         android:text="扬州市桂花林路9幢13楼1304室"/>
@@ -114,15 +114,15 @@
             <View
                     android:layout_width="match_parent"
                     android:layout_height="2px"
-                    android:layout_marginLeft="@dimen/dip_20"
+                    android:layout_marginLeft="@dimen/dip_10"
                     android:background="@color/home_line"/>
 
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/dip_20"
-                    android:textSize="@dimen/text_size_16"
+                    android:layout_marginLeft="@dimen/dip_10"
+                    android:textSize="15sp"
                     android:textColor="@color/black_222222"
                     android:text="@string/products_list"/>
 
@@ -137,33 +137,34 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dip_20"
+                    android:divider="@null"
+                    android:dividerHeight="0dp"
                     android:scrollbars="none"/>
 
             <View
                     android:layout_width="match_parent"
-                    android:layout_height="2px"
-                    android:layout_marginLeft="@dimen/dip_20"
+                    android:layout_height="10dp"
                     android:background="@color/home_line"/>
 
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/dip_20"
-                    android:textSize="@dimen/text_size_16"
+                    android:layout_marginLeft="@dimen/dip_10"
+                    android:textSize="15sp"
                     android:textColor="@color/black_222222"
                     android:text="@string/pay_way"/>
 
             <View
                     android:layout_width="match_parent"
                     android:layout_height="2px"
-                    android:layout_marginLeft="@dimen/dip_20"
+                    android:layout_marginLeft="@dimen/dip_10"
                     android:background="@color/home_line"/>
 
             <LinearLayout
                     android:id="@+id/zhifubao_pay"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="@dimen/dip_20"
+                    android:layout_marginLeft="@dimen/dip_10"
                     android:layout_height="50dp">
 
                 <ImageView
@@ -178,7 +179,7 @@
                         android:layout_weight="1"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="15dp"
-                        android:textSize="@dimen/text_size_16"
+                        android:textSize="@dimen/text_size_15"
                         android:textColor="@color/black_444444"
                         android:text="@string/zhifubao"/>
 
@@ -195,13 +196,13 @@
             <View
                     android:layout_width="match_parent"
                     android:layout_height="2px"
-                    android:layout_marginLeft="@dimen/dip_60"
+                    android:layout_marginLeft="@dimen/dip_50"
                     android:background="@color/home_line"/>
 
             <LinearLayout
                     android:id="@+id/we_chat_pay"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="@dimen/dip_20"
+                    android:layout_marginLeft="@dimen/dip_10"
                     android:layout_height="50dp">
 
                 <ImageView
@@ -216,7 +217,7 @@
                         android:layout_weight="1"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="15dp"
-                        android:textSize="@dimen/text_size_16"
+                        android:textSize="@dimen/text_size_15"
                         android:textColor="@color/black_444444"
                         android:text="@string/we_chat"/>
 
@@ -237,7 +238,7 @@
 
             <View
                     android:layout_width="match_parent"
-                    android:layout_height="15dp"
+                    android:layout_height="10dp"
                     android:background="#eff3f5"/>
 
             <View
@@ -257,8 +258,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:layout_marginLeft="@dimen/dip_20"
-                        android:textSize="@dimen/text_size_16"
+                        android:layout_marginLeft="@dimen/dip_10"
+                        android:textSize="15sp"
                         android:textColor="@color/black_222222"
                         android:text="@string/discount_coupon"/>
 
@@ -267,7 +268,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:layout_marginLeft="@dimen/dip_20"
-                        android:textSize="@dimen/text_size_16"
+                        android:textSize="@dimen/text_size_15"
                         android:textColor="@color/gray_9b9b9b"
                         android:text="@string/discount_coupon"/>
 
@@ -288,7 +289,7 @@
 
             <View
                     android:layout_width="match_parent"
-                    android:layout_height="15dp"
+                    android:layout_height="10dp"
                     android:background="#eff3f5"/>
 
             <View
@@ -307,8 +308,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginLeft="@dimen/dip_20"
-                        android:textSize="@dimen/text_size_16"
+                        android:layout_marginLeft="@dimen/dip_10"
+                        android:textSize="15sp"
                         android:textColor="@color/black_222222"
                         android:text="@string/products_price"/>
 
@@ -316,7 +317,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
-                        android:textSize="@dimen/text_size_16"
+                        android:textSize="@dimen/text_size_15"
                         android:textColor="@color/black_444444"
                         android:text="¥ 409"/>
 
@@ -325,7 +326,7 @@
             <View
                     android:layout_width="match_parent"
                     android:layout_height="2px"
-                    android:layout_marginLeft="@dimen/dip_20"
+                    android:layout_marginLeft="@dimen/dip_10"
                     android:background="@color/home_line"/>
 
             <LinearLayout
@@ -339,8 +340,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginLeft="@dimen/dip_20"
-                        android:textSize="@dimen/text_size_16"
+                        android:layout_marginLeft="@dimen/dip_10"
+                        android:textSize="@dimen/text_size_15"
                         android:textColor="@color/black_444444"
                         android:text="@string/shuifei"/>
 
@@ -348,7 +349,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
-                        android:textSize="@dimen/text_size_16"
+                        android:textSize="@dimen/text_size_15"
                         android:textColor="@color/black_444444"
                         android:text="¥ 409"/>
 
@@ -357,7 +358,7 @@
             <View
                     android:layout_width="match_parent"
                     android:layout_height="2px"
-                    android:layout_marginLeft="@dimen/dip_20"
+                    android:layout_marginLeft="@dimen/dip_10"
                     android:background="@color/home_line"/>
 
             <LinearLayout
@@ -371,8 +372,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginLeft="@dimen/dip_20"
-                        android:textSize="@dimen/text_size_16"
+                        android:layout_marginLeft="@dimen/dip_10"
+                        android:textSize="@dimen/text_size_15"
                         android:textColor="@color/black_444444"
                         android:text="@string/yunfei"/>
 
@@ -380,7 +381,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
-                        android:textSize="@dimen/text_size_16"
+                        android:textSize="@dimen/text_size_15"
                         android:textColor="@color/black_444444"
                         android:text="¥ 409"/>
 
@@ -389,7 +390,7 @@
             <View
                     android:layout_width="match_parent"
                     android:layout_height="2px"
-                    android:layout_marginLeft="@dimen/dip_20"
+                    android:layout_marginLeft="@dimen/dip_10"
                     android:background="@color/home_line"/>
 
             <LinearLayout
@@ -403,8 +404,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginLeft="@dimen/dip_20"
-                        android:textSize="@dimen/text_size_16"
+                        android:layout_marginLeft="@dimen/dip_10"
+                        android:textSize="@dimen/text_size_15"
                         android:textColor="@color/black_444444"
                         android:text="@string/discount_coupon"/>
 
@@ -412,7 +413,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
-                        android:textSize="@dimen/text_size_16"
+                        android:textSize="@dimen/text_size_15"
                         android:textColor="@color/black_444444"
                         android:text="¥ 409"/>
 
@@ -451,7 +452,7 @@
                 android:layout_weight="1"
                 android:layout_marginLeft="@dimen/dip_5"
                 android:textColor="@color/red"
-                android:textSize="@dimen/text_size_22"
+                android:textSize="@dimen/text_size_19"
                 android:text="¥490"/>
 
         <TextView
@@ -461,7 +462,7 @@
                 android:layout_weight="2"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_18"
+                android:textSize="@dimen/text_size_17"
                 android:background="@color/red"
                 android:text="@string/verify_order"/>
 

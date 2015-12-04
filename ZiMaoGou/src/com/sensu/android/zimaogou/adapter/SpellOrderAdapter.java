@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.utils.TextUtils;
 
 /**
  * Created by zhangwentao on 2015/11/19.
@@ -33,6 +34,7 @@ public class SpellOrderAdapter extends SimpleBaseAdapter {
             viewHolder.mProductDescribe = (TextView) view.findViewById(R.id.product_describe);
             viewHolder.mGroupPrice = (TextView) view.findViewById(R.id.group_buy_price);
             viewHolder.mOldPrice = (TextView) view.findViewById(R.id.old_price);
+            TextUtils.addLineCenter(viewHolder.mOldPrice);
             viewHolder.mGroupPersonSize = (TextView) view.findViewById(R.id.group_person_size);
             view.setTag(viewHolder);
         } else {

@@ -8,8 +8,8 @@
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_marginTop="@dimen/dip_20"
-            android:layout_marginBottom="@dimen/dip_20">
+            android:layout_marginTop="@dimen/dip_10"
+            android:layout_marginBottom="@dimen/dip_10">
 
         <ImageView
                 android:id="@+id/product_pic"
@@ -27,20 +27,30 @@
                 android:layout_marginRight="@dimen/dip_20"
                 android:maxLines="2"
                 android:ellipsize="end"
-                android:textSize="@dimen/text_size_18"
+                android:textSize="15sp"
                 android:textColor="@color/black_444444"
                 android:text="亨博士 玛咖精片玛咖精片玛咖精片玛咖精片玛咖精片"/>
 
         <TextView
-                android:id="@+id/product_price"
+                android:id="@+id/rmb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_toRightOf="@+id/product_pic"
                 android:layout_alignLeft="@+id/product_name"
-                android:textSize="@dimen/text_size_18"
+                android:textSize="13sp"
                 android:textColor="@color/black_222222"
-                android:text="¥ 108" />
+                android:text="¥" />
+
+            <TextView
+                    android:id="@+id/product_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toRightOf="@+id/rmb"
+                    android:textSize="@dimen/text_size_15"
+                    android:textColor="@color/black_222222"
+                    android:text="108" />
 
         <TextView
                 android:id="@+id/product_count"
@@ -49,7 +59,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/dip_20"
-                android:textSize="@dimen/text_size_17"
+                android:textSize="@dimen/text_size_14"
                 android:textColor="@color/black_222222"
                 android:text="×1" />
 
@@ -59,7 +69,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dip_60"
                     android:layout_alignRight="@+id/product_count"
-                    android:textSize="@dimen/text_size_18"
+                    android:textSize="@dimen/text_size_13"
                     android:textColor="@color/gray_9b9b9b"
                     android:text="M"/>
 

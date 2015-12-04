@@ -92,7 +92,7 @@ public class OrderActivity extends BaseActivity {
         ArrayList<ProductMode> pros5 = new ArrayList<ProductMode>();
         ProductMode mode1 = new ProductMode();
         mode1.setTestImg(R.drawable.product3);
-        mode1.setTestTitle("懒人支架，给你最好的体验");
+        mode1.setTestTitle("懒人支架给你最好的体验");
         mode1.setPrice(100);
         mode1.setNum(1);
         pros1.add(mode1);

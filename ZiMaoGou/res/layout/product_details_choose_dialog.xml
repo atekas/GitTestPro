@@ -34,7 +34,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/img_pro"
-                        android:layout_marginTop="40dp"
+                        android:layout_marginTop="20dp"
                         android:layout_marginLeft="25dp"
                         android:textSize="@dimen/text_size_large"
                         android:textColor="@color/red"
@@ -46,9 +46,9 @@
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/img_pro"
                         android:layout_below="@+id/tv_productPrice"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginLeft="25dp"
-                        android:textSize="@dimen/text_size_normal"
+                        android:textSize="13sp"
                         android:textColor="@color/gray_9b9b9b"
                         android:text="库存充足"/>
 
@@ -58,7 +58,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:padding="@dimen/dip_10"
-                        android:layout_marginTop="14dp"
+                        android:layout_marginTop="4dp"
                         android:layout_marginRight="5dp"
                         android:src="@drawable/close"/>
 
@@ -96,7 +96,7 @@
                             android:gravity="center"
                             android:background="@drawable/drawable_choose_product_border"
                             android:textColor="@color/color_choose_product_text_color"
-                            android:textSize="@dimen/text_size_medial"
+                            android:textSize="14sp"
                             android:text="魔力紫"/>
 
                     <TextView
@@ -108,7 +108,7 @@
                             android:gravity="center"
                             android:background="@drawable/drawable_choose_product_border"
                             android:textColor="@color/color_choose_product_text_color"
-                            android:textSize="@dimen/text_size_medial"
+                            android:textSize="14sp"
                             android:text="宝石蓝"/>
 
                 </LinearLayout>
@@ -186,7 +186,7 @@
                 android:layout_height="60dp"
                 android:background="@color/red"
                 android:layout_marginTop="20dp"
-                android:textSize="@dimen/title_size"
+                android:textSize="17sp"
                 android:textColor="@color/white"
                 android:gravity="center"
                 android:text="确定"/>

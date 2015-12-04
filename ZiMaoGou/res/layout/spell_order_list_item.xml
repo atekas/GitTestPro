@@ -18,10 +18,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dip_10"
             android:layout_marginRight="@dimen/dip_10"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:maxLines="1"
             android:ellipsize="end"
-            android:textSize="@dimen/text_size_18"
+            android:textSize="@dimen/text_size_15"
             android:textColor="@color/black_222222"
             android:text="降血压健脑银杏进化120毫克"/>
 
@@ -31,10 +31,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dip_10"
             android:layout_marginRight="@dimen/dip_10"
-            android:layout_marginTop="15dp"
-            android:textSize="@dimen/text_size_16"
+            android:layout_marginTop="10dp"
+            android:textSize="@dimen/text_size_13"
             android:textColor="#666666"
-            android:text="降血压健脑银杏进化降血压健脑银杏进化"/>
+            android:text="降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化"/>
 
     <LinearLayout
             android:orientation="horizontal"
@@ -43,15 +43,22 @@
             android:gravity="bottom"
             android:layout_marginLeft="@dimen/dip_10"
             android:layout_marginRight="@dimen/dip_10"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="10dp">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_22"
+                android:textColor="@color/red"
+                android:text="¥"/>
 
         <TextView
                 android:id="@+id/group_buy_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_20"
+                android:textSize="25sp"
                 android:textColor="@color/red"
-                android:text="¥68"/>
+                android:text="68"/>
 
         <TextView
                 android:id="@+id/old_price"
@@ -82,7 +89,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:textColor="@color/red"
-                    android:textSize="@dimen/text_size_16"
+                    android:textSize="@dimen/text_size_15"
                     android:text="3人成团"/>
 
             <TextView
@@ -91,7 +98,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_16"
+                    android:textSize="@dimen/text_size_15"
                     android:text="去组团"/>
 
         </LinearLayout>
@@ -101,7 +108,7 @@
     <View
             android:layout_width="match_parent"
             android:layout_height="2px"
-            android:layout_marginTop="@dimen/dip_20"
+            android:layout_marginTop="@dimen/dip_10"
             android:background="@color/home_line"/>
 
 </LinearLayout>

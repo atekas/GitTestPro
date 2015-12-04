@@ -13,8 +13,12 @@ import com.sensu.android.zimaogou.adapter.ReceiverListAdapter;
  * Created by qi.yang on 2015/11/20.
  */
 public class ReceiverAddressActivity extends BaseActivity {
+    public static final String IS_NO_EDIT = "is_no_edit";
+
     ImageView mBackImageView;
     ListView mReceiverAddressListView;
+
+    private boolean mIsNoEdit;
 
 
     @Override
@@ -25,6 +29,8 @@ public class ReceiverAddressActivity extends BaseActivity {
     }
 
     private void initView(){
+        mIsNoEdit = getIntent().getBooleanExtra(IS_NO_EDIT, false);
+
         mBackImageView = (ImageView) findViewById(R.id.back);
         mReceiverAddressListView = (ListView) findViewById(R.id.lv_receiverAddress);
         mBackImageView.setOnClickListener(new View.OnClickListener() {
@@ -34,7 +40,7 @@ public class ReceiverAddressActivity extends BaseActivity {
             }
         });
         mReceiverAddressListView.setDivider(null);
-        mReceiverAddressListView.setAdapter(new ReceiverListAdapter(this));
+        mReceiverAddressListView.setAdapter(new ReceiverListAdapter(this, mIsNoEdit));
     }
 
     public void AddAddressClick(View v){

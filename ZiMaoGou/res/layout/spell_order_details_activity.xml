@@ -72,12 +72,12 @@
                         android:id="@+id/product_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
                         android:maxLines="1"
                         android:ellipsize="end"
-                        android:textSize="@dimen/text_size_18"
+                        android:textSize="@dimen/text_size_15"
                         android:textColor="@color/black_222222"
                         android:text="降血压健脑银杏进化120毫克"/>
 
@@ -85,11 +85,11 @@
                         android:id="@+id/product_describe"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginBottom="@dimen/dip_20"
-                        android:layout_marginTop="12dp"
-                        android:textSize="@dimen/text_size_16"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="@dimen/dip_10"
+                        android:layout_marginTop="10dp"
+                        android:textSize="@dimen/text_size_13"
                         android:textColor="#666666"
                         android:text="健乐多健身增肌增重粉健身教练定制款乳清蛋白750g赠男士维生素一瓶健乐多健身增肌增重粉健身教练定制款乳清蛋白750g赠男士维生素一瓶健乐多健身增肌增重粉健身教练定制款乳清蛋白750g赠男士维生素一瓶健乐多健身增肌增重粉健身教练定制款乳清蛋白750g赠男士维生素一瓶"/>
             </LinearLayout>

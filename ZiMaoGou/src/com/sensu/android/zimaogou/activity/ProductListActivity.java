@@ -7,7 +7,6 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.adapter.ProductsDetailsAdapter;
-import com.sensu.android.zimaogou.utils.DisplayUtils;
 
 /**
  * Created by zhangwentao on 2015/11/17.

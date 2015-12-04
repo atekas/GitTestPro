@@ -17,6 +17,8 @@
     <color name="white">#ffffff</color>
     <drawable name="white">#ffffff</drawable>
 
+    <drawable name="eeeeee">#eeeeee</drawable>
+
     <color name="red">#dc283c</color>
     <color name="black">#000000</color>
 

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.mycenter.ReceiverAddressEditActivity;
@@ -19,9 +20,11 @@ import java.util.ArrayList;
  */
 public class ReceiverListAdapter extends SimpleBaseAdapter{
     ArrayList<TestAddress> addresses = new ArrayList<TestAddress>();
-    public ReceiverListAdapter(Context context) {
+    private boolean mIsEdit;
+    public ReceiverListAdapter(Context context, boolean isEdit) {
         super(context);
         setData();
+        mIsEdit = isEdit;
     }
 
     @Override
@@ -41,10 +44,18 @@ public class ReceiverListAdapter extends SimpleBaseAdapter{
             holder.tv_edit = (TextView) view.findViewById(R.id.tv_edit);
             holder.tv_delete = (TextView) view.findViewById(R.id.tv_delete);
             holder.img_choose = (ImageView) view.findViewById(R.id.img_choose);
+            holder.mEditAddress = (RelativeLayout) view.findViewById(R.id.edit_address);
             view.setTag(holder);
         }else{
             holder = (ViewHolder) view.getTag();
         }
+
+        if (mIsEdit) {
+            holder.mEditAddress.setVisibility(View.GONE);
+        } else {
+            holder.mEditAddress.setVisibility(View.VISIBLE);
+        }
+
         final int position = i;
         if(addresses.get(position).isChoose) {
             holder.img_choose.setImageResource(R.drawable.d_03);
@@ -76,6 +87,7 @@ public class ReceiverListAdapter extends SimpleBaseAdapter{
     private class ViewHolder {
         TextView tv_name,tv_phone,tv_address,tv_edit,tv_delete;
         ImageView img_choose;
+        RelativeLayout mEditAddress;
     }
 
     /**

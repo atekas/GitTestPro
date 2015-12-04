@@ -46,7 +46,7 @@
     <LinearLayout
             android:id="@+id/sort_rules_layout"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="40dp"
             android:background="@color/white">
 
         <RelativeLayout
@@ -61,7 +61,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/color_product_text_select"
-                    android:textSize="@dimen/text_size_18"
+                    android:textSize="@dimen/text_size_15"
                     android:drawableRight="@drawable/drawable_product_select"
                     android:drawablePadding="@dimen/dip_5"
                     android:text="@string/newest"/>
@@ -80,7 +80,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/color_product_text_select"
-                    android:textSize="@dimen/text_size_18"
+                    android:textSize="@dimen/text_size_15"
                     android:drawableRight="@drawable/drawable_product_select"
                     android:drawablePadding="@dimen/dip_5"
                     android:text="@string/moods"/>

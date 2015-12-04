@@ -171,6 +171,8 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         mProductCommentTextView = (TextView) findViewById(R.id.tv_productComment);
         mCursorImageView = (ImageView) findViewById(R.id.cursor);
 
+        findViewById(R.id.scroll_view_title).setVisibility(View.GONE);
+
         mProductDetailTextView.setTextColor(getResources().getColor(R.color.red));
 
         mProductWebView = (WebView) findViewById(R.id.productDetail_webView);
@@ -210,6 +212,8 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         findViewById(R.id.back).setOnClickListener(this);
         findViewById(R.id.shopping_bag).setOnClickListener(this);
         findViewById(R.id.product_share).setOnClickListener(this);
+        findViewById(R.id.add_to_buy_bag).setOnClickListener(this);
+        findViewById(R.id.pay).setOnClickListener(this);
 
         listView = (ListView) findViewById(R.id.product_evaluate_list);
         listView.setAdapter(new ProductEvaluateAdapter(this));
@@ -245,6 +249,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 mChooseDialog.dismiss();
                 break;
             case R.id.sure:
+                startActivity(new Intent(this, ProductShopCarActivity.class));
                 mChooseDialog.dismiss();
                 break;
             case R.id.type_1:
@@ -264,6 +269,12 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
             case R.id.bt_add:
                 mProductCount++;
                 ((EditText) mChooseDialog.findViewById(R.id.product_num)).setText(mProductCount + "");
+                break;
+            case R.id.add_to_buy_bag:
+                ChooseTypeAndColorClick(findViewById(R.id.add_to_buy_bag));
+                break;
+            case R.id.pay:
+                startActivity(new Intent(this, VerifyOrderActivity.class));
                 break;
         }
     }

@@ -9,9 +9,9 @@
             android:id="@+id/special_introduce_pic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dip_20"
-            android:layout_marginRight="@dimen/dip_20"
-            android:layout_marginTop="@dimen/dip_20"
+            android:layout_marginLeft="@dimen/dip_10"
+            android:layout_marginRight="@dimen/dip_10"
+            android:layout_marginTop="@dimen/dip_10"
             android:src="@drawable/special_1"
             android:scaleType="fitXY"
             android:layout_gravity="center_horizontal"/>
@@ -20,23 +20,23 @@
             android:id="@+id/special_introduce_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dip_25"
-            android:layout_marginRight="@dimen/dip_25"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:layout_marginTop="@dimen/dip_10"
-            android:textSize="@dimen/text_size_16"
+            android:textSize="18sp"
             android:textColor="@color/black_222222"
-            android:text="奶白肌肤养成记"/>
+            android:text="关于雪地靴除了UGG，还有这些"/>
 
     <TextView
             android:id="@+id/special_introduce_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dip_25"
-            android:layout_marginRight="@dimen/dip_25"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:layout_marginTop="@dimen/dip_10"
-            android:layout_marginBottom="28dp"
+            android:layout_marginBottom="10dp"
             android:textSize="@dimen/text_size_14"
             android:textColor="@color/black_444444"
-            android:text="奶白肌肤养成记"/>
+            android:text="墨尔本成立的Yellow Earth，从1991年始，经历了二十年的发展历程，最终将自己的羊皮毛产品形成国际品牌。这一品牌，体现着Yellow Earth对澳洲这片土地深深的热爱，在澳洲特有的羊皮毛产品上的耕耘已经获得了澳洲政府的肯定和推介，以及广大人民的厚爱。" />
 
 </LinearLayout>

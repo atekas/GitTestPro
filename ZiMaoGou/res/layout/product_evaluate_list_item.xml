@@ -9,9 +9,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="20dp">
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="14dp">
 
         <com.sensu.android.zimaogou.widget.RoundImageView
                 android:id="@+id/user_photo"
@@ -24,10 +24,15 @@
                 android:id="@+id/user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_16"
+                android:textSize="13sp"
                 android:textColor="@color/black_222222"
                 android:layout_marginLeft="10dp"
                 android:text="ZHF_13545610"/>
+
+        <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1"/>
+
+        <include
+                layout="@layout/commend_star"/>
 
     </LinearLayout>
 
@@ -35,9 +40,9 @@
             android:id="@+id/evaluate_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:textSize="@dimen/text_size_16"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textSize="13sp"
             android:textColor="#555555"
             android:text="衣服质量真的很好,看起来很有档次,假期便宜了很多,物超所值,知得购买"/>
 
@@ -47,9 +52,9 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="20dp">
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="12dp">
 
         <com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout
                 android:id="@+id/frame_1"
