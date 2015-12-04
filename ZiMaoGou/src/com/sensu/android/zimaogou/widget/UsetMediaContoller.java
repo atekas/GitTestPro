@@ -232,6 +232,7 @@ public class UsetMediaContoller extends JjMediaContoller {
 		 * 头部控制器区域
 		 */
 		mSystemInfoLayout = v.findViewById(R.id.sdk_media_controller_panel);
+		mSystemInfoLayout.setVisibility(View.GONE);
 		/**
 		 * 视频总时间
 		 */
@@ -310,6 +311,7 @@ public class UsetMediaContoller extends JjMediaContoller {
 		mDirectionView = (ImageButton) v
 				.findViewById(R.id.sdk_media_controller_direction);
 		mDirectionView.setOnClickListener(mDirectionListener);
+		mDirectionView.setVisibility(View.INVISIBLE);
 		/**
 		 * 设置清晰度View
 		 */

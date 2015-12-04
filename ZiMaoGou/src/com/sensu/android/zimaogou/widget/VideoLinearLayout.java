@@ -37,6 +37,7 @@ public class VideoLinearLayout extends LinearLayout {
         // UsetMediaContoller(this));//用户自定义控制器
 
 //        mVideoView.setMediaController(new VideoJjMediaContoller(getContext(), true));// 内部写好的控制器
+//        mVideoView.setMediaController(new UsetMediaContoller(getContext()));
         // 参数必须true
         mLoadBufferTextView.setTextColor(Color.RED);
         /***

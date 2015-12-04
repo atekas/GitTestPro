@@ -93,8 +93,10 @@
             android:id="@+id/product_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:listSelector="@null"
             android:numColumns="2"
-            android:horizontalSpacing="2dp"
+            android:horizontalSpacing="5dp"
+            android:layout_marginTop="5dp"
             android:background="#e8e8e8"/>
 
 </LinearLayout>
