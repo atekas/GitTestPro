@@ -8,9 +8,10 @@ public class HttpUtil {
 
 	private static AsyncHttpClient client = new AsyncHttpClient();
 
-	public static final String HOST = "http://api.51pinlife.com/";
+	public static final String HOST = "http://139.196.108.137:80/v1/";
 	static {
 		client.setTimeout(5000);//设置超时
+		client.addHeader("Content-type", "application/json");
 	}
 
 	//获取完整的url
@@ -26,15 +27,14 @@ public class HttpUtil {
 	 */
 	public static void get(String url, AsyncHttpResponseHandler responseHandler) {
 		LogUtils.d("HttpUtil", "get url:" + getAbsoluteUrl(url));
-		get(url,null,responseHandler);
+		get(url, null, responseHandler);
 	}
 
 	public static void get(String url, RequestParams params,
 			AsyncHttpResponseHandler responseHandler) {
 		LogUtils.d("HttpUtil", "get url:" + getAbsoluteUrl(url) + "||参数:"
 				+ (params != null ? params.toString() : "params is null"));
-//		client.get(getAbsoluteUrl(url), params, responseHandler);
-		client.get(url, params, responseHandler);
+		client.get(getAbsoluteUrl(url), params, responseHandler);
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class HttpUtil {
 	 * @param res
 	 */
 	public static void get(String urlString, JsonHttpResponseHandler res) {
-		client.get(urlString, res);
+		client.get(getAbsoluteUrl(urlString), res);
 
 	}
 
@@ -58,7 +58,7 @@ public class HttpUtil {
 	public static void get(String urlString, RequestParams params,
 			JsonHttpResponseHandler res) {
 
-		client.get(urlString, params, res);
+		client.get(getAbsoluteUrl(urlString), params, res);
 
 	}
 
@@ -69,7 +69,7 @@ public class HttpUtil {
 	 */
 	public static void get(String uString, BinaryHttpResponseHandler bHandler) {
 
-		client.get(uString, bHandler);
+		client.get(getAbsoluteUrl(uString), bHandler);
 
 	}
 

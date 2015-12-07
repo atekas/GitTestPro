@@ -5,8 +5,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import com.alibaba.fastjson.JSON;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.ReqResponse.ProductListResponse;
 import com.sensu.android.zimaogou.adapter.ProductsDetailsAdapter;
+import com.sensu.android.zimaogou.utils.HttpUtil;
+import com.sensu.android.zimaogou.utils.PromptUtils;
+
+import java.util.List;
 
 /**
  * Created by zhangwentao on 2015/11/17.
@@ -44,6 +52,8 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
         mProductsDetailsAdapter = new ProductsDetailsAdapter(this);
         mGridView.setAdapter(mProductsDetailsAdapter);
 
+        getProductList();
+
         mGridView.setOnItemClickListener(this);
     }
 
@@ -67,5 +77,21 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         startActivity(new Intent(this, ProductDetailsActivity.class));
+    }
+
+    private void getProductList() {
+        HttpUtil.get(IConstants.sGoodList, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(String content) {
+                super.onSuccess(content);
+                ProductListResponse productListResponse = JSON.parseObject(content, ProductListResponse.class);
+                PromptUtils.showToast(productListResponse.data.get(0).id);
+            }
+
+            @Override
+            public void onFailure(Throwable error, String content) {
+                super.onFailure(error, content);
+            }
+        });
     }
 }
