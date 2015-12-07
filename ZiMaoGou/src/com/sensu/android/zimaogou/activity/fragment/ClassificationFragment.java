@@ -9,6 +9,7 @@ import android.widget.*;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.*;
 import com.sensu.android.zimaogou.adapter.ClassificationGridAdapter;
+import com.sensu.android.zimaogou.utils.HttpUtil;
 
 /**
  * Created by zhangwentao on 2015/11/10.
@@ -120,5 +121,8 @@ public class ClassificationFragment extends BaseFragment implements AdapterView.
                 startActivity(new Intent(mParentActivity, SearchActivity.class));
                 break;
         }
+    }
+
+    public void getClassification() {
     }
 }
