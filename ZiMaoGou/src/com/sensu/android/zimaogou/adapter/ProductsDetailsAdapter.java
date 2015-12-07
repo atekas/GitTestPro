@@ -4,18 +4,20 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.ReqResponse.ProductListResponse;
 import com.sensu.android.zimaogou.utils.DisplayUtils;
+import com.sensu.android.zimaogou.utils.ImageUtils;
 
 /**
  * Created by zhangwentao on 2015/11/18.
  */
 public class ProductsDetailsAdapter extends SimpleBaseAdapter {
 
+    private ProductListResponse mProductListResponse;
     private int mPicSize;
 
     public ProductsDetailsAdapter(Context context) {
@@ -23,9 +25,16 @@ public class ProductsDetailsAdapter extends SimpleBaseAdapter {
         mPicSize = (DisplayUtils.getDisplayWidth()) / 2;
     }
 
+    public void setProductList(ProductListResponse productListResponse) {
+        if (productListResponse != mProductListResponse) {
+            mProductListResponse = productListResponse;
+        }
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount() {
-        return 30;
+        return mProductListResponse == null ? 0 : mProductListResponse.data.size();
     }
 
     @Override
@@ -44,8 +53,11 @@ public class ProductsDetailsAdapter extends SimpleBaseAdapter {
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
-
         //todo 塞数据
+        ProductListResponse.ProductListData productListData = mProductListResponse.data.get(i);
+        viewHolder.mProductName.setText(productListData.name);
+        viewHolder.mPrice.setText(productListData.price);
+        ImageUtils.displayImage(productListData.main_image, viewHolder.mProductPic);
 
         return view;
     }

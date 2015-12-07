@@ -85,6 +85,7 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
             public void onSuccess(String content) {
                 super.onSuccess(content);
                 ProductListResponse productListResponse = JSON.parseObject(content, ProductListResponse.class);
+                mProductsDetailsAdapter.setProductList(productListResponse);
                 PromptUtils.showToast(productListResponse.data.get(0).id);
             }
 
