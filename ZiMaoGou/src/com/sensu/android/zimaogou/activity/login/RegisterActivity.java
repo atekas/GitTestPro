@@ -71,21 +71,26 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     private void getCode(){
         String phoneNum = mPhoneEditText.getText().toString().trim();
-//        if(TextUtils.isEmpty(phoneNum)){
-//            PromptUtils.showToast("手机号码不能为空");
-//            return ;
-//        }
+        if(TextUtils.isEmpty(phoneNum)){
+            PromptUtils.showToast("手机号码不能为空");
+            return ;
+        }
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("mobile", phoneNum);
 
-        RequestParams requestParams = new RequestParams();
-        requestParams.put("mobile", "15229024392");
-        HttpUtil.post(IConstants.sGetAuthCode, requestParams, new AsyncHttpResponseHandler(){
-            @Override
-            public void onSuccess(String content) {
-                super.onSuccess(content);
-                AuthCodeResponse authCodeResponse = JSON.parseObject(content, AuthCodeResponse.class);
-                PromptUtils.showToast(authCodeResponse.data.recode);
-            }
-        });
+            HttpUtil.post(this, IConstants.sGetAuthCode, jsonObject, new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(String content) {
+                    super.onSuccess(content);
+                    AuthCodeResponse authCodeResponse = JSON.parseObject(content, AuthCodeResponse.class);
+                    PromptUtils.showToast(authCodeResponse.data.recode);
+                }
+            });
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void checkCode() {

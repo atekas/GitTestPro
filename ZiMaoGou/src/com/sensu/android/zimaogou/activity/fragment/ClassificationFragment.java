@@ -6,10 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.alibaba.fastjson.JSON;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.ReqResponse.ProductClassificationResponse;
 import com.sensu.android.zimaogou.activity.*;
 import com.sensu.android.zimaogou.adapter.ClassificationGridAdapter;
 import com.sensu.android.zimaogou.utils.HttpUtil;
+
+import java.util.List;
 
 /**
  * Created by zhangwentao on 2015/11/10.
@@ -59,29 +65,31 @@ public class ClassificationFragment extends BaseFragment implements AdapterView.
 
     @Override
     protected void initView() {
+        getClassification();
 
-        LinearLayout containerLayout = (LinearLayout) mParentActivity.findViewById(R.id.classification_list);
         mScrollView = (ScrollView) mParentActivity.findViewById(R.id.scroll_view);
         mParentActivity.findViewById(R.id.search).setOnClickListener(this);
-
-        mViews = new View[toolsList.length];
-        for (int i = 0; i < toolsList.length; i++) {
-            View view = LayoutInflater.from(mParentActivity).inflate(R.layout.classification_list_item, null);
-            view.setId(i);
-            view.setOnClickListener(mOnClickListener);
-            TextView textView = (TextView) view.findViewById(R.id.classification_name);
-            textView.setText(toolsList[i]);
-            containerLayout.addView(view);
-            mViews[i] = view;
-        }
-
-        changColor(0);
 
         mGridView = (GridView) mParentActivity.findViewById(R.id.small_classification_grid);
         mClassificationGridAdapter = new ClassificationGridAdapter(mParentActivity);
         mGridView.setAdapter(mClassificationGridAdapter);
 
         mGridView.setOnItemClickListener(this);
+    }
+
+    private void layoutView(List<ProductClassificationResponse.ProductCategory> productCategoryList) {
+        LinearLayout containerLayout = (LinearLayout) mParentActivity.findViewById(R.id.classification_list);
+        mViews = new View[productCategoryList.size()];
+        for (int i = 0; i < productCategoryList.size(); i++) {
+            View view = LayoutInflater.from(mParentActivity).inflate(R.layout.classification_list_item, null);
+            view.setId(i);
+            view.setOnClickListener(mOnClickListener);
+            TextView textView = (TextView) view.findViewById(R.id.classification_name);
+            textView.setText(productCategoryList.get(i).name);
+            containerLayout.addView(view);
+            mViews[i] = view;
+        }
+        changColor(0);
     }
 
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -124,5 +132,18 @@ public class ClassificationFragment extends BaseFragment implements AdapterView.
     }
 
     public void getClassification() {
+        HttpUtil.get(IConstants.sProduct_classification, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(String content) {
+                super.onSuccess(content);
+                ProductClassificationResponse productClassificationResponse = JSON.parseObject(content, ProductClassificationResponse.class);
+                layoutView(productClassificationResponse.data);
+            }
+
+            @Override
+            public void onFailure(Throwable error, String content) {
+                super.onFailure(error, content);
+            }
+        });
     }
 }

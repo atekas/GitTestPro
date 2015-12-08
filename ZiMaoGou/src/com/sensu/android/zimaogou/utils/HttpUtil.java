@@ -1,8 +1,12 @@
 package com.sensu.android.zimaogou.utils;
 
+import android.content.Context;
 import com.loopj.android.http.*;
+import org.apache.http.entity.StringEntity;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 
 public class HttpUtil {
 
@@ -84,6 +88,15 @@ public class HttpUtil {
 		LogUtils.d("HttpUtil", "post url:" + getAbsoluteUrl(url) + "||参数:"
 				+ (params != null ? params.toString() : "params is null"));
 		client.post(getAbsoluteUrl(url), params, responseHandler);
+	}
+
+	public static void post(Context context, String url, JSONObject jsonObject, AsyncHttpResponseHandler responseHandler) {
+		try {
+			StringEntity stringEntity = new StringEntity(jsonObject.toString());
+			client.post(context, getAbsoluteUrl(url), stringEntity, "application/json", responseHandler);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static JSONArray getJsonArrayFromResponse(JSONObject response,
