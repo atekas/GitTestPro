@@ -13,7 +13,7 @@ import com.sensu.android.zimaogou.activity.login.RegisterActivity;
 public class UpdateTimeHandler extends SoftReferenceActivityHandler<RegisterActivity> {
 
     public final static int UPDATE_TIME_CODE = 0;
-    public int mMaxTime = 120;
+    public int mMaxTime = 60;
 
     public UpdateTimeHandler(RegisterActivity weakReference) {
         super(weakReference);

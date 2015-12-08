@@ -13,4 +13,12 @@ public class TextUtils {
         textView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
         textView.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG);//抗锯齿
     }
+
+    public static boolean isEmpty(String str){
+        if(str == null || str.equals("")){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

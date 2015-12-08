@@ -96,7 +96,7 @@
                     android:text="@string/auth_code"/>
 
             <EditText
-                    android:id="@+id/input_password"
+                    android:id="@+id/input_authCode"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

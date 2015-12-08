@@ -9,7 +9,8 @@ public class IConstants {
     public static final String sTimeStamp = "comm/timestamp";
     //验证短信验证码
     public static final String sCheck = "comm/recode/check";
-
+    //获取验证码
+    public static final String sGetAuthCode = "comm/recode/register";
 
     //商品列表
     public static final String sGoodList = "goods/list";
