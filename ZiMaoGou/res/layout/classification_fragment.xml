@@ -60,8 +60,7 @@
                 android:id="@+id/scroll_view"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
-                android:scrollbars="none"
-                android:background="@drawable/eeeeee">
+                android:scrollbars="none">
 
             <LinearLayout
                     android:id="@+id/classification_list"

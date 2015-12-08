@@ -25,7 +25,12 @@ public class UserInfoDao extends AbstractDao<UserInfo, Void> {
     public static class Properties {
         public final static Property Name = new Property(0, String.class, "name", false, "NAME");
         public final static Property Sex = new Property(1, String.class, "sex", false, "SEX");
-        public final static Property PhoneNum = new Property(2, String.class, "phoneNum", false, "PHONE_NUM");
+        public final static Property Mobile = new Property(2, String.class, "mobile", false, "MOBILE");
+        public final static Property Uid = new Property(3, String.class, "uid", false, "UID");
+        public final static Property Avatar = new Property(4, String.class, "avatar", false, "AVATAR");
+        public final static Property Email = new Property(5, String.class, "email", false, "EMAIL");
+        public final static Property Token = new Property(6, String.class, "token", false, "TOKEN");
+        public final static Property IsLogin = new Property(7, String.class, "isLogin", false, "IS_LOGIN");
     };
 
 
@@ -43,7 +48,12 @@ public class UserInfoDao extends AbstractDao<UserInfo, Void> {
         db.execSQL("CREATE TABLE " + constraint + "'USER_INFO' (" + //
                 "'NAME' TEXT," + // 0: name
                 "'SEX' TEXT," + // 1: sex
-                "'PHONE_NUM' TEXT);"); // 2: phoneNum
+                "'MOBILE' TEXT," + // 2: mobile
+                "'UID' TEXT," + // 3: uid
+                "'AVATAR' TEXT," + // 4: avatar
+                "'EMAIL' TEXT," + // 5: email
+                "'TOKEN' TEXT," + // 6: token
+                "'IS_LOGIN' TEXT);"); // 7: isLogin
     }
 
     /** Drops the underlying database table. */
@@ -67,9 +77,34 @@ public class UserInfoDao extends AbstractDao<UserInfo, Void> {
             stmt.bindString(2, sex);
         }
  
-        String phoneNum = entity.getPhoneNum();
-        if (phoneNum != null) {
-            stmt.bindString(3, phoneNum);
+        String mobile = entity.getMobile();
+        if (mobile != null) {
+            stmt.bindString(3, mobile);
+        }
+ 
+        String uid = entity.getUid();
+        if (uid != null) {
+            stmt.bindString(4, uid);
+        }
+ 
+        String avatar = entity.getAvatar();
+        if (avatar != null) {
+            stmt.bindString(5, avatar);
+        }
+ 
+        String email = entity.getEmail();
+        if (email != null) {
+            stmt.bindString(6, email);
+        }
+ 
+        String token = entity.getToken();
+        if (token != null) {
+            stmt.bindString(7, token);
+        }
+ 
+        String isLogin = entity.getIsLogin();
+        if (isLogin != null) {
+            stmt.bindString(8, isLogin);
         }
     }
 
@@ -85,7 +120,12 @@ public class UserInfoDao extends AbstractDao<UserInfo, Void> {
         UserInfo entity = new UserInfo( //
             cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // name
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // sex
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2) // phoneNum
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // mobile
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // uid
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // avatar
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // email
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // token
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // isLogin
         );
         return entity;
     }
@@ -95,7 +135,12 @@ public class UserInfoDao extends AbstractDao<UserInfo, Void> {
     public void readEntity(Cursor cursor, UserInfo entity, int offset) {
         entity.setName(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
         entity.setSex(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setPhoneNum(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setMobile(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setUid(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setAvatar(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setEmail(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setToken(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setIsLogin(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
      }
     
     /** @inheritdoc */

@@ -11,7 +11,12 @@ public class UserInfo {
 
     private String name;
     private String sex;
-    private String phoneNum;
+    private String mobile;
+    private String uid;
+    private String avatar;
+    private String email;
+    private String token;
+    private String isLogin;
 
     // KEEP FIELDS - put your custom fields here
     // KEEP FIELDS END
@@ -19,10 +24,15 @@ public class UserInfo {
     public UserInfo() {
     }
 
-    public UserInfo(String name, String sex, String phoneNum) {
+    public UserInfo(String name, String sex, String mobile, String uid, String avatar, String email, String token, String isLogin) {
         this.name = name;
         this.sex = sex;
-        this.phoneNum = phoneNum;
+        this.mobile = mobile;
+        this.uid = uid;
+        this.avatar = avatar;
+        this.email = email;
+        this.token = token;
+        this.isLogin = isLogin;
     }
 
     public String getName() {
@@ -41,12 +51,52 @@ public class UserInfo {
         this.sex = sex;
     }
 
-    public String getPhoneNum() {
-        return phoneNum;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setPhoneNum(String phoneNum) {
-        this.phoneNum = phoneNum;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getIsLogin() {
+        return isLogin;
+    }
+
+    public void setIsLogin(String isLogin) {
+        this.isLogin = isLogin;
     }
 
     // KEEP METHODS - put your custom methods here

@@ -6,9 +6,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.BaseActivity;
 import com.sensu.android.zimaogou.activity.MainActivity;
+import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
+import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
+import com.sensu.android.zimaogou.utils.HttpUtil;
+import com.sensu.android.zimaogou.utils.PromptUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 /**
@@ -90,9 +99,8 @@ public class SettingActivity extends BaseActivity {
         bt_sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SettingActivity.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
+
+                loginOut();
                 mLoginOutDialog.dismiss();
             }
         });
@@ -103,5 +111,36 @@ public class SettingActivity extends BaseActivity {
             }
         });
         mLoginOutDialog.show();
+    }
+
+    private void loginOut(){
+        UserInfo userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
+
+        if(userInfo == null){
+            return;
+        }
+
+        RequestParams requestParams1 = new RequestParams();
+        requestParams1.put("uid",userInfo.getUid());
+
+        HttpUtil.getWithSign(userInfo.getToken(),IConstants.sLoginOut, requestParams1,new AsyncHttpResponseHandler(){
+            @Override
+            public void onSuccess(String content) {
+                super.onSuccess(content);
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(content);
+                    if(jsonObject.optString("ret").equals("0")){
+                        PromptUtils.showToast("退出登录");
+                        Intent intent = new Intent(SettingActivity.this, MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(intent);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
     }
 }

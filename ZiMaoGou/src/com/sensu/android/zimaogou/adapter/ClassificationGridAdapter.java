@@ -7,30 +7,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.sensu.android.zimaogou.R;
-import com.sensu.android.zimaogou.ReqResponse.ProductClassificationResponse;
-import com.sensu.android.zimaogou.utils.ImageUtils;
 
 /**
  * Created by zhangwentao on 2015/11/17.
  */
 public class ClassificationGridAdapter extends SimpleBaseAdapter {
 
-    private ProductClassificationResponse.ProductCategory mProductCategory;
-
     public ClassificationGridAdapter(Context context) {
         super(context);
     }
 
-    public void setCategoryList(ProductClassificationResponse.ProductCategory categoryList) {
-        if (categoryList != mProductCategory) {
-            mProductCategory = categoryList;
-            notifyDataSetChanged();
-        }
-    }
-
     @Override
     public int getCount() {
-        return mProductCategory == null ? 0 : mProductCategory.sub.size();
+        return 20;
     }
 
     @Override
@@ -45,10 +34,6 @@ public class ClassificationGridAdapter extends SimpleBaseAdapter {
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
-        ProductClassificationResponse.CategoryList categoryList = mProductCategory.sub.get(i);
-        ImageUtils.displayImage(categoryList.image, viewHolder.mImageView);
-        viewHolder.mTextView.setText(categoryList.name);
-
         return view;
     }
 

@@ -32,6 +32,9 @@ public class GDUserInfoHelper extends GDBaseHelper {
     }
 
     public UserInfo getUserInfo() {
+        if(mUserInfoDao.loadAll().size() == 0){
+            return null;
+        }
         return mUserInfoDao.loadAll().get(0);
     }
 

@@ -16,7 +16,9 @@ import com.sensu.android.zimaogou.activity.login.LoginActivity;
 import com.sensu.android.zimaogou.activity.mycenter.*;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
+import com.sensu.android.zimaogou.utils.ImageUtils;
 import com.sensu.android.zimaogou.utils.PromptUtils;
+import com.sensu.android.zimaogou.utils.TextUtils;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
@@ -33,7 +35,7 @@ import com.umeng.socialize.weixin.media.WeiXinShareContent;
 public class MeFragment extends BaseFragment implements View.OnClickListener {
 
     private ImageView mHeadPicImageView;
-
+    private TextView mNicknameTextView,mLoginTextView;
     public static final String DESCRIPTOR = "com.umeng.share";
     private final UMSocialService mController = UMServiceFactory
             .getUMSocialService(DESCRIPTOR);
@@ -61,6 +63,8 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         mHeadPicImageView = (ImageView) mParentActivity.findViewById(R.id.head_pic);
 
         mHeadPicImageView.setOnClickListener(this);
+        mLoginTextView = (TextView) mParentActivity.findViewById(R.id.login_register);
+        mNicknameTextView = (TextView) mParentActivity.findViewById(R.id.tv_nickname);
         mParentActivity.findViewById(R.id.login_register).setOnClickListener(this);
         mParentActivity.findViewById(R.id.wait_pay).setOnClickListener(this);
         mParentActivity.findViewById(R.id.wait_receive).setOnClickListener(this);
@@ -86,6 +90,31 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        UserInfo user = GDUserInfoHelper.getInstance(mParentActivity).getUserInfo();
+        if(user != null && user.getIsLogin().equals("true")){
+
+            mNicknameTextView.setVisibility(View.VISIBLE);
+            mLoginTextView.setVisibility(View.GONE);
+            if(TextUtils.isEmpty(user.getName())){
+                mNicknameTextView.setText(user.getMobile());
+            }else{
+                mNicknameTextView.setText(user.getName());
+            }
+//            if(TextUtils.isEmpty(user.getAvatar())){
+//                mHeadPicImageView.setImageResource(R.drawable.head_pic_default);
+//            }else{
+//                ImageUtils.displayImage(user.getAvatar(),mHeadPicImageView);
+//            }
+        }else{
+            mNicknameTextView.setVisibility(View.GONE);
+            mLoginTextView.setVisibility(View.VISIBLE);
+            mHeadPicImageView.setImageResource(R.drawable.head_pic_default);
+        }
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
     }
@@ -101,16 +130,11 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             case R.id.head_pic:
                 //TODO 登陆或者更换头像  判断是否登陆  登陆进入用户信息页面，未登陆进入登陆页面
                 PromptUtils.showToast("登陆或者更换头像");
-//                UserInfo userInfo = new UserInfo();
-//                userInfo.setName("张三");
-//                userInfo.setSex("男");
-//                userInfo.setPhoneNum("138888888");
 //                GDUserInfoHelper.getInstance(mParentActivity).insertUserInfo(userInfo);
                 startActivity(new Intent(mParentActivity, MyInformationActivity.class));
                 break;
             case R.id.login_register:
 //                UserInfo userInfo1 = GDUserInfoHelper.getInstance(mParentActivity).getUserInfo();
-//                PromptUtils.showToast(userInfo1.getName() + userInfo1.getSex() + userInfo1.getPhoneNum());
                 mParentActivity.startActivity(new Intent(mParentActivity, LoginActivity.class));
 
                 break;

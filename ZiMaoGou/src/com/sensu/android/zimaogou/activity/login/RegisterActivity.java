@@ -59,6 +59,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 checkCode();
                 break;
             case R.id.get_auth_code:
+                if(TextUtils.isEmpty(mPhoneEditText.getText().toString().trim())){
+                    PromptUtils.showToast("手机号码不能为空");
+                    return ;
+                }
                 //TODO 调用获取验证码接口，成功后下面两方法在返回成功里面调用
                 getCode();
                 mGetAuthCode.setEnabled(false);
@@ -71,10 +75,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     private void getCode(){
         String phoneNum = mPhoneEditText.getText().toString().trim();
-        if(TextUtils.isEmpty(phoneNum)){
-            PromptUtils.showToast("手机号码不能为空");
-            return ;
-        }
+
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("mobile", phoneNum);
@@ -112,7 +113,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 CheckCodeResponse checkCodeResponse = JSON.parseObject(content, CheckCodeResponse.class);
                 PromptUtils.showToast(checkCodeResponse.getMsg() + checkCodeResponse.data.is_pass);
                 if((checkCodeResponse.data.is_pass).equals("1")){
-                    startActivity(new Intent(RegisterActivity.this,InputPasswordActivity.class));
+                    startActivity(new Intent(RegisterActivity.this,InputPasswordActivity.class)
+                            .putExtra("recode",mAuthCodeEditText.getText().toString())
+                            .putExtra("mobile",mPhoneEditText.getText().toString()));
+                    finish();
                 }else{
                     PromptUtils.showToast("验证码不正确");
                 }
