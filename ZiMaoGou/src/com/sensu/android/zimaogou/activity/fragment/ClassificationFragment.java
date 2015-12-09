@@ -22,10 +22,14 @@ import java.util.List;
  */
 public class ClassificationFragment extends BaseFragment implements AdapterView.OnItemClickListener, View.OnClickListener {
 
-    String[] toolsList = new String[]{"常用分类", "潮流女装", "品牌男装", "内衣配饰", "家用电器"
-            , "手机数码", "电脑办公", "个护化妆", "母婴频道", "食物生鲜", "酒水饮料", "家居家纺", "整车车品"
-            , "鞋靴箱包", "运动户外", "图书", "玩具乐器", "钟表", "居家生活", "珠宝饰品", "音像制品", "家具建材"
-            , "计生情趣", "营养保健", "奢侈礼品", "生活服务", "旅游出行"};
+//    String[] toolsList = new String[]{"常用分类", "潮流女装", "品牌男装", "内衣配饰", "家用电器"
+//            , "手机数码", "电脑办公", "个护化妆", "母婴频道", "食物生鲜", "酒水饮料", "家居家纺", "整车车品"
+//            , "鞋靴箱包", "运动户外", "图书", "玩具乐器", "钟表", "居家生活", "珠宝饰品", "音像制品", "家具建材"
+//            , "计生情趣", "营养保健", "奢侈礼品", "生活服务", "旅游出行"};
+
+    public static final String PRODUCT_ID = "product_id";
+    private ProductClassificationResponse mProductClassificationResponse;
+    private ProductClassificationResponse.ProductCategory mCurrentCategory;
 
     private View[] mViews;
     private ScrollView mScrollView;
@@ -102,7 +106,7 @@ public class ClassificationFragment extends BaseFragment implements AdapterView.
     };
 
     private void changColor(int id) {
-        for (int i = 0; i < toolsList.length; i++) {
+        for (int i = 0; i < mProductClassificationResponse.data.size(); i++) {
             if (i != id) {
                 mViews[i].findViewById(R.id.classification_name).setSelected(false);
                 mViews[i].findViewById(R.id.line).setSelected(false);
@@ -110,6 +114,8 @@ public class ClassificationFragment extends BaseFragment implements AdapterView.
         }
         mViews[id].findViewById(R.id.classification_name).setSelected(true);
         mViews[id].findViewById(R.id.line).setSelected(true);
+        mClassificationGridAdapter.setCategoryList(mProductClassificationResponse.data.get(id));
+        mCurrentCategory = mProductClassificationResponse.data.get(id);
     }
 
     private void changTextLocation(int position) {
@@ -119,7 +125,9 @@ public class ClassificationFragment extends BaseFragment implements AdapterView.
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        startActivity(new Intent(mParentActivity, ProductListActivity.class));
+        Intent intent = new Intent(mParentActivity, ProductListActivity.class);
+        intent.putExtra(PRODUCT_ID, mCurrentCategory.sub.get(i).id);
+        startActivity(intent);
     }
 
     @Override
@@ -137,6 +145,7 @@ public class ClassificationFragment extends BaseFragment implements AdapterView.
             public void onSuccess(String content) {
                 super.onSuccess(content);
                 ProductClassificationResponse productClassificationResponse = JSON.parseObject(content, ProductClassificationResponse.class);
+                mProductClassificationResponse = productClassificationResponse;
                 layoutView(productClassificationResponse.data);
             }
 
