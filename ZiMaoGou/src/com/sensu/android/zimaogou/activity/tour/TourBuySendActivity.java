@@ -14,6 +14,9 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.qiniu.android.http.ResponseInfo;
+import com.qiniu.android.storage.UpCompletionHandler;
+import com.qiniu.android.storage.UploadManager;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.BaseActivity;
 import com.sensu.android.zimaogou.activity.LocalPhotoActivity;
@@ -23,6 +26,7 @@ import com.sensu.android.zimaogou.photoalbum.PhotoInfo;
 import com.sensu.android.zimaogou.popup.SelectCountryPopup;
 import com.sensu.android.zimaogou.utils.DisplayUtils;
 import com.sensu.android.zimaogou.utils.ImageUtils;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -59,6 +63,7 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
     private boolean mIsPosition = true;
 
     private int mPicSize;
+    private String mVideoPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,9 +87,9 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
             //视频
             mGridView.setVisibility(View.GONE);
             findViewById(R.id.video_layout).setVisibility(View.VISIBLE);
-            String videoPath = getIntent().getStringExtra(VIDEO_PATH);
+            mVideoPath = getIntent().getStringExtra(VIDEO_PATH);
             MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
-            mediaMetadataRetriever.setDataSource(videoPath);
+            mediaMetadataRetriever.setDataSource(mVideoPath);
             Bitmap bitmap = mediaMetadataRetriever.getFrameAtTime();
             ((ImageView) findViewById(R.id.video_cover)).setImageBitmap(bitmap);
         } else {
@@ -308,5 +313,17 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
         p.width = (int) d.getWidth() ; // 宽度设置为屏幕
         dialogWindow.setAttributes(p);
         mTourBuyChooseDialog.show();
+    }
+
+    public void qiniu() {
+        UploadManager uploadManager = new UploadManager();
+        String key = "";
+        String token = "";
+        uploadManager.put(mVideoPath, key, token, new UpCompletionHandler() {
+            @Override
+            public void complete(String s, ResponseInfo responseInfo, JSONObject jsonObject) {
+
+            }
+        }, null);
     }
 }

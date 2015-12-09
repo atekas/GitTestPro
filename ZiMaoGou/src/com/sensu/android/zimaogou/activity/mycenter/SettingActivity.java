@@ -128,18 +128,20 @@ public class SettingActivity extends BaseActivity {
         RequestParams requestParams1 = new RequestParams();
         requestParams1.put("uid",userInfo.getUid());
 
-        HttpUtil.getWithSign(userInfo.getToken(),IConstants.sLoginOut, requestParams1,new AsyncHttpResponseHandler(){
+        HttpUtil.getWithSign(userInfo.getToken(), IConstants.sLoginOut, requestParams1, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(String content) {
                 super.onSuccess(content);
                 JSONObject jsonObject = null;
-                Log.d("退出登录返回值：",content);
+                Log.d("退出登录返回值：", content);
                 try {
                     jsonObject = new JSONObject(content);
-                    if(jsonObject.optString("ret").equals("0")){
+                    if (jsonObject.optString("ret").equals("0")) {
                         PromptUtils.showToast("退出登录");
-                        UserInfo userInfo1 = GDUserInfoHelper.getInstance(SettingActivity.this).getUserInfo();
-                        GDUserInfoHelper.getInstance(SettingActivity.this).deleteUserInfo(userInfo1);
+//                        UserInfo userInfo1 = GDUserInfoHelper.getInstance(SettingActivity.this).getUserInfo();
+//                        userInfo1.setIsLogin("false");
+//                        GDUserInfoHelper.getInstance(SettingActivity.this).updateUserInfo(userInfo1);
+                        GDUserInfoHelper.getInstance(SettingActivity.this).deleteData();
                         Intent intent = new Intent(SettingActivity.this, MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         startActivity(intent);
