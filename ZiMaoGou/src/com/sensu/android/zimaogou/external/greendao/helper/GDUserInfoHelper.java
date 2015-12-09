@@ -41,4 +41,8 @@ public class GDUserInfoHelper extends GDBaseHelper {
     public void insertUserInfo(UserInfo userInfo) {
         mUserInfoDao.insert(userInfo);
     }
+
+    public void updateUserInfo(UserInfo userInfo) {
+        mUserInfoDao.insertOrReplace(userInfo);
+    }
 }

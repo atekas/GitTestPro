@@ -12,6 +12,7 @@ import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.BaseActivity;
 import com.sensu.android.zimaogou.activity.MainActivity;
+import com.sensu.android.zimaogou.external.greendao.dao.UserInfoDao;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.HttpUtil;
@@ -114,7 +115,7 @@ public class SettingActivity extends BaseActivity {
     }
 
     private void loginOut(){
-        UserInfo userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
+        final UserInfo userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
 
         if(userInfo == null){
             return;
@@ -132,6 +133,8 @@ public class SettingActivity extends BaseActivity {
                     jsonObject = new JSONObject(content);
                     if(jsonObject.optString("ret").equals("0")){
                         PromptUtils.showToast("退出登录");
+                        userInfo.setIsLogin("false");
+                        GDUserInfoHelper.getInstance(SettingActivity.this).updateUserInfo(userInfo);
                         Intent intent = new Intent(SettingActivity.this, MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         startActivity(intent);

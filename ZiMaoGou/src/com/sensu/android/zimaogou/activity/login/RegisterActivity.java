@@ -80,7 +80,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         try {
             jsonObject.put("mobile", phoneNum);
 
-            HttpUtil.post(this, IConstants.sGetAuthCode, jsonObject, new AsyncHttpResponseHandler() {
+            HttpUtil.post(this, IConstants.sGetRegisterCode, jsonObject, new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(String content) {
                     super.onSuccess(content);

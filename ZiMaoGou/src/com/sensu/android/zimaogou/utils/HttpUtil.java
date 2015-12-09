@@ -4,12 +4,14 @@ import android.content.Context;
 import com.loopj.android.http.*;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.activity.login.RegisterActivity;
+import com.sensu.android.zimaogou.encrypt.MD5Utils;
 import org.apache.http.entity.StringEntity;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 
 public class HttpUtil {
 
@@ -118,39 +120,25 @@ public class HttpUtil {
 	}
 
 	public static void getWithSign(final String token,final String url, final RequestParams requestParams, final AsyncHttpResponseHandler asyncHttpResponseHandler){
-		client.get(IConstants.sGetTimestamp,null,new AsyncHttpResponseHandler(){
+		get(IConstants.sGetTimestamp, new AsyncHttpResponseHandler(){
 			@Override
 			public void onSuccess(String content) {
 				super.onSuccess(content);
 				try {
 					JSONObject jsonObject = new JSONObject(content);
 					final String timestamp = jsonObject.optJSONObject("data").optString("timestamp");
-					RequestParams requestParams1 = new RequestParams();
-					requestParams1.put("url",getAbsoluteUrl(url));
-					requestParams1.put("timestamp",timestamp);
-					requestParams1.put("token",token);
 
-					client.get(IConstants.sGetSign,requestParams1,new AsyncHttpResponseHandler(){
-						@Override
-						public void onSuccess(String content) {
-							super.onSuccess(content);
-							try {
-								JSONObject jsonObject1 = new JSONObject(content);
-								String sign = jsonObject1.optJSONObject("data").optString("sign");
+					String sign = MD5Utils.md5(getAbsoluteUrl(url)+"||"+token+"||"+timestamp);
+					requestParams.put("timestamp",timestamp);
+					requestParams.put("sign", sign);
+
+					get(IConstants.sLoginOut,requestParams,asyncHttpResponseHandler);
 
 
-								requestParams.put("timestamp",timestamp);
-								requestParams.put("sign", sign);
 
-								client.get(IConstants.sLoginOut,requestParams,asyncHttpResponseHandler);
-
-							} catch (JSONException e) {
-								e.printStackTrace();
-							}
-
-						}
-					});
 				} catch (JSONException e) {
+					e.printStackTrace();
+				} catch (NoSuchAlgorithmException e) {
 					e.printStackTrace();
 				}
 			}
