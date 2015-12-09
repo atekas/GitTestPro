@@ -78,7 +78,7 @@ public class InputPasswordActivity extends BaseActivity implements View.OnClickL
                     System.out.print(content);
                     UserInfoResponse userInfoResponse = JSON.parseObject(content, UserInfoResponse.class);
                     userInfoResponse.data.setIsLogin("true");
-                    GDUserInfoHelper.getInstance(InputPasswordActivity.this).insertUserInfo(userInfoResponse.data);
+                    GDUserInfoHelper.getInstance(InputPasswordActivity.this).updateUserInfo(userInfoResponse.data);
                     if(userInfoResponse.data != null){
                         PromptUtils.showToast("注册成功！");
                         finish();

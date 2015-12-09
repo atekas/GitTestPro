@@ -22,7 +22,7 @@
                 android:src="@drawable/back"/>
 
         <TextView
-                android:id="@+id/product_name"
+                android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -30,13 +30,18 @@
                 android:textColor="@color/black"
                 android:text="设置"/>
 
-        <ImageView
-                android:id="@+id/photo_pop"
+        <Button
+                android:onClick="SaveClick"
+                android:id="@+id/tv_function"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="@dimen/dip_20"
-                android:layout_toRightOf="@+id/local_photo_title"/>
+                android:textColor="@color/black_444444"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="18dp"
+                android:background="@null"
+                android:layout_alignBottom="@+id/tv_title"
+                android:textSize="@dimen/text_size_x_large"
+                android:text="保存"/>
     </RelativeLayout>
 
     <View

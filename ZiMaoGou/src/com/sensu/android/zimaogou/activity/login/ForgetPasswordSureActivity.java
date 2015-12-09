@@ -2,6 +2,7 @@ package com.sensu.android.zimaogou.activity.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -43,6 +44,8 @@ public class ForgetPasswordSureActivity extends BaseActivity implements View.OnC
         mPasswordSureEditText = (EditText) findViewById(R.id.input_password_sure);
         mGetAuthCode = (TextView) findViewById(R.id.get_auth_code);
         mGetAuthCode.setEnabled(false);
+
+        mUpdateTimeHandler = new UpdateTimeHandler(ForgetPasswordSureActivity.this);
         mUpdateTimeHandler.sendEmptyMessage(UpdateTimeHandler.UPDATE_TIME_CODE);
         findViewById(R.id.next).setOnClickListener(this);
         mGetAuthCode.setOnClickListener(this);
@@ -91,6 +94,8 @@ public class ForgetPasswordSureActivity extends BaseActivity implements View.OnC
                 @Override
                 public void onSuccess(String content) {
                     super.onSuccess(content);
+                    Log.d("返回值：", content);
+
                     try {
                         JSONObject jsonObject1 = new JSONObject(content);
                         if(jsonObject1.optString("ret").equals("0")){

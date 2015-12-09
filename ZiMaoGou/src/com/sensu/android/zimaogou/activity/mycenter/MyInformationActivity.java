@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.Window;
@@ -14,9 +15,17 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.BaseActivity;
+import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
+import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.BitmapUtils;
+import com.sensu.android.zimaogou.utils.HttpUtil;
+import com.sensu.android.zimaogou.utils.LogUtils;
+import com.sensu.android.zimaogou.utils.PromptUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 
@@ -28,11 +37,13 @@ public class MyInformationActivity extends BaseActivity {
     EditText mNicknameEditText;
     TextView mSexTextView, mPhoneTextView;
     private int IMAGE_REQUEST_CODE = 6;
+    private UserInfo userInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_infor_activity);
+        userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
         initView();
     }
 
@@ -41,6 +52,12 @@ public class MyInformationActivity extends BaseActivity {
         mNicknameEditText = (EditText) findViewById(R.id.et_nickname);
         mSexTextView = (TextView) findViewById(R.id.tv_sex);
         mPhoneTextView = (TextView) findViewById(R.id.tv_phone);
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 
     /**
@@ -176,5 +193,34 @@ public class MyInformationActivity extends BaseActivity {
 
         cursor.moveToFirst();
         return cursor.getString(column_index);
+    }
+
+    /**
+     * 保存
+     * @param v
+     */
+    public void SaveClick(View v){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("sex",mSexTextView.getText().toString());
+            jsonObject.put("name",mNicknameEditText.getText().toString());
+            HttpUtil.postWithSign(this,userInfo.getUid(),jsonObject,new AsyncHttpResponseHandler(){
+                @Override
+                public void onSuccess(String content) {
+                    super.onSuccess(content);
+                    Log.d("返回值：",content);
+                    try {
+                        JSONObject jsonObject1 = new JSONObject(content);
+                        if(jsonObject1.optString("ret").equals("0")){
+                            PromptUtils.showToast("保存成功");
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

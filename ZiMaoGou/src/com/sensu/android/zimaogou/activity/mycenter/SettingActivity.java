@@ -3,6 +3,7 @@ package com.sensu.android.zimaogou.activity.mycenter;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -114,8 +115,11 @@ public class SettingActivity extends BaseActivity {
         mLoginOutDialog.show();
     }
 
+    /**
+     * 退出登录请求
+     */
     private void loginOut(){
-        final UserInfo userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
+        UserInfo userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
 
         if(userInfo == null){
             return;
@@ -129,12 +133,14 @@ public class SettingActivity extends BaseActivity {
             public void onSuccess(String content) {
                 super.onSuccess(content);
                 JSONObject jsonObject = null;
+                Log.d("退出登录返回值：",content);
                 try {
                     jsonObject = new JSONObject(content);
                     if(jsonObject.optString("ret").equals("0")){
                         PromptUtils.showToast("退出登录");
-                        userInfo.setIsLogin("false");
-                        GDUserInfoHelper.getInstance(SettingActivity.this).updateUserInfo(userInfo);
+                        UserInfo userInfo1 = GDUserInfoHelper.getInstance(SettingActivity.this).getUserInfo();
+                        userInfo1.setIsLogin("false");
+                        GDUserInfoHelper.getInstance(SettingActivity.this).updateUserInfo(userInfo1);
                         Intent intent = new Intent(SettingActivity.this, MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         startActivity(intent);
@@ -145,5 +151,9 @@ public class SettingActivity extends BaseActivity {
 
             }
         });
+    }
+
+    private void AboutUs(){
+
     }
 }

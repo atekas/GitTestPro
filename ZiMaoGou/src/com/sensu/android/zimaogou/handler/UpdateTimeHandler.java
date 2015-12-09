@@ -5,22 +5,23 @@ import android.os.Message;
 import android.widget.TextView;
 import com.sensu.android.zimaogou.BaseApplication;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.activity.BaseActivity;
 import com.sensu.android.zimaogou.activity.login.RegisterActivity;
 
 /**
  * Created by zhangwentao on 2015/11/13.
  */
-public class UpdateTimeHandler extends SoftReferenceActivityHandler<RegisterActivity> {
+public class UpdateTimeHandler extends SoftReferenceActivityHandler<BaseActivity> {
 
     public final static int UPDATE_TIME_CODE = 0;
     public int mMaxTime = 60;
 
-    public UpdateTimeHandler(RegisterActivity weakReference) {
+    public UpdateTimeHandler(BaseActivity weakReference) {
         super(weakReference);
     }
 
     @Override
-    protected void handlerMessage(RegisterActivity softReference, Message msg) {
+    protected void handlerMessage(BaseActivity softReference, Message msg) {
         switch (msg.what) {
             case UPDATE_TIME_CODE:
                 if (mMaxTime >0) {

@@ -2,6 +2,7 @@ package com.sensu.android.zimaogou.activity.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import com.alibaba.fastjson.JSON;
@@ -95,9 +96,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 public void onSuccess(String content) {
                     super.onSuccess(content);
                     System.out.print(content);
+                    Log.d("返回值：", content);
                     UserInfoResponse userInfoResponse = JSON.parseObject(content, UserInfoResponse.class);
                     userInfoResponse.data.setIsLogin("true");
-                    GDUserInfoHelper.getInstance(LoginActivity.this).insertUserInfo(userInfoResponse.data);
+                    GDUserInfoHelper.getInstance(LoginActivity.this).updateUserInfo(userInfoResponse.data);
                     if (userInfoResponse.data != null) {
                         PromptUtils.showToast("登录成功！");
                         finish();

@@ -144,4 +144,30 @@ public class HttpUtil {
 			}
 		});
 	}
+	public static void postWithSign(final Context context,final String uid, final JSONObject jsonObject, final AsyncHttpResponseHandler asyncHttpResponseHandler){
+		get(IConstants.sGetTimestamp, new AsyncHttpResponseHandler(){
+			@Override
+			public void onSuccess(String content) {
+				super.onSuccess(content);
+				try {
+					JSONObject jsonObject = new JSONObject(content);
+					final String timestamp = jsonObject.optJSONObject("data").optString("timestamp");
+
+					String sign = MD5Utils.md5(uid+"||"+timestamp);
+					jsonObject.put("uid",timestamp);
+					jsonObject.put("timestamp",timestamp);
+					jsonObject.put("sign", sign);
+
+					post(context,IConstants.sLoginOut, jsonObject, asyncHttpResponseHandler);
+
+
+
+				} catch (JSONException e) {
+					e.printStackTrace();
+				} catch (NoSuchAlgorithmException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 }
