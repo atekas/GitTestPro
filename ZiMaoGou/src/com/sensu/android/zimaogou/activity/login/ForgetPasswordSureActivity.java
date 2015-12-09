@@ -12,12 +12,15 @@ import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.AuthCodeResponse;
 import com.sensu.android.zimaogou.activity.BaseActivity;
+import com.sensu.android.zimaogou.encrypt.MD5Utils;
 import com.sensu.android.zimaogou.handler.UpdateTimeHandler;
 import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.sensu.android.zimaogou.utils.TextUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by zhangwentao on 2015/11/13.
@@ -49,6 +52,7 @@ public class ForgetPasswordSureActivity extends BaseActivity implements View.OnC
         mUpdateTimeHandler.sendEmptyMessage(UpdateTimeHandler.UPDATE_TIME_CODE);
         findViewById(R.id.next).setOnClickListener(this);
         mGetAuthCode.setOnClickListener(this);
+        findViewById(R.id.back).setOnClickListener(this);
     }
 
     @Override
@@ -89,12 +93,12 @@ public class ForgetPasswordSureActivity extends BaseActivity implements View.OnC
         try {
             jsonObject.put("mobile", phoneNum);
             jsonObject.put("recode", mCodeEditText.getText().toString());
-            jsonObject.put("password", mPasswordSureEditText.getText().toString());
-            HttpUtil.post(this, IConstants.sGetForgetPassCode, jsonObject, new AsyncHttpResponseHandler() {
+            jsonObject.put("password", MD5Utils.md5(mPasswordSureEditText.getText().toString()));
+            HttpUtil.post(this, IConstants.sForgetPass, jsonObject, new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(String content) {
                     super.onSuccess(content);
-                    Log.d("返回值：", content);
+                    Log.d("忘记密码返回值：", content);
 
                     try {
                         JSONObject jsonObject1 = new JSONObject(content);
@@ -112,6 +116,8 @@ public class ForgetPasswordSureActivity extends BaseActivity implements View.OnC
             });
 
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
     }

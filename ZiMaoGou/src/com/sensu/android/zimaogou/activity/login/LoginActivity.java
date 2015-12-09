@@ -97,13 +97,21 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     super.onSuccess(content);
                     System.out.print(content);
                     Log.d("返回值：", content);
+                    try {
+                        JSONObject jsonObject = new JSONObject(content);
+                        if (jsonObject.optString("ret").equals("-1")) {
+                            PromptUtils.showToast(jsonObject.optString("msg"));
+                            return;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     UserInfoResponse userInfoResponse = JSON.parseObject(content, UserInfoResponse.class);
                     userInfoResponse.data.setIsLogin("true");
-                    GDUserInfoHelper.getInstance(LoginActivity.this).updateUserInfo(userInfoResponse.data);
-                    if (userInfoResponse.data != null) {
-                        PromptUtils.showToast("登录成功！");
-                        finish();
-                    }
+                    GDUserInfoHelper.getInstance(LoginActivity.this).insertUserInfo(userInfoResponse.data);
+                    PromptUtils.showToast("登录成功");
+                    finish();
+
                 }
 
                 @Override
