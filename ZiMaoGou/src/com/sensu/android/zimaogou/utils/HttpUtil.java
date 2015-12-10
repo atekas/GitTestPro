@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.*;
 
 public class HttpUtil {
 
@@ -26,6 +27,30 @@ public class HttpUtil {
 	//获取完整的url
 	private static String getAbsoluteUrl(String relativeUrl) {
 		return HOST + relativeUrl;
+	}
+
+	//获取到添加签名的url
+	public static String getSignUrl(Map<String, String> hashMap) {
+		StringBuilder stringBuilder = new StringBuilder();
+		if (hashMap != null) {
+			stringBuilder.append("?");
+			Iterator iterator = hashMap.entrySet().iterator();
+			List<String> strings = new ArrayList<String>();
+			while (iterator.hasNext()) {
+				Map.Entry entry = (Map.Entry) iterator.next();
+				String key = (String) entry.getKey();
+				String value = (String) entry.getValue();
+				strings.add(key + "=" + value);
+			}
+
+			for (int i = 0; i < strings.size(); i++) {
+				stringBuilder.append(strings.get(i));
+				if (i < strings.size() - 1) {
+					stringBuilder.append("&");
+				}
+			}
+		}
+		return stringBuilder.toString();
 	}
 
 	/**
