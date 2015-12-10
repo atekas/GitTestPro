@@ -8,12 +8,15 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.ProductClassificationResponse;
 import com.sensu.android.zimaogou.activity.*;
 import com.sensu.android.zimaogou.adapter.ClassificationGridAdapter;
 import com.sensu.android.zimaogou.utils.HttpUtil;
+import org.apache.http.Header;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -140,18 +143,18 @@ public class ClassificationFragment extends BaseFragment implements AdapterView.
     }
 
     public void getClassification() {
-        HttpUtil.get(IConstants.sProduct_classification, new AsyncHttpResponseHandler() {
+        HttpUtil.get(IConstants.sProduct_classification, new JsonHttpResponseHandler() {
             @Override
-            public void onSuccess(String content) {
-                super.onSuccess(content);
-                ProductClassificationResponse productClassificationResponse = JSON.parseObject(content, ProductClassificationResponse.class);
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                ProductClassificationResponse productClassificationResponse = JSON.parseObject(response.toString(), ProductClassificationResponse.class);
                 mProductClassificationResponse = productClassificationResponse;
                 layoutView(productClassificationResponse.data);
             }
 
             @Override
-            public void onFailure(Throwable error, String content) {
-                super.onFailure(error, content);
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
             }
         });
     }

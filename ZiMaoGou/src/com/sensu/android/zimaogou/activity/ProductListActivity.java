@@ -6,15 +6,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import com.alibaba.fastjson.JSON;
-import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.ProductListResponse;
 import com.sensu.android.zimaogou.adapter.ProductsDetailsAdapter;
 import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.utils.PromptUtils;
+import org.apache.http.Header;
+import org.json.JSONObject;
 
-import java.util.List;
 
 /**
  * Created by zhangwentao on 2015/11/17.
@@ -80,18 +81,18 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void getProductList() {
-        HttpUtil.get(IConstants.sGoodList, new AsyncHttpResponseHandler() {
+        HttpUtil.get(IConstants.sGoodList, new JsonHttpResponseHandler() {
             @Override
-            public void onSuccess(String content) {
-                super.onSuccess(content);
-                ProductListResponse productListResponse = JSON.parseObject(content, ProductListResponse.class);
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                ProductListResponse productListResponse = JSON.parseObject(response.toString(), ProductListResponse.class);
                 mProductsDetailsAdapter.setProductList(productListResponse);
                 PromptUtils.showToast(productListResponse.data.get(0).id);
             }
 
             @Override
-            public void onFailure(Throwable error, String content) {
-                super.onFailure(error, content);
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
             }
         });
     }

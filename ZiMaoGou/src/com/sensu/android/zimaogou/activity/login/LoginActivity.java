@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
@@ -17,6 +18,7 @@ import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.sensu.android.zimaogou.utils.TextUtils;
+import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -86,40 +88,33 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             PromptUtils.showToast("密码不能为空");
             return;
         }
-        JSONObject requestParams = new JSONObject();
+        RequestParams requestParams = new RequestParams();
 
         try {
             requestParams.put("mobile", mobile);
             requestParams.put("password", MD5Utils.md5(password));
-            HttpUtil.post(this, IConstants.sLogin, requestParams, new AsyncHttpResponseHandler() {
+            HttpUtil.post(IConstants.sLogin, requestParams, new JsonHttpResponseHandler() {
+
                 @Override
-                public void onSuccess(String content) {
-                    super.onSuccess(content);
-                    Log.d("返回值：", content);
-                    try {
-                        JSONObject jsonObject = new JSONObject(content);
-                        if (jsonObject.optString("ret").equals("-1")) {
-                            PromptUtils.showToast(jsonObject.optString("msg"));
-                            return;
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    if (response.optString("ret").equals("-1")) {
+                        PromptUtils.showToast(response.optString("msg"));
+                        return;
                     }
-                    UserInfoResponse userInfoResponse = JSON.parseObject(content, UserInfoResponse.class);
+
+                    UserInfoResponse userInfoResponse = JSON.parseObject(response.toString(), UserInfoResponse.class);
                     userInfoResponse.data.setIsLogin("true");
                     GDUserInfoHelper.getInstance(LoginActivity.this).insertUserInfo(userInfoResponse.data);
                     PromptUtils.showToast("登录成功");
                     finish();
-
                 }
 
                 @Override
-                public void onFailure(Throwable error, String content) {
-                    super.onFailure(error, content);
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    super.onFailure(statusCode, headers, responseString, throwable);
                 }
             });
-        } catch (JSONException e) {
-            e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
