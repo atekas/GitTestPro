@@ -16,14 +16,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.BaseActivity;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
-import com.sensu.android.zimaogou.utils.BitmapUtils;
-import com.sensu.android.zimaogou.utils.HttpUtil;
-import com.sensu.android.zimaogou.utils.LogUtils;
-import com.sensu.android.zimaogou.utils.PromptUtils;
+import com.sensu.android.zimaogou.utils.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -58,6 +56,18 @@ public class MyInformationActivity extends BaseActivity {
                 onBackPressed();
             }
         });
+        if(TextUtils.isEmpty(userInfo.getName())){
+            mNicknameEditText.setText("");
+        }else{
+            mNicknameEditText.setText(userInfo.getName());
+        }
+        if(TextUtils.isEmpty(userInfo.getSex())){
+            mSexTextView.setText("男");
+        }else{
+            mSexTextView.setText(userInfo.getSex());
+        }
+        mPhoneTextView.setText(userInfo.getMobile());
+
     }
 
     /**
@@ -202,9 +212,10 @@ public class MyInformationActivity extends BaseActivity {
     public void SaveClick(View v){
         JSONObject jsonObject = new JSONObject();
         try {
+            jsonObject.put("uid",userInfo.getUid());
             jsonObject.put("sex",mSexTextView.getText().toString());
             jsonObject.put("name",mNicknameEditText.getText().toString());
-            HttpUtil.postWithSign(this,userInfo.getUid(),jsonObject,new AsyncHttpResponseHandler(){
+            HttpUtil.postWithSign(this,userInfo.getToken(), IConstants.sUpdateUserInfo,jsonObject,new AsyncHttpResponseHandler(){
                 @Override
                 public void onSuccess(String content) {
                     super.onSuccess(content);
@@ -213,6 +224,9 @@ public class MyInformationActivity extends BaseActivity {
                         JSONObject jsonObject1 = new JSONObject(content);
                         if(jsonObject1.optString("ret").equals("0")){
                             PromptUtils.showToast("保存成功");
+                            userInfo.setSex(mSexTextView.getText().toString());
+                            userInfo.setName(mNicknameEditText.getText().toString());
+                            GDUserInfoHelper.getInstance(MyInformationActivity.this).updateUserInfo(userInfo);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

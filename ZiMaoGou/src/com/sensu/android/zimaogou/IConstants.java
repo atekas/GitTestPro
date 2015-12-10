@@ -23,6 +23,8 @@ public class IConstants {
     public static final String sLoginOut = "user/loginout";
     //忘记密码
     public static final String sForgetPass = "user/password_modify";
+    //修改用户信息
+    public static final String sUpdateUserInfo = "user";
     //商品列表
     public static final String sGoodList = "goods/list";
     public static final String sProduct_classification = "goods/category";

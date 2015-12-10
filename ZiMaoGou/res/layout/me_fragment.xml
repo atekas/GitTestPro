@@ -53,6 +53,7 @@
                         />
             </LinearLayout>
             <RelativeLayout
+                    android:id="@+id/rl_message"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_alignParentRight="true"
@@ -64,6 +65,7 @@
                            android:layout_centerInParent="true"
                            android:src="@drawable/img_message"/>
                 <TextView
+                        android:id="@+id/tv_numOfMessage"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:textSize="12sp"
@@ -97,6 +99,7 @@
                         android:drawablePadding="10dp"
                         android:text="@string/wait_pay"/>
                 <TextView
+                        android:id="@+id/tv_numOfOrder1"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:textSize="12sp"
@@ -129,6 +132,7 @@
                         android:drawablePadding="10dp"
                         android:text="@string/wait_receive_goods"/>
                 <TextView
+                        android:id="@+id/tv_numOfOrder2"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:textSize="12sp"
@@ -161,6 +165,7 @@
                         android:drawablePadding="10dp"
                         android:text="@string/sales_reture"/>
                 <TextView
+                        android:id="@+id/tv_numOfOrder3"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:textSize="12sp"

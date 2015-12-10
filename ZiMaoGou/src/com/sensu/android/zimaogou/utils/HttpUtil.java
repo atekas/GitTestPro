@@ -169,7 +169,7 @@ public class HttpUtil {
 			}
 		});
 	}
-	public static void postWithSign(final Context context,final String uid, final JSONObject jsonObject, final AsyncHttpResponseHandler asyncHttpResponseHandler){
+	public static void postWithSign(final Context context,final String token,final String url, final JSONObject jsonObject1, final AsyncHttpResponseHandler asyncHttpResponseHandler){
 		get(IConstants.sGetTimestamp, new AsyncHttpResponseHandler(){
 			@Override
 			public void onSuccess(String content) {
@@ -178,12 +178,14 @@ public class HttpUtil {
 					JSONObject jsonObject = new JSONObject(content);
 					final String timestamp = jsonObject.optJSONObject("data").optString("timestamp");
 
-					String sign = MD5Utils.md5(uid+"||"+timestamp);
-					jsonObject.put("uid",timestamp);
-					jsonObject.put("timestamp",timestamp);
-					jsonObject.put("sign", sign);
+					String sign = MD5Utils.md5(getAbsoluteUrl(url)+"||"+token+"||"+timestamp);
+					jsonObject1.put("timestamp",timestamp);
+					jsonObject1.put("sign", sign);
 
-					post(context,IConstants.sLoginOut, jsonObject, asyncHttpResponseHandler);
+					Map<String, String> map = new HashMap<String, String>();
+					map.put("timestamp",timestamp);
+
+					post(context, url, jsonObject1, asyncHttpResponseHandler);
 
 
 

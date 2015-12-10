@@ -138,9 +138,6 @@ public class SettingActivity extends BaseActivity {
                     jsonObject = new JSONObject(content);
                     if (jsonObject.optString("ret").equals("0")) {
                         PromptUtils.showToast("退出登录");
-//                        UserInfo userInfo1 = GDUserInfoHelper.getInstance(SettingActivity.this).getUserInfo();
-//                        userInfo1.setIsLogin("false");
-//                        GDUserInfoHelper.getInstance(SettingActivity.this).updateUserInfo(userInfo1);
                         GDUserInfoHelper.getInstance(SettingActivity.this).deleteData();
                         Intent intent = new Intent(SettingActivity.this, MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);

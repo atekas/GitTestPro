@@ -43,7 +43,8 @@ public class GDUserInfoHelper extends GDBaseHelper {
     }
 
     public void updateUserInfo(UserInfo userInfo) {
-       mUserInfoDao.update(userInfo);
+        mUserInfoDao.deleteAll();
+        mUserInfoDao.insert(userInfo);
     }
     public void deleteUserInfo(UserInfo userInfo){
         mUserInfoDao.delete(userInfo);

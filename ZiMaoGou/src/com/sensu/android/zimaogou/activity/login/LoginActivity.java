@@ -95,7 +95,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 @Override
                 public void onSuccess(String content) {
                     super.onSuccess(content);
-                    System.out.print(content);
                     Log.d("返回值：", content);
                     try {
                         JSONObject jsonObject = new JSONObject(content);

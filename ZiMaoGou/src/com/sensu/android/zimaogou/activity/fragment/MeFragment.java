@@ -1,7 +1,5 @@
 package com.sensu.android.zimaogou.activity.fragment;
 
-import android.app.Activity;
-import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,7 +14,6 @@ import com.sensu.android.zimaogou.activity.login.LoginActivity;
 import com.sensu.android.zimaogou.activity.mycenter.*;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
-import com.sensu.android.zimaogou.utils.ImageUtils;
 import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.sensu.android.zimaogou.utils.TextUtils;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -35,7 +32,7 @@ import com.umeng.socialize.weixin.media.WeiXinShareContent;
 public class MeFragment extends BaseFragment implements View.OnClickListener {
 
     private ImageView mHeadPicImageView;
-    private TextView mNicknameTextView,mLoginTextView;
+    private TextView mNicknameTextView,mLoginTextView,mNumOfOrder1,mNumOfOrder2,mNumOfOrder3, mNumOfMessage;
     public static final String DESCRIPTOR = "com.umeng.share";
     private final UMSocialService mController = UMServiceFactory
             .getUMSocialService(DESCRIPTOR);
@@ -45,6 +42,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     String shareUrl = "http://www.baidu.com";
     String ImageUrl = "http://www.baidu.com/images/img_app_1.png";
     String shareContent = "自贸购";
+    private UserInfo userInfo;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.me_fragment, container, false);
@@ -61,6 +59,10 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     protected void initView() {
 
         mHeadPicImageView = (ImageView) mParentActivity.findViewById(R.id.head_pic);
+        mNumOfOrder1 = (TextView) mParentActivity.findViewById(R.id.tv_numOfOrder1);
+        mNumOfOrder2 = (TextView) mParentActivity.findViewById(R.id.tv_numOfOrder2);
+        mNumOfOrder3 = (TextView) mParentActivity.findViewById(R.id.tv_numOfOrder3);
+        mNumOfMessage = (TextView) mParentActivity.findViewById(R.id.tv_numOfMessage);
 
         mHeadPicImageView.setOnClickListener(this);
         mLoginTextView = (TextView) mParentActivity.findViewById(R.id.login_register);
@@ -92,26 +94,8 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        UserInfo user = GDUserInfoHelper.getInstance(mParentActivity).getUserInfo();
-        if(user != null && user.getIsLogin().equals("true")){
-
-            mNicknameTextView.setVisibility(View.VISIBLE);
-            mLoginTextView.setVisibility(View.GONE);
-            if(TextUtils.isEmpty(user.getName())){
-                mNicknameTextView.setText(user.getMobile());
-            }else{
-                mNicknameTextView.setText(user.getName());
-            }
-//            if(TextUtils.isEmpty(user.getAvatar())){
-//                mHeadPicImageView.setImageResource(R.drawable.head_pic_default);
-//            }else{
-//                ImageUtils.displayImage(user.getAvatar(),mHeadPicImageView);
-//            }
-        }else{
-            mNicknameTextView.setVisibility(View.GONE);
-            mLoginTextView.setVisibility(View.VISIBLE);
-            mHeadPicImageView.setImageResource(R.drawable.head_pic_default);
-        }
+        userInfo = GDUserInfoHelper.getInstance(mParentActivity).getUserInfo();
+        flushUi();
     }
 
     @Override
@@ -140,38 +124,63 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.wait_pay:
                 //TODO 进入待付款页面
-                PromptUtils.showToast("进入待付款页面");
-                startActivity(new Intent(mParentActivity, OrderActivity.class).putExtra("type",1));
+                if(checkLogin()) {
+                    startActivity(new Intent(mParentActivity, OrderActivity.class).putExtra("type", 1));
+                }else{
+                    startActivity(new Intent(mParentActivity,LoginActivity.class));
+                }
                 break;
             case R.id.wait_receive:
                 //TODO 进入待收货界面
-                PromptUtils.showToast("进入待收货界面");
-                startActivity(new Intent(mParentActivity, OrderActivity.class).putExtra("type",2));
+                if(checkLogin()) {
+                    startActivity(new Intent(mParentActivity, OrderActivity.class).putExtra("type",2));
+                }else{
+                    startActivity(new Intent(mParentActivity,LoginActivity.class));
+                }
+
                 break;
             case R.id.sales_return:
                 //TODO 退货单
-                PromptUtils.showToast("退货单");
-                startActivity(new Intent(mParentActivity, OrderActivity.class).putExtra("type",3));
+                if(checkLogin()) {
+                    startActivity(new Intent(mParentActivity, OrderActivity.class).putExtra("type",3));
+                }else{
+                    startActivity(new Intent(mParentActivity,LoginActivity.class));
+                }
+
                 break;
             case R.id.all_orders:
                 //TODO 所有订单
-                PromptUtils.showToast("所有订单");
-                startActivity(new Intent(mParentActivity, OrderActivity.class));
+                if(checkLogin()) {
+                    startActivity(new Intent(mParentActivity, OrderActivity.class));
+                }else{
+                    startActivity(new Intent(mParentActivity,LoginActivity.class));
+                }
+
                 break;
             case R.id.my_coupon:
                 //TODO 我的优惠券
-                PromptUtils.showToast("我的优惠券");
-                startActivity(new Intent(mParentActivity, CouponActivity.class));
+                if(checkLogin()) {
+                    startActivity(new Intent(mParentActivity, CouponActivity.class));
+                }else{
+                    startActivity(new Intent(mParentActivity,LoginActivity.class));
+                }
+
                 break;
             case R.id.my_collection:
                 //TODO 我的收藏
-                PromptUtils.showToast("我的收藏");
-                startActivity(new Intent(mParentActivity, CollectActivity.class));
+                if(checkLogin()) {
+                    startActivity(new Intent(mParentActivity, CollectActivity.class));
+                }else{
+                    startActivity(new Intent(mParentActivity,LoginActivity.class));
+                }
                 break;
             case R.id.take_goods_address:
                 //TODO 收货地址
-                PromptUtils.showToast("收货地址");
-                startActivity(new Intent(mParentActivity, ReceiverAddressActivity.class));
+                if(checkLogin()) {
+                    startActivity(new Intent(mParentActivity, ReceiverAddressActivity.class));
+                }else{
+                    startActivity(new Intent(mParentActivity,LoginActivity.class));
+                }
                 break;
             case R.id.recommend_friends:
                 //TODO 推荐给好友
@@ -332,5 +341,45 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         // googlePlusShareContent.setShareMedia(localImage);
         // mController.setShareMedia(googlePlusShareContent);
 
+    }
+
+
+    private void flushUi(){
+        if(userInfo == null){
+            mNumOfMessage.setVisibility(View.INVISIBLE);
+            mNumOfOrder1.setVisibility(View.INVISIBLE);
+            mNumOfOrder2.setVisibility(View.INVISIBLE);
+            mNumOfOrder3.setVisibility(View.INVISIBLE);
+            mNicknameTextView.setVisibility(View.GONE);
+            mLoginTextView.setVisibility(View.VISIBLE);
+            mHeadPicImageView.setImageResource(R.drawable.head_pic_default);
+//            if(TextUtils.isEmpty(user.getAvatar())){
+//                mHeadPicImageView.setImageResource(R.drawable.head_pic_default);
+//            }else{
+//                ImageUtils.displayImage(user.getAvatar(),mHeadPicImageView);
+//            }
+        }else{
+            mNumOfMessage.setVisibility(View.VISIBLE);
+            mNumOfOrder1.setVisibility(View.VISIBLE);
+            mNumOfOrder2.setVisibility(View.VISIBLE);
+            mNumOfOrder3.setVisibility(View.VISIBLE);
+
+
+            mNicknameTextView.setVisibility(View.VISIBLE);
+            mLoginTextView.setVisibility(View.GONE);
+            if(TextUtils.isEmpty(userInfo.getName())){
+                mNicknameTextView.setText(userInfo.getMobile());
+            }else{
+                mNicknameTextView.setText(userInfo.getName());
+            }
+        }
+    }
+
+    private boolean checkLogin(){
+        if(userInfo == null){
+            PromptUtils.showToast("请先登录");
+            return false;
+        }
+        return true;
     }
 }
