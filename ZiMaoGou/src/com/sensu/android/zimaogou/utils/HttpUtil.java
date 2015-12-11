@@ -48,7 +48,11 @@ public class HttpUtil {
      * @param res
      */
     public static void get(String urlString, JsonHttpResponseHandler res) {
-        client.get(getAbsoluteUrl(urlString), res);
+        if(urlString.indexOf("about_us") >= 0){
+            client.get(urlString,res);
+        }else {
+            client.get(getAbsoluteUrl(urlString), res);
+        }
     }
 
     /**

@@ -7,7 +7,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
@@ -18,6 +20,7 @@ import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.utils.PromptUtils;
+import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,71 +30,70 @@ import org.json.JSONObject;
  */
 public class SettingActivity extends BaseActivity {
     ImageView mBackImageView;
+    RelativeLayout mUpdatePassRelativeLayout, mLoginOutRelativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting_activity);
         mBackImageView = (ImageView) findViewById(R.id.back);
+        mUpdatePassRelativeLayout = (RelativeLayout) findViewById(R.id.rl_updatePass);
+        mLoginOutRelativeLayout = (RelativeLayout) findViewById(R.id.rl_loginOut);
         mBackImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
             }
         });
+        flushUi();
     }
+
     /**
-     *
      * 修改密码
-     *
      */
-    public void UpdatePassClick(View v){
-        startActivity(new Intent(this,UpdatePasswordActivity.class));
+    public void UpdatePassClick(View v) {
+        startActivity(new Intent(this, UpdatePasswordActivity.class));
     }
+
     /**
-     *
      * 清除缓存
-     *
      */
-    public void CacheClick(View v){
+    public void CacheClick(View v) {
 
     }
+
     /**
-     *
      * 用户协议
-     *
      */
-    public void ServiceClick(View v){
-        startActivity(new Intent(this,WebViewActivity.class).putExtra("title","用户协议"));
+    public void ServiceClick(View v) {
+        startActivity(new Intent(this, WebViewActivity.class).putExtra("title", "用户协议"));
     }
+
     /**
-     *
      * 用户去评分
-     *
      */
-    public void RatingClick(View v){
+    public void RatingClick(View v) {
 
     }
+
     /**
-     *
      * 关于我们
-     *
      */
-    public void AboutUsClick(View v){
-        startActivity(new Intent(this,WebViewActivity.class).putExtra("title","关于自贸购"));
+    public void AboutUsClick(View v) {
+        AboutUs();
     }
+
     /**
-     *
      * 退出账号
-     *
      */
-    public void LoginOutClick(View v){
+    public void LoginOutClick(View v) {
         LoginOutDialog();
     }
 
     Dialog mLoginOutDialog;
-    private void LoginOutDialog(){
-        mLoginOutDialog = new Dialog(this,R.style.dialog);
+
+    private void LoginOutDialog() {
+        mLoginOutDialog = new Dialog(this, R.style.dialog);
         mLoginOutDialog.setCancelable(true);
         mLoginOutDialog.setContentView(R.layout.loginout_dialog);
 
@@ -118,40 +120,56 @@ public class SettingActivity extends BaseActivity {
     /**
      * 退出登录请求
      */
-    private void loginOut(){
+    private void loginOut() {
         UserInfo userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
 
-        if(userInfo == null){
+        if (userInfo == null) {
             return;
         }
 
         RequestParams requestParams1 = new RequestParams();
-        requestParams1.put("uid",userInfo.getUid());
+        requestParams1.put("uid", userInfo.getUid());
 
-//        HttpUtil.getWithSign(userInfo.getToken(), IConstants.sLoginOut, requestParams1, new AsyncHttpResponseHandler() {
-//            @Override
-//            public void onSuccess(String content) {
-//                super.onSuccess(content);
-//                JSONObject jsonObject = null;
-//                Log.d("退出登录返回值：", content);
-//                try {
-//                    jsonObject = new JSONObject(content);
-//                    if (jsonObject.optString("ret").equals("0")) {
-//                        PromptUtils.showToast("退出登录");
-//                        GDUserInfoHelper.getInstance(SettingActivity.this).deleteData();
-//                        Intent intent = new Intent(SettingActivity.this, MainActivity.class);
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//                        startActivity(intent);
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//            }
-//        });
+        HttpUtil.getWithSign(userInfo.getToken(), IConstants.sLoginOut, requestParams1, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                Log.d("退出登录返回值：", response.toString());
+                if (response.optString("ret").equals("0")) {
+                    PromptUtils.showToast("退出登录");
+                    GDUserInfoHelper.getInstance(SettingActivity.this).deleteData();
+                    Intent intent = new Intent(SettingActivity.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                }
+
+            }
+        });
     }
 
-    private void AboutUs(){
+    private void AboutUs() {
+        HttpUtil.get(IConstants.sAboutUs, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                JSONObject data = response.optJSONObject("data");
+                Intent intent = new Intent(SettingActivity.this, WebViewActivity.class);
+                intent.putExtra("title", data.optString("title"));
+                intent.putExtra("url",data.optString("url"));
+                startActivity(intent);
 
+            }
+        });
+    }
+
+    private void flushUi() {
+        UserInfo userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
+        if (userInfo == null) {
+            mLoginOutRelativeLayout.setVisibility(View.GONE);
+            mUpdatePassRelativeLayout.setVisibility(View.GONE);
+        } else {
+            mLoginOutRelativeLayout.setVisibility(View.VISIBLE);
+            mUpdatePassRelativeLayout.setVisibility(View.VISIBLE);
+        }
     }
 }

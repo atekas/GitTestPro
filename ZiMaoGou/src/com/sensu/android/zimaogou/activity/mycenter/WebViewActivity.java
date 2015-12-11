@@ -78,7 +78,8 @@ public class WebViewActivity extends BaseActivity {
 //		 webview.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
 		 if(title.indexOf("用户协议")>=0){
 			 webview.loadUrl(URL);
-		 }else if(title.indexOf("关于自贸购")>= 0){
+		 }else if(title.indexOf("关于")>= 0){
+			 URL = "http://"+getIntent().getExtras().getString("url");
 			 webview.loadUrl(URL);
 		 }else if(title.indexOf("广告") >= 0){
 			 webview.loadUrl(URL);

@@ -25,6 +25,8 @@ public class IConstants {
     public static final String sForgetPass = "user/password_modify";
     //修改用户信息
     public static final String sUpdateUserInfo = "user";
+    //关于我们
+    public static final String sAboutUs = "http://139.196.108.137:80/v1/conf/about_us";
     //商品列表
     public static final String sGoodList = "goods/list";
     public static final String sProduct_classification = "goods/category";

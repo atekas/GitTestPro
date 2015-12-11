@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
@@ -17,6 +18,7 @@ import com.sensu.android.zimaogou.handler.UpdateTimeHandler;
 import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.sensu.android.zimaogou.utils.TextUtils;
+import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -56,7 +58,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 finish();
                 break;
             case R.id.next:
-//                checkCode();
+                checkCode();
                 break;
             case R.id.get_auth_code:
                 if(TextUtils.isEmpty(mPhoneEditText.getText().toString().trim())){
@@ -64,7 +66,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     return ;
                 }
                 //TODO 调用获取验证码接口，成功后下面两方法在返回成功里面调用
-//                getCode();
+                getCode();
                 mGetAuthCode.setEnabled(false);
                 mUpdateTimeHandler.sendEmptyMessage(UpdateTimeHandler.UPDATE_TIME_CODE);
 
@@ -73,59 +75,56 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
 
-//    private void getCode(){
-//        String phoneNum = mPhoneEditText.getText().toString().trim();
-//
-//        JSONObject jsonObject = new JSONObject();
-//        try {
-//            jsonObject.put("mobile", phoneNum);
-//
-//            HttpUtil.post(this, IConstants.sGetRegisterCode, jsonObject, new AsyncHttpResponseHandler() {
-//                @Override
-//                public void onSuccess(String content) {
-//                    super.onSuccess(content);
-//                    AuthCodeResponse authCodeResponse = JSON.parseObject(content, AuthCodeResponse.class);
-//                    PromptUtils.showToast(authCodeResponse.data.recode);
-//                }
-//            });
-//
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    private void getCode(){
+        String phoneNum = mPhoneEditText.getText().toString().trim();
+        RequestParams requestParams1 = new RequestParams();
+        requestParams1.put("mobile", phoneNum);
 
-//    private void checkCode() {
-//        if(TextUtils.isEmpty(mPhoneEditText.getText().toString())){
-//            PromptUtils.showToast("手机号码不能为空");
-//            return ;
-//        }
-//        if(TextUtils.isEmpty(mAuthCodeEditText.getText().toString())){
-//            PromptUtils.showToast("验证码不能为空");
-//            return ;
-//        }
-//        RequestParams requestParams = new RequestParams();
-//        requestParams.put("mobile", mPhoneEditText.getText().toString());
-//        requestParams.put("recode", mAuthCodeEditText.getText().toString());
-//        HttpUtil.get(IConstants.sCheck, requestParams, new AsyncHttpResponseHandler() {
-//            @Override
-//            public void onSuccess(String content) {
-//                super.onSuccess(content);
-//                CheckCodeResponse checkCodeResponse = JSON.parseObject(content, CheckCodeResponse.class);
-//                PromptUtils.showToast(checkCodeResponse.getMsg() + checkCodeResponse.data.is_pass);
-//                if((checkCodeResponse.data.is_pass).equals("1")){
-//                    startActivity(new Intent(RegisterActivity.this,InputPasswordActivity.class)
-//                            .putExtra("recode",mAuthCodeEditText.getText().toString())
-//                            .putExtra("mobile",mPhoneEditText.getText().toString()));
-//                    finish();
-//                }else{
-//                    PromptUtils.showToast("验证码不正确");
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable error, String content) {
-//                super.onFailure(error, content);
-//            }
-//        });
-//    }
+
+            HttpUtil.post(IConstants.sGetRegisterCode, requestParams1, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    AuthCodeResponse authCodeResponse = JSON.parseObject(response.toString(), AuthCodeResponse.class);
+                    PromptUtils.showToast(authCodeResponse.data.recode);
+                }
+
+
+            });
+
+
+    }
+
+    private void checkCode() {
+        if(TextUtils.isEmpty(mPhoneEditText.getText().toString())){
+            PromptUtils.showToast("手机号码不能为空");
+            return ;
+        }
+        if(TextUtils.isEmpty(mAuthCodeEditText.getText().toString())){
+            PromptUtils.showToast("验证码不能为空");
+            return ;
+        }
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("mobile", mPhoneEditText.getText().toString());
+        requestParams.put("recode", mAuthCodeEditText.getText().toString());
+        HttpUtil.get(IConstants.sCheck, requestParams, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                CheckCodeResponse checkCodeResponse = JSON.parseObject(response.toString(), CheckCodeResponse.class);
+                PromptUtils.showToast(checkCodeResponse.getMsg() + checkCodeResponse.data.is_pass);
+                if((checkCodeResponse.data.is_pass).equals("1")){
+                    startActivity(new Intent(RegisterActivity.this,InputPasswordActivity.class)
+                            .putExtra("recode",mAuthCodeEditText.getText().toString())
+                            .putExtra("mobile",mPhoneEditText.getText().toString()));
+                    finish();
+                }else{
+                    PromptUtils.showToast("验证码不正确");
+                }
+            }
+
+
+        });
+    }
 }
