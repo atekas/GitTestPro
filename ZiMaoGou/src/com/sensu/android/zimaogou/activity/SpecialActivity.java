@@ -22,6 +22,7 @@ import org.json.JSONObject;
  */
 public class SpecialActivity extends BaseActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
 
+    public static final String THEME_TITLE = "theme_title";
     private ListView mSpecialList;
     private SpecialAdapter mSpecialAdapter;
 
@@ -49,9 +50,9 @@ public class SpecialActivity extends BaseActivity implements AdapterView.OnItemC
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        ThemeListResponse.ThemeListData themeListData = mThemeListResponse.data.get(i + 1);
+        ThemeListResponse.ThemeListData themeListData = mThemeListResponse.data.get(i - 1);
         Intent intent = new Intent(this, SpecialDetailsActivity.class);
-        intent.putExtra("000", themeListData);
+        intent.putExtra(THEME_TITLE, themeListData);
         startActivity(intent);
     }
 

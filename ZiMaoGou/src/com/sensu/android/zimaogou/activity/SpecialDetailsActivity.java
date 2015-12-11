@@ -5,13 +5,24 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+import com.alibaba.fastjson.JSON;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.ReqResponse.ThemeDetailResponse;
+import com.sensu.android.zimaogou.ReqResponse.ThemeListResponse;
 import com.sensu.android.zimaogou.adapter.SpecialDetailsAdapter;
+import com.sensu.android.zimaogou.utils.HttpUtil;
+import com.sensu.android.zimaogou.utils.ImageUtils;
+import org.apache.http.Header;
+import org.json.JSONObject;
 
 /**
  * Created by zhangwentao on 2015/11/18.
- *
+ * <p/>
  * 专题详情页
  */
 public class SpecialDetailsActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
@@ -19,6 +30,8 @@ public class SpecialDetailsActivity extends BaseActivity implements View.OnClick
     private ListView mListView;
     private SpecialDetailsAdapter mSpecialDetailsAdapter;
     private View mHeadView;
+
+    private ThemeListResponse.ThemeListData mThemeListData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +43,13 @@ public class SpecialDetailsActivity extends BaseActivity implements View.OnClick
     }
 
     private void initViews() {
+
+        mThemeListData = (ThemeListResponse.ThemeListData) getIntent().getSerializableExtra(SpecialActivity.THEME_TITLE);
+
         mListView = (ListView) findViewById(R.id.special_details_list);
         mHeadView = LayoutInflater.from(this).inflate(R.layout.special_details_header, null);
         mListView.addHeaderView(mHeadView);
+        layoutTitle();
 
         mSpecialDetailsAdapter = new SpecialDetailsAdapter(this);
         mListView.setAdapter(mSpecialDetailsAdapter);
@@ -50,10 +67,32 @@ public class SpecialDetailsActivity extends BaseActivity implements View.OnClick
         }
     }
 
+    private void layoutTitle() {
+        if (mThemeListData != null) {
+            ImageUtils.displayImage(mThemeListData.media, (ImageView) mHeadView.findViewById(R.id.special_introduce_pic));
+            ((TextView) findViewById(R.id.special_introduce_title)).setText(mThemeListData.name);
+            ((TextView) findViewById(R.id.special_introduce_content)).setText(mThemeListData.content);
+
+            getThemeDetail(mThemeListData.id);
+        }
+    }
+
+    private void getThemeDetail(String id) {
+        String url = IConstants.sGoodTheme + "/" + id + "/goods";
+        HttpUtil.get(url, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                ThemeDetailResponse themeDetailResponse = JSON.parseObject(response.toString(), ThemeDetailResponse.class);
+                mSpecialDetailsAdapter.setThemeDetailData(themeDetailResponse);
+            }
+        });
+    }
+
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        if (i > 1) {
-            startActivity(new Intent(this, ProductDetailsActivity.class));
-        }
+//        if (i > 1) {
+//            startActivity(new Intent(this, ProductDetailsActivity.class));
+//        }
     }
 }
