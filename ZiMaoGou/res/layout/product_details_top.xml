@@ -68,6 +68,7 @@
                         android:text="68"/>
 
                 <TextView
+                        android:id="@+id/price_market"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"

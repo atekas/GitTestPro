@@ -121,6 +121,7 @@
             android:layout_above="@+id/bottom_line">
 
         <include
+                android:id="@+id/product_detail_top"
                 layout="@layout/product_details_top"/>
 
         <ScrollView

@@ -3,33 +3,39 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp">
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_medial"
-                    android:textColor="@color/black_222222"
-                    android:text="类别"
-                    />
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_medial"
-                    android:layout_marginLeft="30dp"
-                    android:textColor="@color/black_222222"
-                    android:text="羊毛衫"
-                    />
-        </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+        <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_medial"
+                android:textColor="@color/black_222222"
+                android:text="类别"/>
+
+        <TextView
+                android:id="@+id/value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_medial"
+                android:layout_marginLeft="30dp"
+                android:textColor="@color/black_222222"
+                android:text="羊毛衫"/>
+
+    </LinearLayout>
+
     <View
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:background="@color/home_line"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"/>
+
 </LinearLayout>

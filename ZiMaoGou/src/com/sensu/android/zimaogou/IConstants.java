@@ -28,6 +28,8 @@ public class IConstants {
     //商品列表
     public static final String sGoodList = "goods/list";
     public static final String sProduct_classification = "goods/category";
+    //商品详情
+    public static final String sProduct_detail = "goods/";
 
     public static final String sRegister = "user/register";
 }

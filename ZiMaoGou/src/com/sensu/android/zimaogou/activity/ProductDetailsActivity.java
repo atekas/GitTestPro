@@ -16,21 +16,33 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.*;
+import com.alibaba.fastjson.JSON;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.ReqResponse.ProductDetailsResponse;
 import com.sensu.android.zimaogou.activity.video.ProductShopCarActivity;
 import com.sensu.android.zimaogou.adapter.ProductEvaluateAdapter;
 import com.sensu.android.zimaogou.adapter.ProductSpecificationAdapter;
 import com.sensu.android.zimaogou.external.umeng.share.UmengShare;
-import com.sensu.android.zimaogou.utils.DisplayUtils;
+import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.sensu.android.zimaogou.utils.UiUtils;
+import com.sensu.android.zimaogou.widget.PullPushScrollView;
 import com.sensu.android.zimaogou.widget.ScrollViewContainer;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import org.apache.http.Header;
+import org.json.JSONObject;
 
 /**
  * Created by zhangwentao on 2015/11/20.
+ * 商品详情
  */
 public class ProductDetailsActivity extends BaseActivity implements View.OnClickListener {
+
+    public static final String PRODUCT_ID = "product_id";
+    public static final String FROM_SOURCE = "from_source";
 
     private ScrollViewContainer mScrollViewContainer;
     private int mProductCount = 1;
@@ -43,7 +55,11 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
     private TextView mProductDetailTextView,mProductSpecificationTextView,mProductCommentTextView;
     private ListView listView,mProductSpecificationListView;
     private WebView mProductWebView;
-    String URL = "http://www.sensu-sh.com/";
+
+    private ProductSpecificationAdapter mProductSpecificationAdapter;
+    private ProductEvaluateAdapter mProductEvaluateAdapter;
+
+    private ProductDetailsResponse mProductDetailsResponse;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -160,10 +176,10 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         mCursorImageView.startAnimation(animation);
     }
 
-
-
-
     private void initViews() {
+        int productId = getIntent().getIntExtra(PRODUCT_ID, 16);
+        int source = getIntent().getIntExtra(FROM_SOURCE, 1);
+        getProductById(productId, source);
         mUmengShare = UmengShare.getInstance(this);
         mScrollViewContainer = (ScrollViewContainer) findViewById(R.id.scroll_view_container);
         mProductDetailTextView = (TextView) findViewById(R.id.tv_productDetail);
@@ -177,25 +193,11 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
 
         mProductWebView = (WebView) findViewById(R.id.productDetail_webView);
         mProductSpecificationListView = (ListView) findViewById(R.id.product_specification_list);
+        mProductSpecificationAdapter = new ProductSpecificationAdapter(this);
+        mProductSpecificationListView.setAdapter(mProductSpecificationAdapter);
 
-        mProductSpecificationListView.setAdapter(new ProductSpecificationAdapter(this));
         UiUtils.setListViewHeightBasedOnChilds(mProductSpecificationListView);
         mProductSpecificationListView.setVisibility(View.GONE);
-
-        WebSettings webSettings = mProductWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setSupportZoom(true);
-        webSettings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
-        webSettings.setBuiltInZoomControls(true);
-        mProductWebView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
-            }
-        });
-        mProductWebView.loadUrl(URL);
-        mProductWebView.setVisibility(View.VISIBLE);
 
         mScrollViewContainer.setOnSlideFinish(new ScrollViewContainer.OnSlideFinish() {
             @Override
@@ -216,7 +218,8 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         findViewById(R.id.pay).setOnClickListener(this);
 
         listView = (ListView) findViewById(R.id.product_evaluate_list);
-        listView.setAdapter(new ProductEvaluateAdapter(this));
+        mProductEvaluateAdapter = new ProductEvaluateAdapter(this);
+        listView.setAdapter(mProductEvaluateAdapter);
         listView.setVisibility(View.GONE);
 
 
@@ -303,8 +306,47 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         mChooseDialog.findViewById(R.id.type_2).setOnClickListener(this);
         mChooseDialog.findViewById(R.id.bt_subtract).setOnClickListener(this);
         mChooseDialog.findViewById(R.id.bt_add).setOnClickListener(this);
+        ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText(mProductDetailsResponse.data.price);
     }
 
+    private void getProductById(int productId, int source) {
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("id", productId);
+        requestParams.put("source", source);
+        HttpUtil.get(IConstants.sProduct_detail + productId, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                ProductDetailsResponse productDetailsResponse = JSON.parseObject(response.toString(), ProductDetailsResponse.class);
+                mProductDetailsResponse = productDetailsResponse;
+                layoutUi();
+            }
 
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                PromptUtils.showToast("获取物品详情失败");
+            }
+        });
+    }
 
+    private void layoutUi() {
+        ((PullPushScrollView) findViewById(R.id.product_detail_top)).setProductDetailsResponse(mProductDetailsResponse);
+        mProductSpecificationAdapter.setProductDetailData(mProductDetailsResponse.data);
+        UiUtils.setListViewHeightBasedOnChilds(mProductSpecificationListView);
+        WebSettings webSettings = mProductWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setSupportZoom(true);
+        webSettings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
+        webSettings.setBuiltInZoomControls(true);
+        mProductWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+        });
+        mProductWebView.loadUrl(mProductDetailsResponse.data.description);
+        mProductWebView.setVisibility(View.VISIBLE);
+    }
 }

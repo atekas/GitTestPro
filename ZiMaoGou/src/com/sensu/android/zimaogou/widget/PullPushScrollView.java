@@ -9,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.view.ViewHelper;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.ReqResponse.ProductDetailsResponse;
 
 /**
  *
@@ -19,23 +21,20 @@ import com.sensu.android.zimaogou.R;
  */
 public class PullPushScrollView extends ScrollView {
 
-    public PullPushScrollView(Context context) {
-        super(context);
-    }
-
     public PullPushScrollView(Context context, AttributeSet attrs) {
         super(context, attrs);
-    }
-
-    public PullPushScrollView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
     }
 
+    public void setProductDetailsResponse(ProductDetailsResponse productDetailsResponse) {
+        ProductDetailsResponse.ProductDetailData productDetailData = productDetailsResponse.data;
+        ((TextView) findViewById(R.id.product_name)).setText(productDetailData.name);
+        ((TextView) findViewById(R.id.now_price)).setText(productDetailData.price);
+        ((TextView) findViewById(R.id.price_market)).setText(productDetailData.price_market);
+    }
 
 }
