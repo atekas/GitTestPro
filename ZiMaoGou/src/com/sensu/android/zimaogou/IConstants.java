@@ -30,6 +30,7 @@ public class IConstants {
     public static final String sProduct_classification = "goods/category";
     //商品详情
     public static final String sProduct_detail = "goods/";
+    public static final String sGoodTheme = "goods/theme";
 
     public static final String sRegister = "user/register";
 }

@@ -177,7 +177,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
     }
 
     private void initViews() {
-        int productId = getIntent().getIntExtra(PRODUCT_ID, 16);
+        int productId = getIntent().getIntExtra(PRODUCT_ID, 25);
         int source = getIntent().getIntExtra(FROM_SOURCE, 1);
         getProductById(productId, source);
         mUmengShare = UmengShare.getInstance(this);

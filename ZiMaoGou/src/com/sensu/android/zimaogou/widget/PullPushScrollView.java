@@ -3,6 +3,7 @@ package com.sensu.android.zimaogou.widget;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -35,6 +36,12 @@ public class PullPushScrollView extends ScrollView {
         ((TextView) findViewById(R.id.product_name)).setText(productDetailData.name);
         ((TextView) findViewById(R.id.now_price)).setText(productDetailData.price);
         ((TextView) findViewById(R.id.price_market)).setText(productDetailData.price_market);
+        if (TextUtils.isEmpty(productDetailData.sale_title)) {
+            findViewById(R.id.sale_title).setVisibility(GONE);
+        } else {
+            findViewById(R.id.sale_title).setVisibility(VISIBLE);
+            ((TextView) findViewById(R.id.sale_title)).setText(productDetailData.sale_title);
+        }
     }
 
 }
