@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.ReqResponse.GroupBuyListResponse;
+import com.sensu.android.zimaogou.utils.ImageUtils;
 import com.sensu.android.zimaogou.utils.TextUtils;
 
 /**
@@ -14,13 +16,20 @@ import com.sensu.android.zimaogou.utils.TextUtils;
  */
 public class SpellOrderAdapter extends SimpleBaseAdapter {
 
+    private GroupBuyListResponse mGroupBuyListResponse;
+
     public SpellOrderAdapter(Context context) {
         super(context);
     }
 
+    public void setGroupBuyList(GroupBuyListResponse groupBuyListResponse) {
+        mGroupBuyListResponse = groupBuyListResponse;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount() {
-        return 5;
+        return mGroupBuyListResponse == null ? 0 : mGroupBuyListResponse.data.size();
     }
 
     @Override
@@ -40,6 +49,15 @@ public class SpellOrderAdapter extends SimpleBaseAdapter {
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
+
+        GroupBuyListResponse.GroupBuyListData groupBuyListData = mGroupBuyListResponse.data.get(i);
+        viewHolder.mProductName.setText(groupBuyListData.name);
+        viewHolder.mProductDescribe.setText(groupBuyListData.content);
+        viewHolder.mGroupPrice.setText(groupBuyListData.price);
+        viewHolder.mOldPrice.setText("¥" + groupBuyListData.price_market);
+        viewHolder.mGroupPersonSize.setText(groupBuyListData.min_num + "人成团");
+        ImageUtils.displayImage(groupBuyListData.media, viewHolder.mImageView);
+
         return view;
     }
 

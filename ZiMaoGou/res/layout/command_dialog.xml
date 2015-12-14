@@ -12,6 +12,7 @@
             android:orientation="vertical"
             android:background="@drawable/command_dialog_border">
             <EditText
+                    android:id="@+id/code_edit"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_margin="25dp"
@@ -25,6 +26,7 @@
                     />
         <View android:layout_width="match_parent" android:layout_height="1px" android:background="@color/command_line_color"/>
         <Button
+                android:id="@+id/submit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/drawable_me_click"
