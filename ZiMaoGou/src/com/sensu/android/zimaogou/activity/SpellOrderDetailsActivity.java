@@ -3,6 +3,8 @@ package com.sensu.android.zimaogou.activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.*;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -33,6 +35,7 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
     private LinearLayout mUserHeadContainer;
     private GroupBuyListResponse.GroupBuyListData mGroupBuyListData;
     private UserInfo mUserInfo;
+    private TimeCount mTimeCount;
 
     private TextView mOldPriceText;
 
@@ -64,6 +67,8 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
         mWantGroupView = (TextView) findViewById(R.id.want_group);
 
         if (mGroupBuyListData != null) {
+            mTimeCount = new TimeCount(getTimeDifference(mGroupBuyListData.end_time), 1000);
+            mTimeCount.start();
             ((TextView) findViewById(R.id.spell_order_name)).setText(mGroupBuyListData.name);
             ImageUtils.displayImage(mGroupBuyListData.media, ((ImageView) findViewById(R.id.group_pic)));
             ((TextView) findViewById(R.id.product_name)).setText(mGroupBuyListData.name);
@@ -95,6 +100,19 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
 
         TextUtils.addLineCenter(mOldPriceText);
         mUserHeadContainer = (LinearLayout) findViewById(R.id.user_photo_container);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mTimeCount != null) {
+            mTimeCount.cancel();
+        }
     }
 
     @Override
@@ -229,5 +247,63 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
                 super.onFailure(statusCode, headers, responseString, throwable);
             }
         });
+    }
+
+    //获取时间差
+    private long getTimeDifference(String endTime) {
+        long timeDifference = DateFormatUtils.getMillsByStringDateTime(endTime) - System.currentTimeMillis();
+        return timeDifference;
+    }
+
+    private void showTimeCount(long time) {
+        long day;
+        long hour;
+        long minute;
+        long second;
+
+        day = (int) (time / ConstantUtils.SECOND_PER_DAY);
+        long day1 = time % ConstantUtils.SECOND_PER_DAY;
+        if (day1 != 0) {
+            hour = (day1 / ConstantUtils.SECOND_PER_HOUR);
+            long hour1 = day1 % ConstantUtils.SECOND_PER_HOUR;
+            if (hour1 !=0) {
+                minute = (hour1 / ConstantUtils.SECONDS_PER_MINUTE);
+                long minute1 = hour1 % ConstantUtils.SECONDS_PER_MINUTE;
+                if (minute1 != 0) {
+                    second = minute1;
+                } else {
+                    second = 0;
+                }
+            } else {
+                minute = 0;
+                second = 0;
+            }
+        } else {
+            hour = 0;
+            minute = 0;
+            second = 0;
+        }
+        ((TextView) findViewById(R.id.show_time_count))
+                .setText("距离结束还有" + day + "天" + hour + "小时" + minute + "分钟" + second + "秒");
+    }
+
+    class TimeCount extends CountDownTimer {
+
+        public TimeCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long l) {
+            showTimeCount(l / 1000);
+        }
+
+        @Override
+        public void onFinish() {
+            //TODO 倒计时结束
+            if (mTimeCount != null) {
+                mTimeCount.cancel();
+            }
+        }
     }
 }

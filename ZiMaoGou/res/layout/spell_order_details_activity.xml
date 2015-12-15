@@ -260,6 +260,7 @@
             android:background="@color/translucence_black_35">
         
         <TextView
+                android:id="@+id/show_time_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
