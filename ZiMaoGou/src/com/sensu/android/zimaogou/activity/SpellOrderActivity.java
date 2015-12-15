@@ -37,7 +37,11 @@ public class SpellOrderActivity extends BaseActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.spell_order_activity);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         initViews();
     }
 
@@ -84,13 +88,12 @@ public class SpellOrderActivity extends BaseActivity implements View.OnClickList
     }
 
     /**
-     *
      * 输入口令
-     *
      */
     Dialog mCommandInputDialog;
-    public void commandInput(View v){
-        mCommandInputDialog = new Dialog(this,R.style.dialog);
+
+    public void commandInput(View v) {
+        mCommandInputDialog = new Dialog(this, R.style.dialog);
         mCommandInputDialog.setCancelable(true);
         mCommandInputDialog.setContentView(R.layout.command_dialog);
         mCommandInputDialog.show();

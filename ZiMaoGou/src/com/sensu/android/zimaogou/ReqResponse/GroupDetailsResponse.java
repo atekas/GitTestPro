@@ -1,16 +1,15 @@
 package com.sensu.android.zimaogou.ReqResponse;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
- * Created by zhangwentao on 2015/12/14.
+ * Created by zhangwentao on 2015/12/15.
  */
-public class GroupBuyListResponse extends BaseReqResponse {
+public class GroupDetailsResponse extends BaseReqResponse {
 
-    public List<GroupBuyListData> data;
+    public GroupDetailData data;
 
-    public class GroupBuyListData implements Serializable {
+    public class GroupDetailData implements Serializable {
         public String content;
         public String id;
         public String media_type;

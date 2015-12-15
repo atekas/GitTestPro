@@ -4,23 +4,26 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.GroupBuyListResponse;
+import com.sensu.android.zimaogou.ReqResponse.GroupDetailsResponse;
+import com.sensu.android.zimaogou.ReqResponse.GroupMemberResponse;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
-import com.sensu.android.zimaogou.utils.DisplayUtils;
-import com.sensu.android.zimaogou.utils.HttpUtil;
-import com.sensu.android.zimaogou.utils.ImageUtils;
-import com.sensu.android.zimaogou.utils.TextUtils;
+import com.sensu.android.zimaogou.utils.*;
 import com.sensu.android.zimaogou.widget.RoundImageView;
 import org.apache.http.Header;
 import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * Created by zhangwentao on 2015/11/20.
@@ -28,8 +31,10 @@ import org.json.JSONObject;
 public class SpellOrderDetailsActivity extends BaseActivity implements View.OnClickListener {
 
     private LinearLayout mUserHeadContainer;
-    private TextView mOldPriceText;
     private GroupBuyListResponse.GroupBuyListData mGroupBuyListData;
+    private UserInfo mUserInfo;
+
+    private TextView mOldPriceText;
 
     private TextView mHaveCodeView;
     private TextView mJoinGroupView;
@@ -46,10 +51,12 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
     }
 
     private void initViews() {
-
+        mUserInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
         mGroupBuyListData = (GroupBuyListResponse.GroupBuyListData) getIntent().getSerializableExtra(SpellOrderActivity.GROUP_BUY_DATA);
 
         mOldPriceText = (TextView) findViewById(R.id.old_price);
+
+        getGroupDetail(mGroupBuyListData.id);
 
         mHaveCodeView = (TextView) findViewById(R.id.have_code);
         mJoinGroupView = (TextView) findViewById(R.id.join_group);
@@ -63,13 +70,15 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
             ((TextView) findViewById(R.id.product_describe)).setText(mGroupBuyListData.content);
             ((TextView) findViewById(R.id.group_min_size)).setText(mGroupBuyListData.min_num + "人成团");
             ((TextView) findViewById(R.id.group_buy_price)).setText("¥" + mGroupBuyListData.price);
+            ((TextView) findViewById(R.id.price_market)).setText("自贸购特价¥" + mGroupBuyListData.price_goods);
             mOldPriceText.setText("¥" + mGroupBuyListData.price_market);
             int saveMoney = Integer.parseInt(mGroupBuyListData.price_market) - Integer.parseInt(mGroupBuyListData.price);
             ((TextView) findViewById(R.id.save_money)).setText("立省¥" + String.valueOf(saveMoney));
+            ((WebView) findViewById(R.id.web_view)).loadUrl(mGroupBuyListData.description);
             if (mGroupBuyListData.is_join.equals("0")) {
                 ((TextView) findViewById(R.id.group_info)).setText("已有" + mGroupBuyListData.member_num + "人参团");
             } else if (mGroupBuyListData.is_join.equals("1")) {
-
+                getMember(mGroupBuyListData.code);
                 ((TextView) findViewById(R.id.group_info)).setText("已有" + mGroupBuyListData.member_num + "人参团 上限" + mGroupBuyListData.max_num + "人");
 
                 mHaveCodeView.setText("换个口令");
@@ -86,7 +95,6 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
 
         TextUtils.addLineCenter(mOldPriceText);
         mUserHeadContainer = (LinearLayout) findViewById(R.id.user_photo_container);
-        addUserPhoto();
     }
 
     @Override
@@ -99,19 +107,24 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
                 startActivity(new Intent(this, ProductDetailsActivity.class));
                 break;
             case R.id.create_group:
-                createGroup();
+                if (mGroupBuyListData.is_join.equals("0")) {
+                    createGroup();
+                } else if (mGroupBuyListData.is_join.equals("1")) {
+                    PromptUtils.showToast("已入团,邀请更多人加入");
+                    //TODO
+                }
                 break;
         }
     }
 
-    private void addUserPhoto() {
-        for (int i = 0; i < 3; i++) {
+    private void addUserPhoto(List<GroupMemberResponse.MemberInfo> memberInfoList) {
+        for (int i = 0; i < memberInfoList.size(); i++) {
             RoundImageView roundImageView = new RoundImageView(this);
             roundImageView.setPadding(5, 5, 5, 5);
             int size = DisplayUtils.dp2px(50);
             roundImageView.setLayoutParams(new ViewGroup.LayoutParams(size, size));
             roundImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            roundImageView.setImageResource(R.drawable.head_photo_02);
+            ImageUtils.displayImage(memberInfoList.get(i).avatar, roundImageView);
             mUserHeadContainer.addView(roundImageView);
         }
     }
@@ -128,9 +141,7 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
         mCommandInputDialog.show();
     }
     /**
-     *
      * 组团
-     *
      */
     Dialog mCommandGroupDialog;
     public void commandGroup(){
@@ -142,32 +153,75 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
 
         Window dialogWindow = mCommandGroupDialog.getWindow();
 
-//        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-//        dialogWindow.setGravity(Gravity.TOP);
-//        lp.y = DisplayUtils.dp2px(50);
-//        dialogWindow.setAttributes(lp);
-
         Display d = m.getDefaultDisplay(); // 获取屏幕宽、高用
         WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 获取对话框当前的参数值
-        p.height = (int) d.getHeight() ; // 高度设置为屏幕
-        p.width = (int) d.getWidth() ; // 宽度设置为屏幕
+        p.height = d.getHeight() ; // 高度设置为屏幕
+        p.width = d.getWidth() ; // 宽度设置为屏幕
         dialogWindow.setAttributes(p);
         mCommandGroupDialog.show();
     }
 
-    private void createGroup() {
-        UserInfo userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
-        if (userInfo == null) {
+    private void getGroupDetail(String id) {
+        if (mUserInfo == null) {
+            PromptUtils.showToast("请先登录");
             return;
         }
         RequestParams requestParams = new RequestParams();
-        requestParams.put("uid", userInfo.getUid());
+        requestParams.put("uid", mUserInfo.getUid());
+        HttpUtil.getWithSign(mUserInfo.getToken(), IConstants.sTb_detail + id, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                GroupDetailsResponse groupDetailsResponse = JSON.parseObject(response.toString(), GroupDetailsResponse.class);
+                String id = groupDetailsResponse.data.id;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
+    }
+
+    private void createGroup() {
+        if (mUserInfo == null) {
+            PromptUtils.showToast("请先登录");
+            //TODO
+            return;
+        }
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("uid", mUserInfo.getUid());
         requestParams.put("tb_id", mGroupBuyListData.id);
-        HttpUtil.postWithSign(userInfo.getToken(), IConstants.sGroup_create, requestParams, new JsonHttpResponseHandler() {
+        HttpUtil.postWithSign(mUserInfo.getToken(), IConstants.sGroup_create, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 commandGroup();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
+    }
+
+    private void getMember(String code) {
+        if (mUserInfo == null) {
+            PromptUtils.showToast("请先登录");
+            //TODO
+            return;
+        }
+
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("uid", mUserInfo.getUid());
+        requestParams.put("code", code);
+        HttpUtil.getWithSign(mUserInfo.getToken(), IConstants.sTb_member, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                GroupMemberResponse groupMemberResponse = JSON.parseObject(response.toString(), GroupMemberResponse.class);
+                addUserPhoto(groupMemberResponse.data.list);
             }
 
             @Override

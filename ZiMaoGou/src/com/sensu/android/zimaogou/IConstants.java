@@ -42,4 +42,6 @@ public class IConstants {
     public static final String sTb_list = "tb/list";
     public static final String sJoin_group = "tb/join";
     public static final String sGroup_create = "tb/build";
+    public static final String sTb_member = "tb/member";
+    public static final String sTb_detail = "tb/";
 }

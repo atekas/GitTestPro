@@ -103,7 +103,7 @@ public class HttpUtil {
                     requestParams.put("timestamp", timestamp);
                     requestParams.put("sign", sign);
 
-                    get(IConstants.sLoginOut, requestParams, asyncHttpResponseHandler);
+                    get(url, requestParams, asyncHttpResponseHandler);
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();
                 }
