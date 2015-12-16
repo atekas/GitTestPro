@@ -3,15 +3,29 @@ package com.sensu.android.zimaogou.activity.tour;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
+import android.widget.*;
+import com.alibaba.fastjson.JSON;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.sensu.android.zimaogou.IConstants;
+import com.sensu.android.zimaogou.Mode.CommentMode;
+import com.sensu.android.zimaogou.Mode.TravelMode;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.BaseActivity;
+import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.external.umeng.share.UmengShare;
+import com.sensu.android.zimaogou.utils.*;
+import com.sensu.android.zimaogou.widget.RoundImageView;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
+ * 游购详情
  * Created by zhangwentao on 2015/11/16.
  */
 public class TourBuyDetailsActivity extends BaseActivity implements View.OnClickListener {
@@ -19,16 +33,22 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
     private ListView mTourDetailsListView;
     private TourBuyDetailsAdapter mTourBuyDetailsAdapter;
     private UmengShare mUmengShare;
-
+    private LinearLayout mLikeUsersLinearLayout;
     private View mHeaderView;
     private RelativeLayout mBottomRelativeLayout;
     private Button mCommentSureButton,mCloseButton;
+    private TravelMode travelMode;
+    private TextView mLikeNumTextView,mCommentNum;
+    ArrayList<UserInfo> likeUsers = new ArrayList<UserInfo>();
+    ArrayList<CommentMode> commentModes = new ArrayList<CommentMode>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.tour_buy_details_activity);
-
+        if(getIntent().getExtras() != null){
+            travelMode = (TravelMode) getIntent().getExtras().get("travel");
+        }
         initViews();
     }
 
@@ -36,9 +56,14 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
         mUmengShare = UmengShare.getInstance(this);
         mTourDetailsListView = (ListView) findViewById(R.id.review_details);
         mBottomRelativeLayout = (RelativeLayout) findViewById(R.id.rl_bottom);
+
         mCommentSureButton = (Button) findViewById(R.id.bt_sure);
         mCloseButton = (Button) findViewById(R.id.bt_close);
         mHeaderView = LayoutInflater.from(this).inflate(R.layout.tour_details_header, null);
+        mLikeUsersLinearLayout = (LinearLayout) mHeaderView.findViewById(R.id.ll_likeUser);
+        mLikeNumTextView = (TextView) mHeaderView.findViewById(R.id.tv_likeNum);
+        mCommentNum = (TextView) mHeaderView.findViewById(R.id.tv_commentNum);
+
         mTourDetailsListView.addHeaderView(mHeaderView);
         mTourBuyDetailsAdapter = new TourBuyDetailsAdapter(this);
 
@@ -60,8 +85,91 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
             }
         });
         initHeader();
+        getDataForLike();
+        getDataForComment();
     }
 
+    /**
+     * 更新点赞人用户头像UI
+     */
+    private void setLikeUsers(){
+//        if(TextUtils.isEmpty(travelMode.getLike_num())||travelMode.getLike_num().equals("0")){
+//            mLikeNumTextView.setVisibility(View.GONE);
+//            return;
+//        }else{
+//            mLikeNumTextView.setText(travelMode.getLike_num());
+//        }
+        mLikeNumTextView.setText(travelMode.getLike_num());
+        for(int i = 0; i < likeUsers.size(); i++){
+            View v = LayoutInflater.from(this).inflate(R.layout.roundimage_layout,null);
+            RoundImageView roundImageView = (RoundImageView) v.findViewById(R.id.head_pic);
+            ImageUtils.displayImage(likeUsers.get(i).getAvatar(),roundImageView);
+            mLikeUsersLinearLayout.addView(v);
+        }
+    }
+    /**
+     * 获取点赞人数据
+     */
+    private void getDataForLike(){
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("id","13");
+
+        HttpUtil.get(IConstants.sGetTravelDetail+"13"+"/likeravatars",requestParams,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                LogUtils.d("游购点赞返回：",response.toString());
+                JSONArray data = response.optJSONArray("data");
+                if(data == null || data.length() == 0){
+                    return;
+                }
+                JSONObject item = null;
+                for(int i = 0; i < data.length(); i++){
+                    try {
+                        item = (JSONObject) data.get(i);
+                        UserInfo userInfo = new UserInfo();
+                        userInfo = JSON.parseObject(item.toString(),UserInfo.class);
+                        likeUsers.add(userInfo);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                setLikeUsers();
+            }
+        });
+    }
+
+    /**
+     * 获取评论数据
+     */
+    private void getDataForComment(){
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("id","13");
+
+        HttpUtil.get(IConstants.sGetTravelDetail+"13"+"/comments",requestParams,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                LogUtils.d("游购评论返回：",response.toString());
+                JSONArray data = response.optJSONArray("data");
+                if(data == null || data.length() == 0){
+                    return;
+                }
+                JSONObject item = null;
+                for(int i = 0; i < data.length(); i++){
+                    try {
+                        item = (JSONObject) data.get(i);
+                        CommentMode commentMode = new CommentMode();
+                        commentMode = JSON.parseObject(item.toString(),CommentMode.class);
+                        commentModes.add(commentMode);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                setLikeUsers();
+            }
+        });
+    }
     /**
      * 评论
      * @param v

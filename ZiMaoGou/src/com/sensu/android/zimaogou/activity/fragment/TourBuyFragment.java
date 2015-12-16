@@ -12,7 +12,12 @@ import android.provider.MediaStore;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.TextView;
+import com.alibaba.fastjson.JSON;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.sensu.android.zimaogou.IConstants;
+import com.sensu.android.zimaogou.Mode.TravelMode;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.ReqResponse.TravelResponse;
 import com.sensu.android.zimaogou.activity.LocalPhotoActivity;
 import com.sensu.android.zimaogou.activity.tour.TourBuyDetailsActivity;
 import com.sensu.android.zimaogou.activity.tour.TourBuySendActivity;
@@ -20,10 +25,14 @@ import com.sensu.android.zimaogou.activity.tour.TourSendData;
 import com.sensu.android.zimaogou.activity.video.CameraActivity;
 import com.sensu.android.zimaogou.adapter.TourBuyAdapter;
 import com.sensu.android.zimaogou.photoalbum.PhotoInfo;
+import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.widget.OnRefreshListener;
 import com.sensu.android.zimaogou.widget.RefreshListView;
+import org.apache.http.Header;
+import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * Created by zhangwentao on 2015/11/10.
@@ -35,7 +44,7 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
     private RefreshListView mTourBuyListView;
     private TourBuyAdapter mTourBuyAdapter;
     String path;
-
+    TravelResponse travelModes = new TravelResponse();
     private Handler mHandler = new Handler();
 
     @Override
@@ -57,6 +66,7 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
 
         mTourBuyListView.setOnRefreshListener(mOnRefreshListener);
         mTourBuyListView.setOnItemClickListener(this);
+        getTravelData();
     }
 
     private OnRefreshListener mOnRefreshListener = new OnRefreshListener() {
@@ -83,6 +93,22 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
         }
     };
 
+    /**
+     *
+     * 获取游购数据
+     */
+    private void getTravelData(){
+
+        HttpUtil.get(IConstants.sGetTravelList,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                travelModes = JSON.parseObject(response.toString(),TravelResponse.class);
+                mTourBuyAdapter.flush(travelModes.data);
+            }
+        });
+
+    }
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
@@ -132,8 +158,8 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        if (i == 1) {
-            startActivity(new Intent(mParentActivity, TourBuyDetailsActivity.class));
+        if (i > 0 ) {
+            startActivity(new Intent(mParentActivity, TourBuyDetailsActivity.class).putExtra("travel",travelModes.data.get(i-1)));
         }
     }
 

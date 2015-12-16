@@ -162,6 +162,8 @@
 
         <activity android:name=".activity.mycenter.OrderDetailActivity" android:screenOrientation="portrait" />
 
+        <activity android:name=".activity.mycenter.MessageActivity" android:screenOrientation="portrait" />
+
 
 
 

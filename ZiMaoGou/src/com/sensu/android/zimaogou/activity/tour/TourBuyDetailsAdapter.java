@@ -6,8 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.sensu.android.zimaogou.Mode.CommentMode;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.adapter.SimpleBaseAdapter;
+import com.sensu.android.zimaogou.utils.DateUtils;
+import com.sensu.android.zimaogou.utils.ImageUtils;
+import com.sensu.android.zimaogou.utils.TextUtils;
+
+import java.util.ArrayList;
 
 import static com.sensu.android.zimaogou.R.id.review_time;
 
@@ -15,14 +21,17 @@ import static com.sensu.android.zimaogou.R.id.review_time;
  * Created by zhangwentao on 2015/11/16.
  */
 public class TourBuyDetailsAdapter extends SimpleBaseAdapter {
-
+    private ArrayList<CommentMode> commentModes = new ArrayList<CommentMode>();
     public TourBuyDetailsAdapter (Context context) {
         super(context);
     }
-
+    private void flush(ArrayList<CommentMode> commentModes){
+        this.commentModes = commentModes;
+        notifyDataSetChanged();
+    }
     @Override
     public int getCount() {
-        return 5;
+        return commentModes.size();
     }
 
     @Override
@@ -39,6 +48,12 @@ public class TourBuyDetailsAdapter extends SimpleBaseAdapter {
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
+        if(!TextUtils.isEmpty(commentModes.get(i).getAvatar())) {
+            ImageUtils.displayImage(commentModes.get(i).getAvatar(), viewHolder.mImageView);
+        }
+        viewHolder.mUserName.setText(commentModes.get(i).getCreatorname());
+        viewHolder.mTime.setText(DateUtils.getTimeAgo(commentModes.get(i).getCreated_at()));
+        viewHolder.mReview.setText(commentModes.get(i).getContent());
         return view;
     }
 

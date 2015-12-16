@@ -99,20 +99,38 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:background="#e5e5e5"/>
-
-    <LinearLayout
-            android:orientation="horizontal"
+    <HorizontalScrollView
             android:layout_width="match_parent"
-            android:gravity="center_vertical"
             android:layout_height="50dp">
 
-        <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dip_25"
-                android:src="@drawable/praise_red_select_40"/>
+        <LinearLayout
+                android:id="@+id/ll_likeUser"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:gravity="center_vertical"
+                android:layout_height="50dp">
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dip_25"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
 
-    </LinearLayout>
+                        android:src="@drawable/praise_red_select_40"/>
+                <TextView
+                        android:id="@+id/tv_likeNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textColor="@color/red"
+                        android:text="6"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <View
             android:layout_width="match_parent"
@@ -139,6 +157,7 @@
                 android:text="@string/review"/>
 
         <TextView
+                android:id="@+id/tv_commentNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"

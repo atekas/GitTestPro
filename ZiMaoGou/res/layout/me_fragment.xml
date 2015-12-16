@@ -57,7 +57,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_alignParentRight="true"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="15dp"
                     android:layout_marginRight="25dp"
                     >
                 <ImageView android:layout_width="25dp"
@@ -269,6 +269,41 @@
                     android:layout_marginLeft="15dp"
                     android:textColor="@color/black"
                     android:text="@string/my_collection"/>
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/arrow_right"/>
+
+        </LinearLayout>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="50dp"
+                android:background="#e5e5e5"/>
+        <LinearLayout
+                android:id="@+id/my_collection"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:background="@drawable/drawable_me_click">
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/my_collection"/>
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="15dp"
+                    android:textColor="@color/black"
+                    android:text="我的游购"/>
 
             <ImageView
                     android:layout_width="wrap_content"

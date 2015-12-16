@@ -81,6 +81,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         mParentActivity.findViewById(R.id.online_service).setOnClickListener(this);
         mParentActivity.findViewById(R.id.service_phone).setOnClickListener(this);
         mParentActivity.findViewById(R.id.setting).setOnClickListener(this);
+        mParentActivity.findViewById(R.id.rl_message).setOnClickListener(this);
     }
 
     @Override
@@ -121,6 +122,13 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 //                UserInfo userInfo1 = GDUserInfoHelper.getInstance(mParentActivity).getUserInfo();
                 mParentActivity.startActivity(new Intent(mParentActivity, LoginActivity.class));
 
+                break;
+            case R.id.rl_message:
+                if(checkLogin()) {
+                    mParentActivity.startActivity(new Intent(mParentActivity, MessageActivity.class));
+                }else{
+                    startActivity(new Intent(mParentActivity,LoginActivity.class));
+                }
                 break;
             case R.id.wait_pay:
                 //TODO 进入待付款页面
@@ -191,6 +199,8 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 mController.getConfig().setPlatforms(SHARE_MEDIA.WEIXIN,
                         SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.SINA);
                 mController.openShare(mParentActivity, false);
+//                mController.shareTo(mParentActivity,SHARE_MEDIA.SINA,null,null);
+
                 break;
             case R.id.online_service:
                 //TODO 在线客服
