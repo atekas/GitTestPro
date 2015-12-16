@@ -57,6 +57,11 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
         mSearchGirdView.setAdapter(new SearchGirdAdapter(this));
         mSearchListView.setAdapter(mSearchListAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         updateLayout();
     }
 

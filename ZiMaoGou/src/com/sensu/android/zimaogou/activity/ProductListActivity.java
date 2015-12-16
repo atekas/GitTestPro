@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -57,6 +58,8 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
         mProductsDetailsAdapter = new ProductsDetailsAdapter(this);
         mGridView.setAdapter(mProductsDetailsAdapter);
 
+        ((TextView) findViewById(R.id.product_name)).setText(mKeyword);
+
         getProductList();
 
         mGridView.setOnItemClickListener(this);
@@ -97,7 +100,6 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
                 super.onSuccess(statusCode, headers, response);
                 ProductListResponse productListResponse = JSON.parseObject(response.toString(), ProductListResponse.class);
                 mProductsDetailsAdapter.setProductList(productListResponse);
-                PromptUtils.showToast(productListResponse.data.get(0).id);
             }
 
             @Override

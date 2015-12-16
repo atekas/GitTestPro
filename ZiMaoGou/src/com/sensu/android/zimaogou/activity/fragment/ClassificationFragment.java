@@ -132,6 +132,7 @@ public class ClassificationFragment extends BaseFragment implements AdapterView.
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Intent intent = new Intent(mParentActivity, ProductListActivity.class);
         intent.putExtra(PRODUCT_ID, mCurrentCategory.sub.get(i).id);
+        intent.putExtra(SearchActivity.KEYWORD, mCurrentCategory.sub.get(i).name);
         startActivity(intent);
     }
 
