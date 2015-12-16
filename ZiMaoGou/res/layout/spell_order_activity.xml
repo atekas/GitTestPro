@@ -95,7 +95,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <com.sensu.android.zimaogou.widget.RefreshListView
+        <ListView
                 android:id="@+id/group_buy_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

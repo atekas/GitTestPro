@@ -278,7 +278,7 @@
             <View android:layout_width="0dp" android:layout_height="1px" android:layout_weight="1" />
 
             <LinearLayout
-                    android:onClick="CommandInput"
+                    android:id="@+id/command_input"
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

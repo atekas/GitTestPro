@@ -3,6 +3,7 @@ package com.sensu.android.zimaogou.activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -13,6 +14,7 @@ import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.GroupBuyListResponse;
+import com.sensu.android.zimaogou.activity.login.LoginActivity;
 import com.sensu.android.zimaogou.adapter.SpellOrderAdapter;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
@@ -26,6 +28,7 @@ import org.json.JSONObject;
  */
 public class SpellOrderActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
     public static final String GROUP_BUY_DATA = "group_buy_data";
+    public static final String TB_ID = "tb_id";
 
     private ListView mListView;
     private SpellOrderAdapter mSpellOrderAdapter;
@@ -78,10 +81,13 @@ public class SpellOrderActivity extends BaseActivity implements View.OnClickList
                 findViewById(R.id.bottom_layout).setVisibility(View.GONE);
                 break;
             case R.id.input_word:
+                if (mUserInfo == null) {
+                    startActivity(new Intent(this, LoginActivity.class));
+                    return;
+                }
                 commandInput(findViewById(R.id.input_word));
                 break;
             case R.id.submit:
-                PromptUtils.showToast("组团");
                 joinGroup();
                 break;
         }
@@ -102,7 +108,7 @@ public class SpellOrderActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        GroupBuyListResponse.GroupBuyListData groupBuyListData = mGroupBuyListResponse.data.get(i - 1);
+        GroupBuyListResponse.GroupBuyListData groupBuyListData = mGroupBuyListResponse.data.get(i);
         Intent intent = new Intent(this, SpellOrderDetailsActivity.class);
         intent.putExtra(GROUP_BUY_DATA, groupBuyListData);
         startActivity(intent);
@@ -123,6 +129,10 @@ public class SpellOrderActivity extends BaseActivity implements View.OnClickList
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 GroupBuyListResponse groupBuyListResponse = JSON.parseObject(response.toString(), GroupBuyListResponse.class);
+                if (groupBuyListResponse.getRet().equals("-1")) {
+                    PromptUtils.showToast(groupBuyListResponse.getMsg());
+                    return;
+                }
                 mGroupBuyListResponse = groupBuyListResponse;
                 mSpellOrderAdapter.setGroupBuyList(groupBuyListResponse);
             }
@@ -136,19 +146,20 @@ public class SpellOrderActivity extends BaseActivity implements View.OnClickList
 
     //入团
     private void joinGroup() {
-        UserInfo userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
-        if (userInfo == null) {
-            PromptUtils.showToast("请先登录");
+
+        String code = ((EditText) mCommandInputDialog.findViewById(R.id.code_edit)).getText().toString().trim();
+        if (TextUtils.isEmpty(code)) {
+            PromptUtils.showToast("请输入口令");
             return;
         }
-        String code = ((EditText) mCommandInputDialog.findViewById(R.id.code_edit)).getText().toString().trim();
         RequestParams requestParams = new RequestParams();
-        requestParams.put("uid", userInfo.getUid());
+        requestParams.put("uid", mUserInfo.getUid());
         requestParams.put("code", code);
-        HttpUtil.postWithSign(userInfo.getToken(), IConstants.sJoin_group, requestParams, new JsonHttpResponseHandler() {
+        HttpUtil.postWithSign(mUserInfo.getToken(), IConstants.sJoin_group, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
+                //todo 进入详情页
             }
 
             @Override
