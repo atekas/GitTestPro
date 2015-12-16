@@ -161,5 +161,5 @@ public class UserInfoDao extends AbstractDao<UserInfo, Void> {
     protected boolean isEntityUpdateable() {
         return true;
     }
-
+    
 }

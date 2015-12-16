@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.ProductListResponse;
@@ -27,6 +28,8 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
     private ProductsDetailsAdapter mProductsDetailsAdapter;
     private boolean mIsNoTitle;
 
+    private String mKeyword;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +41,7 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
     private void intiViews() {
 
         mIsNoTitle = getIntent().getBooleanExtra(IS_NO_TITLE, false);
+        mKeyword = getIntent().getStringExtra(SearchActivity.KEYWORD);
         if (mIsNoTitle) {
             findViewById(R.id.sort_rules_layout).setVisibility(View.GONE);
         } else {
@@ -81,7 +85,13 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void getProductList() {
-        HttpUtil.get(IConstants.sGoodList, new JsonHttpResponseHandler() {
+        RequestParams requestParams = new RequestParams();
+//        requestParams.put("tag", "");
+        requestParams.put("q", mKeyword);
+//        requestParams.put("order_by", "");
+//        requestParams.put("page_num", "");
+//        requestParams.put("limit", "");
+        HttpUtil.get(IConstants.sGoodList, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);

@@ -56,9 +56,15 @@
             android:layout_width="match_parent"
             android:layout_height="2px"
             android:background="@color/home_line"/>
-    <ScrollView android:layout_width="match_parent" android:layout_height="wrap_content">
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                      android:orientation="vertical">
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
             <TextView
                     android:layout_width="match_parent"
@@ -68,8 +74,12 @@
                     android:paddingLeft="15dp"
                     android:gravity="center_vertical"
                     android:text="热门搜索"/>
-            <View android:layout_width="match_parent" android:layout_height="1px"
-                  android:background="@color/home_line"/>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/home_line"/>
+
             <com.sensu.android.zimaogou.widget.NoScrollGridView
                     android:id="@+id/gv_hot_search"
                     android:layout_width="match_parent"
@@ -78,10 +88,15 @@
                     android:paddingLeft="30dp"
                     android:paddingRight="30dp"
                     android:listSelector="@null"
-                    android:numColumns="3"></com.sensu.android.zimaogou.widget.NoScrollGridView>
-            <View android:layout_width="match_parent" android:layout_height="1px"
-                  android:background="@color/home_line"/>
+                    android:numColumns="3"/>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/home_line"/>
+
             <TextView
+                    android:id="@+id/search_recently"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:textSize="@dimen/text_size_small"
@@ -89,22 +104,31 @@
                     android:paddingLeft="15dp"
                     android:gravity="center_vertical"
                     android:text="最近搜过"/>
-            <View android:layout_width="match_parent" android:layout_height="1px"
-                  android:background="@color/home_line"/>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/home_line"/>
+
             <com.sensu.android.zimaogou.widget.NoScrollListView
                     android:id="@+id/lv_search"
                     android:divider="@null"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></com.sensu.android.zimaogou.widget.NoScrollListView>
+                    android:layout_height="wrap_content"/>
+
             <TextView
+                    android:id="@+id/clear_history"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:textSize="@dimen/text_size_normal"
                     android:textColor="@color/black_666666"
                     android:gravity="center"
                     android:text="清除搜索历史"/>
-            <View android:layout_width="match_parent" android:layout_height="1px"
-                  android:background="@color/home_line"/>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/home_line"/>
 
         </LinearLayout>
 
