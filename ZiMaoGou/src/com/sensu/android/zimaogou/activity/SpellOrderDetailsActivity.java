@@ -104,7 +104,6 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
             if (groupBuyListData.is_join.equals("0")) {
                 ((TextView) findViewById(R.id.group_info)).setText("已有" + groupBuyListData.member_num + "人参团");
             } else if (groupBuyListData.is_join.equals("1")) {
-                getMember(groupBuyListData.code);
                 ((TextView) findViewById(R.id.group_info)).setText("已有" + groupBuyListData.member_num + "人参团 上限" + groupBuyListData.max_num + "人");
 
                 mHaveCodeView.setText("换个口令");
@@ -117,6 +116,7 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
     }
 
     private void initDetailData() {
+        ((WebView) findViewById(R.id.web_view)).loadUrl(mGroupDetailsResponse.data.description);
         if (mGroupDetailsResponse.data.is_join.equals("0")) {
             ((TextView) findViewById(R.id.group_info)).setText("已有" + mGroupDetailsResponse.data.member_num + "人参团");
         } else if (mGroupDetailsResponse.data.is_join.equals("1")) {
@@ -264,11 +264,6 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
     }
 
     private void getMember(String code) {
-        if (mUserInfo == null) {
-            PromptUtils.showToast("请先登录");
-            //TODO
-            return;
-        }
 
         RequestParams requestParams = new RequestParams();
         requestParams.put("uid", mUserInfo.getUid());

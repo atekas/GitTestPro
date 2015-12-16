@@ -56,7 +56,9 @@ public class ClassificationFragment extends BaseFragment implements AdapterView.
         if (hidden) {
 
         } else {
-
+            if (mViews == null) {
+                getClassification();
+            }
         }
     }
 
