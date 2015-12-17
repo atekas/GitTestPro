@@ -27,7 +27,6 @@ import org.json.JSONObject;
  * Created by zhangwentao on 2015/11/19.
  */
 public class SpellOrderActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
-    public static final String GROUP_BUY_DATA = "group_buy_data";
     public static final String TB_ID = "tb_id";
 
     private ListView mListView;
@@ -110,7 +109,7 @@ public class SpellOrderActivity extends BaseActivity implements View.OnClickList
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         GroupBuyListResponse.GroupBuyListData groupBuyListData = mGroupBuyListResponse.data.get(i);
         Intent intent = new Intent(this, SpellOrderDetailsActivity.class);
-        intent.putExtra(GROUP_BUY_DATA, groupBuyListData);
+        intent.putExtra(TB_ID, groupBuyListData.id);
         startActivity(intent);
     }
 
@@ -159,7 +158,18 @@ public class SpellOrderActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                //todo 进入详情页
+                String msg = response.optString("msg");
+                String ret = response.optString("ret");
+                if (ret.equals("-1")) {
+                    PromptUtils.showToast(msg);
+                    return;
+                }
+
+                String tbId = response.optJSONObject("data").optString("tb_id");
+
+                Intent intent = new Intent(SpellOrderActivity.this, SpellOrderDetailsActivity.class);
+                intent.putExtra(TB_ID, tbId);
+                startActivity(intent);
             }
 
             @Override

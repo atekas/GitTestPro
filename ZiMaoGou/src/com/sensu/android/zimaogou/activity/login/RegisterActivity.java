@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.IConstants;
@@ -19,7 +18,6 @@ import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.sensu.android.zimaogou.utils.TextUtils;
 import org.apache.http.Header;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -87,6 +85,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     super.onSuccess(statusCode, headers, response);
                     AuthCodeResponse authCodeResponse = JSON.parseObject(response.toString(), AuthCodeResponse.class);
                     PromptUtils.showToast(authCodeResponse.data.recode);
+                    mAuthCodeEditText.setText(authCodeResponse.data.recode);
                 }
 
 

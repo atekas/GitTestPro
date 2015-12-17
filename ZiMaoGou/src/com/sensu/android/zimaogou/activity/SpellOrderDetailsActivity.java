@@ -15,7 +15,6 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
-import com.sensu.android.zimaogou.ReqResponse.GroupBuyListResponse;
 import com.sensu.android.zimaogou.ReqResponse.GroupDetailsResponse;
 import com.sensu.android.zimaogou.ReqResponse.GroupMemberResponse;
 import com.sensu.android.zimaogou.activity.login.LoginActivity;
@@ -33,12 +32,13 @@ import java.util.List;
  * Created by zhangwentao on 2015/11/20.
  */
 public class SpellOrderDetailsActivity extends BaseActivity implements View.OnClickListener {
-    public static final int LOGIN_REQUEST_CODE = 0;
 
     private GroupDetailsResponse mGroupDetailsResponse;
+    private String mTbId;
+    private String mUid;
+    private String mToken;
 
     private LinearLayout mUserHeadContainer;
-    private String mTbId;
     private UserInfo mUserInfo;
     private TimeCount mTimeCount;
 
@@ -59,14 +59,7 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
     }
 
     private void initViews() {
-        GroupBuyListResponse.GroupBuyListData groupBuyListData = (GroupBuyListResponse.GroupBuyListData) getIntent().getSerializableExtra(SpellOrderActivity.GROUP_BUY_DATA);
-        String id = getIntent().getStringExtra(SpellOrderActivity.TB_ID);
-
-        if (id == null) {
-            mTbId = groupBuyListData.id;
-        } else {
-            mTbId = id;
-        }
+        mTbId = getIntent().getStringExtra(SpellOrderActivity.TB_ID);
 
         mOldPriceText = (TextView) findViewById(R.id.old_price);
         TextUtils.addLineCenter(mOldPriceText);
@@ -82,41 +75,27 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
         findViewById(R.id.command_input).setOnClickListener(this);
 
         mUserHeadContainer = (LinearLayout) findViewById(R.id.user_photo_container);
-
-        initData(groupBuyListData);
-    }
-
-    private void initData(GroupBuyListResponse.GroupBuyListData groupBuyListData) {
-        if (groupBuyListData != null) {
-            mTimeCount = new TimeCount(getTimeDifference(groupBuyListData.end_time), 1000);
-            mTimeCount.start();
-            ((TextView) findViewById(R.id.spell_order_name)).setText(groupBuyListData.name);
-            ImageUtils.displayImage(groupBuyListData.media, ((ImageView) findViewById(R.id.group_pic)));
-            ((TextView) findViewById(R.id.product_name)).setText(groupBuyListData.name);
-            ((TextView) findViewById(R.id.product_describe)).setText(groupBuyListData.content);
-            ((TextView) findViewById(R.id.group_min_size)).setText(groupBuyListData.min_num + "人成团");
-            ((TextView) findViewById(R.id.group_buy_price)).setText("¥" + groupBuyListData.price);
-            ((TextView) findViewById(R.id.price_market)).setText("自贸购特价¥" + groupBuyListData.price_goods);
-            mOldPriceText.setText("¥" + groupBuyListData.price_market);
-            int saveMoney = Integer.parseInt(groupBuyListData.price_market) - Integer.parseInt(groupBuyListData.price);
-            ((TextView) findViewById(R.id.save_money)).setText("立省¥" + String.valueOf(saveMoney));
-            ((WebView) findViewById(R.id.web_view)).loadUrl(groupBuyListData.description);
-            if (groupBuyListData.is_join.equals("0")) {
-                ((TextView) findViewById(R.id.group_info)).setText("已有" + groupBuyListData.member_num + "人参团");
-            } else if (groupBuyListData.is_join.equals("1")) {
-                ((TextView) findViewById(R.id.group_info)).setText("已有" + groupBuyListData.member_num + "人参团 上限" + groupBuyListData.max_num + "人");
-
-                mHaveCodeView.setText("换个口令");
-                mJoinGroupView.setText("退出此团");
-
-                mNoCodeView.setText("本团口令:" + groupBuyListData.code);
-                mWantGroupView.setText("邀请更多人");
-            }
-        }
     }
 
     private void initDetailData() {
+        mTimeCount = new TimeCount(getTimeDifference(mGroupDetailsResponse.data.end_time), 1000);
+        mTimeCount.start();
+        ((TextView) findViewById(R.id.spell_order_name)).setText(mGroupDetailsResponse.data.name);
+        ImageUtils.displayImage(mGroupDetailsResponse.data.media, ((ImageView) findViewById(R.id.group_pic)));
+        ((TextView) findViewById(R.id.product_name)).setText(mGroupDetailsResponse.data.name);
+        ((TextView) findViewById(R.id.product_describe)).setText(mGroupDetailsResponse.data.content);
+        ((TextView) findViewById(R.id.group_min_size)).setText(mGroupDetailsResponse.data.min_num + "人成团");
+        ((TextView) findViewById(R.id.group_buy_price)).setText("¥" + mGroupDetailsResponse.data.price);
+        ((TextView) findViewById(R.id.price_market)).setText("自贸购特价¥" + mGroupDetailsResponse.data.price_goods);
+        mOldPriceText.setText("¥" + mGroupDetailsResponse.data.price_market);
+        int saveMoney = Integer.parseInt(mGroupDetailsResponse.data.price_market) - Integer.parseInt(mGroupDetailsResponse.data.price);
+        ((TextView) findViewById(R.id.save_money)).setText("立省¥" + String.valueOf(saveMoney));
         ((WebView) findViewById(R.id.web_view)).loadUrl(mGroupDetailsResponse.data.description);
+
+        isJoinGroup();
+    }
+
+    private void isJoinGroup() {
         if (mGroupDetailsResponse.data.is_join.equals("0")) {
             ((TextView) findViewById(R.id.group_info)).setText("已有" + mGroupDetailsResponse.data.member_num + "人参团");
         } else if (mGroupDetailsResponse.data.is_join.equals("1")) {
@@ -135,10 +114,16 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
     protected void onResume() {
         super.onResume();
         mUserInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
-        if (mUserInfo != null) {
-            if (mTbId != null) {
-                getGroupDetail(mTbId);
-            }
+        if (mUserInfo == null) {
+            mUid = "0";
+            mToken = "";
+        } else {
+            mUid = mUserInfo.getUid();
+            mToken = mUserInfo.getToken();
+        }
+
+        if (mTbId != null) {
+            getGroupDetail(mTbId);
         }
     }
 
@@ -168,7 +153,7 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
                 break;
             case R.id.command_input:
                 if (mUserInfo == null) {
-                    startActivityForResult(new Intent(this, LoginActivity.class), LOGIN_REQUEST_CODE);
+                    startActivity(new Intent(this, LoginActivity.class));
                     return;
                 }
                 commandInput();
@@ -224,8 +209,8 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
 
     private void getGroupDetail(String id) {
         RequestParams requestParams = new RequestParams();
-        requestParams.put("uid", mUserInfo.getUid());
-        HttpUtil.getWithSign(mUserInfo.getToken(), IConstants.sTb_detail + id, requestParams, new JsonHttpResponseHandler() {
+        requestParams.put("uid", mUserInfo);
+        HttpUtil.getWithSign(mToken, IConstants.sTb_detail + id, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -297,7 +282,15 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                //todo 进入详情页
+                String msg = response.optString("msg");
+                String ret = response.optString("ret");
+                if (ret.equals("-1")) {
+                    PromptUtils.showToast(msg);
+                    return;
+                }
+
+                String tbId = response.optJSONObject("data").optString("tb_id");
+                getGroupDetail(tbId);
             }
 
             @Override
