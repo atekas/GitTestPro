@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public class TravelMode implements Serializable {
 
-    private String creatorname;
+    private String name;
     private String id;
     private String uid;
     private String avatar;
@@ -22,12 +22,12 @@ public class TravelMode implements Serializable {
     private String created_at;
     private String updated_at;
 
-    public String getCreatorname() {
-        return creatorname;
+    public String getName() {
+        return name;
     }
 
-    public void setCreatorname(String creatorname) {
-        this.creatorname = creatorname;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getId() {

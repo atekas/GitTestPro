@@ -75,12 +75,14 @@
             android:background="@color/white">
 
         <RelativeLayout
+                android:onClick="LikeClick"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center">
 
             <TextView
+                    android:id="@+id/tv_like"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
@@ -124,6 +126,7 @@
                 android:gravity="center_vertical">
 
             <TextView
+                    android:onClick="CollectClick"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableRight="@drawable/drawable_collect_select_40"
@@ -163,6 +166,7 @@
                         android:layout_marginRight="5dp"
                         android:background="@drawable/product_arrow_red"/>
             <EditText
+                    android:id="@+id/et_comment"
                     android:layout_toLeftOf="@+id/bt_sure"
                     android:layout_toRightOf="@+id/bt_close"
                     android:layout_width="match_parent"

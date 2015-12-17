@@ -41,7 +41,7 @@ public class DateUtils {
         } else if (minute > 0) {
             str = ((minute == 0) ? 1 : minute) + "分钟前";
         } else {
-            str = between + "刚刚";
+            str =  "刚刚";
         }
 
         return str;

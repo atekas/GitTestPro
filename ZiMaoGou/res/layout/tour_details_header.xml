@@ -101,7 +101,8 @@
             android:background="#e5e5e5"/>
     <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="50dp"
+            android:scrollbars="none">
 
         <LinearLayout
                 android:id="@+id/ll_likeUser"

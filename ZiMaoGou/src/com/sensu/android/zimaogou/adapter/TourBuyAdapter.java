@@ -10,8 +10,6 @@ import com.sensu.android.zimaogou.Mode.TravelMode;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.utils.DateUtils;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -55,7 +53,7 @@ public class TourBuyAdapter extends SimpleBaseAdapter {
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
-        viewHolder.tv_userName.setText(travelModes.get(i).getCreatorname());
+        viewHolder.tv_userName.setText(travelModes.get(i).getName());
         viewHolder.tv_sendTime.setText(DateUtils.getTimeAgo(travelModes.get(i).getCreated_at()));
         viewHolder.tv_marks.setText(travelModes.get(i).getCountry()+" "+travelModes.get(i).getTag());
         viewHolder.tv_praiseCount.setText(travelModes.get(i).getLike_num());

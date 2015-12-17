@@ -15,6 +15,24 @@ public class CommentMode implements Serializable {
     private String created_at;
     private String avatar;
     private String creatorname;
+    private String mobile;
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 
     public String getContent() {
         return content;

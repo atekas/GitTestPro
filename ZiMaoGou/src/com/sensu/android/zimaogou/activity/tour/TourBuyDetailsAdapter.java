@@ -25,7 +25,7 @@ public class TourBuyDetailsAdapter extends SimpleBaseAdapter {
     public TourBuyDetailsAdapter (Context context) {
         super(context);
     }
-    private void flush(ArrayList<CommentMode> commentModes){
+    public void flush(ArrayList<CommentMode> commentModes){
         this.commentModes = commentModes;
         notifyDataSetChanged();
     }
@@ -50,8 +50,14 @@ public class TourBuyDetailsAdapter extends SimpleBaseAdapter {
         }
         if(!TextUtils.isEmpty(commentModes.get(i).getAvatar())) {
             ImageUtils.displayImage(commentModes.get(i).getAvatar(), viewHolder.mImageView);
+        }else{
+            viewHolder.mImageView.setImageResource(R.drawable.head_photo_02);
         }
-        viewHolder.mUserName.setText(commentModes.get(i).getCreatorname());
+        if(!TextUtils.isEmpty(commentModes.get(i).getName())) {
+            viewHolder.mUserName.setText(commentModes.get(i).getName());
+        }else{
+            viewHolder.mUserName.setText(commentModes.get(i).getMobile());
+        }
         viewHolder.mTime.setText(DateUtils.getTimeAgo(commentModes.get(i).getCreated_at()));
         viewHolder.mReview.setText(commentModes.get(i).getContent());
         return view;

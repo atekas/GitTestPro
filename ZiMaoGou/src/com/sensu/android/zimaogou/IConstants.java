@@ -38,6 +38,11 @@ public class IConstants {
     public static final String sGetTravelList = "travel/list";
     //游购详情
     public static final String sGetTravelDetail = "travel/";
+    //游购评论
+    public static final String sTravelComment = "travel/comment";
+    //游购点赞
+    public static final String sTravelLike = "travel/like";
+
     public static final String sRegister = "user/register";
 
 
