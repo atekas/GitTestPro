@@ -41,6 +41,7 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
     private LinearLayout mUserHeadContainer;
     private UserInfo mUserInfo;
     private TimeCount mTimeCount;
+    private boolean mIsGroupFinish;
 
     private TextView mOldPriceText;
 
@@ -355,6 +356,14 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
             if (mTimeCount != null) {
                 mTimeCount.cancel();
             }
+            findViewById(R.id.show_time_count).setVisibility(View.GONE);
+            mHaveCodeView.setText("去别的团逛逛");
+            mJoinGroupView.setVisibility(View.GONE);
+
+            mNoCodeView.setText("已结束");
+            mWantGroupView.setVisibility(View.GONE);
+
+            mIsGroupFinish = true;
         }
     }
 }
