@@ -8,20 +8,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import com.loopj.android.http.AsyncHttpResponseHandler;
+import android.widget.TextView;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.BaseActivity;
 import com.sensu.android.zimaogou.activity.MainActivity;
-import com.sensu.android.zimaogou.external.greendao.dao.UserInfoDao;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
+import com.sensu.android.zimaogou.utils.DataCleanManager;
 import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.utils.PromptUtils;
 import org.apache.http.Header;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 
@@ -45,6 +44,15 @@ public class SettingActivity extends BaseActivity {
                 onBackPressed();
             }
         });
+
+        try {
+            String size = DataCleanManager.getTotalCacheSize(this);
+            ((TextView) findViewById(R.id.cache_size)).setText(size);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         flushUi();
     }
 
@@ -59,7 +67,14 @@ public class SettingActivity extends BaseActivity {
      * 清除缓存
      */
     public void CacheClick(View v) {
-
+        DataCleanManager.clearAllCache(this);
+        String size = null;
+        try {
+            size = DataCleanManager.getTotalCacheSize(this);
+            ((TextView) findViewById(R.id.cache_size)).setText(size);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
