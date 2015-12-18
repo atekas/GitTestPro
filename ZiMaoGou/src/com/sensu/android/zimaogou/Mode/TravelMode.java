@@ -21,6 +21,24 @@ public class TravelMode implements Serializable {
     private String brower_num;
     private String created_at;
     private String updated_at;
+    private String is_like;
+    private String is_favorite;
+
+    public String getIs_like() {
+        return is_like;
+    }
+
+    public void setIs_like(String is_like) {
+        this.is_like = is_like;
+    }
+
+    public String getIs_favorite() {
+        return is_favorite;
+    }
+
+    public void setIs_favorite(String is_favorite) {
+        this.is_favorite = is_favorite;
+    }
 
     public String getName() {
         return name;

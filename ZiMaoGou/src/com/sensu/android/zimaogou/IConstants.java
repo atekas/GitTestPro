@@ -42,7 +42,8 @@ public class IConstants {
     public static final String sTravelComment = "travel/comment";
     //游购点赞
     public static final String sTravelLike = "travel/like";
-
+    //游购收藏
+    public static final String sFavorite = "travel/favorite";
     public static final String sRegister = "user/register";
 
 

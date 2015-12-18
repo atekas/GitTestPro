@@ -127,6 +127,8 @@
 
             <TextView
                     android:onClick="CollectClick"
+                    android:clickable="true"
+                    android:id="@+id/tv_favorite"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableRight="@drawable/drawable_collect_select_40"

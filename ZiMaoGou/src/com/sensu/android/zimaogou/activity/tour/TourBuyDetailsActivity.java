@@ -39,22 +39,23 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
     private LinearLayout mLikeUsersLinearLayout;
     private View mHeaderView;
     private RelativeLayout mBottomRelativeLayout;
-    private Button mCommentSureButton,mCloseButton;
+    private Button mCommentSureButton, mCloseButton;
     private TravelMode travelMode;
-    private TextView mLikeNumTextView,mCommentNum,mLikeTextView;
+    private TextView mLikeNumTextView, mCommentNum, mLikeTextView,mFavoriteTextView;
     private EditText mCommentEditText;
     ArrayList<UserInfo> likeUsers = new ArrayList<UserInfo>();
     ArrayList<CommentMode> commentModes = new ArrayList<CommentMode>();
-    UserInfo userInfo ;
+    UserInfo userInfo;
     boolean isLike = false;
     boolean isFavorite = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.tour_buy_details_activity);
         userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
-        if(getIntent().getExtras() != null){
+        if (getIntent().getExtras() != null) {
             travelMode = (TravelMode) getIntent().getExtras().get("travel");
         }
         travelMode.setId("13");
@@ -67,7 +68,7 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
         mBottomRelativeLayout = (RelativeLayout) findViewById(R.id.rl_bottom);
         mCommentEditText = (EditText) findViewById(R.id.et_comment);
         mLikeTextView = (TextView) findViewById(R.id.tv_like);
-
+        mFavoriteTextView = (TextView) findViewById(R.id.tv_favorite);
 
         mCommentSureButton = (Button) findViewById(R.id.bt_sure);
         mCloseButton = (Button) findViewById(R.id.bt_close);
@@ -104,7 +105,7 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
     /**
      * 更新点赞人用户头像UI
      */
-    private void setLikeUsers(){
+    private void setLikeUsers() {
 //        if(TextUtils.isEmpty(travelMode.getLike_num())||travelMode.getLike_num().equals("0")){
 //            mLikeNumTextView.setVisibility(View.GONE);
 //            return;
@@ -112,35 +113,36 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
 //            mLikeNumTextView.setText(travelMode.getLike_num());
 //        }
         mLikeNumTextView.setText(travelMode.getLike_num());
-        for(int i = 0; i < likeUsers.size(); i++){
-            View v = LayoutInflater.from(this).inflate(R.layout.roundimage_layout,null);
+        for (int i = 0; i < likeUsers.size(); i++) {
+            View v = LayoutInflater.from(this).inflate(R.layout.roundimage_layout, null);
             RoundImageView roundImageView = (RoundImageView) v.findViewById(R.id.head_pic);
-            ImageUtils.displayImage(likeUsers.get(i).getAvatar(),roundImageView);
+            ImageUtils.displayImage(likeUsers.get(i).getAvatar(), roundImageView);
             mLikeUsersLinearLayout.addView(v);
         }
     }
+
     /**
      * 获取点赞人数据
      */
-    private void getDataForLike(){
+    private void getDataForLike() {
         RequestParams requestParams = new RequestParams();
-        requestParams.put("id",travelMode.getId());
+        requestParams.put("id", travelMode.getId());
 
-        HttpUtil.get(IConstants.sGetTravelDetail+travelMode.getId()+"/likeravatars",requestParams,new JsonHttpResponseHandler(){
+        HttpUtil.get(IConstants.sGetTravelDetail + travelMode.getId() + "/likeravatars", requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                LogUtils.d("游购点赞返回：",response.toString());
+                LogUtils.d("游购点赞返回：", response.toString());
                 JSONArray data = response.optJSONArray("data");
-                if(data == null || data.length() == 0){
+                if (data == null || data.length() == 0) {
                     return;
                 }
                 JSONObject item = null;
-                for(int i = 0; i < data.length(); i++){
+                for (int i = 0; i < data.length(); i++) {
                     try {
                         item = (JSONObject) data.get(i);
                         UserInfo userInfo = new UserInfo();
-                        userInfo = JSON.parseObject(item.toString(),UserInfo.class);
+                        userInfo = JSON.parseObject(item.toString(), UserInfo.class);
                         likeUsers.add(userInfo);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -154,43 +156,46 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
     /**
      * 获取评论数据
      */
-    private void getDataForComment(){
+    private void getDataForComment() {
         RequestParams requestParams = new RequestParams();
-        requestParams.put("id",travelMode.getId());
+        requestParams.put("id", travelMode.getId());
 
-        HttpUtil.get(IConstants.sGetTravelDetail+travelMode.getId()+"/comments",requestParams,new JsonHttpResponseHandler(){
+        HttpUtil.get(IConstants.sGetTravelDetail + travelMode.getId() + "/comments", requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                LogUtils.d("游购评论返回：",response.toString());
+                LogUtils.d("游购评论返回：", response.toString());
                 commentModes.clear();
                 JSONArray data = response.optJSONArray("data");
-                if(data == null || data.length() == 0){
+                if (data == null || data.length() == 0) {
 
                     return;
                 }
                 JSONObject item = null;
-                for(int i = 0; i < data.length(); i++){
+                for (int i = 0; i < data.length(); i++) {
                     try {
                         item = (JSONObject) data.get(i);
                         CommentMode commentMode = new CommentMode();
-                        commentMode = JSON.parseObject(item.toString(),CommentMode.class);
+                        commentMode = JSON.parseObject(item.toString(), CommentMode.class);
                         commentModes.add(commentMode);
                         mTourBuyDetailsAdapter.flush(commentModes);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
-                mCommentNum.setText(commentModes.size()+"");
+                mCommentNum.setText(commentModes.size() + "");
             }
         });
     }
+
     /**
      * 评论
+     *
      * @param v
      */
-    public void CommentClick(View v){
-        if(userInfo == null){
+    public void CommentClick(View v) {
+
+        if (userInfo == null) {
             PromptUtils.showToast("请先登录");
             startActivity(new Intent(this, LoginActivity.class));
         }
@@ -200,16 +205,16 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
     /**
      * 提交评论
      */
-    private void CommentSubmit(){
-        if(TextUtils.isEmpty(mCommentEditText.getText().toString())){
+    private void CommentSubmit() {
+        if (TextUtils.isEmpty(mCommentEditText.getText().toString())) {
             PromptUtils.showToast("评论内容不能为空");
             return;
         }
         RequestParams requestParams = new RequestParams();
-        requestParams.put("uid",userInfo.getUid());
-        requestParams.put("tid",travelMode.getId());
-        requestParams.put("content",mCommentEditText.getText().toString());
-        HttpUtil.postWithSign(userInfo.getToken(),IConstants.sTravelComment,requestParams,new JsonHttpResponseHandler(){
+        requestParams.put("uid", userInfo.getUid());
+        requestParams.put("tid", travelMode.getId());
+        requestParams.put("content", mCommentEditText.getText().toString());
+        HttpUtil.postWithSign(userInfo.getToken(), IConstants.sTravelComment, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -222,31 +227,112 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
 
     /**
      * 点赞
+     *
      * @param v
      */
-    public void LikeClick(View v){
-        likeSubmit();
+    public void LikeClick(View v) {
+        if(checkLogin()){
+            if(isLike == true){
+                return;
+            }
+            likeSubmit();
+        }else{
+            startActivity(new Intent(this,LoginActivity.class));
+        }
+
+
     }
+
     /**
      * 提交点赞
      */
-    private void likeSubmit(){
+    private void likeSubmit() {
 
         RequestParams requestParams = new RequestParams();
-        requestParams.put("uid",userInfo.getUid());
-        requestParams.put("tid",travelMode.getId());
-        HttpUtil.postWithSign(userInfo.getToken(),IConstants.sTravelLike,requestParams,new JsonHttpResponseHandler(){
+        requestParams.put("uid", userInfo.getUid());
+        requestParams.put("tid", travelMode.getId());
+        HttpUtil.postWithSign(userInfo.getToken(), IConstants.sTravelLike, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                LogUtils.d("提交点赞返回：",response.toString());
+                LogUtils.d("提交点赞返回：", response.toString());
                 mLikeTextView.setSelected(true);
             }
         });
 
     }
-    private void initHeader() {
 
+    /**
+     * 收藏
+     * @param v
+     */
+    public void CollectClick(View v){
+        if(checkLogin()){
+            CollectSubmit();
+        }else{
+            startActivity(new Intent(this,LoginActivity.class));
+        }
+
+    }
+
+    /**
+     * 提交收藏
+     */
+    private void CollectSubmit() {
+
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("uid", userInfo.getUid());
+        requestParams.put("tid", travelMode.getId());
+        HttpUtil.postWithSign(userInfo.getToken(), IConstants.sFavorite, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                LogUtils.d("提交收藏返回：", response.toString());
+                isFavorite = !isFavorite;
+                mFavoriteTextView.setSelected(isFavorite);
+            }
+        });
+
+    }
+    /**
+     * 初始化详情界面
+     */
+    private void initHeader() {
+        getTravelDetail();
+
+    }
+
+    /**
+     * 获取游购详情
+     */
+    private void getTravelDetail() {
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("id", travelMode.getId());
+        requestParams.put("userid", userInfo == null ? "0" : userInfo.getUid());
+        HttpUtil.get(IConstants.sGetTravelDetail + travelMode.getId() , requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                LogUtils.d("游购详情返回：", response.toString());
+                JSONArray data = response.optJSONArray("data");
+                if (data == null || data.length() == 0) {
+
+                    return;
+                }
+                JSONObject item = null;
+
+                try {
+                    item = (JSONObject) data.get(0);
+                    travelMode = JSON.parseObject(item.toString(), TravelMode.class);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                isLike = travelMode.getIs_like().equals("1")?true:false;
+                isFavorite = travelMode.getIs_favorite().equals("1")?true:false;
+                mLikeTextView.setSelected(isLike);
+                mFavoriteTextView.setSelected(isFavorite);
+            }
+        });
     }
 
     @Override
@@ -263,5 +349,13 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
                 mUmengShare.mController.openShare(this, false);
                 break;
         }
+    }
+
+    private boolean checkLogin(){
+        if(userInfo == null){
+            PromptUtils.showToast("请先登录");
+            return false;
+        }
+        return true;
     }
 }
