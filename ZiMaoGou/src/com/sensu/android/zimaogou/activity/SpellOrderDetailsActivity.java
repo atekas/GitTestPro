@@ -37,6 +37,7 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
     private String mTbId;
     private String mUid;
     private String mToken;
+    private String mButtonStatue;
 
     private LinearLayout mUserHeadContainer;
     private UserInfo mUserInfo;
@@ -99,12 +100,22 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
     private void isJoinGroup() {
         if (mGroupDetailsResponse.data.is_join.equals("0")) {
             ((TextView) findViewById(R.id.group_info)).setText("已有" + mGroupDetailsResponse.data.member_num + "人参团");
+            mButtonStatue = "0";
         } else if (mGroupDetailsResponse.data.is_join.equals("1")) {
             getMember(mGroupDetailsResponse.data.code);
             ((TextView) findViewById(R.id.group_info)).setText("已有" + mGroupDetailsResponse.data.member_num + "人参团 上限" + mGroupDetailsResponse.data.max_num + "人");
 
-            mHaveCodeView.setText("换个口令");
-            mJoinGroupView.setText("退出此团");
+            int minNum = Integer.parseInt(mGroupDetailsResponse.data.min_num);
+            int memberNum = Integer.parseInt(mGroupDetailsResponse.data.member_num);
+            if (memberNum >= minNum) {
+                mButtonStatue = "1";
+                mHaveCodeView.setText("立即购买");
+                mJoinGroupView.setVisibility(View.GONE);
+            } else {
+                mButtonStatue = "2";
+                mHaveCodeView.setText("换个口令");
+                mJoinGroupView.setText("退出此团");
+            }
 
             mNoCodeView.setText("本团口令:" + mGroupDetailsResponse.data.code);
             mWantGroupView.setText("邀请更多人");
@@ -157,7 +168,15 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
                     startActivity(new Intent(this, LoginActivity.class));
                     return;
                 }
-                commandInput();
+
+                if (mButtonStatue.equals("0")) {
+                    commandInput();
+                } else if (mButtonStatue.equals("1")) {
+                    //todo 去付款
+                    PromptUtils.showToast("去付款");
+                } else if (mButtonStatue.equals("2")) {
+                    commandInput();
+                }
                 break;
             case R.id.submit:
                 joinGroup();
@@ -176,23 +195,27 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
             mUserHeadContainer.addView(roundImageView);
         }
     }
+
     /**
      * 输入口令
      */
     Dialog mCommandInputDialog;
-    public void commandInput(){
-        mCommandInputDialog = new Dialog(this,R.style.dialog);
+
+    public void commandInput() {
+        mCommandInputDialog = new Dialog(this, R.style.dialog);
         mCommandInputDialog.setCancelable(true);
         mCommandInputDialog.setContentView(R.layout.command_dialog);
         mCommandInputDialog.show();
         mCommandInputDialog.findViewById(R.id.submit).setOnClickListener(this);
     }
+
     /**
      * 组团
      */
     Dialog mCommandGroupDialog;
-    public void commandGroup(){
-        mCommandGroupDialog = new Dialog(this,R.style.dialog);
+
+    public void commandGroup() {
+        mCommandGroupDialog = new Dialog(this, R.style.dialog);
         mCommandGroupDialog.setCancelable(true);
         mCommandGroupDialog.setContentView(R.layout.command_group_dialog);
 
@@ -202,8 +225,8 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
 
         Display d = m.getDefaultDisplay(); // 获取屏幕宽、高用
         WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 获取对话框当前的参数值
-        p.height = d.getHeight() ; // 高度设置为屏幕
-        p.width = d.getWidth() ; // 宽度设置为屏幕
+        p.height = d.getHeight(); // 高度设置为屏幕
+        p.width = d.getWidth(); // 宽度设置为屏幕
         dialogWindow.setAttributes(p);
         mCommandGroupDialog.show();
     }
@@ -318,7 +341,7 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
         if (day1 != 0) {
             hour = (day1 / ConstantUtils.SECOND_PER_HOUR);
             long hour1 = day1 % ConstantUtils.SECOND_PER_HOUR;
-            if (hour1 !=0) {
+            if (hour1 != 0) {
                 minute = (hour1 / ConstantUtils.SECONDS_PER_MINUTE);
                 long minute1 = hour1 % ConstantUtils.SECONDS_PER_MINUTE;
                 if (minute1 != 0) {
