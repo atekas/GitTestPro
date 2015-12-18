@@ -2,6 +2,7 @@ package com.sensu.android.zimaogou.activity.mycenter;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -88,7 +89,10 @@ public class SettingActivity extends BaseActivity {
      * 用户去评分
      */
     public void RatingClick(View v) {
-
+        Uri uri = Uri.parse("market://details?id="+getPackageName());
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     /**
