@@ -101,6 +101,8 @@ public class HomeVerticalLinearLayout extends LinearLayout implements AdapterVie
                 } else if (mType == 5) {
                     Intent intent = new Intent(getContext(), ProductListActivity.class);
                     intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
+                    intent.putExtra(ProductListActivity.PRODUCT_LIST_TAG, "5");
+                    intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, "推荐单品");
                     getContext().startActivity(intent);
                 }
                 break;
