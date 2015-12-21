@@ -98,6 +98,14 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
     }
 
     private void isJoinGroup() {
+        if (mGroupDetailsResponse.data.state.equals("1")) {
+            //todo 正常
+        } else if (mGroupDetailsResponse.data.state.equals("2")) {
+            //todo 已结束
+        } else if (mGroupDetailsResponse.data.state.equals("3")) {
+            //todo 已卖光
+        }
+
         if (mGroupDetailsResponse.data.is_join.equals("0")) {
             ((TextView) findViewById(R.id.group_info)).setText("已有" + mGroupDetailsResponse.data.member_num + "人参团");
             mButtonStatue = "0";
