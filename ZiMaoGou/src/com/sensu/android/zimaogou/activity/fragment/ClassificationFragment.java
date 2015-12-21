@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.alibaba.fastjson.JSON;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
@@ -30,7 +29,6 @@ public class ClassificationFragment extends BaseFragment implements AdapterView.
 //            , "鞋靴箱包", "运动户外", "图书", "玩具乐器", "钟表", "居家生活", "珠宝饰品", "音像制品", "家具建材"
 //            , "计生情趣", "营养保健", "奢侈礼品", "生活服务", "旅游出行"};
 
-    public static final String PRODUCT_ID = "product_id";
     private ProductClassificationResponse mProductClassificationResponse;
     private ProductClassificationResponse.ProductCategory mCurrentCategory;
 
@@ -131,8 +129,8 @@ public class ClassificationFragment extends BaseFragment implements AdapterView.
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Intent intent = new Intent(mParentActivity, ProductListActivity.class);
-        intent.putExtra(PRODUCT_ID, mCurrentCategory.sub.get(i).id);
-        intent.putExtra(SearchActivity.KEYWORD, mCurrentCategory.sub.get(i).name);
+        intent.putExtra(ProductListActivity.PRODUCT_LIST_CATEGORY, mCurrentCategory.sub.get(i).id);
+        intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, mCurrentCategory.sub.get(i).name);
         startActivity(intent);
     }
 

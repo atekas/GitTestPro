@@ -54,4 +54,7 @@ public class IConstants {
     public static final String sGroup_create = "tb/build";
     public static final String sTb_member = "tb/member";
     public static final String sTb_detail = "tb/";
+
+    //首页
+    public static final String sHome_grid = "goods/tag6";
 }

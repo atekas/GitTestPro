@@ -107,21 +107,24 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
                 startActivity(new Intent(mParentActivity, WebViewActivity.class).putExtra("title","购物须知"));
                 break;
             case R.id.ll_hotGoods:
-                PromptUtils.showToast("人气商品");
                 intent = new Intent(mParentActivity, ProductListActivity.class);
                 intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
+                intent.putExtra(ProductListActivity.PRODUCT_LIST_TAG, "1");
+                intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, "人气商品");
                 startActivity(intent);
                 break;
             case R.id.ll_latest:
-                PromptUtils.showToast("最新上架");
                 intent = new Intent(mParentActivity, ProductListActivity.class);
                 intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
+                intent.putExtra(ProductListActivity.PRODUCT_LIST_TAG, "3");
+                intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, "最新上架");
                 startActivity(intent);
                 break;
             case R.id.ll_featureVideos:
-                PromptUtils.showToast("");
                 intent = new Intent(mParentActivity, ProductListActivity.class);
                 intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
+                intent.putExtra(ProductListActivity.PRODUCT_LIST_TAG, "2");
+                intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, "视频精选");
                 startActivity(intent);
                 break;
         }

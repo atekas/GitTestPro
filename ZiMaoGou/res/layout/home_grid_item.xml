@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white">
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp">
+
+        <RelativeLayout
+                android:id="@+id/product_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+            <TextView
+                    android:id="@+id/name_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="13sp"
+                    android:textColor="@color/black_222222"
+                    android:text="免费使用"/>
+
+            <TextView
+                    android:id="@+id/type_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/name_1"
+                    android:layout_marginTop="5dp"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="12sp"
+                    android:textColor="@color/gray_9b9b9b"
+                    android:text="冬季火辣爆款"/>
+
+            <ImageView
+                    android:id="@+id/image_1"
+                    android:layout_width="85dp"
+                    android:layout_height="75dp"
+                    android:layout_below="@+id/type_1"
+                    android:layout_marginTop="13dp"
+                    android:scaleType="centerCrop"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/discount_1"/>
+
+        </RelativeLayout>
+
+        <View
+                android:layout_width="2px"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/dip_10"
+                android:layout_marginBottom="@dimen/dip_10"
+                android:background="@color/home_line"/>
+
+        <RelativeLayout
+                android:id="@+id/product_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_weight="1">
+
+            <TextView
+                    android:id="@+id/name_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="13sp"
+                    android:textColor="@color/black_222222"
+                    android:text="免费使用"/>
+
+            <TextView
+                    android:id="@+id/type_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/name_2"
+                    android:layout_marginTop="5dp"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="12sp"
+                    android:textColor="@color/gray_9b9b9b"
+                    android:text="冬季火辣爆款"/>
+
+            <ImageView
+                    android:id="@+id/image_2"
+                    android:layout_width="85dp"
+                    android:layout_height="75dp"
+                    android:layout_below="@+id/type_2"
+                    android:layout_marginTop="13dp"
+                    android:scaleType="centerCrop"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/discount_2"/>
+
+        </RelativeLayout>
+
+        <View
+                android:layout_width="2px"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/dip_10"
+                android:layout_marginBottom="@dimen/dip_10"
+                android:background="@color/home_line"/>
+
+        <RelativeLayout
+                android:id="@+id/product_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_weight="1">
+
+            <TextView
+                    android:id="@+id/name_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="13sp"
+                    android:textColor="@color/black_222222"
+                    android:text="免费使用"/>
+
+            <TextView
+                    android:id="@+id/type_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/name_3"
+                    android:layout_marginTop="5dp"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="12sp"
+                    android:textColor="@color/gray_9b9b9b"
+                    android:text="冬季火辣爆款"/>
+
+            <ImageView
+                    android:id="@+id/image_3"
+                    android:layout_width="85dp"
+                    android:layout_height="75dp"
+                    android:layout_below="@+id/type_3"
+                    android:layout_marginTop="13dp"
+                    android:scaleType="centerCrop"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/discount_3"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginTop="10dp"
+            android:background="@color/home_line"/>
+
+</LinearLayout>

@@ -14,7 +14,6 @@ import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.ProductListResponse;
 import com.sensu.android.zimaogou.adapter.ProductsDetailsAdapter;
 import com.sensu.android.zimaogou.utils.HttpUtil;
-import com.sensu.android.zimaogou.utils.PromptUtils;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
@@ -25,11 +24,24 @@ import org.json.JSONObject;
 public class ProductListActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     public static final String IS_NO_TITLE = "is_no_title";
+    public static final String PRODUCT_LIST_KEYWORD = "product_list_keyword";
+    public static final String PRODUCT_LIST_TAG = "product_list_tag";
+    public static final String PRODUCT_LIST_CATEGORY = "product_list_category";
+    public static final String PRODUCT_LIST_ORDER_BY = "product_list_order_by";
+    public static final String PRODUCT_LIST_TITLE = "product_list_title";
+
     private GridView mGridView;
     private ProductsDetailsAdapter mProductsDetailsAdapter;
     private boolean mIsNoTitle;
 
+    private String mTitle;
+
     private String mKeyword;
+    private String mTag;
+    private String mCategory;
+    private String mOrderBy;
+    private String mPageNum = "";
+    private String mLimit = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +54,16 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
     private void intiViews() {
 
         mIsNoTitle = getIntent().getBooleanExtra(IS_NO_TITLE, false);
-        mKeyword = getIntent().getStringExtra(SearchActivity.KEYWORD);
+        mKeyword = getIntent().getStringExtra(PRODUCT_LIST_KEYWORD);
+        mKeyword = mKeyword == null ? "" : mKeyword;
+        mTag = getIntent().getStringExtra(PRODUCT_LIST_TAG);
+        mTag = mTag == null ? "" : mTag;
+        mCategory = getIntent().getStringExtra(PRODUCT_LIST_CATEGORY);
+        mCategory = mCategory == null ? "" : mCategory;
+        mOrderBy = getIntent().getStringExtra(PRODUCT_LIST_ORDER_BY);
+        mOrderBy = mOrderBy == null ? "" : mOrderBy;
+        mTitle = getIntent().getStringExtra(PRODUCT_LIST_TITLE);
+        mTitle = mTitle == null ? "" : mTitle;
         if (mIsNoTitle) {
             findViewById(R.id.sort_rules_layout).setVisibility(View.GONE);
         } else {
@@ -58,7 +79,7 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
         mProductsDetailsAdapter = new ProductsDetailsAdapter(this);
         mGridView.setAdapter(mProductsDetailsAdapter);
 
-        ((TextView) findViewById(R.id.product_name)).setText(mKeyword);
+        ((TextView) findViewById(R.id.product_name)).setText(mTitle);
 
         getProductList();
 
@@ -89,11 +110,12 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
 
     private void getProductList() {
         RequestParams requestParams = new RequestParams();
-//        requestParams.put("tag", "");
+        requestParams.put("tag", mTag);
+        requestParams.put("category", mCategory);
         requestParams.put("q", mKeyword);
-//        requestParams.put("order_by", "");
-//        requestParams.put("page_num", "");
-//        requestParams.put("limit", "");
+        requestParams.put("order_by", mOrderBy);
+//        requestParams.put("page_num", mPageNum);
+//        requestParams.put("limit", mLimit);
         HttpUtil.get(IConstants.sGoodList, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

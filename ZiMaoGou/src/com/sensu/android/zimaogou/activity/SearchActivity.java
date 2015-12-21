@@ -14,16 +14,12 @@ import com.sensu.android.zimaogou.external.greendao.model.SearchKeyword;
 import com.sensu.android.zimaogou.widget.NoScrollGridView;
 import com.sensu.android.zimaogou.widget.NoScrollListView;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by zhangwentao on 2015/11/26.
  */
 public class SearchActivity extends BaseActivity implements View.OnClickListener {
-
-    public static final String KEYWORD = "keyword";
 
     private NoScrollGridView mSearchGirdView;
     private NoScrollListView mSearchListView;
@@ -88,7 +84,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 if (!TextUtils.isEmpty(keyword)) {
                     Intent intent = new Intent(this, ProductListActivity.class);
                     intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
-                    intent.putExtra(KEYWORD, keyword);
+                    intent.putExtra(ProductListActivity.PRODUCT_LIST_KEYWORD, keyword);
                     startActivity(intent);
                     SearchKeyword searchKeyword = new SearchKeyword();
                     searchKeyword.setKeyword(keyword);
