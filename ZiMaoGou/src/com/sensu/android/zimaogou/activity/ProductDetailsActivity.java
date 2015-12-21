@@ -334,6 +334,8 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         ((PullPushScrollView) findViewById(R.id.product_detail_top)).setProductDetailsResponse(mProductDetailsResponse);
         mProductSpecificationAdapter.setProductDetailData(mProductDetailsResponse.data);
         UiUtils.setListViewHeightBasedOnChilds(mProductSpecificationListView);
+
+
         WebSettings webSettings = mProductWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setSupportZoom(true);

@@ -10,12 +10,12 @@ public class ProductDetailsResponse extends BaseReqResponse {
 
     public class ProductDetailData {
         public String sale_title;
-        public String media_type;
         public String weight;
         public String state;
         public String deliver_address;
         public String origin;
         public String price_market;
+        public String is_favorite;
         public String id;
         public String category;
         public String rate;
@@ -26,10 +26,11 @@ public class ProductDetailsResponse extends BaseReqResponse {
         public String capacity;
         public String category_sub;
 
+        public MediaData media;
         public List<NormalSpec> normal_spec;
         public List<ColorImage> color_image;
+        public List spec_attr;
         public List spec;
-        public List media;
     }
 
     public static class ColorImage {
@@ -41,5 +42,12 @@ public class ProductDetailsResponse extends BaseReqResponse {
         public String value;
         public String id;
         public String name;
+    }
+
+    public static class MediaData {
+        public String type;
+        public String video;
+        public String cover;
+        public List<String> image;
     }
 }

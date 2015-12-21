@@ -83,11 +83,12 @@
                         android:layout_weight="1"/>
 
                 <ImageView
+                        android:id="@+id/is_collect"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
                         android:padding="@dimen/dip_5"
-                        android:src="@drawable/product_collect_gray"/>
+                        android:src="@drawable/drawable_is_product_collect"/>
 
             </LinearLayout>
 
