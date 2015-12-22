@@ -152,11 +152,11 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
                 RequestParams requestParams = new RequestParams();
                 requestParams.put("uid",userInfo.getUid());
                 try {
-                    Bitmap bitmap = BitmapUtils.getSampleBitmap(mPhotoList.get(0).getmUploadPath(),800,800).getBitmap();
-                    BitmapUtils.saveBitmap(bitmap,mPhotoPath);
 
-                    requestParams.put("body",new File(mPhotoPath));
-                } catch (FileNotFoundException e) {
+                    String path = BitmapUtils.getThumbUploadPath(mPhotoList.get(0).getmUploadPath(), 480);
+
+                    requestParams.put("body",new File(path));
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 HttpUtil.postWithSign(userInfo.getToken(), IConstants.sImageUpload,requestParams,new JsonHttpResponseHandler(){

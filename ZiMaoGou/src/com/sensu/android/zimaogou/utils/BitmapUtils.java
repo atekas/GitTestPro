@@ -9,8 +9,12 @@ import android.opengl.GLES10;
 import android.os.Build;
 import android.os.Environment;
 import android.view.View;
+import com.sensu.android.zimaogou.BaseApplication;
+import com.sensu.android.zimaogou.encrypt.MD5Utils;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by CG on 14-5-31.
@@ -284,4 +288,103 @@ public class BitmapUtils {
         }
     }
 
+
+    //上传图片时对图片压缩
+
+    private static Bitmap mBitmap;
+    private static String timeStamp;
+
+    static public String getThumbUploadPath(String oldPath, int bitmapMaxWidth)
+            throws Exception {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        try {
+            BitmapFactory.decodeFile(oldPath, options);
+        } catch (OutOfMemoryError e1) {
+            e1.printStackTrace();
+        }
+        int height = options.outHeight;
+        int width = options.outWidth;
+        int reqHeight = 0;
+        int reqWidth = bitmapMaxWidth;
+        reqHeight = (reqWidth * height) / width;
+        // 在内存中创建bitmap对象，这个对象按照缩放大小创建的
+        options.inSampleSize = calculateInSampleSize(options, bitmapMaxWidth,
+                reqHeight);
+
+        options.inJustDecodeBounds = false;
+        try {
+            Bitmap bitmap = BitmapFactory.decodeFile(oldPath, options);
+            mBitmap = compressImage(Bitmap.createScaledBitmap(bitmap,
+                    bitmapMaxWidth, reqHeight, false));
+            timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
+                    .format(new Date());
+            options.inPreferredConfig = Bitmap.Config.ARGB_4444;
+            options.inPurgeable = true;
+            options.inInputShareable = true;
+        } catch (OutOfMemoryError e) {
+
+        }
+        return BitmapUtils.saveImg(mBitmap, MD5Utils.md5(timeStamp));
+    }
+
+    public static String saveImg(Bitmap b, String name) throws Exception {
+        String path = BaseApplication.getBaseApplication().getBaseExternalCacheDir()
+                + File.separator + "temp/image/";
+        File mediaFile = new File(path + File.separator + name + ".jpg");
+
+        if (mediaFile.exists()) {
+            mediaFile.delete();
+        }
+
+        if (!new File(path).exists()) {
+            new File(path).mkdirs();
+        }
+
+        mediaFile.createNewFile();
+        FileOutputStream fos = new FileOutputStream(mediaFile);
+        b.compress(Bitmap.CompressFormat.PNG, 80, fos);
+        fos.flush();
+        fos.close();
+        b.recycle();
+        b = null;
+        System.gc();
+        return mediaFile.getPath();
+    }
+
+    public static int calculateInSampleSize(BitmapFactory.Options options,
+                                            int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+            if (width > height) {
+                inSampleSize = Math.round((float) height / (float) reqHeight);
+            } else {
+                inSampleSize = Math.round((float) width / (float) reqWidth);
+            }
+        }
+        return inSampleSize;
+    }
+
+    public static Bitmap compressImage(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, baos);// 质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
+        int options = 100;
+        while (baos.toByteArray().length / 1024 > 100) { // 循环判断如果压缩后图片是否大于100kb,大于继续压缩
+            options -= 10;// 每次都减少10
+            baos.reset();// 重置baos即清空baos
+            bitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);// 这里压缩options%，把压缩后的数据存放到baos中
+        }
+        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());// 把压缩后的数据baos存放到ByteArrayInputStream中
+        Bitmap bitmap1 = null;
+        try {
+            bitmap = BitmapFactory.decodeStream(isBm, null, null);// 把ByteArrayInputStream数据生成图片
+        } catch (OutOfMemoryError e) {
+            e.printStackTrace();
+        }
+        return bitmap;
+    }
 }
