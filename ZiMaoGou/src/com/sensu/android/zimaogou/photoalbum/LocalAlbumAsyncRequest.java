@@ -53,6 +53,7 @@ public class LocalAlbumAsyncRequest implements Runnable {
                 String album = cursor.getString(cursor.getColumnIndex(_album));
                 PhotoInfo photoInfo = new PhotoInfo();
                 photoInfo.setPathPath("file://" + path);
+                photoInfo.setmUploadPath(path);
                 AlbumInfo albumInfo = photoAlbumHash.get(album);
                 if (albumInfo == null) {
                     albumInfo = new AlbumInfo();

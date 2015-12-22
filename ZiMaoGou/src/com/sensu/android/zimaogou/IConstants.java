@@ -45,7 +45,8 @@ public class IConstants {
     //游购收藏
     public static final String sFavorite = "travel/favorite";
     public static final String sRegister = "user/register";
-
+    //上传图片
+    public static final String sImageUpload = "image/upload";
 
 
     //团购

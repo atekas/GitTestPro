@@ -30,7 +30,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
                     android:textColor="@color/black_222222"
-                    android:text="小美美"/>
+                    android:text=""/>
 
             <TextView
                     android:id="@+id/send_time"
@@ -39,9 +39,10 @@
                     android:layout_below="@+id/user_name"
                     android:layout_marginTop="5dp"
                     android:textColor="@color/gray_9b9b9b"
-                    android:text="1天前"/>
+                    android:text=""/>
 
             <TextView
+                    android:id="@+id/tv_city"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/user_name"
@@ -49,17 +50,18 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="8dp"
                     android:textColor="@color/gray_9b9b9b"
-                    android:text="大学路"/>
+                    android:text=""/>
         </RelativeLayout>
 
         <TextView
+                android:id="@+id/tv_browsers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:textColor="@color/gray_9b9b9b"
                 android:layout_marginRight="@dimen/dip_10"
-                android:text="124人看过"/>
+                android:text="0人看过"/>
     </RelativeLayout>
 
     <com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout
@@ -90,7 +92,7 @@
             android:layout_marginRight="10dp"
             android:textColor="@color/black_333333"
             android:textSize="15sp"
-            android:text="产品大升级啦！ 明明白白消费！按国家旅游法规定：一价全包！拥抱大海，岛海相映，海天相依，产品大升级啦！ 明明白白消费！按国家旅游法规定：一价全包！拥抱大海，岛海相映，海天相依，度假首选！—来韩国最美海岛—济州岛旅度假首选！—来韩国最美海岛—济州岛旅游吧！"/>
+            android:text=""/>
 
     <View
             android:layout_width="match_parent"
@@ -127,7 +129,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_size_normal"
                         android:textColor="@color/red"
-                        android:text="6"/>
+                        android:text="0"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -165,7 +167,7 @@
                 android:layout_alignParentRight="true"
                 android:textColor="@color/gray_9b9b9b"
                 android:layout_marginLeft="@dimen/dip_10"
-                android:text="22"/>
+                android:text="0"/>
 
     </LinearLayout>
 

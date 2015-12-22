@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.TextView;
@@ -103,6 +104,7 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
+                Log.d("游购列表返回：",response.toString());
                 travelModes = JSON.parseObject(response.toString(),TravelResponse.class);
                 mTourBuyAdapter.flush(travelModes.data);
             }

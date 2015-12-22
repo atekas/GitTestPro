@@ -14,21 +14,27 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UploadManager;
+import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.BaseActivity;
 import com.sensu.android.zimaogou.activity.LocalPhotoActivity;
 import com.sensu.android.zimaogou.activity.fragment.TourBuyFragment;
 import com.sensu.android.zimaogou.adapter.SimpleBaseAdapter;
+import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
+import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.photoalbum.PhotoInfo;
 import com.sensu.android.zimaogou.popup.SelectCountryPopup;
-import com.sensu.android.zimaogou.utils.DisplayUtils;
-import com.sensu.android.zimaogou.utils.ImageUtils;
+import com.sensu.android.zimaogou.utils.*;
+import org.apache.http.Header;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +56,7 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
     private TourPicAdapter mTourPicAdapter;
 
     private List<PhotoInfo> mPhotoList = TourSendData.picDataList;
-
+    private UserInfo userInfo ;
     private boolean mIsSelectFood;
     private boolean mIsSelectBuy;
     private boolean mIsSelectSightSpot;
@@ -65,11 +71,12 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
     private int mPicSize;
     private String mVideoPath;
 
+    private String mPhotoPath = Environment.getExternalStorageDirectory() + "/zimaogou/mobile/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tour_buy_send_activity);
-
+        userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
         initViews();
     }
 
@@ -117,6 +124,7 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
     protected void onResume() {
         super.onResume();
         mTourPicAdapter.notifyDataSetChanged();
+
     }
 
     @Override
@@ -133,6 +141,31 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.release:
                 //TODO 发布按钮
+                if(mPhotoList.size() == 0){
+                    return;
+                }
+                mPhotoPath += System.currentTimeMillis()+ "zimaogou_pic_yasuo.jpg";
+                File fileDir = new File(mPhotoPath);
+                if (fileDir.exists()) {
+                    fileDir.delete();// 创建文件夹
+                }
+                RequestParams requestParams = new RequestParams();
+                requestParams.put("uid",userInfo.getUid());
+                try {
+                    Bitmap bitmap = BitmapUtils.getSampleBitmap(mPhotoList.get(0).getmUploadPath(),800,800).getBitmap();
+                    BitmapUtils.saveBitmap(bitmap,mPhotoPath);
+
+                    requestParams.put("body",new File(mPhotoPath));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                HttpUtil.postWithSign(userInfo.getToken(), IConstants.sImageUpload,requestParams,new JsonHttpResponseHandler(){
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        LogUtils.d("上传图片返回：", response.toString());
+                    }
+                });
                 break;
             case R.id.choose_country:
                 //TODO 选择国家 弹出对话框
@@ -214,9 +247,9 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
             if (requestCode == TourBuyFragment.TAKE_PHOTO_CODE) {
                 PhotoInfo photoInfo = new PhotoInfo();
                 photoInfo.setPathPath("file://" + path);
+                photoInfo.setmUploadPath(path);
                 TourSendData.picDataList.add(photoInfo);
 
-//                mTourPicAdapter.notifyDataSetChanged();
             } else if (requestCode == TourBuyFragment.CHOOSE_PHOTO_CODE) {
 //                mTourPicAdapter.notifyDataSetChanged();
             }

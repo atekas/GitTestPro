@@ -11,6 +11,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
+import com.sensu.android.zimaogou.R;
 
 /**
  * Created by zhangwentao on 2015/11/4.
@@ -31,7 +32,18 @@ public class ImageUtils {
             .resetViewBeforeLoading(true)
             .cacheOnDisk(true)
             .build();
-
+    public static DisplayImageOptions mHeadDefaultOptions = new DisplayImageOptions.Builder()
+            .considerExifParams(true)
+            .imageScaleType(ImageScaleType.EXACTLY)
+            .bitmapConfig(Bitmap.Config.RGB_565)
+            .resetViewBeforeLoading(true)
+//            .showImageOnLoading(R.drawable.bg_movie_add_shoot)
+            .showImageOnFail(R.drawable.head_photo_02)
+            .showImageForEmptyUri(R.drawable.head_photo_02)
+            .cacheInMemory(true)
+            .resetViewBeforeLoading(true)
+            .cacheOnDisk(true)
+            .build();
     //图片工具类初始化
     public static void init(Context context) {
 
@@ -66,6 +78,10 @@ public class ImageUtils {
      * @param imageView 承载图的imageView
      */
     public static void displayImage(String uri, ImageView imageView) {
+        if(com.sensu.android.zimaogou.utils.TextUtils.isEmpty(uri)){
+            imageView.setImageResource(R.drawable.head_photo_02);
+            return;
+        }
         displayImage(uri, imageView, null);
     }
 

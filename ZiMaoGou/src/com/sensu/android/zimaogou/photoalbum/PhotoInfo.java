@@ -11,6 +11,31 @@ public class PhotoInfo implements Serializable {
 
     private String mPathPath;
     private boolean mChoose = false;
+    private String mUploadPath;
+
+    public String getmPathPath() {
+        return mPathPath;
+    }
+
+    public void setmPathPath(String mPathPath) {
+        this.mPathPath = mPathPath;
+    }
+
+    public boolean ismChoose() {
+        return mChoose;
+    }
+
+    public void setmChoose(boolean mChoose) {
+        this.mChoose = mChoose;
+    }
+
+    public String getmUploadPath() {
+        return mUploadPath;
+    }
+
+    public void setmUploadPath(String mUploadPath) {
+        this.mUploadPath = mUploadPath;
+    }
 
     public String getPicPath() {
         return mPathPath;

@@ -7,11 +7,10 @@ import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.opengl.GLES10;
 import android.os.Build;
+import android.os.Environment;
 import android.view.View;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * Created by CG on 14-5-31.
@@ -207,6 +206,11 @@ public class BitmapUtils {
         saveBitmap(getScreen(activity), filePath);
     }
 
+    /**
+     * 将bitmap保存成图片
+     * @param bitmap
+     * @param filePath
+     */
     public static void saveBitmap(Bitmap bitmap, String filePath) {
         if (bitmap != null) {
             try {
@@ -267,4 +271,17 @@ public class BitmapUtils {
         }
         return bmp;
     }
+
+    public void saveBitmapFile(Bitmap bitmap,String name){
+        File file=new File(name);//将要保存图片的路径
+        try {
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            bos.flush();
+            bos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

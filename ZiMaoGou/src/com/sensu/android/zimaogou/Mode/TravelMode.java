@@ -18,11 +18,20 @@ public class TravelMode implements Serializable {
     private String content;
     private String like_num;
     private String comment_num;
-    private String brower_num;
+    private String browser_num;
     private String created_at;
     private String updated_at;
     private String is_like;
     private String is_favorite;
+    private String location;
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
     public String getIs_like() {
         return is_like;
@@ -128,12 +137,12 @@ public class TravelMode implements Serializable {
         this.comment_num = comment_num;
     }
 
-    public String getBrower_num() {
-        return brower_num;
+    public String getBrowser_num() {
+        return browser_num;
     }
 
-    public void setBrower_num(String brower_num) {
-        this.brower_num = brower_num;
+    public void setBrowser_num(String browser_num) {
+        this.browser_num = browser_num;
     }
 
     public String getCreated_at() {

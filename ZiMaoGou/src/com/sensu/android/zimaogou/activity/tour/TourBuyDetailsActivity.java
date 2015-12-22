@@ -41,8 +41,9 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
     private RelativeLayout mBottomRelativeLayout;
     private Button mCommentSureButton, mCloseButton;
     private TravelMode travelMode;
-    private TextView mLikeNumTextView, mCommentNum, mLikeTextView,mFavoriteTextView;
+    private TextView mLikeNumTextView, mCommentNum, mLikeTextView,mFavoriteTextView,mUserNameTextView,mSendTimeTextView,mCityTextView,mBrowsersTextView,mContentTextView;
     private EditText mCommentEditText;
+    private RoundImageView mUserHeadPicImageView;
     ArrayList<UserInfo> likeUsers = new ArrayList<UserInfo>();
     ArrayList<CommentMode> commentModes = new ArrayList<CommentMode>();
     UserInfo userInfo;
@@ -58,7 +59,6 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
         if (getIntent().getExtras() != null) {
             travelMode = (TravelMode) getIntent().getExtras().get("travel");
         }
-        travelMode.setId("13");
         initViews();
     }
 
@@ -70,12 +70,21 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
         mLikeTextView = (TextView) findViewById(R.id.tv_like);
         mFavoriteTextView = (TextView) findViewById(R.id.tv_favorite);
 
+
+
         mCommentSureButton = (Button) findViewById(R.id.bt_sure);
         mCloseButton = (Button) findViewById(R.id.bt_close);
         mHeaderView = LayoutInflater.from(this).inflate(R.layout.tour_details_header, null);
         mLikeUsersLinearLayout = (LinearLayout) mHeaderView.findViewById(R.id.ll_likeUser);
         mLikeNumTextView = (TextView) mHeaderView.findViewById(R.id.tv_likeNum);
         mCommentNum = (TextView) mHeaderView.findViewById(R.id.tv_commentNum);
+        mUserNameTextView = (TextView) mHeaderView.findViewById(R.id.user_name);
+        mSendTimeTextView = (TextView) mHeaderView.findViewById(R.id.send_time);
+        mCityTextView = (TextView) mHeaderView.findViewById(R.id.tv_city);
+        mBrowsersTextView = (TextView) mHeaderView.findViewById(R.id.tv_browsers);
+        mContentTextView = (TextView) mHeaderView.findViewById(R.id.content_text);
+        mUserHeadPicImageView = (RoundImageView) mHeaderView.findViewById(R.id.user_head_pic);
+
 
         mTourDetailsListView.addHeaderView(mHeaderView);
         mTourBuyDetailsAdapter = new TourBuyDetailsAdapter(this);
@@ -116,7 +125,7 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
         for (int i = 0; i < likeUsers.size(); i++) {
             View v = LayoutInflater.from(this).inflate(R.layout.roundimage_layout, null);
             RoundImageView roundImageView = (RoundImageView) v.findViewById(R.id.head_pic);
-            ImageUtils.displayImage(likeUsers.get(i).getAvatar(), roundImageView);
+            ImageUtils.displayImage(likeUsers.get(i).getAvatar(), roundImageView,ImageUtils.mHeadDefaultOptions);
             mLikeUsersLinearLayout.addView(v);
         }
     }
@@ -331,6 +340,13 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
                 isFavorite = travelMode.getIs_favorite().equals("1")?true:false;
                 mLikeTextView.setSelected(isLike);
                 mFavoriteTextView.setSelected(isFavorite);
+                ImageUtils.displayImage(travelMode.getAvatar(), mUserHeadPicImageView, ImageUtils.mHeadDefaultOptions);
+
+                mUserNameTextView.setText(travelMode.getName());
+                mSendTimeTextView.setText(DateUtils.getTimeAgo(travelMode.getCreated_at()));
+                mCityTextView.setText(travelMode.getLocation());
+                mBrowsersTextView.setText(travelMode.getBrowser_num()+"人看过");
+                mContentTextView.setText(travelMode.getContent());
             }
         });
     }

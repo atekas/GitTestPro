@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.sensu.android.zimaogou.Mode.TravelMode;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.utils.DateUtils;
+import com.sensu.android.zimaogou.utils.ImageUtils;
 
 import java.util.ArrayList;
 
@@ -53,11 +54,15 @@ public class TourBuyAdapter extends SimpleBaseAdapter {
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
+
+        ImageUtils.displayImage(travelModes.get(i).getAvatar(),viewHolder.img_userHead,ImageUtils.mHeadDefaultOptions);
         viewHolder.tv_userName.setText(travelModes.get(i).getName());
         viewHolder.tv_sendTime.setText(DateUtils.getTimeAgo(travelModes.get(i).getCreated_at()));
         viewHolder.tv_marks.setText(travelModes.get(i).getCountry()+" "+travelModes.get(i).getTag());
         viewHolder.tv_praiseCount.setText(travelModes.get(i).getLike_num());
         viewHolder.tv_reviewCount.setText(travelModes.get(i).getComment_num());
+        viewHolder.tv_location.setText(travelModes.get(i).getLocation());
+        viewHolder.tv_content.setText(travelModes.get(i).getContent());
         return view;
     }
 

@@ -48,11 +48,8 @@ public class TourBuyDetailsAdapter extends SimpleBaseAdapter {
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
-        if(!TextUtils.isEmpty(commentModes.get(i).getAvatar())) {
-            ImageUtils.displayImage(commentModes.get(i).getAvatar(), viewHolder.mImageView);
-        }else{
-            viewHolder.mImageView.setImageResource(R.drawable.head_photo_02);
-        }
+        ImageUtils.displayImage(commentModes.get(i).getAvatar(), viewHolder.mImageView,ImageUtils.mHeadDefaultOptions);
+
         if(!TextUtils.isEmpty(commentModes.get(i).getName())) {
             viewHolder.mUserName.setText(commentModes.get(i).getName());
         }else{
