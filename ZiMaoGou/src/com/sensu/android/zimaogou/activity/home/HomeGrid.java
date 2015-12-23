@@ -1,6 +1,7 @@
 package com.sensu.android.zimaogou.activity.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.HomeGridResponse;
+import com.sensu.android.zimaogou.activity.ProductListActivity;
 import com.sensu.android.zimaogou.adapter.SimpleBaseAdapter;
 import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.utils.ImageUtils;
@@ -60,20 +62,52 @@ public class HomeGrid extends LinearLayout {
                 view = LayoutInflater.from(getContext()).inflate(R.layout.home_grid_item, null);
             }
             int leftPosition = 3 * i;
-            HomeGridResponse.HomeGridData homeGridDataLeft = mHomeGridResponse.data.get(leftPosition);
+            final HomeGridResponse.HomeGridData homeGridDataLeft = mHomeGridResponse.data.get(leftPosition);
             ((TextView) view.findViewById(R.id.name_1)).setText(homeGridDataLeft.name);
             ((TextView) view.findViewById(R.id.type_1)).setText(homeGridDataLeft.alias);
             ImageUtils.displayImage(homeGridDataLeft.image, ((ImageView) view.findViewById(R.id.image_1)));
+
+            view.findViewById(R.id.product_1).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getContext(), ProductListActivity.class);
+                    intent.putExtra(ProductListActivity.PRODUCT_LIST_CATEGORY, homeGridDataLeft.id);
+                    intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, homeGridDataLeft.name);
+                    getContext().startActivity(intent);
+                }
+            });
+
             int centerPosition = 3 * i + 1;
-            HomeGridResponse.HomeGridData homeGridDataCenter = mHomeGridResponse.data.get(centerPosition);
+            final HomeGridResponse.HomeGridData homeGridDataCenter = mHomeGridResponse.data.get(centerPosition);
             ((TextView) view.findViewById(R.id.name_2)).setText(homeGridDataCenter.name);
             ((TextView) view.findViewById(R.id.type_2)).setText(homeGridDataCenter.alias);
             ImageUtils.displayImage(homeGridDataCenter.image, ((ImageView) view.findViewById(R.id.image_2)));
+
+            view.findViewById(R.id.product_2).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getContext(), ProductListActivity.class);
+                    intent.putExtra(ProductListActivity.PRODUCT_LIST_CATEGORY, homeGridDataCenter.id);
+                    intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, homeGridDataCenter.name);
+                    getContext().startActivity(intent);
+                }
+            });
+
             int rightPosition = 3 * i + 2;
-            HomeGridResponse.HomeGridData homeGridDataRight = mHomeGridResponse.data.get(rightPosition);
+            final HomeGridResponse.HomeGridData homeGridDataRight = mHomeGridResponse.data.get(rightPosition);
             ((TextView) view.findViewById(R.id.name_3)).setText(homeGridDataRight.name);
             ((TextView) view.findViewById(R.id.type_3)).setText(homeGridDataRight.alias);
             ImageUtils.displayImage(homeGridDataRight.image, ((ImageView) view.findViewById(R.id.image_3)));
+
+            view.findViewById(R.id.product_3).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getContext(), ProductListActivity.class);
+                    intent.putExtra(ProductListActivity.PRODUCT_LIST_CATEGORY, homeGridDataRight.id);
+                    intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, homeGridDataRight.name);
+                    getContext().startActivity(intent);
+                }
+            });
 
             return view;
         }
