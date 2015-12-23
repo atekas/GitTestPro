@@ -58,4 +58,8 @@ public class IConstants {
 
     //首页
     public static final String sHome_grid = "goods/tag6";
+
+
+    //购物车
+    public static final String sCart = "cart";
 }

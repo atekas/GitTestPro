@@ -7,11 +7,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.VerifyOrderActivity;
+import com.sensu.android.zimaogou.activity.login.LoginActivity;
 import com.sensu.android.zimaogou.adapter.ShoppingBagAdapter;
+import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
+import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
+import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.widget.OnRefreshListener;
 import com.sensu.android.zimaogou.widget.RefreshListView;
+import org.apache.http.Header;
+import org.json.JSONObject;
 
 /**
  * Created by zhangwentao on 2015/11/10.
@@ -20,6 +29,8 @@ public class ShoppingBagFragment extends BaseFragment implements View.OnClickLis
 
     private RefreshListView mGoodsListView;
     private ShoppingBagAdapter mShoppingBagAdapter;
+
+    private UserInfo mUserInfo;
 
     private TextView mTitleEdit;
     private TextView mSubmit;
@@ -52,6 +63,14 @@ public class ShoppingBagFragment extends BaseFragment implements View.OnClickLis
 
     @Override
     protected void initView() {
+
+        mUserInfo = GDUserInfoHelper.getInstance(mParentActivity).getUserInfo();
+        if (mUserInfo == null) {
+            mParentActivity.startActivity(new Intent(mParentActivity, LoginActivity.class));
+        } else {
+            getCart();
+        }
+
         mTitleEdit = (TextView) mParentActivity.findViewById(R.id.goods_edit);
         mSubmit = (TextView) mParentActivity.findViewById(R.id.bt_submit);
         mTotalLayout = (LinearLayout) mParentActivity.findViewById(R.id.ll_bottom_center);
@@ -167,5 +186,22 @@ public class ShoppingBagFragment extends BaseFragment implements View.OnClickLis
         mShoppingBagAdapter.mIsEditProduct = false;
         mShoppingBagAdapter.notifyDataSetChanged();
         //todo 总金额塞入最新金额
+    }
+
+    private void getCart() {
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("uid", mUserInfo.getUid());
+        HttpUtil.getWithSign(mUserInfo.getToken(), IConstants.sCart, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                //todo 接口通,等数据
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
     }
 }

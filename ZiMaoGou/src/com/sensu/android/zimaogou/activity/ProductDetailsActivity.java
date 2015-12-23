@@ -22,9 +22,12 @@ import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.ProductDetailsResponse;
+import com.sensu.android.zimaogou.activity.login.LoginActivity;
 import com.sensu.android.zimaogou.activity.video.ProductShopCarActivity;
 import com.sensu.android.zimaogou.adapter.ProductEvaluateAdapter;
 import com.sensu.android.zimaogou.adapter.ProductSpecificationAdapter;
+import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
+import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.external.umeng.share.UmengShare;
 import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.utils.PromptUtils;
@@ -252,8 +255,10 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 mChooseDialog.dismiss();
                 break;
             case R.id.sure:
-                startActivity(new Intent(this, ProductShopCarActivity.class));
-                mChooseDialog.dismiss();
+                //todo 添加购物车
+//                startActivity(new Intent(this, ProductShopCarActivity.class));
+//                mChooseDialog.dismiss();
+                addToCart();
                 break;
             case R.id.type_1:
                 mChooseDialog.findViewById(R.id.type_1).setSelected(true);
@@ -350,5 +355,30 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         });
         mProductWebView.loadUrl(mProductDetailsResponse.data.description);
         mProductWebView.setVisibility(View.VISIBLE);
+    }
+
+    private void addToCart() {
+        UserInfo userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
+        if (userInfo == null) {
+            startActivity(new Intent(this, LoginActivity.class));
+            return;
+        }
+        RequestParams requestParams = new RequestParams();
+
+        requestParams.put("uid", userInfo.getUid());
+        requestParams.put("source", "0");
+        requestParams.put("num", "1");
+        requestParams.put("spec_id", "37");
+        HttpUtil.postWithSign(userInfo.getToken(), IConstants.sCart, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
     }
 }
