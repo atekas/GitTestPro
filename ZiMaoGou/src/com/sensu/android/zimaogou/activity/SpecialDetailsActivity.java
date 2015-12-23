@@ -69,7 +69,7 @@ public class SpecialDetailsActivity extends BaseActivity implements View.OnClick
 
     private void layoutTitle() {
         if (mThemeListData != null) {
-            ImageUtils.displayImage(mThemeListData.media, (ImageView) mHeadView.findViewById(R.id.special_introduce_pic));
+            ImageUtils.displayImage(mThemeListData.media.cover, (ImageView) mHeadView.findViewById(R.id.special_introduce_pic));
             ((TextView) findViewById(R.id.special_introduce_title)).setText(mThemeListData.name);
             ((TextView) findViewById(R.id.special_introduce_content)).setText(mThemeListData.content);
 

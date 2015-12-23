@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.ThemeListResponse;
@@ -66,7 +67,9 @@ public class SpecialActivity extends BaseActivity implements AdapterView.OnItemC
     }
 
     private void getSpecialList() {
-        HttpUtil.get(IConstants.sGoodTheme, new JsonHttpResponseHandler() {
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("is_index_page", "0");
+        HttpUtil.get(IConstants.sGoodTheme, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);

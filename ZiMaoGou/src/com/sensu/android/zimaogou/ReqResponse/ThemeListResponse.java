@@ -13,9 +13,14 @@ public class ThemeListResponse extends BaseReqResponse {
     public class ThemeListData implements Serializable {
         public String id;
         public String content;
-        public String media_type;
         public String price;
-        public String media;
+        public Media media;
         public String name;
+    }
+
+    public static class Media implements Serializable {
+        public String cover;
+        public String video;
+        public String type;
     }
 }

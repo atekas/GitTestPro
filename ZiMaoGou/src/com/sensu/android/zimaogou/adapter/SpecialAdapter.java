@@ -47,7 +47,7 @@ public class SpecialAdapter extends SimpleBaseAdapter {
 
         ThemeListResponse.ThemeListData themeListData = mThemeListResponse.data.get(i);
 
-        ImageUtils.displayImage(themeListData.media, viewHolder.mSpecialPic);
+        ImageUtils.displayImage(themeListData.media.cover, viewHolder.mSpecialPic);
         viewHolder.mName.setText(themeListData.name);
         viewHolder.mPrice.setText(themeListData.price);
 
