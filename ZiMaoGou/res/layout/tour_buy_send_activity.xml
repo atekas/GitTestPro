@@ -49,12 +49,14 @@
                 android:background="@color/white">
 
             <EditText
+                    android:id="@+id/et_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="15dp"
                     android:textSize="@dimen/text_size_13"
+                    android:textColor="@color/black"
                     android:hint="@string/release_hint"
                     android:textColorHint="@color/release_hint_color"
                     android:background="@null"/>
@@ -127,7 +129,7 @@
                         android:layout_weight="1"
                         android:layout_marginLeft="@dimen/dip_20"
                         android:textColor="@color/black"
-                        android:text="@string/location"/>
+                        android:text=""/>
 
                 <ImageView
                         android:id="@+id/location_switch"
@@ -166,11 +168,12 @@
                         android:text="@string/country"/>
 
                 <TextView
+                        android:id="@+id/tv_countryName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:layout_marginRight="@dimen/dip_2"
-                        android:text="韩国"/>
+                        android:text=""/>
 
                 <ImageView
                         android:layout_width="wrap_content"
@@ -213,81 +216,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/dip_10"
-                    android:layout_marginLeft="@dimen/dip_50">
+                    android:layout_marginLeft="48dp">
 
-                <LinearLayout
-                        android:id="@+id/food_layout"
-                        android:layout_width="wrap_content"
+                <com.sensu.android.zimaogou.widget.MyTagListView
+                        xmlns:f="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/tagview"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/drawable_marks_select"
-                        android:gravity="center">
-
-                    <ImageView
-                            android:id="@+id/food_select"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone"
-                            android:src="@drawable/mark_select"/>
-
-                    <TextView
-                            android:id="@+id/food_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:textSize="@dimen/text_size_16"
-                            android:textColor="@color/color_product_text_select"
-                            android:text="@string/good_food"/>
-                </LinearLayout>
-
-                <LinearLayout
-                        android:id="@+id/buy_layout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/drawable_marks_select"
-                        android:layout_marginLeft="@dimen/dip_10"
-                        android:gravity="center">
-
-                    <ImageView
-                            android:id="@+id/buy_select"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone"
-                            android:src="@drawable/mark_select"/>
-
-                    <TextView
-                            android:id="@+id/buy_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:textSize="@dimen/text_size_16"
-                            android:textColor="@color/color_product_text_select"
-                            android:text="@string/buy"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                        android:id="@+id/sight_spot_layout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/drawable_marks_select"
-                        android:layout_marginLeft="@dimen/dip_10"
-                        android:gravity="center">
-
-                    <ImageView
-                            android:id="@+id/sight_spot_select"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone"
-                            android:src="@drawable/mark_select"/>
-
-                    <TextView
-                            android:id="@+id/sight_spot_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_size_16"
-                            android:textColor="@color/color_product_text_select"
-                            android:text="@string/sight_spot"/>
-                </LinearLayout>
+                        android:paddingBottom="5dp"
+                        android:paddingRight="12dp"
+                        android:paddingTop="0dp"
+                        f:horizontalSpacing="8dp"
+                        f:orientation="horizontal"
+                        f:verticalSpacing="8dp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

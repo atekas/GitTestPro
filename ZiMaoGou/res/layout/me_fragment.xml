@@ -29,8 +29,8 @@
 
                 <com.sensu.android.zimaogou.widget.RoundImageView
                         android:id="@+id/head_pic"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/head_pic_default"/>
 
@@ -69,7 +69,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:textSize="12sp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/red"
                         android:gravity="center"
                         android:layout_alignParentRight="true"
                         android:background="@drawable/message_num"
@@ -103,7 +103,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:textSize="12sp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/red"
                         android:gravity="center"
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="8dp"
@@ -136,7 +136,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:textSize="12sp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/red"
                         android:gravity="center"
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="8dp"
@@ -169,7 +169,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:textSize="12sp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/red"
                         android:gravity="center"
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="8dp"

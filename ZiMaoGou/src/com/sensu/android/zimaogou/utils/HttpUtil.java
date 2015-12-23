@@ -7,6 +7,7 @@ import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.security.NoSuchAlgorithmException;
 
 public class HttpUtil {
@@ -132,5 +133,19 @@ public class HttpUtil {
                 }
             }
         });
+    }
+
+    public static void postImage(String uid,String token,String imageUrl,JsonHttpResponseHandler jsonHttpResponseHandler){
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("uid",uid);
+        try {
+
+            String path = BitmapUtils.getThumbUploadPath(imageUrl, 480);
+
+            requestParams.put("body",new File(path));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        postWithSign(token,IConstants.sImageUpload,requestParams,jsonHttpResponseHandler);
     }
 }

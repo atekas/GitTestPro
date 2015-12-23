@@ -10,17 +10,18 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.*;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.*;
+import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UploadManager;
 import com.sensu.android.zimaogou.IConstants;
+import com.sensu.android.zimaogou.Mode.LandMode;
+import com.sensu.android.zimaogou.Mode.TravelTagMode;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.ReqResponse.TravelSendResponse;
 import com.sensu.android.zimaogou.activity.BaseActivity;
 import com.sensu.android.zimaogou.activity.LocalPhotoActivity;
 import com.sensu.android.zimaogou.activity.fragment.TourBuyFragment;
@@ -30,11 +31,13 @@ import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.photoalbum.PhotoInfo;
 import com.sensu.android.zimaogou.popup.SelectCountryPopup;
 import com.sensu.android.zimaogou.utils.*;
+import com.sensu.android.zimaogou.widget.MyTagListView;
 import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,22 +59,27 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
     private TourPicAdapter mTourPicAdapter;
 
     private List<PhotoInfo> mPhotoList = TourSendData.picDataList;
-    private UserInfo userInfo ;
-    private boolean mIsSelectFood;
-    private boolean mIsSelectBuy;
-    private boolean mIsSelectSightSpot;
+    private UserInfo userInfo;
 
-    private LinearLayout mFoodLayout;
-    private LinearLayout mBuyLayout;
-    private LinearLayout mSightSpotLayout;
 
     private ImageView mLocationSwitch;
+    private TextView mCountryNameTextView, mLocationTextView;
+    private EditText mContentEditText;
+
     private boolean mIsPosition = true;
 
     private int mPicSize;
     private String mVideoPath;
-
+    private MyTagListView mTagListView;
     private String mPhotoPath = Environment.getExternalStorageDirectory() + "/zimaogou/mobile/";
+    private ArrayList<String> mServiceImages = new ArrayList<String>();
+
+    ArrayList<LandMode> landModes = new ArrayList<LandMode>();
+    ArrayList<TravelTagMode> travelTagModes = new ArrayList<TravelTagMode>();
+    int mSendSuccess = 0;
+    boolean mIsUpload = true;
+    String location = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,19 +113,30 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
             findViewById(R.id.video_layout).setVisibility(View.GONE);
         }
 
-        mFoodLayout = (LinearLayout) findViewById(R.id.food_layout);
-        mBuyLayout = (LinearLayout) findViewById(R.id.buy_layout);
-        mSightSpotLayout = (LinearLayout) findViewById(R.id.sight_spot_layout);
         mLocationSwitch = (ImageView) findViewById(R.id.location_switch);
         mLocationSwitch.setSelected(mIsPosition);
+        mCountryNameTextView = (TextView) findViewById(R.id.tv_countryName);
+        mLocationTextView = (TextView) findViewById(R.id.location);
+        mContentEditText = (EditText) findViewById(R.id.et_content);
+        mTagListView = (MyTagListView) findViewById(R.id.tagview);
 
-        mFoodLayout.setOnClickListener(this);
-        mBuyLayout.setOnClickListener(this);
-        mSightSpotLayout.setOnClickListener(this);
         mLocationSwitch.setOnClickListener(this);
         findViewById(R.id.cancel).setOnClickListener(this);
         findViewById(R.id.release).setOnClickListener(this);
         findViewById(R.id.choose_country).setOnClickListener(this);
+
+        getTravelSendData();
+        getLocation();
+    }
+
+    private void getLocation() {
+        new LocationService(this, new LocationService.OnLocationFinish() {
+            @Override
+            public void getLocationInfo(List<String> stringList) {
+                location = stringList.get(0);
+                mLocationTextView.setText(location);
+            }
+        });
     }
 
     @Override
@@ -141,35 +160,63 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.release:
                 //TODO 发布按钮
-                if(mPhotoList.size() == 0){
+                if (mPhotoList.size() == 0) {
                     return;
                 }
-                mPhotoPath += System.currentTimeMillis()+ "zimaogou_pic_yasuo.jpg";
-                File fileDir = new File(mPhotoPath);
-                if (fileDir.exists()) {
-                    fileDir.delete();// 创建文件夹
+                if (!checkInputData()) {//检查参数
+                    return;
                 }
-                RequestParams requestParams = new RequestParams();
-                requestParams.put("uid",userInfo.getUid());
-                try {
+                mServiceImages.clear();
+                mSendSuccess = 0;
+                for (int i = 0; i < mPhotoList.size(); i++) {
+                    HttpUtil.postImage(userInfo.getUid(), userInfo.getToken(), mPhotoList.get(i).getmUploadPath(), new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            super.onSuccess(statusCode, headers, response);
+                            LogUtils.d("上传图片返回：", response.toString());
+                            mSendSuccess++;
+                            String photoUrl = "";
+                            try {
+                                photoUrl = response.getJSONObject("data").getString("url");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            mServiceImages.add(photoUrl);
+                            if (mSendSuccess == mPhotoList.size()) {
 
-                    String path = BitmapUtils.getThumbUploadPath(mPhotoList.get(0).getmUploadPath(), 480);
+                                final RequestParams requestParams = new RequestParams();
+                                requestParams.put("uid", userInfo.getUid());
+                                setRequestData(requestParams);
+                                HttpUtil.postWithSign(userInfo.getToken(), IConstants.sSendTravel, requestParams, new JsonHttpResponseHandler() {
+                                    @Override
+                                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                                        super.onSuccess(statusCode, headers, response);
+                                        LogUtils.d("发布游购返回：", response.toString());
 
-                    requestParams.put("body",new File(path));
-                } catch (Exception e) {
-                    e.printStackTrace();
+                                    }
+
+                                    @Override
+                                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                                        super.onFailure(statusCode, headers, responseString, throwable);
+                                        PromptUtils.showToast("发布游购失败");
+                                        LogUtils.d("发布游购返回：", "ErrorCode:" + statusCode + "Html:" + responseString);
+                                    }
+                                });
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                            super.onFailure(statusCode, headers, responseString, throwable);
+                            mIsUpload = false;
+                        }
+                    });
                 }
-                HttpUtil.postWithSign(userInfo.getToken(), IConstants.sImageUpload,requestParams,new JsonHttpResponseHandler(){
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        super.onSuccess(statusCode, headers, response);
-                        LogUtils.d("上传图片返回：", response.toString());
-                    }
-                });
                 break;
             case R.id.choose_country:
                 //TODO 选择国家 弹出对话框
-                SelectCountryPopup selectCountryPopup = new SelectCountryPopup(this);
+                SelectCountryPopup selectCountryPopup = new SelectCountryPopup(this, mCountryNameTextView, landModes);
                 selectCountryPopup.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
                 break;
             case R.id.location_switch:
@@ -177,55 +224,18 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
                 if (mIsPosition) {
                     //关闭定位
                     mIsPosition = false;
+                    mLocationTextView.setText("");
                 } else {
                     //开启定位并进行定位
                     mIsPosition = true;
+                    mLocationTextView.setText(location);
                 }
                 mLocationSwitch.setSelected(mIsPosition);
-                break;
-            case R.id.food_layout:
-                if (mIsSelectFood) {
-                    mFoodLayout.setSelected(false);
-                    findViewById(R.id.food_text).setSelected(false);
-                    findViewById(R.id.food_select).setVisibility(View.GONE);
-                    mIsSelectFood = false;
-                } else {
-                    mFoodLayout.setSelected(true);
-                    findViewById(R.id.food_text).setSelected(true);
-                    findViewById(R.id.food_select).setVisibility(View.VISIBLE);
-                    mIsSelectFood = true;
-                }
-                break;
-            case R.id.buy_layout:
-                if (mIsSelectBuy) {
-                    mBuyLayout.setSelected(false);
-                    findViewById(R.id.buy_text).setSelected(false);
-                    findViewById(R.id.buy_select).setVisibility(View.GONE);
-                    mIsSelectBuy = false;
-                } else {
-                    mBuyLayout.setSelected(true);
-                    findViewById(R.id.buy_text).setSelected(true);
-                    findViewById(R.id.buy_select).setVisibility(View.VISIBLE);
-                    mIsSelectBuy = true;
-                }
-                break;
-            case R.id.sight_spot_layout:
-                if (mIsSelectSightSpot) {
-                    mSightSpotLayout.setSelected(false);
-                    findViewById(R.id.sight_spot_text).setSelected(false);
-                    findViewById(R.id.sight_spot_select).setVisibility(View.GONE);
-                    mIsSelectSightSpot = false;
-                } else {
-                    mSightSpotLayout.setSelected(true);
-                    findViewById(R.id.sight_spot_text).setSelected(true);
-                    findViewById(R.id.sight_spot_select).setVisibility(View.VISIBLE);
-                    mIsSelectSightSpot = true;
-                }
                 break;
             case R.id.take_photo:
                 mObjectList.clear();
                 Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                path = Environment.getExternalStorageDirectory() + File.separator + "im/" +System.currentTimeMillis() +".jpg";
+                path = Environment.getExternalStorageDirectory() + File.separator + "im/" + System.currentTimeMillis() + ".jpg";
                 File mTempCapturePicFile = new File(path);
                 intent1.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mTempCapturePicFile));
                 startActivityForResult(intent1, TourBuyFragment.TAKE_PHOTO_CODE);
@@ -257,15 +267,19 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
     }
 
     class TourPicAdapter extends SimpleBaseAdapter {
-
+        private int size = 0;
         @Override
         public void notifyDataSetChanged() {
+            if(size == mPhotoList.size()){
+                return;
+            }
             for (PhotoInfo photoInfo : mPhotoList) {
                 mObjectList.add(photoInfo);
             }
             if (mPhotoList.size() < 5) {
                 mObjectList.add(mAdd);
             }
+            size = mPhotoList.size();
             super.notifyDataSetChanged();
         }
 
@@ -315,8 +329,9 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
      * 选择对话框
      */
     Dialog mTourBuyChooseDialog;
-    public void chooseDialog(){
-        mTourBuyChooseDialog = new Dialog(this,R.style.notParentDialog);
+
+    public void chooseDialog() {
+        mTourBuyChooseDialog = new Dialog(this, R.style.notParentDialog);
         mTourBuyChooseDialog.setCancelable(true);
         mTourBuyChooseDialog.setContentView(R.layout.tour_buy_choose_dialog);
         TextView tv_cancel = (TextView) mTourBuyChooseDialog.findViewById(R.id.tv_cancel);
@@ -343,7 +358,7 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
         Display d = m.getDefaultDisplay(); // 获取屏幕宽、高用
         WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 获取对话框当前的参数值
 //        p.height = (int) d.getHeight() ; // 高度设置为屏幕
-        p.width = (int) d.getWidth() ; // 宽度设置为屏幕
+        p.width = (int) d.getWidth(); // 宽度设置为屏幕
         dialogWindow.setAttributes(p);
         mTourBuyChooseDialog.show();
     }
@@ -358,5 +373,76 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
 
             }
         }, null);
+    }
+
+    /**
+     * 获取国家,游购标签
+     */
+    private void getTravelSendData() {
+
+        HttpUtil.get(IConstants.sGetComm, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                LogUtils.d("获取游购国家，标签", response.toString());
+                TravelSendResponse travelSendResponse = new TravelSendResponse();
+                travelSendResponse = JSON.parseObject(response.toString(), TravelSendResponse.class);
+                travelTagModes = travelSendResponse.data.tag;
+                landModes = travelSendResponse.data.country;
+
+                mTagListView.setTravelTagModes(travelTagModes);
+            }
+        });
+    }
+
+    private void setRequestData(RequestParams requestParams) {
+        JSONObject jsonObject = new JSONObject();
+        requestParams.put("category", "1");
+        requestParams.put("location", mLocationTextView.getText().toString());
+        requestParams.put("country", mCountryNameTextView.getText().toString());
+        requestParams.put("content", mContentEditText.getText().toString());
+        JSONArray jsonArray = new JSONArray();
+        JSONArray jsonArray1 = new JSONArray();
+        for (int i = 0; i < travelTagModes.size(); i++) {
+
+            if (travelTagModes.get(i).isCheck()) {
+                jsonArray.put(travelTagModes.get(i).getId());
+            }
+        }
+        requestParams.put("tags", jsonArray);
+
+        for (int j = 0; j < mServiceImages.size(); j++) {
+            jsonArray1.put(mServiceImages.get(j));
+        }
+        requestParams.put("images", jsonArray1);
+
+    }
+
+    /**
+     * 检查必填参数
+     *
+     * @return
+     */
+    private boolean checkInputData() {
+        if (TextUtils.isEmpty(mContentEditText.getText().toString())) {
+            PromptUtils.showToast("发表游购内容不能为空");
+            return false;
+        }
+        if (TextUtils.isEmpty(mCountryNameTextView.getText().toString())) {
+            PromptUtils.showToast("发表游购国家不能为空");
+            return false;
+        }
+        boolean haveTag = false;
+        for (TravelTagMode tagMode : travelTagModes) {
+            if (tagMode.isCheck()) {
+                haveTag = true;
+                break;
+            }
+        }
+        if (!haveTag) {
+            PromptUtils.showToast("请选择游购标签");
+            return false;
+        }
+        return true;
     }
 }

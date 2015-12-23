@@ -14,6 +14,7 @@ import com.sensu.android.zimaogou.activity.login.LoginActivity;
 import com.sensu.android.zimaogou.activity.mycenter.*;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
+import com.sensu.android.zimaogou.utils.ImageUtils;
 import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.sensu.android.zimaogou.utils.TextUtils;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -363,11 +364,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             mNicknameTextView.setVisibility(View.GONE);
             mLoginTextView.setVisibility(View.VISIBLE);
             mHeadPicImageView.setImageResource(R.drawable.head_pic_default);
-//            if(TextUtils.isEmpty(user.getAvatar())){
-//                mHeadPicImageView.setImageResource(R.drawable.head_pic_default);
-//            }else{
-//                ImageUtils.displayImage(user.getAvatar(),mHeadPicImageView);
-//            }
+
         }else{
             mNumOfMessage.setVisibility(View.VISIBLE);
             mNumOfOrder1.setVisibility(View.VISIBLE);
@@ -382,6 +379,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             }else{
                 mNicknameTextView.setText(userInfo.getName());
             }
+            ImageUtils.displayImage(userInfo.getAvatar(), mHeadPicImageView,ImageUtils.mHeadDefaultOptions);
         }
     }
 

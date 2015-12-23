@@ -47,7 +47,10 @@ public class IConstants {
     public static final String sRegister = "user/register";
     //上传图片
     public static final String sImageUpload = "image/upload";
-
+    //获取配置：国家，游购标签
+    public static final String sGetComm = "conf/comm";
+    //发布游购
+    public static final String sSendTravel = "travel";
 
     //团购
     public static final String sTb_list = "tb/list";

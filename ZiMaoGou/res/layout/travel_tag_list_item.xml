@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <LinearLayout
+            android:id="@+id/food_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/drawable_marks_select"
+            android:gravity="center">
+
+        <ImageView
+                android:id="@+id/food_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:src="@drawable/mark_select"/>
+
+        <TextView
+                android:id="@+id/food_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textSize="@dimen/text_size_16"
+                android:textColor="@color/color_product_text_select"
+                android:text="@string/good_food"/>
+    </LinearLayout>
+</LinearLayout>

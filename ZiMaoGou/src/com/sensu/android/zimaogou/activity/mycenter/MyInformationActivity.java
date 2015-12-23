@@ -27,6 +27,7 @@ import com.sensu.android.zimaogou.utils.*;
 import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.File;
 
@@ -39,7 +40,7 @@ public class MyInformationActivity extends BaseActivity {
     TextView mSexTextView, mPhoneTextView;
     private int IMAGE_REQUEST_CODE = 6;
     private UserInfo userInfo;
-
+    private String avatar="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +71,7 @@ public class MyInformationActivity extends BaseActivity {
             mSexTextView.setText(userInfo.getSex());
         }
         mPhoneTextView.setText(userInfo.getMobile());
+        ImageUtils.displayImage(userInfo.getAvatar(), mHeadImageView,ImageUtils.mHeadDefaultOptions);
 
     }
 
@@ -170,6 +172,7 @@ public class MyInformationActivity extends BaseActivity {
                     if (path == null) {
                         path = uri.getPath(); // from File Manager
                     }
+                    avatar = path;
                     mHeadImageView.setImageBitmap(BitmapUtils.getSampleBitmap(path, 800, 800).getBitmap());
                     break;
 //                case CAMERA_REQUEST_CODE:
@@ -214,10 +217,34 @@ public class MyInformationActivity extends BaseActivity {
      * @param v
      */
     public void SaveClick(View v) {
+        if(TextUtils.isEmpty(avatar)) {
+            postInfo();
+        }else{
+            HttpUtil.postImage(userInfo.getUid(),userInfo.getToken(),avatar,new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    LogUtils.d("头像上传返回：",response.toString());
+                    try {
+                        avatar = response.getJSONObject("data").getString("url");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    postInfo();
+                }
+            });
+        }
+    }
+    private void postInfo(){
         RequestParams requestParams = new RequestParams();
         requestParams.put("name", mNicknameEditText.getText().toString());
         requestParams.put("uid", userInfo.getUid());
         requestParams.put("token", userInfo.getToken());
+        requestParams.put("sex", mSexTextView.getText().toString());
+        if(!TextUtils.isEmpty(avatar)){
+            requestParams.put("avatar", avatar);
+        }
+
         HttpUtil.postWithSign(userInfo.getToken(), IConstants.sUpdateUserInfo, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject responseString) {
@@ -228,6 +255,9 @@ public class MyInformationActivity extends BaseActivity {
                     PromptUtils.showToast("保存成功");
                     userInfo.setSex(mSexTextView.getText().toString());
                     userInfo.setName(mNicknameEditText.getText().toString());
+                    if(!TextUtils.isEmpty(avatar)){
+                        userInfo.setAvatar(avatar);
+                    }
                     GDUserInfoHelper.getInstance(MyInformationActivity.this).updateUserInfo(userInfo);
                 }
             }
