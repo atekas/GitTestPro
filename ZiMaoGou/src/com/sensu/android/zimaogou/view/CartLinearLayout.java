@@ -8,10 +8,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.CartDataResponse;
+import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
+import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
+import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.utils.ImageUtils;
 import com.sensu.android.zimaogou.utils.PromptUtils;
+import org.apache.http.Header;
+import org.json.JSONObject;
 
 /**
  * Created by zhangwentao on 2015/12/24.
@@ -69,6 +77,13 @@ public class CartLinearLayout extends LinearLayout {
                 @Override
                 public void onClick(View view) {
                     PromptUtils.showToast("点击了" + position + "个选择");
+                    if (mCartDataGroup.data.get(position).getIsSelect()) {
+                        mCartDataGroup.data.get(position).setIsSelect(false);
+                        view.findViewById(R.id.img_choose).setSelected(false);
+                    } else {
+                        mCartDataGroup.data.get(position).setIsSelect(true);
+                        view.findViewById(R.id.img_choose).setSelected(true);
+                    }
                 }
             });
 
@@ -90,6 +105,7 @@ public class CartLinearLayout extends LinearLayout {
                 @Override
                 public void onClick(View view) {
                     PromptUtils.showToast("删除第" + position + "项");
+                    deleteProduct(mCartDataGroup.data.get(position).id);
                 }
             });
 
@@ -107,5 +123,42 @@ public class CartLinearLayout extends LinearLayout {
         });
 
         addView(bottomView);
+    }
+
+    private void changeNum(String id, String num) {
+        UserInfo userInfo = GDUserInfoHelper.getInstance(getContext()).getUserInfo();
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("uid", userInfo.getUid());
+        requestParams.put("id", id);
+        requestParams.put("num", num);
+        HttpUtil.postWithSign(userInfo.getToken(), IConstants.sCart + "/" + id, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
+    }
+
+    private void deleteProduct(String id) {
+        UserInfo userInfo = GDUserInfoHelper.getInstance(getContext()).getUserInfo();
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("uid", userInfo.getUid());
+        requestParams.put("id", id);
+        HttpUtil.postWithSign(userInfo.getToken(), IConstants.sCart + "/" + id+ "/delete", requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
     }
 }
