@@ -6,12 +6,13 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.TextView;
+import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
-import com.sensu.android.zimaogou.activity.VerifyOrderActivity;
+import com.sensu.android.zimaogou.ReqResponse.CartDataResponse;
 import com.sensu.android.zimaogou.activity.login.LoginActivity;
 import com.sensu.android.zimaogou.adapter.ShoppingBagAdapter;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
@@ -29,17 +30,11 @@ public class ShoppingBagFragment extends BaseFragment implements View.OnClickLis
 
     private RefreshListView mGoodsListView;
     private ShoppingBagAdapter mShoppingBagAdapter;
+    private boolean mIsEdit;
 
     private UserInfo mUserInfo;
 
-    private TextView mTitleEdit;
-    private TextView mSubmit;
-    private LinearLayout mTotalLayout;
-    private TextView mTotalMoney;
-    private ImageView mIsAllSelectView;
-
-    private boolean mIsEditProduct;
-    private boolean mIsAllSelect = true;
+    private TextView mEditText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -71,24 +66,13 @@ public class ShoppingBagFragment extends BaseFragment implements View.OnClickLis
             getCart();
         }
 
-        mTitleEdit = (TextView) mParentActivity.findViewById(R.id.goods_edit);
-        mSubmit = (TextView) mParentActivity.findViewById(R.id.bt_submit);
-        mTotalLayout = (LinearLayout) mParentActivity.findViewById(R.id.ll_bottom_center);
-
-        mTotalMoney = (TextView) mParentActivity.findViewById(R.id.total_money);
-        mIsAllSelectView = (ImageView) mParentActivity.findViewById(R.id.is_all_select);
         mGoodsListView = (RefreshListView) mParentActivity.findViewById(R.id.bag_goods_list);
         mShoppingBagAdapter = new ShoppingBagAdapter(mParentActivity);
         mGoodsListView.setAdapter(mShoppingBagAdapter);
+        mShoppingBagAdapter.setListView(mGoodsListView );
         mGoodsListView.setOnRefreshListener(mOnRefreshListener);
-
-        mTitleEdit.setOnClickListener(this);
-        mSubmit.setOnClickListener(this);
-        mIsAllSelectView.setOnClickListener(this);
-        //默认全选
-        mIsAllSelectView.setSelected(true);
-        mShoppingBagAdapter.mShoppingBagIsAllSelect = true;
-        mShoppingBagAdapter.notifyDataSetChanged();
+        mEditText = (TextView) mParentActivity.findViewById(R.id.goods_edit);
+        mEditText.setOnClickListener(this);
     }
 
 
@@ -136,56 +120,18 @@ public class ShoppingBagFragment extends BaseFragment implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.goods_edit:
-                if (mIsEditProduct) {
-                    statueIsEdit();
+                if (mIsEdit) {
+                    //todo 编辑状态
+                    mIsEdit = false;
+                    mEditText.setText("编辑");
                 } else {
-                    statueIsNotEdit();
+                    //todo 非编辑状态
+                    mIsEdit = true;
+                    mEditText.setText("完成");
                 }
-                break;
-            case R.id.bt_submit:
-                if (mIsEditProduct) {
-                    //todo 删除选中的商品
-                } else {
-                    //todo 提交选中商品订单  进入到确认订单页面
-                    startActivity(new Intent(mParentActivity, VerifyOrderActivity.class));
-                }
-                break;
-            case R.id.is_all_select:
-                //todo 所有商品全部选择
-                if (mIsAllSelect) {
-                    mIsAllSelect = false;
-                    mIsAllSelectView.setSelected(false);
-                    mShoppingBagAdapter.mShoppingBagIsAllSelect = false;
-                    mShoppingBagAdapter.notifyDataSetChanged();
-                } else {
-                    mIsAllSelect = true;
-                    mIsAllSelectView.setSelected(true);
-                    mShoppingBagAdapter.mShoppingBagIsAllSelect = true;
-                    mShoppingBagAdapter.notifyDataSetChanged();
-                }
+                mShoppingBagAdapter.setIsEditProduct(mIsEdit);
                 break;
         }
-    }
-
-    private void statueIsEdit() {
-        mIsEditProduct = false;
-        mTitleEdit.setText("完成");
-        mSubmit.setText("删除");
-        mTotalLayout.setVisibility(View.GONE);
-        mIsAllSelectView.setSelected(false);
-        mShoppingBagAdapter.mIsEditProduct = true;
-        mShoppingBagAdapter.mShoppingBagIsAllSelect = false;
-        mShoppingBagAdapter.notifyDataSetChanged();
-    }
-
-    private void statueIsNotEdit() {
-        mIsEditProduct = true;
-        mTitleEdit.setText("编辑");
-        mSubmit.setText("去结算");
-        mTotalLayout.setVisibility(View.VISIBLE);
-        mShoppingBagAdapter.mIsEditProduct = false;
-        mShoppingBagAdapter.notifyDataSetChanged();
-        //todo 总金额塞入最新金额
     }
 
     private void getCart() {
@@ -196,6 +142,8 @@ public class ShoppingBagFragment extends BaseFragment implements View.OnClickLis
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 //todo 接口通,等数据
+                CartDataResponse cartDataResponse = JSON.parseObject(response.toString(), CartDataResponse.class);
+                mShoppingBagAdapter.setCartDataGroup(cartDataResponse);
             }
 
             @Override

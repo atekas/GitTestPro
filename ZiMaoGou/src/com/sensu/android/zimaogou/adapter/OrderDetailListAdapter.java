@@ -1,7 +1,6 @@
 package com.sensu.android.zimaogou.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 import com.sensu.android.zimaogou.Mode.OrderMode;
 import com.sensu.android.zimaogou.Mode.ProductMode;
 import com.sensu.android.zimaogou.R;
-import com.sensu.android.zimaogou.activity.mycenter.RefundOrCommentActivity;
 import com.sensu.android.zimaogou.utils.UiUtils;
 
 import java.util.ArrayList;
@@ -43,7 +41,7 @@ public class OrderDetailListAdapter extends SimpleBaseAdapter {
             viewHolder = new ViewHolder();
             view = LayoutInflater.from(mContext).inflate(R.layout.order_detail_list_item,null);
 
-            viewHolder.lv_products = (ListView) view.findViewById(R.id.lv_products);
+            viewHolder.lv_products = (ListView) view.findViewById(R.id.product_child);
 
             view.setTag(viewHolder);
         }else{

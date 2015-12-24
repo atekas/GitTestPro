@@ -45,11 +45,10 @@
                 android:background="@color/home_line"/>
     </RelativeLayout>
 
-    <com.sensu.android.zimaogou.widget.NoScrollListView
-            android:id="@+id/lv_products"
+    <com.sensu.android.zimaogou.view.CartLinearLayout
+            android:id="@+id/product_child"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:divider="@null"
-            android:dividerHeight="0dp"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical"/>
 
 </LinearLayout>

@@ -54,7 +54,6 @@ public class ProductShopCarActivity extends BaseActivity implements View.OnClick
         mIsAllSelectView.setOnClickListener(this);
         //默认全选
         mIsAllSelectView.setSelected(true);
-        mShoppingBagAdapter.mShoppingBagIsAllSelect = true;
         mShoppingBagAdapter.notifyDataSetChanged();
 
     }
@@ -105,12 +104,10 @@ public class ProductShopCarActivity extends BaseActivity implements View.OnClick
                 if (mIsAllSelect) {
                     mIsAllSelect = false;
                     mIsAllSelectView.setSelected(false);
-                    mShoppingBagAdapter.mShoppingBagIsAllSelect = false;
                     mShoppingBagAdapter.notifyDataSetChanged();
                 } else {
                     mIsAllSelect = true;
                     mIsAllSelectView.setSelected(true);
-                    mShoppingBagAdapter.mShoppingBagIsAllSelect = true;
                     mShoppingBagAdapter.notifyDataSetChanged();
                 }
             case R.id.back:
@@ -126,7 +123,6 @@ public class ProductShopCarActivity extends BaseActivity implements View.OnClick
         mTotalLayout.setVisibility(View.GONE);
         mIsAllSelectView.setSelected(false);
         mShoppingBagAdapter.mIsEditProduct = true;
-        mShoppingBagAdapter.mShoppingBagIsAllSelect = false;
         mShoppingBagAdapter.notifyDataSetChanged();
     }
 

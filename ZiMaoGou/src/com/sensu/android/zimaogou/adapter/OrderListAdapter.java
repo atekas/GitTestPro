@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.sensu.android.zimaogou.Mode.OrderMode;
 import com.sensu.android.zimaogou.Mode.ProductMode;
 import com.sensu.android.zimaogou.R;
-import com.sensu.android.zimaogou.activity.mycenter.ApplySalesAfterActivity;
 import com.sensu.android.zimaogou.activity.mycenter.OrderDetailActivity;
 import com.sensu.android.zimaogou.activity.mycenter.RefundOrCommentActivity;
 import com.sensu.android.zimaogou.utils.UiUtils;
@@ -49,7 +48,7 @@ public class OrderListAdapter extends SimpleBaseAdapter {
             viewHolder.tv_orderNo = (TextView) view.findViewById(R.id.tv_orderNo);
             viewHolder.tv_orderType = (TextView) view.findViewById(R.id.tv_type);
             viewHolder.tv_showNum = (TextView) view.findViewById(R.id.tv_showNum);
-            viewHolder.lv_products = (ListView) view.findViewById(R.id.lv_products);
+            viewHolder.lv_products = (ListView) view.findViewById(R.id.product_child);
             viewHolder.rl_amount = (RelativeLayout) view.findViewById(R.id.rl_amount);
             viewHolder.rl_button = (RelativeLayout) view.findViewById(R.id.rl_button);
             viewHolder.bt_cancel = (Button) view.findViewById(R.id.bt_cancel);
