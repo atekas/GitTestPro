@@ -172,6 +172,7 @@ public class HomeHorizontalLinearLayout extends LinearLayout implements AdapterV
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 LogUtils.d("推荐好物返回：",response.toString());
+                LogUtils.d("推荐好物返回：",response.toString());
                 mCommendProduct = JSON.parseObject(response.toString(), CommendProductResponse.class);
                 mhListViewAdapter = new HorizontalListViewAdapter(getContext(),mCommendProduct.data,mType);
                 mhListView.setAdapter(mhListViewAdapter);
