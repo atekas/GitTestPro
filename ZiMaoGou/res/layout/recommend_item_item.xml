@@ -14,7 +14,7 @@
     <ImageView
             android:id="@+id/first_frame"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="140dp"
             android:scaleType="fitXY"
             android:src="@drawable/special_1"/>
 

@@ -192,7 +192,14 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
                                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                                         super.onSuccess(statusCode, headers, response);
                                         LogUtils.d("发布游购返回：", response.toString());
-
+                                        try {
+                                            if(response.getString("ret").equals("0")){
+                                                PromptUtils.showToast(response.getString("msg"));
+                                                finish();
+                                            }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
                                     }
 
                                     @Override

@@ -10,7 +10,10 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.sensu.android.zimaogou.Mode.ProductMode;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.ReqResponse.CommendProductResponse;
+import com.sensu.android.zimaogou.ReqResponse.ProductDetailsResponse;
 import com.sensu.android.zimaogou.utils.DisplayUtils;
+import com.sensu.android.zimaogou.utils.ImageUtils;
 
 import java.util.ArrayList;
 
@@ -21,9 +24,9 @@ public class HorizontalListViewAdapter extends BaseAdapter {
     private int selectIndex = -1;
     int Size = 1; //一屏显示多少个
     int Type = 1;//哪个部分调用 1，每日推荐 2，拼单特价，3.发现好店铺
-    ArrayList<ProductMode> pros = new ArrayList<ProductMode>();
+    ArrayList<CommendProductResponse.CommendProductMode> pros = new ArrayList<CommendProductResponse.CommendProductMode>();
     int width = DisplayUtils.getDisplayWidth();
-    public HorizontalListViewAdapter(Context context, ArrayList<ProductMode> pros, int type) {
+    public HorizontalListViewAdapter(Context context, ArrayList<CommendProductResponse.CommendProductMode> pros, int type) {
         this.mContext = context;
         this.pros = pros;
         if (type == 1) {
@@ -61,7 +64,7 @@ public class HorizontalListViewAdapter extends BaseAdapter {
                 holder.mImage = (ImageView) convertView.findViewById(R.id.img_pro);
                 holder.mTitle = (TextView) convertView.findViewById(R.id.tv_pro);
                 holder.mRl_img = (RelativeLayout) convertView.findViewById(R.id.rl_img);
-
+                holder.mVideoImage = (ImageView) convertView.findViewById(R.id.img_video);
                 holder.mSalePrice = (TextView) convertView.findViewById(R.id.tv_salePrice);
                 holder.mOrigPrice = (TextView) convertView.findViewById(R.id.tv_origPrice);
                 holder.mOrigPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG); //中划线
@@ -89,8 +92,16 @@ public class HorizontalListViewAdapter extends BaseAdapter {
             }
 
 
-            holder.mTitle.setText(pros.get(position).getTestTitle());
-            holder.mImage.setImageResource(pros.get(position).getTestImg());
+            holder.mTitle.setText(pros.get(position).name);
+            if(pros.get(position).media.type.equals("1")){
+                holder.mVideoImage.setVisibility(View.GONE);
+                ImageUtils.displayImage(pros.get(position).media.image.get(0),holder.mImage);
+            }else{
+                holder.mVideoImage.setVisibility(View.VISIBLE);
+                ImageUtils.displayImage(pros.get(position).media.cover,holder.mImage);
+            }
+            holder.mSalePrice.setText(pros.get(position).price);
+            holder.mOrigPrice.setText("￥"+pros.get(position).price_market);
 //		iconBitmap = getPropThumnail(mIconIDs[position]);
 //		holder.mImage.setImageBitmap(iconBitmap);
 //		holder.mImage.setim
@@ -112,8 +123,7 @@ public class HorizontalListViewAdapter extends BaseAdapter {
                     gsHolder = (GroupSpeViewHolder) convertView.getTag();
                 }
 
-                gsHolder.mTitle.setText(pros.get(position).getTestTitle());
-                gsHolder.mImage.setImageResource(pros.get(position).getTestImg());
+                gsHolder.mTitle.setText(pros.get(position).name);
             }
 
         }
@@ -126,8 +136,9 @@ public class HorizontalListViewAdapter extends BaseAdapter {
      */
     private static class DailyRecViewHolder {
         private TextView mTitle,mSalePrice,mOrigPrice;
-        private ImageView mImage;
+        private ImageView mImage,mVideoImage;
         private RelativeLayout mRl_img;
+
     }
 
     /**

@@ -13,12 +13,14 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.ReqResponse.CommendProductResponse;
 import com.sensu.android.zimaogou.ReqResponse.ThemeListResponse;
 import com.sensu.android.zimaogou.activity.ProductDetailsActivity;
 import com.sensu.android.zimaogou.activity.ProductListActivity;
 import com.sensu.android.zimaogou.activity.SpecialActivity;
 import com.sensu.android.zimaogou.activity.SpecialDetailsActivity;
 import com.sensu.android.zimaogou.utils.HttpUtil;
+import com.sensu.android.zimaogou.utils.LogUtils;
 import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.sensu.android.zimaogou.utils.UiUtils;
 import org.apache.http.Header;
@@ -34,7 +36,7 @@ public class HomeVerticalLinearLayout extends LinearLayout implements AdapterVie
     ListView mListView;
 
     private RecommendThemeAdapter mRecommendThemeAdapter;
-
+    private CommendProductResponse mCommendProduct = new CommendProductResponse();
     public HomeVerticalLinearLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -62,8 +64,7 @@ public class HomeVerticalLinearLayout extends LinearLayout implements AdapterVie
                 break;
             case 5:
                 mTitle.setText("推荐单品");
-                mListView.setAdapter(new RecommendItemAdapter(getContext()));
-                UiUtils.setListViewHeightBasedOnChilds(mListView);
+                getCommendProducts();
                 break;
         }
     }
@@ -115,6 +116,21 @@ public class HomeVerticalLinearLayout extends LinearLayout implements AdapterVie
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
+    }
+    private void getCommendProducts(){
+        final RequestParams requestParams = new RequestParams();
+        requestParams.put("tag","5");
+        HttpUtil.get(IConstants.sGoodList,requestParams,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                LogUtils.d("推荐单品返回：", response.toString());
+                mCommendProduct = JSON.parseObject(response.toString(), CommendProductResponse.class);
+
+                mListView.setAdapter(new RecommendItemAdapter(getContext(),mCommendProduct.data));
+                UiUtils.setListViewHeightBasedOnChilds(mListView);
             }
         });
     }

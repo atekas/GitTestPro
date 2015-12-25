@@ -27,6 +27,7 @@ import com.sensu.android.zimaogou.activity.video.CameraActivity;
 import com.sensu.android.zimaogou.adapter.TourBuyAdapter;
 import com.sensu.android.zimaogou.photoalbum.PhotoInfo;
 import com.sensu.android.zimaogou.utils.HttpUtil;
+import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.sensu.android.zimaogou.widget.OnRefreshListener;
 import com.sensu.android.zimaogou.widget.RefreshListView;
 import org.apache.http.Header;
@@ -58,6 +59,7 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
         super.onActivityCreated(savedInstanceState);
     }
 
+
     @Override
     protected void initView() {
         mParentActivity.findViewById(R.id.tour_buy_send).setOnClickListener(this);
@@ -67,7 +69,6 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
 
         mTourBuyListView.setOnRefreshListener(mOnRefreshListener);
         mTourBuyListView.setOnItemClickListener(this);
-        getTravelData();
     }
 
     private OnRefreshListener mOnRefreshListener = new OnRefreshListener() {
@@ -105,6 +106,9 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 Log.d("游购列表返回：",response.toString());
+                if(travelModes.data != null && travelModes.data.size()>0) {
+                    travelModes.data.clear();
+                }
                 travelModes = JSON.parseObject(response.toString(),TravelResponse.class);
                 mTourBuyAdapter.flush(travelModes.data);
             }
@@ -124,6 +128,12 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onPause() {
         super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getTravelData();
     }
 
     @Override

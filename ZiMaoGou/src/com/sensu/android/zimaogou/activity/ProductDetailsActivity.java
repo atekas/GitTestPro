@@ -30,6 +30,7 @@ import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.external.umeng.share.UmengShare;
 import com.sensu.android.zimaogou.utils.HttpUtil;
+import com.sensu.android.zimaogou.utils.LogUtils;
 import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.sensu.android.zimaogou.utils.UiUtils;
 import com.sensu.android.zimaogou.widget.PullPushScrollView;
@@ -167,6 +168,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 mProductWebView.setVisibility(View.GONE);
                 mProductSpecificationListView.setVisibility(View.GONE);
                 listView.setVisibility(View.VISIBLE);
+
                 mProductDetailTextView.setTextColor(getResources().getColor(R.color.black_444444));
                 mProductSpecificationTextView.setTextColor(getResources().getColor(R.color.black_444444));
                 mProductCommentTextView.setTextColor(getResources().getColor(R.color.red));
@@ -180,7 +182,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
     }
 
     private void initViews() {
-        int productId = getIntent().getIntExtra(PRODUCT_ID, 25);
+        int productId = getIntent().getIntExtra(PRODUCT_ID, 39);
         int source = getIntent().getIntExtra(FROM_SOURCE, 1);
         getProductById(productId, source);
         mUmengShare = UmengShare.getInstance(this);
@@ -221,9 +223,6 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         findViewById(R.id.pay).setOnClickListener(this);
 
         listView = (ListView) findViewById(R.id.product_evaluate_list);
-        mProductEvaluateAdapter = new ProductEvaluateAdapter(this);
-        listView.setAdapter(mProductEvaluateAdapter);
-        listView.setVisibility(View.GONE);
 
 
         mProductDetailTextView.setOnClickListener(new MyOnClickListener(0));
@@ -315,16 +314,18 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
     }
 
     private void getProductById(int productId, int source) {
-        RequestParams requestParams = new RequestParams();
+        final RequestParams requestParams = new RequestParams();
         requestParams.put("id", productId);
         requestParams.put("source", source);
         HttpUtil.get(IConstants.sProduct_detail + productId, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
+                LogUtils.d("获取商品详情：",response.toString());
                 ProductDetailsResponse productDetailsResponse = JSON.parseObject(response.toString(), ProductDetailsResponse.class);
                 mProductDetailsResponse = productDetailsResponse;
                 layoutUi();
+
             }
 
             @Override
@@ -355,6 +356,11 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         });
         mProductWebView.loadUrl(mProductDetailsResponse.data.description);
         mProductWebView.setVisibility(View.VISIBLE);
+
+        mProductEvaluateAdapter = new ProductEvaluateAdapter(ProductDetailsActivity.this,mProductDetailsResponse.data.comment);
+        listView.setAdapter(mProductEvaluateAdapter);
+        listView.setVisibility(View.GONE);
+        mProductCommentTextView.setText("评价"+mProductDetailsResponse.data.comment.size());
     }
 
     private void addToCart() {

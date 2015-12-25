@@ -1,5 +1,8 @@
 package com.sensu.android.zimaogou.ReqResponse;
 
+import com.sensu.android.zimaogou.Mode.ProductCommentMode;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,6 +34,7 @@ public class ProductDetailsResponse extends BaseReqResponse {
         public List<ColorImage> color_image;
         public List spec_attr;
         public List spec;
+        public ArrayList<ProductCommentMode> comment;
     }
 
     public static class ColorImage {

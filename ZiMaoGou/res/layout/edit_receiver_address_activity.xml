@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/coupon_bg"
+        >
+
+    <RelativeLayout
+            android:id="@+id/title_layout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#f8f8f8">
+
+        <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dip_10"
+                android:layout_centerVertical="true"
+                android:src="@drawable/back"/>
+
+        <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black_444444"
+                android:layout_centerInParent="true"
+                android:textSize="@dimen/title_size"
+                android:text="填写物流"/>
+        <TextView
+                android:id="@+id/tv_function"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black_444444"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="18dp"
+                android:layout_alignBottom="@+id/tv_title"
+                android:textSize="@dimen/text_size_x_large"
+                android:text="激活"/>
+        <View android:layout_width="fill_parent"
+              android:layout_height="1px"
+              android:layout_alignParentBottom="true"
+              android:background="@color/title_line"/>
+    </RelativeLayout>
+    <View android:layout_width="match_parent" android:layout_height="1px" android:background="@color/title_line"/>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#f8fafb"
+                android:orientation="vertical"
+                android:paddingLeft="16dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="18dp">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_normal"
+                    android:textColor="@color/black_666666"
+                    android:text="请注明单号：2014325164615161，递送到如下地址"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_normal"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/black_444444"
+                    android:text="上海市杨浦区大学路292号301室"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_normal"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/black_444444"
+                    android:text="周先生 18516844658"/>
+
+
+        </LinearLayout>
+    <View android:layout_width="match_parent"
+          android:layout_height="1px"
+          android:background="@color/home_line"/>
+    <View android:layout_width="match_parent"
+          android:layout_marginTop="10dp"
+          android:layout_height="1px"
+          android:background="@color/home_line"/>
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:layout_height="45dp"
+            android:background="@drawable/drawable_me_click">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_big"
+                android:layout_centerVertical="true"
+                android:textColor="@color/black_444444"
+                android:text="请选择快递公司"/>
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/arrow_right"
+                />
+    </RelativeLayout>
+    <View android:layout_width="match_parent"
+          android:layout_height="1px"
+          android:background="@color/home_line"/>
+    <View android:layout_width="match_parent"
+          android:layout_marginTop="10dp"
+          android:layout_height="1px"
+          android:background="@color/home_line"/>
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:layout_height="45dp"
+            android:background="@drawable/drawable_me_click">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_big"
+                android:layout_centerVertical="true"
+                android:textColor="@color/black_444444"
+                android:text="请输入快递及单号"/>
+
+    </RelativeLayout>
+    <View android:layout_width="match_parent"
+          android:layout_height="1px"
+          android:background="@color/home_line"/>
+        <Button
+                android:id="@+id/tv_addAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/drawable_login_pressed"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="@dimen/dip_17"
+                android:layout_marginRight="@dimen/dip_17"
+                android:textSize="@dimen/text_size_18"
+                android:gravity="center"
+                android:textColor="@color/color_login_press"
+                android:text="提交"/>
+</LinearLayout>

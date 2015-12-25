@@ -8,9 +8,15 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import com.alibaba.fastjson.JSON;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.Mode.ProductMode;
 import com.sensu.android.zimaogou.Mode.StoreMode;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.ReqResponse.CommendProductResponse;
+import com.sensu.android.zimaogou.ReqResponse.ProductDetailsResponse;
 import com.sensu.android.zimaogou.activity.GoodShopActivity;
 import com.sensu.android.zimaogou.activity.ProductDetailsActivity;
 import com.sensu.android.zimaogou.activity.SpellOrderActivity;
@@ -18,7 +24,11 @@ import com.sensu.android.zimaogou.activity.SpellOrderDetailsActivity;
 import com.sensu.android.zimaogou.activity.tour.TourBuyDetailsActivity;
 import com.sensu.android.zimaogou.activity.tour.TourBuyDetailsAdapter;
 import com.sensu.android.zimaogou.utils.DisplayUtils;
+import com.sensu.android.zimaogou.utils.HttpUtil;
+import com.sensu.android.zimaogou.utils.LogUtils;
 import com.sensu.android.zimaogou.utils.PromptUtils;
+import org.apache.http.Header;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -33,6 +43,7 @@ public class HomeHorizontalLinearLayout extends LinearLayout implements AdapterV
     int mType = 1;//哪个部分调用 1，每日推荐 2，拼单特价，3.发现好店铺
     ArrayList<ProductMode> pros = new ArrayList<ProductMode>();//产品数组
     ArrayList<StoreMode> stors = new ArrayList<StoreMode>();//店铺数组
+    CommendProductResponse mCommendProduct = new CommendProductResponse();
     public HomeHorizontalLinearLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -101,13 +112,12 @@ public class HomeHorizontalLinearLayout extends LinearLayout implements AdapterV
                 linearParams.height = width/3 + DisplayUtils.dp2px(48);
                 mhListView.setLayoutParams(linearParams);
 //                mhListView.setPadding(0,0,DisplayUtils.dp2px(6),0);
-                mhListViewAdapter = new HorizontalListViewAdapter(getContext(),pros,Type);
-                mhListView.setAdapter(mhListViewAdapter);
+                getCommendProducts();
                 break;
             case 2://拼单特价
                 mTitle.setText(getResources().getText(R.string.group_special));
                 linearParams.height = DisplayUtils.dp2px(235);
-                mhListViewAdapter = new HorizontalListViewAdapter(getContext(),pros,Type);
+                mhListViewAdapter = new HorizontalListViewAdapter(getContext(),mCommendProduct.data,Type);
                 mhListView.setAdapter(mhListViewAdapter);
                 break;
             case 3://发现好店铺
@@ -153,5 +163,19 @@ public class HomeHorizontalLinearLayout extends LinearLayout implements AdapterV
                 }
                 break;
         }
+    }
+    private void getCommendProducts(){
+        final RequestParams requestParams = new RequestParams();
+        requestParams.put("tag","4");
+        HttpUtil.get(IConstants.sGoodList,requestParams,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                LogUtils.d("推荐好物返回：",response.toString());
+                mCommendProduct = JSON.parseObject(response.toString(), CommendProductResponse.class);
+                mhListViewAdapter = new HorizontalListViewAdapter(getContext(),mCommendProduct.data,mType);
+                mhListView.setAdapter(mhListViewAdapter);
+            }
+        });
     }
 }
