@@ -98,7 +98,7 @@ public class CartLinearLayout extends LinearLayout {
                     int productNum = Integer.parseInt(num);
                     if (productNum > 1) {
                         productNum--;
-                        changeNum(mCartDataGroup.data.get(position).id, String.valueOf(productNum), position);
+                        changeNum(mCartDataGroup.data.get(position).spec_id, String.valueOf(productNum), position);
                     }
                 }
             });
@@ -110,7 +110,7 @@ public class CartLinearLayout extends LinearLayout {
                     String num = ((EditText) childView.findViewById(R.id.et_productNum)).getText().toString();
                     int productNum = Integer.parseInt(num);
                     productNum++;
-                    changeNum(mCartDataGroup.data.get(position).id, String.valueOf(productNum), position);
+                    changeNum(mCartDataGroup.data.get(position).spec_id, String.valueOf(productNum), position);
                 }
             });
 
@@ -118,7 +118,7 @@ public class CartLinearLayout extends LinearLayout {
                 @Override
                 public void onClick(View view) {
                     PromptUtils.showToast("删除第" + position + "项");
-                    deleteProduct(mCartDataGroup.data.get(position).id, position);
+                    deleteProduct(mCartDataGroup.data.get(position).spec_id, position);
                 }
             });
 

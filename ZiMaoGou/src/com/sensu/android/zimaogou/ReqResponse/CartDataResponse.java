@@ -24,7 +24,7 @@ public class CartDataResponse extends BaseReqResponse {
 
     public static class CartDataChild {
         public String spec;
-        public String id;
+        public String spec_id;
         public String title;
         public String num;
         public String price;
@@ -32,6 +32,8 @@ public class CartDataResponse extends BaseReqResponse {
         public String deliver_address;
         public String image;
         public String real_num;
+        public String goods_id;
+        public String source;
 
         private boolean mIsSelect;
 
