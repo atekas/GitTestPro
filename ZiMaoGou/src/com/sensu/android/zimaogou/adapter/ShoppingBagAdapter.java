@@ -48,6 +48,14 @@ public class ShoppingBagAdapter extends SimpleBaseAdapter {
         notifyDataSetChanged();
     }
 
+    public void productIsEmpty(int i) {
+        int size = mCartDataResponse.data.get(i).data.size();
+        if (size == 0) {
+            mCartDataResponse.data.remove(i);
+        }
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount() {
         return mCartDataResponse == null ? 0 : mCartDataResponse.data.size();

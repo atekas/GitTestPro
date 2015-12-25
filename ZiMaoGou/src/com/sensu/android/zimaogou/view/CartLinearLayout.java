@@ -28,12 +28,15 @@ public class CartLinearLayout extends LinearLayout {
 
     //true 编辑状态    false 非编辑状态
     private boolean mIsEdit;
-    private View[] mViews;
 
     private CartDataResponse.CartDataGroup mCartDataGroup;
     private ShoppingBagAdapter mShoppingBagAdapter;
 
     private int mFlag;
+
+    private Button mSubmitBtm;
+    private TextView mSelectNum;
+    private TextView mSumPrice;
 
     public CartLinearLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -47,8 +50,6 @@ public class CartLinearLayout extends LinearLayout {
         mCartDataGroup = cartDataGroup;
         mIsEdit = isEdit;
         removeAllViews();
-        mViews = null;
-        mViews = new View[cartDataGroup.data.size()];
         for (int i = 0; i < cartDataGroup.data.size(); i++) {
             final View childView = LayoutInflater.from(getContext()).inflate(R.layout.shopping_list_child_item, null);
 
@@ -127,12 +128,19 @@ public class CartLinearLayout extends LinearLayout {
 
         View bottomView = LayoutInflater.from(getContext()).inflate(R.layout.shopping_cart_bottom, null);
 
-        bottomView.findViewById(R.id.bt_submit).setOnClickListener(new OnClickListener() {
+        mSubmitBtm = (Button) bottomView.findViewById(R.id.bt_submit);
+        mSelectNum = (TextView) bottomView.findViewById(R.id.product_count);
+        mSumPrice = (TextView) bottomView.findViewById(R.id.total_money);
+
+        mSubmitBtm.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                PromptUtils.showToast("去结算");
+                PromptUtils.showToast("点击了第" + mFlag + "的结算按钮");
             }
         });
+
+        mSelectNum.setText("已选商品" + getSelectNum() + "件");
+        mSumPrice.setText("¥" + getAllMoney());
 
         addView(bottomView);
     }
@@ -169,7 +177,7 @@ public class CartLinearLayout extends LinearLayout {
                 super.onSuccess(statusCode, headers, response);
                 //删除成功
                 mCartDataGroup.data.remove(position);
-                mShoppingBagAdapter.notifyDataSetChanged();
+                mShoppingBagAdapter.productIsEmpty(mFlag);
             }
 
             @Override
@@ -178,5 +186,27 @@ public class CartLinearLayout extends LinearLayout {
                 PromptUtils.showToast("删除失败");
             }
         });
+    }
+
+    private int getSelectNum() {
+        int num = 0;
+        for (CartDataResponse.CartDataChild cartDataChild : mCartDataGroup.data) {
+            if (cartDataChild.getIsSelect()) {
+                num += Integer.parseInt(cartDataChild.num);
+            }
+        }
+        return num;
+    }
+
+    private int getAllMoney() {
+        int allMoney = 0;
+        for (CartDataResponse.CartDataChild cartDataChild : mCartDataGroup.data) {
+            if (cartDataChild.getIsSelect()) {
+                int price = Integer.parseInt(cartDataChild.price);
+                int num = Integer.parseInt(cartDataChild.num);
+                allMoney += price * num;
+            }
+        }
+        return allMoney;
     }
 }
