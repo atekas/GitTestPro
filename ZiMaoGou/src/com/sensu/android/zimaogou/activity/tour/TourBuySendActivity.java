@@ -397,6 +397,28 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
                 travelTagModes = travelSendResponse.data.tag;
                 landModes = travelSendResponse.data.country;
 
+
+            }
+        });
+        HttpUtil.get(IConstants.sGetTravelTags, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                LogUtils.d("获取游购国家，标签", response.toString());
+                try {
+                    JSONArray data = response.getJSONArray("data");
+                    JSONObject item = null;
+                    for(int i = 0; i < data.length();i++){
+                        item = (JSONObject) data.get(i);
+                        TravelTagMode tagMode = new TravelTagMode();
+                        tagMode = JSON.parseObject(item.toString(),TravelTagMode.class);
+                        travelTagModes.add(tagMode);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
                 mTagListView.setTravelTagModes(travelTagModes);
             }
         });

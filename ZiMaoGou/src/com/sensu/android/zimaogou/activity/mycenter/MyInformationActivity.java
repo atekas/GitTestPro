@@ -90,6 +90,28 @@ public class MyInformationActivity extends BaseActivity {
     }
 
     /**
+     * 手机
+     * @param v
+     */
+    boolean bindPhone = true;//为了测试绑定手机号的两个页面
+    public void PhoneClick(View v){
+//        if(TextUtils.isEmpty(userInfo.getMobile())){
+//            startActivity(new Intent(this,BindPhoneActivity.class));
+//
+//        }else{
+//            startActivity(new Intent(this,UpdatePasswordActivity.class));
+//        }
+        if(bindPhone){
+            startActivity(new Intent(this,BindPhoneActivity.class));
+            bindPhone = !bindPhone;
+
+        }else{
+            startActivity(new Intent(this,UpdateBindPhoneActivity.class));
+            bindPhone = !bindPhone;
+        }
+
+    }
+    /**
      * 选择对话框
      */
     Dialog mSexChooseDialog;

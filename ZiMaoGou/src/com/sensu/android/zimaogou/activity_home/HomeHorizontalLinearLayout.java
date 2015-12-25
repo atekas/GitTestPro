@@ -16,6 +16,7 @@ import com.sensu.android.zimaogou.Mode.ProductMode;
 import com.sensu.android.zimaogou.Mode.StoreMode;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.CommendProductResponse;
+import com.sensu.android.zimaogou.ReqResponse.GroupBuyListResponse;
 import com.sensu.android.zimaogou.ReqResponse.ProductDetailsResponse;
 import com.sensu.android.zimaogou.activity.GoodShopActivity;
 import com.sensu.android.zimaogou.activity.ProductDetailsActivity;
@@ -23,6 +24,8 @@ import com.sensu.android.zimaogou.activity.SpellOrderActivity;
 import com.sensu.android.zimaogou.activity.SpellOrderDetailsActivity;
 import com.sensu.android.zimaogou.activity.tour.TourBuyDetailsActivity;
 import com.sensu.android.zimaogou.activity.tour.TourBuyDetailsAdapter;
+import com.sensu.android.zimaogou.external.greendao.helper.GDBaseHelper;
+import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.utils.DisplayUtils;
 import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.utils.LogUtils;
@@ -38,12 +41,14 @@ import java.util.ArrayList;
 public class HomeHorizontalLinearLayout extends LinearLayout implements AdapterView.OnItemClickListener, View.OnClickListener {
     HorizontalListView mhListView;
     HorizontalListViewAdapter mhListViewAdapter;
+    HomeGroupAdapter homeGroupAdapter;
     StoreHorizontalListViewAdapter mStoreListAdapter;
     TextView mTitle;
     int mType = 1;//哪个部分调用 1，每日推荐 2，拼单特价，3.发现好店铺
     ArrayList<ProductMode> pros = new ArrayList<ProductMode>();//产品数组
     ArrayList<StoreMode> stors = new ArrayList<StoreMode>();//店铺数组
     CommendProductResponse mCommendProduct = new CommendProductResponse();
+    GroupBuyListResponse mGroupProduct = new GroupBuyListResponse();
     public HomeHorizontalLinearLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -117,8 +122,7 @@ public class HomeHorizontalLinearLayout extends LinearLayout implements AdapterV
             case 2://拼单特价
                 mTitle.setText(getResources().getText(R.string.group_special));
                 linearParams.height = DisplayUtils.dp2px(235);
-                mhListViewAdapter = new HorizontalListViewAdapter(getContext(),mCommendProduct.data,Type);
-                mhListView.setAdapter(mhListViewAdapter);
+                getGroupProducts();
                 break;
             case 3://发现好店铺
                 mTitle.setText(getResources().getText(R.string.find_shop));
@@ -164,6 +168,10 @@ public class HomeHorizontalLinearLayout extends LinearLayout implements AdapterV
                 break;
         }
     }
+
+    /**
+     * 推荐好物
+     */
     private void getCommendProducts(){
         final RequestParams requestParams = new RequestParams();
         requestParams.put("tag","4");
@@ -172,11 +180,28 @@ public class HomeHorizontalLinearLayout extends LinearLayout implements AdapterV
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 LogUtils.d("推荐好物返回：",response.toString());
-                LogUtils.d("推荐好物返回：",response.toString());
                 mCommendProduct = JSON.parseObject(response.toString(), CommendProductResponse.class);
                 mhListViewAdapter = new HorizontalListViewAdapter(getContext(),mCommendProduct.data,mType);
                 mhListView.setAdapter(mhListViewAdapter);
             }
+        });
+    }
+
+    private void getGroupProducts(){
+
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("uid", GDUserInfoHelper.getInstance(getContext()).getUserInfo() == null?"0":GDUserInfoHelper.getInstance(getContext()).getUserInfo().getUid());
+        HttpUtil.get(IConstants.sTb_list,requestParams,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                LogUtils.d("拼单特价返回：",response.toString());
+                mGroupProduct = JSON.parseObject(response.toString(), GroupBuyListResponse.class);
+                homeGroupAdapter = new HomeGroupAdapter(getContext(),mGroupProduct.data);
+                mhListView.setAdapter(homeGroupAdapter);
+            }
+
+
         });
     }
 }

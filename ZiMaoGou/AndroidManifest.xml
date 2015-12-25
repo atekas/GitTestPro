@@ -164,6 +164,10 @@
 
         <activity android:name=".activity.mycenter.MessageActivity" android:screenOrientation="portrait" />
 
+        <activity android:name=".activity.mycenter.BindPhoneActivity" android:screenOrientation="portrait" />
+
+        <activity android:name=".activity.mycenter.UpdateBindPhoneActivity" android:screenOrientation="portrait" />
+
 
 
 

@@ -1,6 +1,7 @@
 package com.sensu.android.zimaogou.Mode;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by qi.yang on 2015/12/15.
@@ -13,7 +14,6 @@ public class TravelMode implements Serializable {
     private String avatar;
     private String category;
     private String country;
-    private String tag;
     private String media;
     private String content;
     private String like_num;
@@ -25,6 +25,7 @@ public class TravelMode implements Serializable {
     private String is_favorite;
     private String location;
 
+    private ArrayList<String> tag;
     public String getLocation() {
         return location;
     }
@@ -97,11 +98,12 @@ public class TravelMode implements Serializable {
         this.country = country;
     }
 
-    public String getTag() {
+
+    public ArrayList<String> getTag() {
         return tag;
     }
 
-    public void setTag(String tag) {
+    public void setTag(ArrayList<String> tag) {
         this.tag = tag;
     }
 

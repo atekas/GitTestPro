@@ -72,4 +72,6 @@
     <string name="edit_address">编辑收货地址</string>
     
     <string name="command_group_tip">你是团长哦，赶快招呼朋友们来参团吧</string>
+    <string name="bind_phone_tip1">为了及时收到系统通知和您的账户安全，请绑定手机号</string>
+    <string name="bind_phone_tip2">请设置登录密码，可用于手机账号登录</string>
 </resources>

@@ -219,6 +219,7 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
             if (requestCode == TAKE_PHOTO_CODE) {
                 PhotoInfo photoInfo = new PhotoInfo();
                 photoInfo.setPathPath("file://" + path);
+                photoInfo.setmUploadPath(path);
                 TourSendData.picDataList.add(photoInfo);
 
                 Intent intent = new Intent(mParentActivity, TourBuySendActivity.class);

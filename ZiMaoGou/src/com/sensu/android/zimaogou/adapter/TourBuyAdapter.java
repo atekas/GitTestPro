@@ -58,7 +58,12 @@ public class TourBuyAdapter extends SimpleBaseAdapter {
         ImageUtils.displayImage(travelModes.get(i).getAvatar(),viewHolder.img_userHead,ImageUtils.mHeadDefaultOptions);
         viewHolder.tv_userName.setText(travelModes.get(i).getName());
         viewHolder.tv_sendTime.setText(DateUtils.getTimeAgo(travelModes.get(i).getCreated_at()));
-        viewHolder.tv_marks.setText(travelModes.get(i).getCountry()+" "+travelModes.get(i).getTag());
+        String tag = "";
+        for(int j = 0; j <travelModes.get(i).getTag().size(); j++){
+            tag += " "+travelModes.get(i).getTag().get(j);
+        }
+
+        viewHolder.tv_marks.setText(travelModes.get(i).getCountry()+tag);
         viewHolder.tv_praiseCount.setText(travelModes.get(i).getLike_num());
         viewHolder.tv_reviewCount.setText(travelModes.get(i).getComment_num());
         viewHolder.tv_location.setText(travelModes.get(i).getLocation());

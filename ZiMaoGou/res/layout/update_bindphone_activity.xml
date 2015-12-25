@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/app_background_color">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white">
+
+        <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dip_10"
+                android:src="@drawable/back"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black_222222"
+                android:layout_centerInParent="true"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:text="绑定手机号"/>
+
+    </RelativeLayout>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/title_line"/>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:orientation="horizontal">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dip_20"
+                android:textSize="@dimen/text_size_15"
+                android:textColor="@color/black_666666"
+                android:text="当前手机号："/>
+
+        <TextView
+                android:id="@+id/tv_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_15"
+                android:textColorHint="@color/hint_color"
+                android:textColor="@color/black_666666"
+                android:text="15618850919"
+                />
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:visibility="gone"
+                    android:layout_width="@dimen/dip_60"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dip_20"
+                    android:textSize="@dimen/text_size_15"
+                    android:textColor="@color/black_222222"
+                    android:text="@string/phone_num"/>
+
+            <EditText
+                    android:id="@+id/input_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dip_20"
+                    android:textSize="@dimen/text_size_15"
+                    android:padding="@dimen/dip_10"
+                    android:layout_marginLeft="10dp"
+                    android:inputType="phone"
+                    android:hint="@string/please_input_phone"
+                    android:textColorHint="@color/hint_color"
+                    android:textColor="@color/black_222222"
+                    android:background="@null"/>
+
+        </LinearLayout>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="@dimen/dip_20"
+                android:layout_marginRight="@dimen/dip_20"
+                android:background="@color/home_line"/>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+
+            <TextView
+                    android:visibility="gone"
+                    android:layout_width="@dimen/dip_60"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dip_20"
+                    android:textSize="@dimen/text_size_15"
+                    android:textColor="@color/black_222222"
+                    android:text="@string/auth_code"/>
+
+            <EditText
+                    android:id="@+id/input_authCode"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/text_size_15"
+                    android:padding="@dimen/dip_10"
+                    android:layout_marginLeft="10dp"
+                    android:hint="@string/please_input_auth_code"
+                    android:textColorHint="@color/hint_color"
+                    android:textColor="@color/black_222222"
+                    android:background="@null"/>
+
+            <TextView
+                    android:id="@+id/get_auth_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dip_20"
+                    android:textSize="@dimen/text_size_13"
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/drawable_auth_code"
+                    android:textColor="@color/color_auth_code"
+                    android:text="@string/get_auth_code"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+            android:id="@+id/next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/drawable_login_pressed"
+            android:layout_marginLeft="@dimen/dip_17"
+            android:layout_marginRight="@dimen/dip_17"
+            android:layout_marginTop="@dimen/dip_20"
+            android:textSize="@dimen/text_size_17"
+            android:gravity="center"
+            android:textColor="@color/color_login_press"
+            android:text="保存"/>
+
+</LinearLayout>
