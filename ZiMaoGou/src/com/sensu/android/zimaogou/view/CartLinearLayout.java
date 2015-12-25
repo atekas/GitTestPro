@@ -4,15 +4,13 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.CartDataResponse;
+import com.sensu.android.zimaogou.adapter.ShoppingBagAdapter;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.HttpUtil;
@@ -23,7 +21,7 @@ import org.json.JSONObject;
 
 /**
  * Created by zhangwentao on 2015/12/24.
- *
+ * <p/>
  * 购物车子项
  */
 public class CartLinearLayout extends LinearLayout {
@@ -33,6 +31,9 @@ public class CartLinearLayout extends LinearLayout {
     private View[] mViews;
 
     private CartDataResponse.CartDataGroup mCartDataGroup;
+    private ShoppingBagAdapter mShoppingBagAdapter;
+
+    private int mFlag;
 
     public CartLinearLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -40,77 +41,88 @@ public class CartLinearLayout extends LinearLayout {
     }
 
     public void setCartGroup(CartDataResponse.CartDataGroup cartDataGroup, boolean isEdit
-            , ListView listView) {
+            , ListView listView, ShoppingBagAdapter shoppingBagAdapter, int flag) {
+        mFlag = flag;
+        mShoppingBagAdapter = shoppingBagAdapter;
         mCartDataGroup = cartDataGroup;
         mIsEdit = isEdit;
         removeAllViews();
         mViews = null;
         mViews = new View[cartDataGroup.data.size()];
         for (int i = 0; i < cartDataGroup.data.size(); i++) {
-            View view = LayoutInflater.from(getContext()).inflate(R.layout.shopping_list_child_item, null);
+            final View childView = LayoutInflater.from(getContext()).inflate(R.layout.shopping_list_child_item, null);
 
-            ImageUtils.displayImage(cartDataGroup.data.get(i).image, ((ImageView) view.findViewById(R.id.img_pro)));
-            ((TextView) view.findViewById(R.id.tv_productName)).setText(cartDataGroup.data.get(i).title);
-            ((TextView) view.findViewById(R.id.tv_productPrice)).setText("¥" + cartDataGroup.data.get(i).price);
-            ((TextView) view.findViewById(R.id.tv_productNum)).setText("x" + cartDataGroup.data.get(i).num);
-            ((TextView) view.findViewById(R.id.product_type))
+            ImageUtils.displayImage(cartDataGroup.data.get(i).image, ((ImageView) childView.findViewById(R.id.img_pro)));
+            ((TextView) childView.findViewById(R.id.tv_productName)).setText(cartDataGroup.data.get(i).title);
+            ((TextView) childView.findViewById(R.id.tv_productPrice)).setText("¥" + cartDataGroup.data.get(i).price);
+            ((TextView) childView.findViewById(R.id.tv_productNum)).setText("x" + cartDataGroup.data.get(i).num);
+            ((TextView) childView.findViewById(R.id.product_type))
                     .setText(cartDataGroup.data.get(i).spec);
+            ((EditText) childView.findViewById(R.id.et_productNum)).setText(cartDataGroup.data.get(i).num);
+            if (cartDataGroup.data.get(i).getIsSelect()) {
+                childView.findViewById(R.id.img_choose).setSelected(true);
+            } else {
+                childView.findViewById(R.id.img_choose).setSelected(false);
+            }
 
-            view.setId(i);
+            childView.setId(i);
             if (mIsEdit) {
                 //编辑状态
-                view.findViewById(R.id.rl_showType).setVisibility(GONE);
-                view.findViewById(R.id.ll_editNum).setVisibility(VISIBLE);
+                childView.findViewById(R.id.rl_showType).setVisibility(GONE);
+                childView.findViewById(R.id.ll_editNum).setVisibility(VISIBLE);
             } else {
-                view.findViewById(R.id.rl_showType).setVisibility(VISIBLE);
-                view.findViewById(R.id.ll_editNum).setVisibility(GONE);
-                //非编辑状态
-                if (cartDataGroup.getIsAllSelect()) {
-                    view.findViewById(R.id.img_choose).setSelected(true);
-                } else {
-                    view.findViewById(R.id.img_choose).setSelected(false);
-                }
+                childView.findViewById(R.id.rl_showType).setVisibility(VISIBLE);
+                childView.findViewById(R.id.ll_editNum).setVisibility(GONE);
             }
 
             final int position = i;
-            view.findViewById(R.id.img_choose).setOnClickListener(new OnClickListener() {
+            childView.findViewById(R.id.img_choose).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     PromptUtils.showToast("点击了" + position + "个选择");
                     if (mCartDataGroup.data.get(position).getIsSelect()) {
                         mCartDataGroup.data.get(position).setIsSelect(false);
-                        view.findViewById(R.id.img_choose).setSelected(false);
                     } else {
                         mCartDataGroup.data.get(position).setIsSelect(true);
-                        view.findViewById(R.id.img_choose).setSelected(true);
+                    }
+                    mShoppingBagAdapter.isAllSelect(mFlag);
+                }
+            });
+
+            childView.findViewById(R.id.bt_subtract).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PromptUtils.showToast("点击了第" + position + "项减号");
+                    String num = ((EditText) childView.findViewById(R.id.et_productNum)).getText().toString();
+                    int productNum = Integer.parseInt(num);
+                    if (productNum > 1) {
+                        productNum--;
+                        changeNum(mCartDataGroup.data.get(position).id, String.valueOf(productNum), position);
                     }
                 }
             });
 
-            view.findViewById(R.id.bt_subtract).setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    PromptUtils.showToast("点击了第" + position + "项减号");
-                }
-            });
-
-            view.findViewById(R.id.bt_add).setOnClickListener(new OnClickListener() {
+            childView.findViewById(R.id.bt_add).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     PromptUtils.showToast("点击了第" + position + "项加号");
+                    String num = ((EditText) childView.findViewById(R.id.et_productNum)).getText().toString();
+                    int productNum = Integer.parseInt(num);
+                    productNum++;
+                    changeNum(mCartDataGroup.data.get(position).id, String.valueOf(productNum), position);
                 }
             });
 
-            view.findViewById(R.id.delete).setOnClickListener(new OnClickListener() {
+            childView.findViewById(R.id.delete).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     PromptUtils.showToast("删除第" + position + "项");
-                    deleteProduct(mCartDataGroup.data.get(position).id);
+                    deleteProduct(mCartDataGroup.data.get(position).id, position);
                 }
             });
 
-            new FrontViewToMove(view.findViewById(R.id.content), listView);
-            addView(view);
+            new FrontViewToMove(childView.findViewById(R.id.content), listView);
+            addView(childView);
         }
 
         View bottomView = LayoutInflater.from(getContext()).inflate(R.layout.shopping_cart_bottom, null);
@@ -125,7 +137,7 @@ public class CartLinearLayout extends LinearLayout {
         addView(bottomView);
     }
 
-    private void changeNum(String id, String num) {
+    private void changeNum(String id, final String num, final int position) {
         UserInfo userInfo = GDUserInfoHelper.getInstance(getContext()).getUserInfo();
         RequestParams requestParams = new RequestParams();
         requestParams.put("uid", userInfo.getUid());
@@ -135,6 +147,8 @@ public class CartLinearLayout extends LinearLayout {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
+                mCartDataGroup.data.get(position).num = num;
+                mShoppingBagAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -144,20 +158,24 @@ public class CartLinearLayout extends LinearLayout {
         });
     }
 
-    private void deleteProduct(String id) {
+    private void deleteProduct(String id, final int position) {
         UserInfo userInfo = GDUserInfoHelper.getInstance(getContext()).getUserInfo();
         RequestParams requestParams = new RequestParams();
         requestParams.put("uid", userInfo.getUid());
         requestParams.put("id", id);
-        HttpUtil.postWithSign(userInfo.getToken(), IConstants.sCart + "/" + id+ "/delete", requestParams, new JsonHttpResponseHandler() {
+        HttpUtil.postWithSign(userInfo.getToken(), IConstants.sCart + "/" + id + "/delete", requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
+                //删除成功
+                mCartDataGroup.data.remove(position);
+                mShoppingBagAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
+                PromptUtils.showToast("删除失败");
             }
         });
     }

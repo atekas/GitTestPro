@@ -37,7 +37,7 @@
 
     </RelativeLayout>
 
-    <com.sensu.android.zimaogou.widget.RefreshListView
+    <ListView
             android:id="@+id/bag_goods_list"
             android:layout_above="@+id/rl_bottom"
             android:layout_alignParentTop="true"

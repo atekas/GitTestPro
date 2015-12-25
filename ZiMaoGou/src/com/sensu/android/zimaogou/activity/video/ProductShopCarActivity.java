@@ -44,7 +44,7 @@ public class ProductShopCarActivity extends BaseActivity implements View.OnClick
         mGoodsListView = (RefreshListView) findViewById(R.id.bag_goods_list);
         mBackImageView = (ImageView) findViewById(R.id.back);
 
-        mShoppingBagAdapter = new ShoppingBagAdapter(this);
+        mShoppingBagAdapter = new ShoppingBagAdapter(this, mGoodsListView);
         mGoodsListView.setAdapter(mShoppingBagAdapter);
         mGoodsListView.setOnRefreshListener(mOnRefreshListener);
 

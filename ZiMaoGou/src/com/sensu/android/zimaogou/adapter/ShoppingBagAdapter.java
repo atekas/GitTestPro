@@ -20,8 +20,9 @@ public class ShoppingBagAdapter extends SimpleBaseAdapter {
     public boolean mIsEditProduct;
     public ListView mListView;
 
-    public ShoppingBagAdapter(Context context) {
+    public ShoppingBagAdapter(Context context, ListView listView) {
         super(context);
+        mListView = listView;
     }
 
     public void setCartDataGroup(CartDataResponse cartDataResponse) {
@@ -34,8 +35,17 @@ public class ShoppingBagAdapter extends SimpleBaseAdapter {
         notifyDataSetChanged();
     }
 
-    public void setListView(ListView listView) {
-        mListView = listView;
+    public void isAllSelect(int i) {
+        CartDataResponse.CartDataGroup cartDataGroup = mCartDataResponse.data.get(i);
+        for (CartDataResponse.CartDataChild cartDataChild : cartDataGroup.data) {
+            if (cartDataChild.getIsSelect()) {
+                cartDataGroup.setIsAllSelect(true);
+            } else {
+                cartDataGroup.setIsAllSelect(false);
+                break;
+            }
+        }
+        notifyDataSetChanged();
     }
 
     @Override
@@ -58,6 +68,7 @@ public class ShoppingBagAdapter extends SimpleBaseAdapter {
         }
         //todo mGoodsOrderAdapter 只刷新数据
         final CartDataResponse.CartDataGroup cartDataGroup = mCartDataResponse.data.get(i);
+
         shoppingBagViewHolder.tv_warehouseName.setText(cartDataGroup.deliver_address);
 
         if (cartDataGroup.getIsAllSelect()) {
@@ -65,7 +76,8 @@ public class ShoppingBagAdapter extends SimpleBaseAdapter {
         } else {
             shoppingBagViewHolder.img_choose.setSelected(false);
         }
-        shoppingBagViewHolder.product_child.setCartGroup(cartDataGroup, mIsEditProduct, mListView);
+
+        shoppingBagViewHolder.product_child.setCartGroup(cartDataGroup, mIsEditProduct, mListView, this, i);
 
         shoppingBagViewHolder.img_choose.setOnClickListener(new View.OnClickListener() {
             @Override
