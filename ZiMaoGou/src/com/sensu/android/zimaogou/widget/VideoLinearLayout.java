@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,7 +32,7 @@ public class VideoLinearLayout extends LinearLayout {
     public VideoLinearLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
-
+    boolean isFirst = true;
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
@@ -144,6 +146,8 @@ public class VideoLinearLayout extends LinearLayout {
         mVideoView.setOnJjCompletionListener(new OnJjCompletionListener() {
             @Override
             public void onJjCompletion() {
+                isFirst = true;
+                mPlayImageView.setImageResource(R.drawable.video);
                 mCoverImageView.setVisibility(View.VISIBLE);
                 mPlayImageView.setVisibility(View.VISIBLE);
             }
@@ -158,10 +162,52 @@ public class VideoLinearLayout extends LinearLayout {
     }
 
     public void playing(){
-        mCoverImageView.setVisibility(View.GONE);
-        mPlayImageView.setVisibility(View.GONE);
-        mVideoView.setResourceVideo(mPlayUrl);
+        AlphaAnimation outAnimation = new AlphaAnimation(0.0f,1.0f);
+        outAnimation.setDuration(1000);
+        outAnimation.setStartOffset(500);
+        AlphaAnimation inAnimation = new AlphaAnimation(1.0f,0.0f);
+        outAnimation.setDuration(1000);
+        outAnimation.setStartOffset(500);
+        outAnimation.setAnimationListener(new RemoveAnimationListener());
+        inAnimation.setAnimationListener(new RemoveAnimationListener());
+        if(mVideoView.isPlaying()){
+            mVideoView.pause();
+            mPlayImageView.setImageResource(R.drawable.video);
+            mPlayImageView.setAlpha(1.0f);
+            mPlayImageView.startAnimation(outAnimation);
+        }else{
+            mVideoView.start();
+            mPlayImageView.setImageResource(R.drawable.video_stop);
+            mPlayImageView.startAnimation(inAnimation);
+        }
+
+        if(isFirst) {
+            mVideoView.setResourceVideo(mPlayUrl);
+            mPlayImageView.setImageResource(R.drawable.video_stop);
+            mPlayImageView.startAnimation(outAnimation);
+            mCoverImageView.setVisibility(View.GONE);
+            isFirst = false;
+        }
 
     }
 
+    private class RemoveAnimationListener implements Animation.AnimationListener {
+        // 动画效果执行完时remove
+        public void onAnimationEnd(Animation animation) {
+            System.out.println("onAnimationEnd");
+            if(mVideoView.isPlaying()){
+                mPlayImageView.setAlpha(0.0f);
+            }else{
+                mPlayImageView.setAlpha(1.0f);
+            }
+        }
+
+        public void onAnimationRepeat(Animation animation) {
+            System.out.println("onAnimationRepeat");
+        }
+
+        public void onAnimationStart(Animation animation) {
+            System.out.println("onAnimationStart");
+        }
+    }
 }
