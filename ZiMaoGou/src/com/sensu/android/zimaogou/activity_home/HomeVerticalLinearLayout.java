@@ -35,6 +35,8 @@ public class HomeVerticalLinearLayout extends LinearLayout implements AdapterVie
     TextView mTitle;
     ListView mListView;
 
+    private ThemeListResponse mThemeListResponse;
+
     private RecommendThemeAdapter mRecommendThemeAdapter;
     private CommendProductResponse mCommendProduct = new CommendProductResponse();
     public HomeVerticalLinearLayout(Context context, AttributeSet attrs) {
@@ -74,11 +76,24 @@ public class HomeVerticalLinearLayout extends LinearLayout implements AdapterVie
         switch (mType) {
             case 4:
                 PromptUtils.showToast("推荐专题");
-                getContext().startActivity(new Intent(getContext(), SpecialDetailsActivity.class));
+                if (mThemeListResponse == null) {
+                    return;
+                }
+                ThemeListResponse.ThemeListData themeListData = mThemeListResponse.data.get(i);
+                Intent intent = new Intent(getContext(), SpecialDetailsActivity.class);
+                intent.putExtra(SpecialActivity.THEME_TITLE, themeListData);
+                getContext().startActivity(intent);
                 break;
             case 5:
                 PromptUtils.showToast("推荐单品");
-                getContext().startActivity(new Intent(getContext(), ProductDetailsActivity.class));
+                if (mCommendProduct == null) {
+                    return;
+                }
+                CommendProductResponse.CommendProductMode commendProductMode = mCommendProduct.data.get(i);
+                Intent intent1 = new Intent(getContext(), ProductDetailsActivity.class);
+                intent1.putExtra(ProductDetailsActivity.PRODUCT_ID, commendProductMode.id);
+                intent1.putExtra(ProductDetailsActivity.FROM_SOURCE, "0");
+                getContext().startActivity(intent1);
                 break;
         }
     }
@@ -109,6 +124,7 @@ public class HomeVerticalLinearLayout extends LinearLayout implements AdapterVie
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 ThemeListResponse themeListResponse = JSON.parseObject(response.toString(), ThemeListResponse.class);
+                mThemeListResponse = themeListResponse;
                 mRecommendThemeAdapter.setThemeListResponse(themeListResponse);
                 UiUtils.setListViewHeightBasedOnChilds(mListView);
             }

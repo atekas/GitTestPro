@@ -71,7 +71,7 @@ public class HomeGrid extends LinearLayout {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), ProductListActivity.class);
-                    intent.putExtra(ProductListActivity.PRODUCT_LIST_CATEGORY, homeGridDataLeft.id);
+                    intent.putExtra(ProductListActivity.PRODUCT_LIST_TAG, homeGridDataLeft.id);
                     intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, homeGridDataLeft.name);
                     getContext().startActivity(intent);
                 }
@@ -87,7 +87,7 @@ public class HomeGrid extends LinearLayout {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), ProductListActivity.class);
-                    intent.putExtra(ProductListActivity.PRODUCT_LIST_CATEGORY, homeGridDataCenter.id);
+                    intent.putExtra(ProductListActivity.PRODUCT_LIST_TAG, homeGridDataCenter.id);
                     intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, homeGridDataCenter.name);
                     getContext().startActivity(intent);
                 }
