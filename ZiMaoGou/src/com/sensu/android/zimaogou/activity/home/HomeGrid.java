@@ -103,7 +103,7 @@ public class HomeGrid extends LinearLayout {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), ProductListActivity.class);
-                    intent.putExtra(ProductListActivity.PRODUCT_LIST_CATEGORY, homeGridDataRight.id);
+                    intent.putExtra(ProductListActivity.PRODUCT_LIST_TAG, homeGridDataRight.id);
                     intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, homeGridDataRight.name);
                     getContext().startActivity(intent);
                 }

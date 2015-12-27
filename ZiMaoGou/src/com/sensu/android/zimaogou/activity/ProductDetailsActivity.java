@@ -48,6 +48,9 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
     public static final String PRODUCT_ID = "product_id";
     public static final String FROM_SOURCE = "from_source";
 
+    private String mProductId;
+    private String mSource;
+
     private ScrollViewContainer mScrollViewContainer;
     private int mProductCount = 1;
     private UmengShare mUmengShare;
@@ -182,9 +185,11 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
     }
 
     private void initViews() {
-        int productId = getIntent().getIntExtra(PRODUCT_ID, 39);
-        int source = getIntent().getIntExtra(FROM_SOURCE, 1);
-        getProductById(productId, source);
+        mProductId = getIntent().getStringExtra(PRODUCT_ID);
+        mSource = getIntent().getStringExtra(FROM_SOURCE);
+        if (mProductId != null) {
+            getProductById(mProductId, mSource);
+        }
         mUmengShare = UmengShare.getInstance(this);
         mScrollViewContainer = (ScrollViewContainer) findViewById(R.id.scroll_view_container);
         mProductDetailTextView = (TextView) findViewById(R.id.tv_productDetail);
@@ -313,7 +318,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText(mProductDetailsResponse.data.price);
     }
 
-    private void getProductById(int productId, int source) {
+    private void getProductById(String productId, String source) {
         final RequestParams requestParams = new RequestParams();
         requestParams.put("id", productId);
         requestParams.put("source", source);
@@ -372,7 +377,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         RequestParams requestParams = new RequestParams();
 
         requestParams.put("uid", userInfo.getUid());
-        requestParams.put("source", "0");
+        requestParams.put("source", mSource);
         requestParams.put("num", "1");
         requestParams.put("spec_id", "37");
         HttpUtil.postWithSign(userInfo.getToken(), IConstants.sCart, requestParams, new JsonHttpResponseHandler() {

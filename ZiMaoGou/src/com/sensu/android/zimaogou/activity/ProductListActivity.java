@@ -33,6 +33,7 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
     private GridView mGridView;
     private ProductsDetailsAdapter mProductsDetailsAdapter;
     private boolean mIsNoTitle;
+    private ProductListResponse mProductListResponse;
 
     private String mTitle;
 
@@ -105,7 +106,11 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        startActivity(new Intent(this, ProductDetailsActivity.class));
+        ProductListResponse.ProductListData productListData = mProductListResponse.data.get(i);
+        Intent intent = new Intent(this, ProductDetailsActivity.class);
+        intent.putExtra(ProductDetailsActivity.PRODUCT_ID, productListData.id);
+        intent.putExtra(ProductDetailsActivity.FROM_SOURCE, "0");
+        startActivity(intent);
     }
 
     private void getProductList() {
@@ -121,6 +126,7 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 ProductListResponse productListResponse = JSON.parseObject(response.toString(), ProductListResponse.class);
+                mProductListResponse = productListResponse;
                 mProductsDetailsAdapter.setProductList(productListResponse);
             }
 

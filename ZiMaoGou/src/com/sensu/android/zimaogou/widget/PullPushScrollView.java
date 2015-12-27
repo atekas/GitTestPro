@@ -8,10 +8,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.ProductDetailsResponse;
 import com.sensu.android.zimaogou.adapter.ViewPagerAdapter;
+import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
+import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
+import com.sensu.android.zimaogou.utils.HttpUtil;
+import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.sensu.android.zimaogou.view.PhotoView;
+import org.apache.http.Header;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,9 +60,9 @@ public class PullPushScrollView extends ScrollView implements View.OnClickListen
             findViewById(R.id.sale_title).setVisibility(VISIBLE);
             ((TextView) findViewById(R.id.sale_title)).setText(productDetailData.sale_title);
         }
-        if (productDetailData.is_favorite.equals("0")) {
+        if (productDetailData.favorite_id.equals("0")) {
             findViewById(R.id.is_collect).setSelected(false);
-        } else if (productDetailData.is_favorite.equals("1")) {
+        } else {
             findViewById(R.id.is_collect).setSelected(true);
         }
 
@@ -84,10 +93,10 @@ public class PullPushScrollView extends ScrollView implements View.OnClickListen
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.is_collect:
-                if (mProductDetailData.is_favorite.equals("0")) {
-                    //TODO 进行收藏
-                } else if (mProductDetailData.is_favorite.equals("1")) {
-                    //todo 取消收藏
+                if (mProductDetailData.favorite_id.equals("0")) {
+                    addGoodsToCollect();
+                } else {
+                    deleteGoodsCollect();
                 }
                 break;
         }
@@ -106,5 +115,47 @@ public class PullPushScrollView extends ScrollView implements View.OnClickListen
     @Override
     public void onPageScrollStateChanged(int i) {
 
+    }
+
+    private void addGoodsToCollect() {
+        UserInfo userInfo = GDUserInfoHelper.getInstance(getContext()).getUserInfo();
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("gid", mProductDetailData.id);
+        requestParams.put("uid", userInfo.getUid());
+        HttpUtil.postWithSign(userInfo.getToken(), IConstants.sGoodsCollect, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                PromptUtils.showToast("收藏成功");
+                findViewById(R.id.is_collect).setSelected(true);
+                mProductDetailData.favorite_id = "1";
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
+    }
+
+    private void deleteGoodsCollect() {
+        UserInfo userInfo = GDUserInfoHelper.getInstance(getContext()).getUserInfo();
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("id", mProductDetailData.favorite_id);
+        requestParams.put("uid", userInfo.getUid());
+        HttpUtil.postWithSign(userInfo.getToken(), IConstants.sGoodsCollect + "/" + mProductDetailData.id + "/delete", requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                PromptUtils.showToast("取消收藏成功");
+                findViewById(R.id.is_collect).setSelected(false);
+                mProductDetailData.favorite_id = "0";
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
     }
 }

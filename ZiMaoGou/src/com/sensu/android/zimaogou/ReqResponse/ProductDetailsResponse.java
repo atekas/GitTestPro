@@ -18,7 +18,7 @@ public class ProductDetailsResponse extends BaseReqResponse {
         public String deliver_address;
         public String origin;
         public String price_market;
-        public String is_favorite;
+        public String favorite_id;
         public String id;
         public String category;
         public String rate;
@@ -32,8 +32,8 @@ public class ProductDetailsResponse extends BaseReqResponse {
         public MediaData media;
         public List<NormalSpec> normal_spec;
         public List<ColorImage> color_image;
-        public List spec_attr;
-        public List spec;
+        public List<SpecAttr> spec_attr;
+        public List<Spec> spec;
         public ArrayList<ProductCommentMode> comment;
     }
 
@@ -53,5 +53,22 @@ public class ProductDetailsResponse extends BaseReqResponse {
         public String video;
         public String cover;
         public List<String> image;
+    }
+
+    public static class SpecAttr {
+        public String cn;
+        public String en;
+    }
+
+    public static class Spec {
+        public String id;
+        public String source;
+        public String capacity;
+        public String color;
+        public String size;
+        public String price;
+        public String price_market;
+        public String num;
+        public String seller_no;
     }
 }

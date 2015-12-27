@@ -33,6 +33,7 @@ public class IConstants {
     //商品详情
     public static final String sProduct_detail = "goods/";
     public static final String sGoodTheme = "goods/theme";
+    public static final String sGoodsCollect = "goods/favorite";
 
     //游购列表
     public static final String sGetTravelList = "travel/list";
