@@ -1,13 +1,19 @@
 package com.sensu.android.zimaogou.activity.tour;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.*;
 import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.Mode.CommentMode;
 import com.sensu.android.zimaogou.Mode.TravelMode;
@@ -18,7 +24,9 @@ import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.external.umeng.share.UmengShare;
 import com.sensu.android.zimaogou.utils.*;
+import com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout;
 import com.sensu.android.zimaogou.widget.RoundImageView;
+import com.sensu.android.zimaogou.widget.VideoLinearLayout;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -36,7 +44,7 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
     private ListView mTourDetailsListView;
     private TourBuyDetailsAdapter mTourBuyDetailsAdapter;
     private UmengShare mUmengShare;
-    private LinearLayout mLikeUsersLinearLayout;
+    private LinearLayout mLikeUsersLinearLayout,mImageLinearLayout;
     private View mHeaderView;
     private RelativeLayout mBottomRelativeLayout;
     private Button mCommentSureButton, mCloseButton;
@@ -46,6 +54,8 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
     private RoundImageView mUserHeadPicImageView;
     ArrayList<UserInfo> likeUsers = new ArrayList<UserInfo>();
     ArrayList<CommentMode> commentModes = new ArrayList<CommentMode>();
+    private FixedAspectRatioFrameLayout mVideoFrameLayout;
+    private VideoLinearLayout mVideoLinearLayout;
     UserInfo userInfo;
     boolean isLike = false;
     boolean isFavorite = false;
@@ -84,6 +94,12 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
         mBrowsersTextView = (TextView) mHeaderView.findViewById(R.id.tv_browsers);
         mContentTextView = (TextView) mHeaderView.findViewById(R.id.content_text);
         mUserHeadPicImageView = (RoundImageView) mHeaderView.findViewById(R.id.user_head_pic);
+
+        mVideoFrameLayout = (FixedAspectRatioFrameLayout) mHeaderView.findViewById(R.id.video_frameLayout);
+        mImageLinearLayout = (LinearLayout) mHeaderView.findViewById(R.id.ll_img);
+        mVideoLinearLayout = (VideoLinearLayout) mHeaderView.findViewById(R.id.ll_video);
+        mVideoFrameLayout.setVisibility(View.GONE);
+        mImageLinearLayout.setVisibility(View.GONE);
 
 
         mTourDetailsListView.addHeaderView(mHeaderView);
@@ -347,6 +363,53 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
                 mCityTextView.setText(travelMode.getLocation());
                 mBrowsersTextView.setText(travelMode.getBrowser_num()+"人看过");
                 mContentTextView.setText(travelMode.getContent());
+
+                if(travelMode.getCategory().equals("2")){
+                    mVideoFrameLayout.setVisibility(View.VISIBLE);
+                    mImageLinearLayout.setVisibility(View.GONE);
+                    mVideoLinearLayout.setURL(travelMode.getMedia().cover,travelMode.getMedia().video);
+                }else{
+                    mVideoFrameLayout.setVisibility(View.GONE);
+                    mImageLinearLayout.setVisibility(View.VISIBLE);
+                    for(int i = 0; i < travelMode.getMedia().image.size(); i++){
+                        View v = LayoutInflater.from(TourBuyDetailsActivity.this ).inflate(R.layout.tour_details_header_img_item,null);
+                        final ImageView imageView = (ImageView) v.findViewById(R.id.content_pic);
+                        ImageLoader.getInstance().displayImage(travelMode.getMedia().image.get(i), imageView, new ImageLoadingListener() {
+                            @Override
+                            public void onLoadingStarted(String imageUri, View view) {
+
+                            }
+
+                            @Override
+                            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+                            }
+
+                            @Override
+                            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                            // TODO Auto-generated method stub
+
+                                DisplayMetrics metric = new DisplayMetrics();
+                                getWindowManager().getDefaultDisplay().getMetrics(metric);
+                                int pxWidth = metric.widthPixels;
+                                float ratio = (float)pxWidth/(float)loadedImage.getWidth();
+                                float imageHeight = loadedImage.getHeight()*ratio;
+
+                                ViewGroup.LayoutParams lp = imageView.getLayoutParams();
+                                lp.width = pxWidth;
+                                lp.height = (int)imageHeight;
+                                imageView.setLayoutParams(lp);
+                            }
+
+                            @Override
+                            public void onLoadingCancelled(String imageUri, View view) {
+
+                            }
+                        });
+                        mImageLinearLayout.addView(v);
+                    }
+
+                }
             }
         });
     }

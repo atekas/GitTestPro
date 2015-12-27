@@ -97,8 +97,14 @@
                     android:background="@color/home_line"
                     android:layout_alignParentBottom="true"/>
         </RelativeLayout>
-        <RelativeLayout android:layout_width="match_parent" android:layout_height="@dimen/dip_50">
-            <TextView android:layout_width="match_parent"
+        <RelativeLayout
+                android:onClick="ChooseAddressClick"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dip_50"
+                android:background="@drawable/drawable_me_click">
+            <TextView
+                    android:id="@+id/tv_province"
+                    android:layout_width="match_parent"
                       android:layout_height="match_parent"
                       android:textSize="@dimen/text_size_large"
                       android:textColor="@color/black_333333"

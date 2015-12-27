@@ -14,7 +14,7 @@ public class TravelMode implements Serializable {
     private String avatar;
     private String category;
     private String country;
-    private String media;
+    private TravelMedia media;
     private String content;
     private String like_num;
     private String comment_num;
@@ -26,6 +26,11 @@ public class TravelMode implements Serializable {
     private String location;
 
     private ArrayList<String> tag;
+    public class TravelMedia implements Serializable{
+        public String video;
+        public String cover;
+        public ArrayList<String> image = new ArrayList<String>();
+    }
     public String getLocation() {
         return location;
     }
@@ -107,11 +112,11 @@ public class TravelMode implements Serializable {
         this.tag = tag;
     }
 
-    public String getMedia() {
+    public TravelMedia getMedia() {
         return media;
     }
 
-    public void setMedia(String media) {
+    public void setMedia(TravelMedia media) {
         this.media = media;
     }
 

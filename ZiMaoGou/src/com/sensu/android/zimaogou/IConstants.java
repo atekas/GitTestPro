@@ -54,7 +54,8 @@ public class IConstants {
     public static final String sGetTravelTags = "travel/taglist";
     //发布游购
     public static final String sSendTravel = "travel";
-
+    //获取城市
+    public static final String sGetProvinceAndCity = "conf/city";
     //团购
     public static final String sTb_list = "tb/list";
     public static final String sJoin_group = "tb/join";

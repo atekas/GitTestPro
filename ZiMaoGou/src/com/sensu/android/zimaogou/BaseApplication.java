@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
 import android.widget.Toast;
+import com.sensu.android.zimaogou.Mode.ProvinceMode;
 import com.sensu.android.zimaogou.external.greendao.dao.DaoMaster;
 import com.sensu.android.zimaogou.external.greendao.dao.DaoSession;
 import com.sensu.android.zimaogou.handler.CustomNotificationHandler;
@@ -42,10 +43,11 @@ public class BaseApplication extends Application {
 
     private static final String TAG = BaseApplication.class.getName();
     private PushAgent mPushAgent;
+    public static ProvinceMode mChooseAddress ;
     @Override
     public void onCreate() {
         super.onCreate();
-
+        mChooseAddress = new ProvinceMode();
         mBaseApplication = this;
 
         // /storage/emulated/0/general/
@@ -66,7 +68,6 @@ public class BaseApplication extends Application {
 
         DisplayUtils.init(this);
         PromptUtils.init(this);
-
 //        TelephoneInfoUtils.init(this);
 //        WiFiInfoUtils.init(this);
 //        NetworkTypeUtils.init(this);
@@ -157,7 +158,16 @@ public class BaseApplication extends Application {
         mPushAgent.setNotificationClickHandler(notificationClickHandler);
 
     }
+    public static void setChooseProvince(ProvinceMode provinceMode){
+        mChooseAddress.data = provinceMode.data;
+        mChooseAddress.setName(provinceMode.getName());
+        mChooseAddress.setId(provinceMode.getId());
+        mChooseAddress = provinceMode;
+    }
+    public static ProvinceMode getChooseProvince(){
 
+        return mChooseAddress;
+    }
     public static String getStr(int resId) {
         return mBaseApplication.getString(resId);
     }

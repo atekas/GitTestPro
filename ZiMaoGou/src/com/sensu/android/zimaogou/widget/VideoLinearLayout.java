@@ -5,10 +5,14 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import cn.com.video.venvy.param.*;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.utils.ImageUtils;
+import com.sensu.android.zimaogou.utils.PromptUtils;
+import com.sensu.android.zimaogou.utils.TextUtils;
 
 /**
  * 视频播放
@@ -20,6 +24,9 @@ public class VideoLinearLayout extends LinearLayout {
     private TextView mLoadBufferTextView;// //
     private View mLoadView;// /
     private TextView mLoadText;// /
+    private ImageView mCoverImageView,mPlayImageView;
+    private String mCoverUrl = "";
+    private String mPlayUrl = "";
     public VideoLinearLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -33,6 +40,18 @@ public class VideoLinearLayout extends LinearLayout {
         mLoadText = (TextView) findViewById(R.id.sdk_ijk_progress_bar_text);
         mLoadBufferView = findViewById(R.id.sdk_load_layout);
         mLoadBufferTextView = (TextView) findViewById(R.id.sdk_sdk_ijk_load_buffer_text);
+        mCoverImageView = (ImageView) findViewById(R.id.img_cover);
+        mPlayImageView = (ImageView) findViewById(R.id.img_play);
+        mPlayImageView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(TextUtils.isEmpty(mPlayUrl)){
+                    PromptUtils.showToast("视频地址为空");
+                    return;
+                }
+                playing();
+            }
+        });
         // mVideoView.setMediaController(new
         // UsetMediaContoller(this));//用户自定义控制器
 
@@ -122,6 +141,27 @@ public class VideoLinearLayout extends LinearLayout {
          */
         mVideoView.setVideoJjSeekToTime(Long.valueOf(20000));
         mVideoView.setVideoJjTitle("测试视频");
-        mVideoView.setResourceVideo("http://wsv.videojj.com/haoyigou_ctrd.mp4");
+        mVideoView.setOnJjCompletionListener(new OnJjCompletionListener() {
+            @Override
+            public void onJjCompletion() {
+                mCoverImageView.setVisibility(View.VISIBLE);
+                mPlayImageView.setVisibility(View.VISIBLE);
+            }
+        });
+//        mVideoView.setResourceVideo("http://wsv.videojj.com/haoyigou_ctrd.mp4");
     }
+
+    public void setURL(String coverImageUrl,String videoUrl){
+        mCoverUrl = coverImageUrl;
+        mPlayUrl = videoUrl;
+        ImageUtils.displayImage(coverImageUrl,mCoverImageView);
+    }
+
+    public void playing(){
+        mCoverImageView.setVisibility(View.GONE);
+        mPlayImageView.setVisibility(View.GONE);
+        mVideoView.setResourceVideo(mPlayUrl);
+
+    }
+
 }

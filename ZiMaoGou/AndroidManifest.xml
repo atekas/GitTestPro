@@ -168,8 +168,11 @@
 
         <activity android:name=".activity.mycenter.UpdateBindPhoneActivity" android:screenOrientation="portrait" />
 
+        <activity android:name=".activity.mycenter.ChooseProvinceActivity" android:screenOrientation="portrait" />
 
+        <activity android:name=".activity.mycenter.ChooseCityActivity" android:screenOrientation="portrait" />
 
+        <activity android:name=".activity.mycenter.ChooseDistrictActivity" android:screenOrientation="portrait" />
 
 
 

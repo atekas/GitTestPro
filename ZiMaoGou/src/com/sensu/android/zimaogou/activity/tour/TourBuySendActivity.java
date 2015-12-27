@@ -217,6 +217,7 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
                         public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                             super.onFailure(statusCode, headers, responseString, throwable);
                             mIsUpload = false;
+                            PromptUtils.showToast("上传图片出错");
                         }
                     });
                 }

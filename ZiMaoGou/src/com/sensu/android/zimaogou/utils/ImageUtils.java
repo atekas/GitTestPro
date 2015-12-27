@@ -3,15 +3,21 @@ package com.sensu.android.zimaogou.utils;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
+import com.sensu.android.zimaogou.BaseApplication;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.activity.BaseActivity;
 
 /**
  * Created by zhangwentao on 2015/11/4.
@@ -131,4 +137,6 @@ public class ImageUtils {
         }
         ImageLoader.getInstance().displayImage(uri, imageView, displayImageOptions, imageLoadingListener, imageLoadingProgressListener);
     }
+
+
 }
