@@ -79,41 +79,56 @@
                         android:layout_height="wrap_content">
 
                     <TextView
+                            android:id="@+id/type_color"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
                             android:layout_marginBottom="12dp"
                             android:textSize="@dimen/text_size_big"
                             android:textColor="@color/black_222222"
-                            android:text="类型"/>
+                            android:text="颜色"/>
 
                     <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                        <TextView
-                                android:id="@+id/type_1"
-                                android:layout_width="wrap_content"
+                        <com.sensu.android.zimaogou.widget.ProductTypeListView
+                                xmlns:f="http://schemas.android.com/apk/res-auto"
+                                android:id="@+id/product_type_color"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:padding="8dp"
-                                android:gravity="center"
-                                android:background="@drawable/drawable_choose_product_border"
-                                android:textColor="@color/color_choose_product_text_color"
-                                android:textSize="14sp"
-                                android:text="魔力紫"/>
+                                android:paddingTop="0dp"
+                                f:horizontalSpacing="8dp"
+                                f:orientation="horizontal"
+                                f:verticalSpacing="8dp"/>
 
-                        <TextView
-                                android:id="@+id/type_2"
-                                android:layout_width="wrap_content"
+                    </LinearLayout>
+
+                    <TextView
+                            android:id="@+id/type_size"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="12dp"
+                            android:textSize="@dimen/text_size_big"
+                            android:textColor="@color/black_222222"
+                            android:text="大小"/>
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                        <com.sensu.android.zimaogou.widget.ProductTypeListView
+                                xmlns:f="http://schemas.android.com/apk/res-auto"
+                                android:id="@+id/product_type_size"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:padding="8dp"
-                                android:layout_marginLeft="10dp"
-                                android:gravity="center"
-                                android:background="@drawable/drawable_choose_product_border"
-                                android:textColor="@color/color_choose_product_text_color"
-                                android:textSize="14sp"
-                                android:text="宝石蓝"/>
+                                android:paddingTop="0dp"
+                                f:horizontalSpacing="8dp"
+                                f:orientation="horizontal"
+                                f:verticalSpacing="8dp"/>
 
                     </LinearLayout>
 

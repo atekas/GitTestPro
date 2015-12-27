@@ -20,6 +20,7 @@ import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.IConstants;
+import com.sensu.android.zimaogou.Mode.ProductTypeModel;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.ProductDetailsResponse;
 import com.sensu.android.zimaogou.activity.login.LoginActivity;
@@ -29,15 +30,16 @@ import com.sensu.android.zimaogou.adapter.ProductSpecificationAdapter;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.external.umeng.share.UmengShare;
-import com.sensu.android.zimaogou.utils.HttpUtil;
-import com.sensu.android.zimaogou.utils.LogUtils;
-import com.sensu.android.zimaogou.utils.PromptUtils;
-import com.sensu.android.zimaogou.utils.UiUtils;
+import com.sensu.android.zimaogou.utils.*;
+import com.sensu.android.zimaogou.widget.ProductTypeListView;
 import com.sensu.android.zimaogou.widget.PullPushScrollView;
 import com.sensu.android.zimaogou.widget.ScrollViewContainer;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import org.apache.http.Header;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by zhangwentao on 2015/11/20.
@@ -59,14 +61,15 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
     private int currIndex = 0;// 对应不同的Tab
     private int bmpW;//Image的宽度
     private ImageView mCursorImageView;
-    private TextView mProductDetailTextView,mProductSpecificationTextView,mProductCommentTextView;
-    private ListView listView,mProductSpecificationListView;
+    private TextView mProductDetailTextView, mProductSpecificationTextView, mProductCommentTextView;
+    private ListView listView, mProductSpecificationListView;
     private WebView mProductWebView;
 
     private ProductSpecificationAdapter mProductSpecificationAdapter;
     private ProductEvaluateAdapter mProductEvaluateAdapter;
 
     private ProductDetailsResponse mProductDetailsResponse;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +81,6 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
 
     /**
      * 初始化cursor
-     *
      */
     private void InitImageView() {
         bmpW = BitmapFactory.decodeResource(getResources(), R.drawable.spell_order_title)
@@ -109,13 +111,12 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
             startAnimation(index);
         }
     }
-    /***
-     *
+
+    /**
      * cursor动画
-     *
      */
 
-    private void startAnimation(int index){
+    private void startAnimation(int index) {
         if (index == currIndex) {
             return;
         }
@@ -135,7 +136,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                     animation = new TranslateAnimation(one, 0, 0, 0);
 
                 }
-                if(currIndex == 2){
+                if (currIndex == 2) {
                     animation = new TranslateAnimation(two, 0, 0, 0);
                 }
                 mProductWebView.setVisibility(View.VISIBLE);
@@ -150,7 +151,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                     animation = new TranslateAnimation(0, one, 0, 0);
 
                 }
-                if(currIndex == 2){
+                if (currIndex == 2) {
                     animation = new TranslateAnimation(two, one, 0, 0);
                 }
                 mProductWebView.setVisibility(View.GONE);
@@ -165,7 +166,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                     animation = new TranslateAnimation(0, two, 0, 0);
 
                 }
-                if(currIndex == 1){
+                if (currIndex == 1) {
                     animation = new TranslateAnimation(one, two, 0, 0);
                 }
                 mProductWebView.setVisibility(View.GONE);
@@ -264,14 +265,6 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
 //                mChooseDialog.dismiss();
                 addToCart();
                 break;
-            case R.id.type_1:
-                mChooseDialog.findViewById(R.id.type_1).setSelected(true);
-                mChooseDialog.findViewById(R.id.type_2).setSelected(false);
-                break;
-            case R.id.type_2:
-                mChooseDialog.findViewById(R.id.type_1).setSelected(false);
-                mChooseDialog.findViewById(R.id.type_2).setSelected(true);
-                break;
             case R.id.bt_subtract:
                 if (mProductCount > 1) {
                     mProductCount--;
@@ -290,12 +283,14 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 break;
         }
     }
+
     /**
      * 选择型号和颜色
      */
     Dialog mChooseDialog;
-    public void ChooseTypeAndColorClick(View v){
-        mChooseDialog = new Dialog(this,R.style.dialog);
+
+    public void ChooseTypeAndColorClick(View v) {
+        mChooseDialog = new Dialog(this, R.style.dialog);
         mChooseDialog.setCancelable(true);
         mChooseDialog.setContentView(R.layout.product_details_choose_dialog);
         WindowManager m = getWindowManager();
@@ -303,19 +298,88 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
 
         Display d = m.getDefaultDisplay(); // 获取屏幕宽、高用
         WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 获取对话框当前的参数值
-        p.width = (int) d.getWidth() ; // 宽度设置为屏幕
+        p.width = (int) d.getWidth(); // 宽度设置为屏幕
         dialogWindow.setAttributes(p);
         mChooseDialog.show();
 
         mChooseDialog.findViewById(R.id.cancel).setOnClickListener(this);
-        mChooseDialog.findViewById(R.id.type_1).setSelected(true);
-        mChooseDialog.findViewById(R.id.type_2).setSelected(false);
         mChooseDialog.findViewById(R.id.sure).setOnClickListener(this);
-        mChooseDialog.findViewById(R.id.type_1).setOnClickListener(this);
-        mChooseDialog.findViewById(R.id.type_2).setOnClickListener(this);
         mChooseDialog.findViewById(R.id.bt_subtract).setOnClickListener(this);
         mChooseDialog.findViewById(R.id.bt_add).setOnClickListener(this);
-        ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText(mProductDetailsResponse.data.price);
+        ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText("¥" + mProductDetailsResponse.data.price);
+
+        setColor();
+        setSize();
+    }
+
+    private void setColor() {
+        List<ProductTypeModel> productTypeModels = new ArrayList<ProductTypeModel>();
+        for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
+
+            if (productTypeModels.size() == 0) {
+                ProductTypeModel productTypeModel1 = new ProductTypeModel();
+                productTypeModel1.setIsSelect(false);
+
+                if (Integer.parseInt(spec.num) > 1) {
+                    productTypeModel1.setEnable(true);
+                }
+
+                productTypeModel1.setTypeName(spec.color);
+                productTypeModels.add(productTypeModel1);
+            } else {
+                for (ProductTypeModel productTypeModel : productTypeModels) {
+                    if (productTypeModel.getTypeName().equals(spec.color)) {
+                        break;
+                    } else {
+                        ProductTypeModel productTypeModel1 = new ProductTypeModel();
+                        productTypeModel1.setIsSelect(false);
+
+                        if (Integer.parseInt(spec.num) > 1) {
+                            productTypeModel1.setEnable(true);
+                        }
+
+                        productTypeModel1.setTypeName(spec.color);
+                        productTypeModels.add(productTypeModel1);
+                    }
+                }
+            }
+        }
+        ((ProductTypeListView) mChooseDialog.findViewById(R.id.product_type_color)).setTypeData(productTypeModels);
+    }
+
+    private void setSize() {
+        List<ProductTypeModel> productTypeModels = new ArrayList<ProductTypeModel>();
+        for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
+
+            if (productTypeModels.size() == 0) {
+                ProductTypeModel productTypeModel1 = new ProductTypeModel();
+                productTypeModel1.setIsSelect(false);
+
+                if (Integer.parseInt(spec.num) > 1) {
+                    productTypeModel1.setEnable(true);
+                }
+
+                productTypeModel1.setTypeName(spec.size);
+                productTypeModels.add(productTypeModel1);
+            } else {
+                for (ProductTypeModel productTypeModel : productTypeModels) {
+                    if (productTypeModel.getTypeName().equals(spec.size)) {
+                        break;
+                    } else {
+                        ProductTypeModel productTypeModel1 = new ProductTypeModel();
+                        productTypeModel1.setIsSelect(false);
+
+                        if (Integer.parseInt(spec.num) > 1) {
+                            productTypeModel1.setEnable(true);
+                        }
+
+                        productTypeModel1.setTypeName(spec.size);
+                        productTypeModels.add(productTypeModel1);
+                    }
+                }
+            }
+        }
+        ((ProductTypeListView) mChooseDialog.findViewById(R.id.product_type_size)).setTypeData(productTypeModels);
     }
 
     private void getProductById(String productId, String source) {
@@ -326,7 +390,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                LogUtils.d("获取商品详情：",response.toString());
+                LogUtils.d("获取商品详情：", response.toString());
                 ProductDetailsResponse productDetailsResponse = JSON.parseObject(response.toString(), ProductDetailsResponse.class);
                 mProductDetailsResponse = productDetailsResponse;
                 layoutUi();
@@ -362,10 +426,10 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         mProductWebView.loadUrl(mProductDetailsResponse.data.description);
         mProductWebView.setVisibility(View.VISIBLE);
 
-        mProductEvaluateAdapter = new ProductEvaluateAdapter(ProductDetailsActivity.this,mProductDetailsResponse.data.comment);
+        mProductEvaluateAdapter = new ProductEvaluateAdapter(ProductDetailsActivity.this, mProductDetailsResponse.data.comment);
         listView.setAdapter(mProductEvaluateAdapter);
         listView.setVisibility(View.GONE);
-        mProductCommentTextView.setText("评价"+mProductDetailsResponse.data.comment.size());
+        mProductCommentTextView.setText("评价" + mProductDetailsResponse.data.comment.size());
     }
 
     private void addToCart() {
