@@ -31,6 +31,7 @@ import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.external.umeng.share.UmengShare;
 import com.sensu.android.zimaogou.utils.*;
+import com.sensu.android.zimaogou.view.ProductTypeLinearLayout;
 import com.sensu.android.zimaogou.widget.ProductTypeListView;
 import com.sensu.android.zimaogou.widget.PullPushScrollView;
 import com.sensu.android.zimaogou.widget.ScrollViewContainer;
@@ -308,8 +309,9 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         mChooseDialog.findViewById(R.id.bt_add).setOnClickListener(this);
         ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText("¥" + mProductDetailsResponse.data.price);
 
-        setColor();
-        setSize();
+        ((ProductTypeLinearLayout) mChooseDialog.findViewById(R.id.product_type_layout)).setProductDetailsResponse(mProductDetailsResponse);
+//        setColor();
+//        setSize();
     }
 
     private void setColor() {
@@ -344,7 +346,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 }
             }
         }
-        ((ProductTypeListView) mChooseDialog.findViewById(R.id.product_type_color)).setTypeData(productTypeModels);
+//        ((ProductTypeListView) mChooseDialog.findViewById(R.id.product_type_color)).setTypeData(productTypeModels);
     }
 
     private void setSize() {
@@ -379,7 +381,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 }
             }
         }
-        ((ProductTypeListView) mChooseDialog.findViewById(R.id.product_type_size)).setTypeData(productTypeModels);
+//        ((ProductTypeListView) mChooseDialog.findViewById(R.id.product_type_size)).setTypeData(productTypeModels);
     }
 
     private void getProductById(String productId, String source) {

@@ -5,6 +5,15 @@ package com.sensu.android.zimaogou.Mode;
  */
 public class ProductTypeModel {
 
+    private String mType;
+    public void setType(String type) {
+        mType = type;
+    }
+
+    public String getType() {
+        return mType;
+    }
+
     private String mTypeName;
     public void setTypeName(String typeName) {
         mTypeName = typeName;

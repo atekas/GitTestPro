@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:paddingLeft="@dimen/dip_10"
+              android:paddingRight="@dimen/dip_10"
+              android:background="@color/white">
+
+    <TextView
+            android:id="@+id/type_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="12dp"
+            android:textSize="@dimen/text_size_big"
+            android:textColor="@color/black_222222"
+            android:text="颜色"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <com.sensu.android.zimaogou.widget.ProductTypeListView
+                xmlns:f="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/product_type_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="0dp"
+                f:horizontalSpacing="8dp"
+                f:orientation="horizontal"
+                f:verticalSpacing="8dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

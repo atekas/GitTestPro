@@ -15,6 +15,9 @@ import java.util.List;
 public class ProductTypeListView extends FlowLayout {
 
     private List<ProductTypeModel> mProductTypeModelList;
+    private OnTypeClickListener mOnTypeClickListener;
+
+    private int mPosition;
 
     public ProductTypeListView(Context context) {
         super(context);
@@ -28,7 +31,9 @@ public class ProductTypeListView extends FlowLayout {
         super(context, attributeSet, defStyle);
     }
 
-    public void setTypeData(List<ProductTypeModel> productTypeModelList) {
+    public void setTypeData(List<ProductTypeModel> productTypeModelList, int position, OnTypeClickListener onTypeClickListener) {
+        mOnTypeClickListener = onTypeClickListener;
+        mPosition = position;
         removeAllViews();
         mProductTypeModelList = productTypeModelList;
         for (int i = 0; i < productTypeModelList.size(); i++) {
@@ -41,19 +46,45 @@ public class ProductTypeListView extends FlowLayout {
         final TextView type = (TextView) productTypeView.findViewById(R.id.type_name);
         type.setText(productTypeModel.getTypeName());
 
-//        if (productTypeModel.getIsSelect()) {
-//            type.setSelected(true);
-//        } else {
-//            type.setSelected(false);
-//        }
+        if (productTypeModel.getIsSelect()) {
+            type.setSelected(true);
+        } else {
+            type.setSelected(false);
+        }
 
-//        type.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                productTypeModel.setIsSelect(true);
-//            }
-//        });
+        if (productTypeModel.getEnable()) {
+            type.setEnabled(true);
+        } else {
+            type.setEnabled(false);
+        }
+
+        type.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                initProductTypeModelList();
+                productTypeModel.setIsSelect(true);
+                if (mOnTypeClickListener != null) {
+                    mOnTypeClickListener.onTypeClick(productTypeModel.getType(), mPosition);
+                }
+                setTypeData(mProductTypeModelList, mPosition, new OnTypeClickListener() {
+                    @Override
+                    public void onTypeClick(String type, int position) {
+
+                    }
+                });
+            }
+        });
 
         addView(productTypeView);
+    }
+
+    private void initProductTypeModelList() {
+        for (ProductTypeModel productTypeModel : mProductTypeModelList) {
+            productTypeModel.setIsSelect(false);
+        }
+    }
+
+    public interface OnTypeClickListener {
+        public void onTypeClick(String type, int position);
     }
 }
