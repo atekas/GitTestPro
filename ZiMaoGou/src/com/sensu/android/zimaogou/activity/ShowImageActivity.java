@@ -1,7 +1,9 @@
 package com.sensu.android.zimaogou.activity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.utils.ImageUtils;
 import com.sensu.android.zimaogou.widget.CropImageView;
 
 /**
@@ -11,6 +13,7 @@ import com.sensu.android.zimaogou.widget.CropImageView;
  */
 public class ShowImageActivity extends BaseActivity {
 
+    public static final String IMAGE_URL = "image_url";
     private CropImageView mCropImageView;
 
     @Override
@@ -18,8 +21,12 @@ public class ShowImageActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.show_image_activity);
 
+        String url = getIntent().getStringExtra(IMAGE_URL);
+
         mCropImageView = (CropImageView) findViewById(R.id.scalable_watch_pic);
 
-        mCropImageView.setImageResource(R.drawable.product1);
+        if (!TextUtils.isEmpty(url)) {
+            ImageUtils.displayImage(url, mCropImageView);
+        }
     }
 }
