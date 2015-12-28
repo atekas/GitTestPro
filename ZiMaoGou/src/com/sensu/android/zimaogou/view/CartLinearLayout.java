@@ -1,6 +1,7 @@
 package com.sensu.android.zimaogou.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +9,10 @@ import android.widget.*;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.IConstants;
+import com.sensu.android.zimaogou.Mode.SelectProductModel;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.CartDataResponse;
+import com.sensu.android.zimaogou.activity.VerifyOrderActivity;
 import com.sensu.android.zimaogou.adapter.ShoppingBagAdapter;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
@@ -18,6 +21,9 @@ import com.sensu.android.zimaogou.utils.ImageUtils;
 import com.sensu.android.zimaogou.utils.PromptUtils;
 import org.apache.http.Header;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by zhangwentao on 2015/12/24.
@@ -136,6 +142,33 @@ public class CartLinearLayout extends LinearLayout {
             @Override
             public void onClick(View view) {
                 PromptUtils.showToast("点击了第" + mFlag + "的结算按钮");
+
+                SelectProductModel selectProductModel = new SelectProductModel();
+                List<SelectProductModel.GoodsInfo> goodsInfoList = new ArrayList<SelectProductModel.GoodsInfo>();
+                for (CartDataResponse.CartDataChild cartDataChild : mCartDataGroup.data) {
+                    if (cartDataChild.getIsSelect()) {
+                        SelectProductModel.GoodsInfo goodsInfo = new SelectProductModel.GoodsInfo();
+                        goodsInfo.setGoodsId(cartDataChild.goods_id);
+                        goodsInfo.setSpecId(cartDataChild.spec_id);
+                        goodsInfo.setNum(cartDataChild.num);
+                        goodsInfo.setPrice(cartDataChild.price);
+                        goodsInfo.setSource(cartDataChild.source);
+                        goodsInfo.setName(cartDataChild.title);
+                        goodsInfo.setSpec(cartDataChild.spec);
+                        goodsInfo.setImage(cartDataChild.image);
+                        goodsInfoList.add(goodsInfo);
+                    }
+                }
+                selectProductModel.setGoodsInfo(goodsInfoList);
+                selectProductModel.setTotalMoney(getAllMoney());
+                if (selectProductModel.getGoodsInfo().size() == 0) {
+                    PromptUtils.showToast("请选择要付款的商品");
+                    return;
+                }
+
+                Intent intent = new Intent(getContext(), VerifyOrderActivity.class);
+                intent.putExtra(VerifyOrderActivity.PRODUCT_FOR_PAY, selectProductModel);
+                getContext().startActivity(intent);
             }
         });
 

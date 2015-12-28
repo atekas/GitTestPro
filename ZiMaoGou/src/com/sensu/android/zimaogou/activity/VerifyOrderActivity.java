@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
+import com.sensu.android.zimaogou.Mode.SelectProductModel;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.mycenter.CouponActivity;
 import com.sensu.android.zimaogou.activity.mycenter.ReceiverAddressActivity;
@@ -15,6 +17,8 @@ import com.sensu.android.zimaogou.utils.PromptUtils;
  */
 public class VerifyOrderActivity extends BaseActivity implements View.OnClickListener {
 
+    public static final String PRODUCT_FOR_PAY = "product_for_pay";
+
     //默认0 为支付宝付款 1 为微信支付
     public static final int ZFB_PAY = 0;
     public static final int WE_CHAT_PAY = 1;
@@ -24,7 +28,10 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
 
     private int mPayWay;
     private ListView mListView;
+    private TextView mAmountMoneyView;
     private VerifyOrderAdapter mVerifyOrderAdapter;
+
+    private SelectProductModel mSelectProductModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +43,11 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initViews() {
+
+        mSelectProductModel = (SelectProductModel) getIntent().getSerializableExtra(PRODUCT_FOR_PAY);
+
+        mAmountMoneyView = (TextView) findViewById(R.id.sum_money);
+
         findViewById(R.id.back).setOnClickListener(this);
         findViewById(R.id.into_address_list).setOnClickListener(this);
         findViewById(R.id.zhifubao_pay).setOnClickListener(this);
@@ -51,6 +63,10 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
         mListView.setFocusable(false);
         mVerifyOrderAdapter = new VerifyOrderAdapter(this);
         mListView.setAdapter(mVerifyOrderAdapter);
+        if (mSelectProductModel != null) {
+            mVerifyOrderAdapter.setSelectProductModel(mSelectProductModel);
+            mAmountMoneyView.setText(mSelectProductModel.getTotalMoney());
+        }
     }
 
     @Override
