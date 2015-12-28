@@ -25,6 +25,8 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
 
     private ProductDetailsResponse mProductDetailsResponse;
 
+    private OnProductColorListener mOnProductColorListener;
+
     public ProductTypeLinearLayout(Context context) {
         super(context);
     }
@@ -37,7 +39,8 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
         super(context, attrs, defStyle);
     }
 
-    public void setProductDetailsResponse(ProductDetailsResponse productDetailsResponse) {
+    public void setProductDetailsResponse(ProductDetailsResponse productDetailsResponse, OnProductColorListener onProductColorListener) {
+        mOnProductColorListener = onProductColorListener;
         mProductDetailsResponse = productDetailsResponse;
         int size = productDetailsResponse.data.spec_attr.size();
         for (int i = 0; i < size; i++) {
@@ -171,7 +174,9 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
 
     @Override
     public void onTypeClick(String type, String value) {
-        PromptUtils.showToast(type);
+        if (type.equals("color") && mOnProductColorListener != null) {
+            mOnProductColorListener.getProductColor(value);
+        }
         removeAllViews();
         int size = mProductDetailsResponse.data.spec_attr.size();
         for (int i = 0; i < size; i++) {
@@ -297,5 +302,9 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
 
     public List<ProductTypeModel> getCapacity() {
         return mCapacityProductTypeList;
+    }
+
+    public interface OnProductColorListener {
+        public void getProductColor(String color);
     }
 }

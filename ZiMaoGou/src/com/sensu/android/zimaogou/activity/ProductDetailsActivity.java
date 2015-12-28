@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Bundle;
-import android.text.*;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -48,7 +47,7 @@ import java.util.List;
  * Created by zhangwentao on 2015/11/20.
  * 商品详情
  */
-public class ProductDetailsActivity extends BaseActivity implements View.OnClickListener {
+public class ProductDetailsActivity extends BaseActivity implements View.OnClickListener, ProductTypeLinearLayout.OnProductColorListener {
 
     public static final String PRODUCT_ID = "product_id";
     public static final String FROM_SOURCE = "from_source";
@@ -314,7 +313,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         mChooseDialog.findViewById(R.id.bt_add).setOnClickListener(this);
         ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText("¥" + mProductDetailsResponse.data.price);
 
-        ((ProductTypeLinearLayout) mChooseDialog.findViewById(R.id.product_type_layout)).setProductDetailsResponse(mProductDetailsResponse);
+        ((ProductTypeLinearLayout) mChooseDialog.findViewById(R.id.product_type_layout)).setProductDetailsResponse(mProductDetailsResponse, this);
     }
 
     private String getSpecId() {
@@ -480,5 +479,21 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 super.onFailure(statusCode, headers, responseString, throwable);
             }
         });
+    }
+
+    @Override
+    public void getProductColor(String color) {
+        if (!TextUtils.isEmpty(color)) {
+            ImageView imageView = (ImageView) mChooseDialog.findViewById(R.id.img_pro);
+            String url = null;
+            for (ProductDetailsResponse.ColorImage colorImage : mProductDetailsResponse.data.color_image) {
+                if (color.equals(colorImage.name)) {
+                    url = colorImage.image;
+                }
+            }
+            if (!TextUtils.isEmpty(url)) {
+                ImageUtils.displayImage(url, imageView);
+            }
+        }
     }
 }
