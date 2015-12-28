@@ -57,7 +57,11 @@ public class ProductsDetailsAdapter extends SimpleBaseAdapter {
         ProductListResponse.ProductListData productListData = mProductListResponse.data.get(i);
         viewHolder.mProductName.setText(productListData.name);
         viewHolder.mPrice.setText(productListData.price);
-        ImageUtils.displayImage(productListData.main_image, viewHolder.mProductPic);
+        if (productListData.media.type.equals("1")) {
+            ImageUtils.displayImage(productListData.media.image.get(0), viewHolder.mProductPic);
+        } else {
+            ImageUtils.displayImage(productListData.media.cover, viewHolder.mProductPic);
+        }
 
         return view;
     }

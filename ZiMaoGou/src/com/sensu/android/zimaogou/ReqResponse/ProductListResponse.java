@@ -18,6 +18,15 @@ public class ProductListResponse  {
         public String origin;
         public String price;
         public String price_market;
-        public String main_image;
+        public Media media;
     }
+
+    public static class Media {
+        //1图片, 2视频, 12有图片视频
+        public String type;
+        public String video;
+        public String cover;
+        public List<String> image;
+    }
+
 }
