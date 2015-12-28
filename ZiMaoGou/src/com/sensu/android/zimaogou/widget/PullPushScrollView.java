@@ -74,7 +74,7 @@ public class PullPushScrollView extends ScrollView implements View.OnClickListen
         }
 
         //type为2时表示有视频, viewPager中数据位image.size +１
-        if (productDetailData.media.type.equals("2")) {
+        if (productDetailData.media.type.equals("12")) {
             mViews = new View[count + 1];
             PhotoView photoView = (PhotoView) LayoutInflater.from(getContext()).inflate(R.layout.photo_view_pager_item, null);
             photoView.setPhotoData(productDetailData.media.cover, true, productDetailData.media.video);

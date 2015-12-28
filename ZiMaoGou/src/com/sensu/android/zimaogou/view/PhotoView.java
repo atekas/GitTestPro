@@ -7,6 +7,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.utils.ImageUtils;
+import com.sensu.android.zimaogou.widget.VideoLinearLayout;
 
 /**
  * Created by zhangwentao on 2015/12/23.
@@ -29,6 +30,9 @@ public class PhotoView extends FrameLayout implements View.OnClickListener {
         if (isVideo) {
             findViewById(R.id.video_play).setVisibility(VISIBLE);
             findViewById(R.id.video_view).setVisibility(VISIBLE);
+
+            ((VideoLinearLayout) findViewById(R.id.video_view)).setURL(imagePath, videoPath);
+
         } else {
             findViewById(R.id.video_play).setVisibility(GONE);
             findViewById(R.id.video_view).setVisibility(GONE);
