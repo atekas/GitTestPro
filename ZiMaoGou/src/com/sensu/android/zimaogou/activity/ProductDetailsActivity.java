@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Bundle;
+import android.text.*;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
@@ -262,9 +264,12 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.sure:
                 //todo 添加购物车
-//                startActivity(new Intent(this, ProductShopCarActivity.class));
-//                mChooseDialog.dismiss();
-                addToCart();
+                if (TextUtils.isEmpty(getSpecId())) {
+                    PromptUtils.showToast("请选择规格");
+                    return;
+                }
+                String num = ((EditText) mChooseDialog.findViewById(R.id.product_num)).getText().toString();
+                addToCart(getSpecId(), num);
                 break;
             case R.id.bt_subtract:
                 if (mProductCount > 1) {
@@ -310,78 +315,95 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText("¥" + mProductDetailsResponse.data.price);
 
         ((ProductTypeLinearLayout) mChooseDialog.findViewById(R.id.product_type_layout)).setProductDetailsResponse(mProductDetailsResponse);
-//        setColor();
-//        setSize();
     }
 
-    private void setColor() {
-        List<ProductTypeModel> productTypeModels = new ArrayList<ProductTypeModel>();
-        for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
+    private String getSpecId() {
+        List<ProductTypeModel> mColorList = null;
+        List<ProductTypeModel> mSizeList = null;
+        List<ProductTypeModel> mCapacityList = null;
+        for (ProductDetailsResponse.SpecAttr specAttr : mProductDetailsResponse.data.spec_attr) {
+            if (specAttr.en.equals("color")) {
+                mColorList = ((ProductTypeLinearLayout) mChooseDialog.findViewById(R.id.product_type_layout)).getColor();
+            } else if (specAttr.en.equals("size")) {
+                mSizeList = ((ProductTypeLinearLayout) mChooseDialog.findViewById(R.id.product_type_layout)).getSize();
+            } else if (specAttr.en.equals("capacity")) {
+                mCapacityList = ((ProductTypeLinearLayout) mChooseDialog.findViewById(R.id.product_type_layout)).getCapacity();
+            }
+        }
 
-            if (productTypeModels.size() == 0) {
-                ProductTypeModel productTypeModel1 = new ProductTypeModel();
-                productTypeModel1.setIsSelect(false);
-
-                if (Integer.parseInt(spec.num) > 1) {
-                    productTypeModel1.setEnable(true);
+        String color = "";
+        String size = "";
+        String capacity = "";
+        if (mColorList != null) {
+            for (ProductTypeModel productTypeModel : mColorList) {
+                if (productTypeModel.getIsSelect()) {
+                    color = productTypeModel.getTypeName();
                 }
+            }
+        }
 
-                productTypeModel1.setTypeName(spec.color);
-                productTypeModels.add(productTypeModel1);
-            } else {
-                for (ProductTypeModel productTypeModel : productTypeModels) {
-                    if (productTypeModel.getTypeName().equals(spec.color)) {
-                        break;
-                    } else {
-                        ProductTypeModel productTypeModel1 = new ProductTypeModel();
-                        productTypeModel1.setIsSelect(false);
+        if (mSizeList != null) {
+            for (ProductTypeModel productTypeModel : mSizeList) {
+                if (productTypeModel.getIsSelect()) {
+                    size = productTypeModel.getTypeName();
+                }
+            }
+        }
 
-                        if (Integer.parseInt(spec.num) > 1) {
-                            productTypeModel1.setEnable(true);
+        if (mCapacityList != null) {
+            for (ProductTypeModel productTypeModel : mCapacityList) {
+                if (productTypeModel.getIsSelect()) {
+                    capacity = productTypeModel.getTypeName();
+                }
+            }
+        }
+
+        String id = null;
+
+        if (!TextUtils.isEmpty(color) && !TextUtils.isEmpty(capacity)) {
+            for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
+                if (!TextUtils.isEmpty(color)) {
+                    if (spec.color.equals(color)) {
+                        for (ProductDetailsResponse.Spec spec1 : mProductDetailsResponse.data.spec) {
+                            if (!TextUtils.isEmpty(capacity)) {
+                                if (spec1.capacity.equals(capacity)) {
+                                    id = spec1.id;
+                                }
+                            }
                         }
-
-                        productTypeModel1.setTypeName(spec.color);
-                        productTypeModels.add(productTypeModel1);
+                    }
+                }
+            }
+        } else if (!TextUtils.isEmpty(color) && !TextUtils.isEmpty(size)) {
+            for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
+                if (!TextUtils.isEmpty(color)) {
+                    if (spec.color.equals(color)) {
+                        for (ProductDetailsResponse.Spec spec1 : mProductDetailsResponse.data.spec) {
+                            if (!TextUtils.isEmpty(size)) {
+                                if (spec1.capacity.equals(size)) {
+                                    id = spec1.id;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } else if (!TextUtils.isEmpty(capacity) && !TextUtils.isEmpty(size)) {
+            for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
+                if (!TextUtils.isEmpty(capacity)) {
+                    if (spec.color.equals(capacity)) {
+                        for (ProductDetailsResponse.Spec spec1 : mProductDetailsResponse.data.spec) {
+                            if (!TextUtils.isEmpty(size)) {
+                                if (spec1.capacity.equals(size)) {
+                                    id = spec1.id;
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
-//        ((ProductTypeListView) mChooseDialog.findViewById(R.id.product_type_color)).setTypeData(productTypeModels);
-    }
-
-    private void setSize() {
-        List<ProductTypeModel> productTypeModels = new ArrayList<ProductTypeModel>();
-        for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
-
-            if (productTypeModels.size() == 0) {
-                ProductTypeModel productTypeModel1 = new ProductTypeModel();
-                productTypeModel1.setIsSelect(false);
-
-                if (Integer.parseInt(spec.num) > 1) {
-                    productTypeModel1.setEnable(true);
-                }
-
-                productTypeModel1.setTypeName(spec.size);
-                productTypeModels.add(productTypeModel1);
-            } else {
-                for (ProductTypeModel productTypeModel : productTypeModels) {
-                    if (productTypeModel.getTypeName().equals(spec.size)) {
-                        break;
-                    } else {
-                        ProductTypeModel productTypeModel1 = new ProductTypeModel();
-                        productTypeModel1.setIsSelect(false);
-
-                        if (Integer.parseInt(spec.num) > 1) {
-                            productTypeModel1.setEnable(true);
-                        }
-
-                        productTypeModel1.setTypeName(spec.size);
-                        productTypeModels.add(productTypeModel1);
-                    }
-                }
-            }
-        }
-//        ((ProductTypeListView) mChooseDialog.findViewById(R.id.product_type_size)).setTypeData(productTypeModels);
+        return id;
     }
 
     private void getProductById(String productId, String source) {
@@ -434,7 +456,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         mProductCommentTextView.setText("评价" + mProductDetailsResponse.data.comment.size());
     }
 
-    private void addToCart() {
+    private void addToCart(String id, String num) {
         UserInfo userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
         if (userInfo == null) {
             startActivity(new Intent(this, LoginActivity.class));
@@ -444,12 +466,13 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
 
         requestParams.put("uid", userInfo.getUid());
         requestParams.put("source", mSource);
-        requestParams.put("num", "1");
-        requestParams.put("spec_id", "37");
+        requestParams.put("num", num);
+        requestParams.put("spec_id", id);
         HttpUtil.postWithSign(userInfo.getToken(), IConstants.sCart, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
+                mChooseDialog.dismiss();
             }
 
             @Override

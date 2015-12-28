@@ -17,8 +17,6 @@ public class ProductTypeListView extends FlowLayout {
     private List<ProductTypeModel> mProductTypeModelList;
     private OnTypeClickListener mOnTypeClickListener;
 
-    private int mPosition;
-
     public ProductTypeListView(Context context) {
         super(context);
     }
@@ -31,9 +29,8 @@ public class ProductTypeListView extends FlowLayout {
         super(context, attributeSet, defStyle);
     }
 
-    public void setTypeData(List<ProductTypeModel> productTypeModelList, int position, OnTypeClickListener onTypeClickListener) {
+    public void setTypeData(List<ProductTypeModel> productTypeModelList, OnTypeClickListener onTypeClickListener) {
         mOnTypeClickListener = onTypeClickListener;
-        mPosition = position;
         removeAllViews();
         mProductTypeModelList = productTypeModelList;
         for (int i = 0; i < productTypeModelList.size(); i++) {
@@ -64,11 +61,11 @@ public class ProductTypeListView extends FlowLayout {
                 initProductTypeModelList();
                 productTypeModel.setIsSelect(true);
                 if (mOnTypeClickListener != null) {
-                    mOnTypeClickListener.onTypeClick(productTypeModel.getType(), mPosition);
+                    mOnTypeClickListener.onTypeClick(productTypeModel.getType(), productTypeModel.getTypeName());
                 }
-                setTypeData(mProductTypeModelList, mPosition, new OnTypeClickListener() {
+                setTypeData(mProductTypeModelList, new OnTypeClickListener() {
                     @Override
-                    public void onTypeClick(String type, int position) {
+                    public void onTypeClick(String type, String value) {
 
                     }
                 });
@@ -85,6 +82,6 @@ public class ProductTypeListView extends FlowLayout {
     }
 
     public interface OnTypeClickListener {
-        public void onTypeClick(String type, int position);
+        public void onTypeClick(String type, String value);
     }
 }
