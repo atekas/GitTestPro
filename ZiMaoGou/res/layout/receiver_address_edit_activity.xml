@@ -50,7 +50,9 @@
             android:background="@color/white"
             >
         <RelativeLayout android:layout_width="match_parent" android:layout_height="@dimen/dip_50">
-            <EditText android:layout_width="match_parent"
+            <EditText
+                    android:id="@+id/et_receiverName"
+                    android:layout_width="match_parent"
                       android:layout_height="match_parent"
                       android:textSize="@dimen/text_size_large"
                       android:textColor="@color/black_333333"
@@ -66,7 +68,9 @@
                     android:layout_alignParentBottom="true"/>
         </RelativeLayout>
         <RelativeLayout android:layout_width="match_parent" android:layout_height="@dimen/dip_50">
-            <EditText android:layout_width="match_parent"
+            <EditText
+                    android:id="@+id/et_receiverPhone"
+                    android:layout_width="match_parent"
                       android:layout_height="match_parent"
                       android:textSize="@dimen/text_size_large"
                       android:textColor="@color/black_333333"
@@ -82,7 +86,9 @@
                     android:layout_alignParentBottom="true"/>
         </RelativeLayout>
         <RelativeLayout android:layout_width="match_parent" android:layout_height="@dimen/dip_50">
-            <EditText android:layout_width="match_parent"
+            <EditText
+                    android:id="@+id/et_receiverID"
+                    android:layout_width="match_parent"
                       android:layout_height="match_parent"
                       android:textSize="@dimen/text_size_large"
                       android:textColor="@color/black_333333"
@@ -120,7 +126,9 @@
                     android:layout_alignParentBottom="true"/>
         </RelativeLayout>
         <RelativeLayout android:layout_width="match_parent" android:layout_height="@dimen/dip_50">
-            <EditText android:layout_width="match_parent"
+            <EditText
+                    android:id="@+id/et_receiverStreet"
+                    android:layout_width="match_parent"
                       android:layout_height="match_parent"
                       android:textSize="@dimen/text_size_large"
                       android:textColor="@color/black_333333"
@@ -152,7 +160,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/kg_03"
+                    android:src="@drawable/address_switch_selector"
                     />
         </RelativeLayout>
 

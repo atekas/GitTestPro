@@ -69,4 +69,11 @@ public class IConstants {
 
     //购物车
     public static final String sCart = "cart";
+
+
+    //获取我的收货地址
+    public  static final String sGetReceiverAddress = "my/address";
+    //添加收货地址
+    public  static final String sAddAddress = "user/address";
+
 }

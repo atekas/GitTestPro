@@ -10,21 +10,34 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.sensu.android.zimaogou.IConstants;
+import com.sensu.android.zimaogou.Mode.ReceiverAddressMode;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.mycenter.ReceiverAddressEditActivity;
+import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
+import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
+import com.sensu.android.zimaogou.utils.HttpUtil;
+import com.sensu.android.zimaogou.utils.LogUtils;
+import org.apache.http.Header;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 /**
  * Created by qi.yang on 2015/11/20.
  */
-public class ReceiverListAdapter extends SimpleBaseAdapter{
-    ArrayList<TestAddress> addresses = new ArrayList<TestAddress>();
+public class ReceiverListAdapter extends SimpleBaseAdapter {
+    ArrayList<ReceiverAddressMode> addresses = new ArrayList<ReceiverAddressMode>();
     private boolean mIsEdit;
-    public ReceiverListAdapter(Context context, boolean isEdit) {
+    UserInfo userInfo;
+
+    public ReceiverListAdapter(Context context, boolean isEdit, ArrayList<ReceiverAddressMode> addresses) {
         super(context);
-        setData();
         mIsEdit = isEdit;
+        this.addresses = addresses;
+        userInfo = GDUserInfoHelper.getInstance(mContext).getUserInfo();
     }
 
     @Override
@@ -35,9 +48,9 @@ public class ReceiverListAdapter extends SimpleBaseAdapter{
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder holder;
-        if(view == null){
+        if (view == null) {
             holder = new ViewHolder();
-            view = LayoutInflater.from(mContext).inflate(R.layout.receiver_address_list_item,null);
+            view = LayoutInflater.from(mContext).inflate(R.layout.receiver_address_list_item, null);
             holder.tv_address = (TextView) view.findViewById(R.id.tv_address);
             holder.tv_phone = (TextView) view.findViewById(R.id.tv_phone);
             holder.tv_name = (TextView) view.findViewById(R.id.tv_name);
@@ -46,7 +59,7 @@ public class ReceiverListAdapter extends SimpleBaseAdapter{
             holder.img_choose = (ImageView) view.findViewById(R.id.img_choose);
             holder.mEditAddress = (RelativeLayout) view.findViewById(R.id.edit_address);
             view.setTag(holder);
-        }else{
+        } else {
             holder = (ViewHolder) view.getTag();
         }
 
@@ -57,15 +70,17 @@ public class ReceiverListAdapter extends SimpleBaseAdapter{
         }
 
         final int position = i;
-        if(addresses.get(position).isChoose) {
+        if (addresses.get(position).getIs_default().equals("1")) {
             holder.img_choose.setImageResource(R.drawable.d_03);
-        }else{
+        } else {
             holder.img_choose.setImageResource(R.drawable.d_06);
         }
         holder.tv_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mContext.startActivity(new Intent(mContext, ReceiverAddressEditActivity.class).putExtra("title","编辑收货地址"));
+                mContext.startActivity(new Intent(mContext, ReceiverAddressEditActivity.class)
+                        .putExtra("title", "编辑收货地址")
+                        .putExtra("data", addresses.get(position)));
             }
         });
         holder.tv_delete.setOnClickListener(new View.OnClickListener() {
@@ -80,24 +95,26 @@ public class ReceiverListAdapter extends SimpleBaseAdapter{
                 setDefaultAddress(position);
             }
         });
+        holder.tv_name.setText(addresses.get(position).getName());
+        holder.tv_phone.setText(addresses.get(position).getMobile());
+        holder.tv_address.setText(addresses.get(position).getProvince() + addresses.get(position).getCity() + addresses.get(position).getDistrict() + " " + addresses.get(position).getAddress());
         return view;
     }
 
 
     private class ViewHolder {
-        TextView tv_name,tv_phone,tv_address,tv_edit,tv_delete;
+        TextView tv_name, tv_phone, tv_address, tv_edit, tv_delete;
         ImageView img_choose;
         RelativeLayout mEditAddress;
     }
 
     /**
-     *
      * 删除地址
-     *
      */
     Dialog mDeleteAddressDialog;
-    private void DeleteAddressDialog(final int position){
-        mDeleteAddressDialog = new Dialog(mContext,R.style.dialog);
+
+    private void DeleteAddressDialog(final int position) {
+        mDeleteAddressDialog = new Dialog(mContext, R.style.dialog);
         mDeleteAddressDialog.setCancelable(true);
         mDeleteAddressDialog.setContentView(R.layout.delete_address_dialog);
 
@@ -121,49 +138,74 @@ public class ReceiverListAdapter extends SimpleBaseAdapter{
         mDeleteAddressDialog.show();
     }
 
-    private class TestAddress{
-        public boolean isChoose = false;
-    }
-
-    /**
-     * 填充测试数据
-     */
-    private void setData(){
-        TestAddress t1 = new TestAddress();
-        t1.isChoose = true;
-        TestAddress t2 = new TestAddress();
-        t2.isChoose = false;
-        TestAddress t3 = new TestAddress();
-        t3.isChoose = false ;
-        addresses.add(t1);
-        addresses.add(t2);
-        addresses.add(t3);
-    }
 
     /**
      * 刷新数据
      */
-    private void flush(){
+    private void flush() {
         this.notifyDataSetChanged();
     }
 
     /**
      * 删除地址
+     *
      * @param position
      */
-    private void deleteAddress(int position){
-        addresses.remove(position);
-        flush();
+    private void deleteAddress(final int position) {
+        String url = IConstants.sAddAddress + "/" + addresses.get(position).getId()+"/delete";
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("uid",userInfo.getUid());
+        requestParams.put("id",addresses.get(position).getId());
+
+        HttpUtil.postWithSign(userInfo.getToken(), url, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+
+                LogUtils.d("删除地址返回：", response.toString());
+                addresses.remove(position);
+                flush();
+            }
+        });
+
     }
+
     /**
      * 设为默认地址
+     *
      * @param position
      */
-    private void setDefaultAddress(int position){
-        for(TestAddress t: addresses){
-            t.isChoose = false;
-        }
-        addresses.get(position).isChoose = true;
-        flush();
+    private void setDefaultAddress(final int position) {
+        String url = IConstants.sAddAddress + "/" + addresses.get(position).getId();
+        RequestParams requestParams = new RequestParams();
+
+        requestParams.put("uid", userInfo.getUid());
+        requestParams.put("name", addresses.get(position).getName());
+        requestParams.put("mobile", addresses.get(position).getMobile());
+        requestParams.put("id_card", addresses.get(position).getId_card());
+
+        requestParams.put("address", addresses.get(position).getAddress());
+        requestParams.put("is_default", "1");
+        requestParams.put("id", addresses.get(position).getId());
+        requestParams.put("province", addresses.get(position).getProvince_id());
+        requestParams.put("city", addresses.get(position).getCity_id());
+        requestParams.put("district", addresses.get(position).getDistrict_id());
+
+
+        HttpUtil.postWithSign(userInfo.getToken(), url, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+
+                LogUtils.d("设为默认地址：", response.toString());
+                for (ReceiverAddressMode t : addresses) {
+                    t.setIs_default("0");
+                }
+                addresses.get(position).setIs_default("1");
+                flush();
+            }
+        });
+
+
     }
 }
