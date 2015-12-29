@@ -314,6 +314,7 @@
                         android:text="@string/products_price"/>
 
                 <TextView
+                        android:id="@+id/amount_money"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
@@ -346,6 +347,7 @@
                         android:text="@string/shuifei"/>
 
                 <TextView
+                        android:id="@+id/rate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
@@ -410,6 +412,7 @@
                         android:text="@string/discount_coupon"/>
 
                 <TextView
+                        android:id="@+id/coupon_money"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"

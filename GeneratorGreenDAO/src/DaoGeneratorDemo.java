@@ -20,6 +20,7 @@ public class DaoGeneratorDemo {
 
         addUserInfo(schema);
         addSearchKeyword(schema);
+        addAddressDefault(schema);
 
 
         schema.setDefaultJavaPackageDao("com.sensu.android.zimaogou.external.greendao.dao");
@@ -42,5 +43,21 @@ public class DaoGeneratorDemo {
     public static void addSearchKeyword(Schema schema) {
         Entity keyword = schema.addEntity("SearchKeyword");
         keyword.addStringProperty("keyword");
+    }
+
+    public static void addAddressDefault(Schema schema) {
+        Entity addressDefault = schema.addEntity("AddressDefault");
+        addressDefault.addStringProperty("id");
+        addressDefault.addStringProperty("name");
+        addressDefault.addStringProperty("mobile");
+        addressDefault.addStringProperty("id_card");
+        addressDefault.addStringProperty("province_id");
+        addressDefault.addStringProperty("city_id");
+        addressDefault.addStringProperty("district_id");
+        addressDefault.addStringProperty("province");
+        addressDefault.addStringProperty("city");
+        addressDefault.addStringProperty("district");
+        addressDefault.addStringProperty("address");
+        addressDefault.addStringProperty("is_default");
     }
 }

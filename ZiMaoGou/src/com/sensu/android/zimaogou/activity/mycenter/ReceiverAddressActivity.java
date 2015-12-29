@@ -10,12 +10,15 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.Mode.ProvinceMode;
+import com.sensu.android.zimaogou.Mode.ReceiverAddressMode;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.AddressResponse;
 import com.sensu.android.zimaogou.ReqResponse.ReceiverAddressResponse;
 import com.sensu.android.zimaogou.activity.BaseActivity;
 import com.sensu.android.zimaogou.adapter.ReceiverListAdapter;
+import com.sensu.android.zimaogou.external.greendao.helper.GDAddressDefaultHelper;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
+import com.sensu.android.zimaogou.external.greendao.model.AddressDefault;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.utils.LogUtils;
@@ -33,7 +36,8 @@ public class ReceiverAddressActivity extends BaseActivity {
     ProvinceMode mResultAddress;
     private boolean mIsNoEdit;
     ReceiverAddressResponse receiverAddressResponse = new ReceiverAddressResponse();
-    UserInfo userInfo ;
+    UserInfo userInfo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +47,7 @@ public class ReceiverAddressActivity extends BaseActivity {
         userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
     }
 
-    private void initView(){
+    private void initView() {
         mIsNoEdit = getIntent().getBooleanExtra(IS_NO_EDIT, false);
 
         mBackImageView = (ImageView) findViewById(R.id.back);
@@ -64,27 +68,68 @@ public class ReceiverAddressActivity extends BaseActivity {
         getReceiverAddress();
     }
 
-    public void AddAddressClick(View v){
-        startActivity(new Intent(this,ReceiverAddressEditActivity.class).putExtra("title","新增收货地址"));
+    public void AddAddressClick(View v) {
+        startActivity(new Intent(this, ReceiverAddressEditActivity.class).putExtra("title", "新增收货地址"));
     }
 
     /**
      * 获取收货地址
      */
-    private void getReceiverAddress(){
+    private void getReceiverAddress() {
         RequestParams requestParams = new RequestParams();
-        requestParams.put("uid",userInfo.getUid());
+        requestParams.put("uid", userInfo.getUid());
 
-        HttpUtil.getWithSign(userInfo.getToken(),IConstants.sGetReceiverAddress,requestParams,new JsonHttpResponseHandler(){
+        HttpUtil.getWithSign(userInfo.getToken(), IConstants.sGetReceiverAddress, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                LogUtils.d("获取收货地址：",response.toString());
-                receiverAddressResponse = JSON.parseObject(response.toString(),ReceiverAddressResponse.class);
-                mReceiverAddressListView.setAdapter(new ReceiverListAdapter(ReceiverAddressActivity.this, mIsNoEdit,receiverAddressResponse.data));
+                LogUtils.d("获取收货地址：", response.toString());
+                receiverAddressResponse = JSON.parseObject(response.toString(), ReceiverAddressResponse.class);
+                saveAddress();
+                mReceiverAddressListView.setAdapter(new ReceiverListAdapter(ReceiverAddressActivity.this, mIsNoEdit, receiverAddressResponse.data));
             }
         });
     }
 
+    private void saveAddress() {
+        boolean isHaveDefault = false;
+        if (receiverAddressResponse.data.size() != 0) {
+            for (ReceiverAddressMode receiverAddressMode : receiverAddressResponse.data) {
+                if (receiverAddressMode.getIs_default().equals("1")) {
+                    isHaveDefault = true;
+                    AddressDefault addressDefault = new AddressDefault();
+                    addressDefault.setId(receiverAddressMode.getId());
+                    addressDefault.setName(receiverAddressMode.getName());
+                    addressDefault.setAddress(receiverAddressMode.getAddress());
+                    addressDefault.setCity(receiverAddressMode.getCity());
+                    addressDefault.setCity_id(receiverAddressMode.getCity_id());
+                    addressDefault.setDistrict(receiverAddressMode.getDistrict());
+                    addressDefault.setDistrict_id(receiverAddressMode.getDistrict_id());
+                    addressDefault.setId_card(receiverAddressMode.getId_card());
+                    addressDefault.setMobile(receiverAddressMode.getMobile());
+                    addressDefault.setProvince(receiverAddressMode.getProvince());
+                    addressDefault.setProvince_id(receiverAddressMode.getProvince_id());
+                    GDAddressDefaultHelper.getInstance(this).insertAddress(addressDefault);
+                    break;
+                }
+            }
 
+            if (!isHaveDefault) {
+                ReceiverAddressMode receiverAddressMode = receiverAddressResponse.data.get(0);
+                AddressDefault addressDefault = new AddressDefault();
+                addressDefault.setId(receiverAddressMode.getId());
+                addressDefault.setName(receiverAddressMode.getName());
+                addressDefault.setAddress(receiverAddressMode.getAddress());
+                addressDefault.setCity(receiverAddressMode.getCity());
+                addressDefault.setCity_id(receiverAddressMode.getCity_id());
+                addressDefault.setDistrict(receiverAddressMode.getDistrict());
+                addressDefault.setDistrict_id(receiverAddressMode.getDistrict_id());
+                addressDefault.setId_card(receiverAddressMode.getId_card());
+                addressDefault.setMobile(receiverAddressMode.getMobile());
+                addressDefault.setProvince(receiverAddressMode.getProvince());
+                addressDefault.setProvince_id(receiverAddressMode.getProvince_id());
+                GDAddressDefaultHelper.getInstance(this).insertAddress(addressDefault);
+            }
+        }
+    }
 }

@@ -5,12 +5,25 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.Mode.SelectProductModel;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.mycenter.CouponActivity;
 import com.sensu.android.zimaogou.activity.mycenter.ReceiverAddressActivity;
 import com.sensu.android.zimaogou.adapter.VerifyOrderAdapter;
+import com.sensu.android.zimaogou.external.greendao.helper.GDAddressDefaultHelper;
+import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
+import com.sensu.android.zimaogou.external.greendao.model.AddressDefault;
+import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
+import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.utils.PromptUtils;
+import com.sensu.android.zimaogou.utils.RateUtil;
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by zhangwentao on 2015/11/19.
@@ -32,6 +45,9 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
     private VerifyOrderAdapter mVerifyOrderAdapter;
 
     private SelectProductModel mSelectProductModel;
+
+    private double mAmountMoney;
+    private double mRateMoney;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +79,32 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
         mListView.setFocusable(false);
         mVerifyOrderAdapter = new VerifyOrderAdapter(this);
         mListView.setAdapter(mVerifyOrderAdapter);
+
+        getAddressDefault();
+
         if (mSelectProductModel != null) {
             mVerifyOrderAdapter.setSelectProductModel(mSelectProductModel);
-            mAmountMoneyView.setText(mSelectProductModel.getTotalMoney()+"");
+            ((TextView) findViewById(R.id.amount_money)).setText("¥ " + mSelectProductModel.getTotalMoney());
+            mRateMoney = getAmountRate();
+            ((TextView) findViewById(R.id.rate)).setText("¥ " + mRateMoney);
+
+            ((TextView) findViewById(R.id.coupon_money)).setText("-¥ 0");
+
+            mAmountMoney = mSelectProductModel.getTotalMoney() + getAmountRate();
+            mAmountMoneyView.setText("¥ " + mAmountMoney);
+        }
+    }
+
+    private void getAddressDefault() {
+        AddressDefault addressDefault = GDAddressDefaultHelper.getInstance(this).getAddressDefault();
+        if (addressDefault != null) {
+            ((TextView) findViewById(R.id.name)).setText(addressDefault.getName());
+            ((TextView) findViewById(R.id.phone_num)).setText(addressDefault.getMobile());
+            ((TextView) findViewById(R.id.address)).setText(addressDefault.getAddress());
+        } else {
+            ((TextView) findViewById(R.id.name)).setText("请选择收货地址");
+            findViewById(R.id.phone_num).setVisibility(View.INVISIBLE);
+            findViewById(R.id.address).setVisibility(View.INVISIBLE);
         }
     }
 
@@ -98,11 +137,14 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
                 startActivityForResult(new Intent(this, CouponActivity.class), CHOOSE_COUPON_CODE);
                 break;
             case R.id.verify_order:
-                if (mPayWay == ZFB_PAY) {
-                    PromptUtils.showToast("支付宝支付");
-                } else if (mPayWay == WE_CHAT_PAY) {
-                    PromptUtils.showToast("微信支付");
-                }
+//                if (mPayWay == ZFB_PAY) {
+//                    PromptUtils.showToast("支付宝支付");
+//                } else if (mPayWay == WE_CHAT_PAY) {
+//                    PromptUtils.showToast("微信支付");
+//                }
+
+                createOrder();
+
                 break;
         }
     }
@@ -110,5 +152,81 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void createOrder() {
+        UserInfo userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("uid", userInfo.getUid());
+        requestParams.put("amount_goods", mAmountMoney);
+        requestParams.put("amount_express", "0");
+        requestParams.put("amount_coupon", "0");
+        requestParams.put("amount_tax", mRateMoney);
+        requestParams.put("weight", "0");
+        requestParams.put("pay_type", "1");
+        requestParams.put("receiver_info", getAddressJson());
+        requestParams.put("goods", getGoodsJson());
+        HttpUtil.postWithSign(userInfo.getToken(), IConstants.sOrder, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
+    }
+
+    //未选择优惠券的税费
+    private double getAmountRate() {
+        double amountRate = 0;
+        if (mSelectProductModel != null) {
+            for (SelectProductModel.GoodsInfo goodsInfo : mSelectProductModel.getGoodsInfo()) {
+                double productPrice = Double.parseDouble(goodsInfo.getPrice()) * Double.parseDouble(goodsInfo.getNum());
+                double rate = productPrice * RateUtil.getRate(goodsInfo.getRate());
+                amountRate += rate;
+            }
+        }
+        return amountRate;
+    }
+
+    //选择优惠券后新的税费
+    private double getAmountRateWithCoupon(double allMoney, double coupon) {
+        return RateUtil.getRateMoneyWithCoupon(allMoney, getAmountRate(), coupon);
+    }
+
+    private String getGoodsJson() {
+        JSONArray jsonArray = new JSONArray();
+        if (mSelectProductModel != null) {
+            //(goods_id/source/spec_id/price/num)
+            for (SelectProductModel.GoodsInfo goodsInfo : mSelectProductModel.getGoodsInfo()) {
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("goods_id", goodsInfo.getGoodsId());
+                    jsonObject.put("source", goodsInfo.getSource());
+                    jsonObject.put("spec_id", goodsInfo.getSpecId());
+                    jsonObject.put("price", goodsInfo.getPrice());
+                    jsonObject.put("num", goodsInfo.getNum());
+                    jsonArray.put(jsonObject);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return jsonArray.toString();
+    }
+
+    private String getAddressJson() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("name", "张三");
+            jsonObject.put("mobile", "13888888888");
+            jsonObject.put("address", "上海大学路");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
     }
 }

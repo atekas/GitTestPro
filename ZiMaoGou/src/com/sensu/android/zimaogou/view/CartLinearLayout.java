@@ -156,6 +156,7 @@ public class CartLinearLayout extends LinearLayout {
                         goodsInfo.setName(cartDataChild.title);
                         goodsInfo.setSpec(cartDataChild.spec);
                         goodsInfo.setImage(cartDataChild.image);
+                        goodsInfo.setRate(cartDataChild.rate);
                         goodsInfoList.add(goodsInfo);
                     }
                 }
@@ -231,12 +232,12 @@ public class CartLinearLayout extends LinearLayout {
         return num;
     }
 
-    private int getAllMoney() {
-        int allMoney = 0;
+    private double getAllMoney() {
+        double allMoney = 0;
         for (CartDataResponse.CartDataChild cartDataChild : mCartDataGroup.data) {
             if (cartDataChild.getIsSelect()) {
-                int price = Integer.parseInt(cartDataChild.price);
-                int num = Integer.parseInt(cartDataChild.num);
+                double price = Double.parseDouble(cartDataChild.price);
+                double num = Double.parseDouble(cartDataChild.num);
                 allMoney += price * num;
             }
         }

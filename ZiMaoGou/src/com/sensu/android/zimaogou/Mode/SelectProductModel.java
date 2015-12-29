@@ -17,12 +17,12 @@ public class SelectProductModel implements Serializable {
         return mGoodsInfo;
     }
 
-    private int mTotalMoney;
-    public void setTotalMoney(int totalMoney) {
+    private double mTotalMoney;
+    public void setTotalMoney(double totalMoney) {
         mTotalMoney = totalMoney;
     }
 
-    public int getTotalMoney() {
+    public double getTotalMoney() {
         return mTotalMoney;
     }
 
@@ -100,6 +100,15 @@ public class SelectProductModel implements Serializable {
 
         public String getSpec() {
             return mSpec;
+        }
+
+        public String mRate;
+        public void setRate(String rate) {
+            mRate = rate;
+        }
+
+        public String getRate() {
+            return mRate;
         }
     }
 

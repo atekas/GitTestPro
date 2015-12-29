@@ -63,6 +63,9 @@ public class IConstants {
     public static final String sTb_member = "tb/member";
     public static final String sTb_detail = "tb/";
 
+    //订单
+    public static final String sOrder = "order";
+
     //首页
     public static final String sHome_grid = "goods/tag6";
 

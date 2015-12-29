@@ -34,6 +34,7 @@ public class CartDataResponse extends BaseReqResponse {
         public String real_num;
         public String goods_id;
         public String source;
+        public String rate;
 
         private boolean mIsSelect;
 
