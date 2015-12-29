@@ -2,12 +2,15 @@ package com.sensu.android.zimaogou.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.IConstants;
+import com.sensu.android.zimaogou.Mode.ReceiverAddressMode;
 import com.sensu.android.zimaogou.Mode.SelectProductModel;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.mycenter.CouponActivity;
@@ -45,6 +48,7 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
     private VerifyOrderAdapter mVerifyOrderAdapter;
 
     private SelectProductModel mSelectProductModel;
+    private AddressDefault mAddressDefault;
 
     private double mAmountMoney;
     private double mRateMoney;
@@ -96,11 +100,11 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void getAddressDefault() {
-        AddressDefault addressDefault = GDAddressDefaultHelper.getInstance(this).getAddressDefault();
-        if (addressDefault != null) {
-            ((TextView) findViewById(R.id.name)).setText(addressDefault.getName());
-            ((TextView) findViewById(R.id.phone_num)).setText(addressDefault.getMobile());
-            ((TextView) findViewById(R.id.address)).setText(addressDefault.getAddress());
+        mAddressDefault = GDAddressDefaultHelper.getInstance(this).getAddressDefault();
+        if (mAddressDefault != null) {
+            ((TextView) findViewById(R.id.name)).setText(mAddressDefault.getName());
+            ((TextView) findViewById(R.id.phone_num)).setText(mAddressDefault.getMobile());
+            ((TextView) findViewById(R.id.address)).setText(mAddressDefault.getAddress());
         } else {
             ((TextView) findViewById(R.id.name)).setText("请选择收货地址");
             findViewById(R.id.phone_num).setVisibility(View.INVISIBLE);
@@ -137,14 +141,11 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
                 startActivityForResult(new Intent(this, CouponActivity.class), CHOOSE_COUPON_CODE);
                 break;
             case R.id.verify_order:
-//                if (mPayWay == ZFB_PAY) {
-//                    PromptUtils.showToast("支付宝支付");
-//                } else if (mPayWay == WE_CHAT_PAY) {
-//                    PromptUtils.showToast("微信支付");
-//                }
-
+                if (TextUtils.isEmpty(getAddressJson()) || TextUtils.isEmpty(getGoodsJson())) {
+                    PromptUtils.showToast("数据有误");
+                    return;
+                }
                 createOrder();
-
                 break;
         }
     }
@@ -152,6 +153,32 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK) {
+            return;
+        }
+        switch (requestCode) {
+            case CHOOSE_ADDRESS_CODE:
+                ReceiverAddressMode receiverAddressMode = (ReceiverAddressMode) data.getSerializableExtra("address");
+                if (mAddressDefault == null) {
+                    mAddressDefault = new AddressDefault();
+                }
+                mAddressDefault.setId(receiverAddressMode.getId());
+                mAddressDefault.setName(receiverAddressMode.getName());
+                mAddressDefault.setAddress(receiverAddressMode.getAddress());
+                mAddressDefault.setCity(receiverAddressMode.getCity());
+                mAddressDefault.setCity_id(receiverAddressMode.getCity_id());
+                mAddressDefault.setDistrict(receiverAddressMode.getDistrict());
+                mAddressDefault.setDistrict_id(receiverAddressMode.getDistrict_id());
+                mAddressDefault.setId_card(receiverAddressMode.getId_card());
+                mAddressDefault.setMobile(receiverAddressMode.getMobile());
+                mAddressDefault.setProvince(receiverAddressMode.getProvince());
+                mAddressDefault.setProvince_id(receiverAddressMode.getProvince_id());
+
+                ((TextView) findViewById(R.id.name)).setText(mAddressDefault.getName());
+                ((TextView) findViewById(R.id.phone_num)).setText(mAddressDefault.getMobile());
+                ((TextView) findViewById(R.id.address)).setText(mAddressDefault.getAddress());
+                break;
+        }
     }
 
     private void createOrder() {
@@ -219,14 +246,12 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
     }
 
     private String getAddressJson() {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("name", "张三");
-            jsonObject.put("mobile", "13888888888");
-            jsonObject.put("address", "上海大学路");
-        } catch (JSONException e) {
-            e.printStackTrace();
+        Gson gson = new Gson();
+        if (mAddressDefault != null) {
+            String addressJson = gson.toJson(mAddressDefault);
+            return addressJson;
+        } else {
+            return null;
         }
-        return jsonObject.toString();
     }
 }

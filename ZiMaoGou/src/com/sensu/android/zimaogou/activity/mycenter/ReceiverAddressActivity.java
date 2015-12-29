@@ -3,6 +3,7 @@ package com.sensu.android.zimaogou.activity.mycenter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import com.alibaba.fastjson.JSON;
@@ -28,7 +29,7 @@ import org.json.JSONObject;
 /**
  * Created by qi.yang on 2015/11/20.
  */
-public class ReceiverAddressActivity extends BaseActivity {
+public class ReceiverAddressActivity extends BaseActivity implements AdapterView.OnItemClickListener {
     public static final String IS_NO_EDIT = "is_no_edit";
 
     ImageView mBackImageView;
@@ -59,7 +60,7 @@ public class ReceiverAddressActivity extends BaseActivity {
             }
         });
         mReceiverAddressListView.setDivider(null);
-
+        mReceiverAddressListView.setOnItemClickListener(this);
     }
 
     @Override
@@ -131,5 +132,13 @@ public class ReceiverAddressActivity extends BaseActivity {
                 GDAddressDefaultHelper.getInstance(this).insertAddress(addressDefault);
             }
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        ReceiverAddressMode receiverAddressMode = receiverAddressResponse.data.get(i);
+        Intent intent = new Intent();
+        intent.putExtra("address", receiverAddressMode);
+        setResult(RESULT_OK, intent);
     }
 }
