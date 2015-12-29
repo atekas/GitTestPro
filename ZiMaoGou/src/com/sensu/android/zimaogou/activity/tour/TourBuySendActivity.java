@@ -38,6 +38,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +51,7 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
     public static final String VIDEO_PATH = "video_path";
 
     String path;
-
+    String mServiceVideoPath = "";
     private Object mAdd;
     private List<Object> mObjectList = new ArrayList<Object>();
 
@@ -79,6 +80,7 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
     int mSendSuccess = 0;
     boolean mIsUpload = true;
     String location = "";
+    String coverUrl = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,8 +107,14 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
             mVideoPath = getIntent().getStringExtra(VIDEO_PATH);
             MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
             mediaMetadataRetriever.setDataSource(mVideoPath);
-            Bitmap bitmap = mediaMetadataRetriever.getFrameAtTime();
-            ((ImageView) findViewById(R.id.video_cover)).setImageBitmap(bitmap);
+            Bitmap bitmap = mediaMetadataRetriever.getFrameAtTime(1);
+
+            try {
+                coverUrl = BitmapUtils.saveImg(bitmap,"cover");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            ImageUtils.displayImage("file://" + coverUrl, (ImageView) findViewById(R.id.video_cover));
         } else {
             //图片
             mGridView.setVisibility(View.VISIBLE);
@@ -160,67 +168,23 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.release:
                 //TODO 发布按钮
-                if (mPhotoList.size() == 0) {
-                    return;
-                }
+
                 if (!checkInputData()) {//检查参数
                     return;
                 }
                 mServiceImages.clear();
                 mSendSuccess = 0;
-                for (int i = 0; i < mPhotoList.size(); i++) {
-                    HttpUtil.postImage(userInfo.getUid(), userInfo.getToken(), mPhotoList.get(i).getmUploadPath(), new JsonHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                            super.onSuccess(statusCode, headers, response);
-                            LogUtils.d("上传图片返回：", response.toString());
-                            mSendSuccess++;
-                            String photoUrl = "";
-                            try {
-                                photoUrl = response.getJSONObject("data").getString("url");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            mServiceImages.add(photoUrl);
-                            if (mSendSuccess == mPhotoList.size()) {
-
-                                final RequestParams requestParams = new RequestParams();
-                                requestParams.put("uid", userInfo.getUid());
-                                setRequestData(requestParams);
-                                HttpUtil.postWithSign(userInfo.getToken(), IConstants.sSendTravel, requestParams, new JsonHttpResponseHandler() {
-                                    @Override
-                                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                                        super.onSuccess(statusCode, headers, response);
-                                        LogUtils.d("发布游购返回：", response.toString());
-                                        try {
-                                            if(response.getString("ret").equals("0")){
-                                                PromptUtils.showToast(response.getString("msg"));
-                                                finish();
-                                            }
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                                        super.onFailure(statusCode, headers, responseString, throwable);
-                                        PromptUtils.showToast("发布游购失败");
-                                        LogUtils.d("发布游购返回：", "ErrorCode:" + statusCode + "Html:" + responseString);
-                                    }
-                                });
-
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                            super.onFailure(statusCode, headers, responseString, throwable);
-                            mIsUpload = false;
-                            PromptUtils.showToast("上传图片出错");
-                        }
-                    });
+                if (mIsVideo) {
+                    uploadImage(coverUrl);
+                }else {
+                    if (mPhotoList.size() == 0) {
+                        return;
+                    }
+                    for (int i = 0; i < mPhotoList.size(); i++) {
+                        uploadImage(mPhotoList.get(i).getmUploadPath());
+                    }
                 }
+
                 break;
             case R.id.choose_country:
                 //TODO 选择国家 弹出对话框
@@ -276,9 +240,10 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
 
     class TourPicAdapter extends SimpleBaseAdapter {
         private int size = 0;
+
         @Override
         public void notifyDataSetChanged() {
-            if(size == mPhotoList.size()){
+            if (size == mPhotoList.size()) {
                 return;
             }
             for (PhotoInfo photoInfo : mPhotoList) {
@@ -395,7 +360,6 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
                 LogUtils.d("获取游购国家，标签", response.toString());
                 TravelSendResponse travelSendResponse = new TravelSendResponse();
                 travelSendResponse = JSON.parseObject(response.toString(), TravelSendResponse.class);
-                travelTagModes = travelSendResponse.data.tag;
                 landModes = travelSendResponse.data.country;
 
 
@@ -409,10 +373,10 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
                 try {
                     JSONArray data = response.getJSONArray("data");
                     JSONObject item = null;
-                    for(int i = 0; i < data.length();i++){
+                    for (int i = 0; i < data.length(); i++) {
                         item = (JSONObject) data.get(i);
                         TravelTagMode tagMode = new TravelTagMode();
-                        tagMode = JSON.parseObject(item.toString(),TravelTagMode.class);
+                        tagMode = JSON.parseObject(item.toString(), TravelTagMode.class);
                         travelTagModes.add(tagMode);
                     }
 
@@ -427,7 +391,8 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
 
     private void setRequestData(RequestParams requestParams) {
         JSONObject jsonObject = new JSONObject();
-        requestParams.put("category", "1");
+
+
         requestParams.put("location", mLocationTextView.getText().toString());
         requestParams.put("country", mCountryNameTextView.getText().toString());
         requestParams.put("content", mContentEditText.getText().toString());
@@ -444,9 +409,18 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
         for (int j = 0; j < mServiceImages.size(); j++) {
             jsonArray1.put(mServiceImages.get(j));
         }
-        requestParams.put("images", jsonArray1);
+        if (mIsVideo) {
+            requestParams.put("category", "2");
+            requestParams.put("images", "");
+            requestParams.put("cover", mServiceImages.get(0));
+            requestParams.put("video",mServiceVideoPath);
+        } else {
+            requestParams.put("category", "1");
+            requestParams.put("images", jsonArray1);
+        }
 
     }
+
 
     /**
      * 检查必填参数
@@ -474,5 +448,100 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
             return false;
         }
         return true;
+    }
+
+    private void uploadImage(String url) {
+        HttpUtil.postImage(userInfo.getUid(), userInfo.getToken(), url, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                LogUtils.d("上传图片返回：", response.toString());
+                mSendSuccess++;
+                String photoUrl = "";
+                try {
+                    photoUrl = response.getJSONObject("data").getString("url");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                mServiceImages.add(photoUrl);
+                if (!mIsVideo) {
+                    if (mSendSuccess != mPhotoList.size()) {
+                        return;
+                    }
+                    uploadTravel();
+                } else {
+                    uploadVideo();
+                }
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                mIsUpload = false;
+                PromptUtils.showToast("上传图片出错");
+            }
+        });
+    }
+
+
+    private void uploadVideo() {
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("uid", userInfo.getUid());
+        try {
+
+            requestParams.put("body",new File(mVideoPath),"application/mp4");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        HttpUtil.postWithSign(userInfo.getToken(), IConstants.sVideoUpload, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                LogUtils.d("上传视频返回：", response.toString());
+                try {
+                    mServiceVideoPath = response.getJSONObject("data").getString("url");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                uploadTravel();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                LogUtils.d("上传视频失败",responseString.toString());
+            }
+        });
+    }
+
+    private void uploadTravel() {
+        final RequestParams requestParams = new RequestParams();
+        requestParams.put("uid", userInfo.getUid());
+        setRequestData(requestParams);
+        HttpUtil.postWithSign(userInfo.getToken(), IConstants.sSendTravel, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                LogUtils.d("发布游购返回：", response.toString());
+                try {
+                    if (response.getString("ret").equals("0")) {
+                        PromptUtils.showToast(response.getString("msg"));
+                        finish();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                PromptUtils.showToast("发布游购失败");
+                LogUtils.d("发布游购返回：", "ErrorCode:" + statusCode + "Html:" + responseString);
+            }
+        });
+
+
     }
 }

@@ -48,6 +48,8 @@ public class IConstants {
     public static final String sRegister = "user/register";
     //上传图片
     public static final String sImageUpload = "image/upload";
+    //上传视频
+    public static final String sVideoUpload = "video/upload";
     //获取配置：国家
     public static final String sGetComm = "conf/comm";
     //获取游购标签
@@ -78,5 +80,8 @@ public class IConstants {
     public  static final String sGetReceiverAddress = "my/address";
     //添加收货地址
     public  static final String sAddAddress = "user/address";
+
+    //获取我的订单
+    public static final String sGetMyOrder = "my/order";
 
 }

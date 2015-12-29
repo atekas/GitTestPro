@@ -1,5 +1,6 @@
 package com.sensu.android.zimaogou.utils;
 
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.util.LruCache;
 import com.sensu.android.zimaogou.encrypt.MD5Utils;
@@ -14,12 +15,14 @@ import java.util.Locale;
 /**
  * Created by winter on 2015/9/22.
  * 文件操作工具
+ *
  * @author winter
  */
 public class FileUtils {
 
     /**
      * 对文件排序，文件夹在前，文件在后，同类型按照名称排序
+     *
      * @param files
      */
     public static void sort(File[] files) {
@@ -62,6 +65,7 @@ public class FileUtils {
 
     /**
      * 取出文件名中的无效字符
+     *
      * @param srcStr
      * @return 去除文件名后的字符
      */
@@ -71,6 +75,7 @@ public class FileUtils {
 
     /**
      * 判断路径是文件，且存在
+     *
      * @param path 文件路径，如果传入null字符串，则认为文件不存在
      * @return 如果条件成立，返回true；
      */
@@ -90,6 +95,7 @@ public class FileUtils {
      * <p> 由文件夹路径字符串创建一个文件夹
      * <p> 1.路径已经存在，不创建
      * <p> 2.如果路径是个文件，删除后创建
+     *
      * @param path 文件夹路径字符串
      */
     public static void createPath(String path) {
@@ -107,6 +113,7 @@ public class FileUtils {
     /**
      * <p> 由文件路径创建文件
      * <p> 1.文件已经存在则不创建
+     *
      * @param filePath
      * @return
      * @throws java.io.IOException
@@ -148,7 +155,7 @@ public class FileUtils {
             return file.delete();
         } else if (file.isDirectory()) {
             File[] files = file.listFiles();
-            for (File f: files) {
+            for (File f : files) {
                 deleteFile(f);
             }
             return file.delete();
@@ -159,6 +166,7 @@ public class FileUtils {
 
     /**
      * 重命名文件
+     *
      * @param srcPath 原名
      * @param dstPath 重命名后的文件名
      * @return 成功为true
@@ -180,6 +188,7 @@ public class FileUtils {
      * <p> Reader reader4 = new CharArrayReader(new char[] {'a', 'b', 'c'});
      * <p> Reader reader5 = new BufferedReader(reader1);
      * <p> Reader reader6 = new LineNumberReader(reader2);
+     *
      * @param reader
      * @return
      */
@@ -188,8 +197,8 @@ public class FileUtils {
     }
 
     /**
-     *  StringUtils.stringFromInputStream()类似
-     * */
+     * StringUtils.stringFromInputStream()类似
+     */
     public static StringBuilder readUseReader(Reader reader, StringBuilder error) {
         try {
             StringBuilder content = new StringBuilder();
@@ -215,6 +224,7 @@ public class FileUtils {
      * <p> Reader reader4 = new CharArrayReader(new char[] {'a', 'b', 'c'});
      * <p> Reader reader5 = new BufferedReader(reader1);
      * <p> Reader reader6 = new LineNumberReader(reader2);
+     *
      * @param reader
      * @return
      */
@@ -226,7 +236,7 @@ public class FileUtils {
         BufferedReader bufferedReader = new BufferedReader(reader);
         StringBuilder content = new StringBuilder();
         String line;
-        try{
+        try {
             while ((line = bufferedReader.readLine()) != null) {
                 content.append(line);
             }
@@ -248,6 +258,7 @@ public class FileUtils {
      * <p> Writer writer4 = new CharArrayWriter();
      * <p> Writer writer5 = new BufferedWriter(writer1);
      * <p> Writer writer6 = new LogWriter("tag");
+     *
      * @param writer
      * @param str
      * @return
@@ -292,7 +303,7 @@ public class FileUtils {
         int length = 1000;
         int size;
         byte[] bs = new byte[length];
-        while ((size = inputStream.read(bs, 0, length)) >0) {
+        while ((size = inputStream.read(bs, 0, length)) > 0) {
             outputStream.write(bs, 0, size);
         }
         outputStream.flush();
@@ -368,4 +379,7 @@ public class FileUtils {
         }
         return false;
     }
+
+
+
 }

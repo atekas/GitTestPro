@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import com.sensu.android.zimaogou.Mode.MyOrderMode;
 import com.sensu.android.zimaogou.Mode.OrderMode;
 import com.sensu.android.zimaogou.Mode.ProductMode;
 import com.sensu.android.zimaogou.R;
@@ -22,12 +23,12 @@ import java.util.ArrayList;
  * Created by qi.yang on 2015/11/18.
  */
 public class OrderListAdapter extends SimpleBaseAdapter {
-    ArrayList<OrderMode> mOrders;
-    public void flush(ArrayList<OrderMode> orders){
+    ArrayList<MyOrderMode> mOrders;
+    public void flush(ArrayList<MyOrderMode> orders){
         this.mOrders = orders;
         this.notifyDataSetChanged();
     }
-    public OrderListAdapter(Context context,ArrayList<OrderMode> mOrders) {
+    public OrderListAdapter(Context context,ArrayList<MyOrderMode> mOrders) {
         super(context);
         this.mOrders = mOrders;
     }
@@ -71,8 +72,8 @@ public class OrderListAdapter extends SimpleBaseAdapter {
                 mContext.startActivity(new Intent(mContext, OrderDetailActivity.class));
             }
         });
-        switch (mOrders.get(i).getType()){
-            case 1:
+        switch (mOrders.get(i).getState()){
+            case 0:
                 viewHolder.rl_button.setVisibility(View.VISIBLE);
                 viewHolder.rl_amount.setVisibility(View.VISIBLE);
                 viewHolder.bt_cancel.setVisibility(View.GONE);
@@ -80,7 +81,7 @@ public class OrderListAdapter extends SimpleBaseAdapter {
                 viewHolder.bt_submit.setText("付款");
                 viewHolder.tv_orderType.setText("待付款");
                 break;
-            case 2:
+            case 1:
                 viewHolder.rl_button.setVisibility(View.VISIBLE);
                 viewHolder.rl_amount.setVisibility(View.VISIBLE);
                 viewHolder.bt_cancel.setVisibility(View.VISIBLE);
@@ -89,7 +90,7 @@ public class OrderListAdapter extends SimpleBaseAdapter {
                 viewHolder.bt_submit.setText("确认收货");
                 viewHolder.tv_orderType.setText("待收货");
                 break;
-            case 3:
+            case 2:
                 viewHolder.rl_button.setVisibility(View.VISIBLE);
                 viewHolder.rl_amount.setVisibility(View.GONE);
                 viewHolder.bt_cancel.setVisibility(View.VISIBLE);
@@ -122,11 +123,14 @@ public class OrderListAdapter extends SimpleBaseAdapter {
             }
         });
         viewHolder.tv_showNum.setText("共"+mOrders.size()+"件商品，合计:");
-        viewHolder.tv_amount.setText(amountMoney(mOrders.get(i))+"");
-        OrderChildListAdapter adapter = new OrderChildListAdapter(mContext,mOrders.get(i).getPros(),mOrders.get(i).getType());
+        viewHolder.tv_amount.setText(mOrders.get(i).getAmount_total());
+        viewHolder.tv_orderNo.setText(mOrders.get(i).getOrder_no());
+        viewHolder.tv_freight.setText("(含运费：￥"+mOrders.get(i).getAmount_express()+")");
+
+        OrderChildListAdapter adapter = new OrderChildListAdapter(mContext,mOrders.get(i).getGoods(),mOrders.get(i).getState());
         viewHolder.lv_products.setDivider(null);
         viewHolder.lv_products.setAdapter(adapter);
-        adapter.flush(mOrders.get(i).getPros());
+        adapter.flush(mOrders.get(i).getGoods());
         UiUtils.setListViewHeightBasedOnChilds(viewHolder.lv_products);
         return view;
     }
@@ -138,11 +142,5 @@ public class OrderListAdapter extends SimpleBaseAdapter {
         public Button bt_cancel,bt_submit,bt_comment;
     }
 
-    private double amountMoney(OrderMode order){
-        double sum = 0;
-        for(ProductMode pro:order.getPros()){
-            sum += pro.getPrice()*pro.getNum();
-        }
-        return sum;
-    }
+
 }

@@ -4,8 +4,10 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.sensu.android.zimaogou.Mode.MyOrderGoodsMode;
 import com.sensu.android.zimaogou.Mode.ProductMode;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.utils.ImageUtils;
 
 import java.util.ArrayList;
 
@@ -13,14 +15,14 @@ import java.util.ArrayList;
  * Created by qi.yang on 2015/11/18.
  */
 public class OrderChildListAdapter extends SimpleBaseAdapter {
-    ArrayList<ProductMode> mProducts;
+    ArrayList<MyOrderGoodsMode> mProducts;
     int type = 1;
-    public void flush(ArrayList<ProductMode> mProducts){
+    public void flush(ArrayList<MyOrderGoodsMode> mProducts){
         this.mProducts = mProducts;
         this.notifyDataSetChanged();
     }
 
-    public OrderChildListAdapter(Context context,ArrayList<ProductMode> mProducts,int type) {
+    public OrderChildListAdapter(Context context,ArrayList<MyOrderGoodsMode> mProducts,int type) {
         super(context);
         this.mProducts = mProducts;
         this.type = type;
@@ -45,15 +47,19 @@ public class OrderChildListAdapter extends SimpleBaseAdapter {
             productsViewHolder.tv_productPrice = (TextView) view.findViewById(R.id.tv_productPrice);
             productsViewHolder.ll_refund = (LinearLayout) view.findViewById(R.id.ll_refund);
             productsViewHolder.tv_refundMoney = (TextView) view.findViewById(R.id.tv_refundMoney);
+            productsViewHolder.tv_spc = (TextView) view.findViewById(R.id.tv_spc);
             view.setTag(productsViewHolder);
         }else{
             productsViewHolder = (ProductsViewHolder) view.getTag();
         }
-        productsViewHolder.img_pro.setImageResource(mProducts.get(i).getTestImg());
+        ImageUtils.displayImage(mProducts.get(i).getImage(),productsViewHolder.img_pro);
+
         productsViewHolder.tv_productPrice.setText("￥" + mProducts.get(i).getPrice());
         productsViewHolder.tv_refundMoney.setText("￥" + mProducts.get(i).getPrice());
-        productsViewHolder.tv_productName.setText(mProducts.get(i).getTestTitle());
+        productsViewHolder.tv_productName.setText(mProducts.get(i).getName());
         productsViewHolder.tv_productNum.setText("x"+mProducts.get(i).getNum());
+        productsViewHolder.tv_spc.setText(mProducts.get(i).getSpec());
+
         if(type == 3){
             productsViewHolder.ll_refund.setVisibility(View.VISIBLE);
             productsViewHolder.tv_productPrice.setVisibility(View.GONE);
@@ -61,12 +67,13 @@ public class OrderChildListAdapter extends SimpleBaseAdapter {
             productsViewHolder.ll_refund.setVisibility(View.GONE);
             productsViewHolder.tv_productPrice.setVisibility(View.VISIBLE);
         }
+
         return view;
     }
 
     public static class ProductsViewHolder {
         public ImageView img_choose,img_pro;
-        public TextView tv_productName,tv_productNum,tv_productPrice,tv_refundMoney;
+        public TextView tv_productName,tv_productNum,tv_productPrice,tv_refundMoney,tv_spc;
         public RelativeLayout rl_showType;
         public LinearLayout ll_refund;
     }

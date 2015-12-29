@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class MyTagListView extends FlowLayout {
 
-    private final List<TravelTagMode> mTravelTagModes = new ArrayList<TravelTagMode>();
+    private List<TravelTagMode> mTravelTagModes = new ArrayList<TravelTagMode>();
 
     public MyTagListView(Context context) {
         super(context);
@@ -43,32 +43,34 @@ public class MyTagListView extends FlowLayout {
         }
     }
 
-    public void addTravelTagMode(TravelTagMode TravelTagMode, boolean b) {
-        mTravelTagModes.add(TravelTagMode);
-        inflateTravelTagModeView(TravelTagMode, b);
+    public void addTravelTagMode(TravelTagMode travelTagMode, boolean b) {
+        mTravelTagModes.add(travelTagMode);
+        inflateTravelTagModeView(travelTagMode, b);
     }
 
-    private void inflateTravelTagModeView(final TravelTagMode t, boolean b) {
+    private void inflateTravelTagModeView(TravelTagMode t, boolean b) {
         View localTravelTagModeView = View.inflate(getContext(),
                 R.layout.travel_tag_list_item, null);
         final LinearLayout ll_tag = (LinearLayout) localTravelTagModeView.findViewById(R.id.food_layout);
         final TextView tv_title = (TextView) localTravelTagModeView.findViewById(R.id.food_text);
         final ImageView img_tag = (ImageView) localTravelTagModeView.findViewById(R.id.food_select);
         tv_title.setText(t.getName());
+        ll_tag.setTag(t);
         ll_tag.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                if (t.isCheck()) {
+                TravelTagMode tagMode = (TravelTagMode) ll_tag.getTag();
+                if (tagMode.isCheck()) {
                     ll_tag.setSelected(false);
                     tv_title.setSelected(false);
                     img_tag.setVisibility(View.GONE);
-                    t.setCheck(false);
+                    tagMode.setCheck(!tagMode.isCheck());
                 } else {
                     ll_tag.setSelected(true);
                     tv_title.setSelected(true);
                     img_tag.setVisibility(View.VISIBLE);
-                    t.setCheck(true);
+                    tagMode.setCheck(!tagMode.isCheck());
                 }
             }
         });

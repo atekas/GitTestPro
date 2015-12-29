@@ -331,7 +331,7 @@ public class BitmapUtils {
     public static String saveImg(Bitmap b, String name) throws Exception {
         String path = BaseApplication.getBaseApplication().getBaseExternalCacheDir()
                 + File.separator + "temp/image/";
-        File mediaFile = new File(path + File.separator + name + ".jpg");
+        File mediaFile = new File(path + File.separator + System.currentTimeMillis()+name + ".jpg");
 
         if (mediaFile.exists()) {
             mediaFile.delete();
