@@ -65,7 +65,7 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
         mListView.setAdapter(mVerifyOrderAdapter);
         if (mSelectProductModel != null) {
             mVerifyOrderAdapter.setSelectProductModel(mSelectProductModel);
-            mAmountMoneyView.setText(mSelectProductModel.getTotalMoney());
+            mAmountMoneyView.setText(mSelectProductModel.getTotalMoney()+"");
         }
     }
 

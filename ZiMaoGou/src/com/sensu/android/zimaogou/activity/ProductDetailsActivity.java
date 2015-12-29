@@ -379,7 +379,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                     if (spec.color.equals(color)) {
                         for (ProductDetailsResponse.Spec spec1 : mProductDetailsResponse.data.spec) {
                             if (!TextUtils.isEmpty(size)) {
-                                if (spec1.capacity.equals(size)) {
+                                if (spec1.size.equals(size)) {
                                     id = spec1.id;
                                 }
                             }
@@ -390,10 +390,10 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         } else if (!TextUtils.isEmpty(capacity) && !TextUtils.isEmpty(size)) {
             for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
                 if (!TextUtils.isEmpty(capacity)) {
-                    if (spec.color.equals(capacity)) {
+                    if (spec.capacity.equals(capacity)) {
                         for (ProductDetailsResponse.Spec spec1 : mProductDetailsResponse.data.spec) {
                             if (!TextUtils.isEmpty(size)) {
-                                if (spec1.capacity.equals(size)) {
+                                if (spec1.size.equals(size)) {
                                     id = spec1.id;
                                 }
                             }
