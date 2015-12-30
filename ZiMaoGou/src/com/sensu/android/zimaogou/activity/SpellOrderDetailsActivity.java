@@ -193,6 +193,7 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
     }
 
     private void addUserPhoto(List<GroupMemberResponse.MemberInfo> memberInfoList) {
+        mUserHeadContainer.removeAllViews();
         for (int i = 0; i < memberInfoList.size(); i++) {
             RoundImageView roundImageView = new RoundImageView(this);
             roundImageView.setPadding(5, 5, 5, 5);
@@ -323,6 +324,8 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
 
                 String tbId = response.optJSONObject("data").optString("tb_id");
                 getGroupDetail(tbId);
+
+                mCommandInputDialog.dismiss();
             }
 
             @Override
