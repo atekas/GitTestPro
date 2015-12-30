@@ -50,10 +50,9 @@ public class BaseApplication extends Application {
         super.onCreate();
         mChooseAddress = new ProvinceMode();
         mBaseApplication = this;
-        PlatformConfig.setWeixin("wx22e5d0e3792db66a", "dfbe36c15fe8317f34ad8a17170c7a4c");
+        PlatformConfig.setWeixin("wx967daebe835fbeac", "5bb696d9ccd75a38c8a0bfe0675559b3");
         //新浪微博
-        PlatformConfig.setSinaWeibo("3379781848", "4694a246726f6fdd1e93aabdfbd444c0");
-
+        PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad");
         // /storage/emulated/0/general/
         mUserDir = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "zimaogou" + File.separator;
         // /storage/emulated/0/general/image/

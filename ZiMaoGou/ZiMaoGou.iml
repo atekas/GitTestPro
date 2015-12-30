@@ -155,5 +155,19 @@
     <orderEntry type="library" exported="" name="open_sdk_r5509" level="project" />
     <orderEntry type="library" exported="" name="libapshare" level="project" />
     <orderEntry type="library" exported="" name="mta-sdk-1.6.2" level="project" />
+    <orderEntry type="library" exported="" name="SocialSDK_whatsapp" level="project" />
+    <orderEntry type="library" exported="" name="SocialSDK_yixin_1" level="project" />
+    <orderEntry type="library" exported="" name="SocialSDK_yixin_2" level="project" />
+    <orderEntry type="library" exported="" name="SocialSDK_ynote" level="project" />
+    <orderEntry type="library" exported="" name="twitter4j-core-4.0.4" level="project" />
+    <orderEntry type="library" exported="" name="SocialSDK_twitter" level="project" />
+    <orderEntry type="library" exported="" name="SocialSDK_tumblr" level="project" />
+    <orderEntry type="library" exported="" name="SocialSDK_tencentWB_3" level="project" />
+    <orderEntry type="library" exported="" name="SocialSDK_tencentWB_2" level="project" />
+    <orderEntry type="library" exported="" name="SocialSDK_tencentWB_1" level="project" />
+    <orderEntry type="library" exported="" name="SocialSDK_sms" level="project" />
+    <orderEntry type="library" exported="" name="SocialSDK_renren_2" level="project" />
+    <orderEntry type="library" exported="" name="SocialSDK_renren_1" level="project" />
+    <orderEntry type="library" exported="" name="SocialSDK_alipay" level="project" />
   </component>
 </module>
