@@ -28,5 +28,7 @@ public class GroupBuyListResponse extends BaseReqResponse {
         public String end_time;
         public String goods_id;
         public String state;
+        public String rate;
+        public String goods_image;
     }
 }

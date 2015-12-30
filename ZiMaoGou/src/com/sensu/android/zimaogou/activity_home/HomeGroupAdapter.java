@@ -69,7 +69,7 @@ public class HomeGroupAdapter extends BaseAdapter {
         } else {
             gsHolder = (GroupSpeViewHolder) convertView.getTag();
         }
-        ImageUtils.displayImage(pros.get(position).media,gsHolder.mImage);
+        ImageUtils.displayImage(pros.get(position).goods_image,gsHolder.mImage);
         gsHolder.mTitle.setText(pros.get(position).content);
         gsHolder.mPersons.setText(pros.get(position).max_num+"人成团");
         gsHolder.mSalePrice.setText(pros.get(position).price);
