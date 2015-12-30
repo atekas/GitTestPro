@@ -17,6 +17,15 @@ public class SelectProductModel implements Serializable {
         return mGoodsInfo;
     }
 
+    public String mDeliverAddress;
+    public void setDeliverAddress(String deliverAddress) {
+        mDeliverAddress = deliverAddress;
+    }
+
+    public String getDeliverAddress() {
+        return mDeliverAddress;
+    }
+
     private double mTotalMoney;
     public void setTotalMoney(double totalMoney) {
         mTotalMoney = totalMoney;
@@ -110,6 +119,7 @@ public class SelectProductModel implements Serializable {
         public String getRate() {
             return mRate;
         }
+
     }
 
 }

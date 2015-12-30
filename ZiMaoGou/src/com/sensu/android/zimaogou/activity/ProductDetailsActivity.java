@@ -402,6 +402,26 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 }
             }
         }
+
+        if (mProductDetailsResponse.data.spec_attr.size() == 0) {
+            id = mProductDetailsResponse.data.spec.get(0).id;
+        } else if (mProductDetailsResponse.data.spec_attr.size() == 1) {
+            for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
+                if (!TextUtils.isEmpty(color)) {
+                    if (spec.color.equals(color)) {
+                        id = spec.id;
+                    }
+                } else if (!TextUtils.isEmpty(size)) {
+                    if (spec.size.equals(size)) {
+                        id = spec.id;
+                    }
+                } else if (!TextUtils.isEmpty(capacity)) {
+                    if (spec.capacity.equals(capacity)) {
+                        id = spec.id;
+                    }
+                }
+            }
+        }
         return id;
     }
 

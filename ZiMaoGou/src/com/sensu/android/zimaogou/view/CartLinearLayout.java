@@ -49,7 +49,7 @@ public class CartLinearLayout extends LinearLayout {
         setOrientation(VERTICAL);
     }
 
-    public void setCartGroup(CartDataResponse.CartDataGroup cartDataGroup, boolean isEdit
+    public void setCartGroup(final CartDataResponse.CartDataGroup cartDataGroup, boolean isEdit
             , ListView listView, ShoppingBagAdapter shoppingBagAdapter, int flag) {
         mFlag = flag;
         mShoppingBagAdapter = shoppingBagAdapter;
@@ -162,6 +162,7 @@ public class CartLinearLayout extends LinearLayout {
                 }
                 selectProductModel.setGoodsInfo(goodsInfoList);
                 selectProductModel.setTotalMoney(getAllMoney());
+                selectProductModel.setDeliverAddress(cartDataGroup.deliver_address);
                 if (selectProductModel.getGoodsInfo().size() == 0) {
                     PromptUtils.showToast("请选择要付款的商品");
                     return;

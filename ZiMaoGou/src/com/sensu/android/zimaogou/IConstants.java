@@ -67,6 +67,9 @@ public class IConstants {
 
     //订单
     public static final String sOrder = "order";
+    //运费规则
+    public static final String sExpressRule = "conf/express_rule";
+
 
     //首页
     public static final String sHome_grid = "goods/tag6";

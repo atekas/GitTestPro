@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -13,6 +14,7 @@ import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.Mode.ReceiverAddressMode;
 import com.sensu.android.zimaogou.Mode.SelectProductModel;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.ReqResponse.ExpressRuleResponse;
 import com.sensu.android.zimaogou.activity.mycenter.CouponActivity;
 import com.sensu.android.zimaogou.activity.mycenter.ReceiverAddressActivity;
 import com.sensu.android.zimaogou.adapter.VerifyOrderAdapter;
@@ -49,9 +51,11 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
 
     private SelectProductModel mSelectProductModel;
     private AddressDefault mAddressDefault;
+    private ExpressRuleResponse mExpressRuleResponse;
 
     private double mAmountMoney;
     private double mRateMoney;
+    private double mExpressMoney;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +67,8 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initViews() {
+
+        getExpressRule();
 
         mSelectProductModel = (SelectProductModel) getIntent().getSerializableExtra(PRODUCT_FOR_PAY);
 
@@ -87,6 +93,9 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
         getAddressDefault();
 
         if (mSelectProductModel != null) {
+
+            getExpressMoney();
+
             mVerifyOrderAdapter.setSelectProductModel(mSelectProductModel);
             ((TextView) findViewById(R.id.amount_money)).setText("¥ " + mSelectProductModel.getTotalMoney());
             mRateMoney = getAmountRate();
@@ -96,6 +105,8 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
 
             mAmountMoney = mSelectProductModel.getTotalMoney() + getAmountRate();
             mAmountMoneyView.setText("¥ " + mAmountMoney);
+
+            ((TextView) findViewById(R.id.express_money)).setText("¥ " + mExpressMoney);
         }
     }
 
@@ -109,6 +120,20 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
             ((TextView) findViewById(R.id.name)).setText("请选择收货地址");
             findViewById(R.id.phone_num).setVisibility(View.INVISIBLE);
             findViewById(R.id.address).setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private void getExpressMoney() {
+        if (mExpressRuleResponse != null) {
+            for (ExpressRuleResponse.ExpressRuleData expressRuleData : mExpressRuleResponse.data) {
+                if (expressRuleData.deliver_address.equals(mSelectProductModel.getDeliverAddress())) {
+                    if (mSelectProductModel.getTotalMoney() > Double.parseDouble(expressRuleData.end_amount)) {
+                        mExpressMoney = 0;
+                    } else {
+                        mExpressMoney = Double.parseDouble(expressRuleData.express_amount);
+                    }
+                }
+            }
         }
     }
 
@@ -202,6 +227,7 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
+                PromptUtils.showToast("生成订单失败");
             }
         });
     }
@@ -253,5 +279,21 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
         } else {
             return null;
         }
+    }
+
+    private void getExpressRule() {
+        HttpUtil.get(IConstants.sExpressRule, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                ExpressRuleResponse expressRuleResponse = JSON.parseObject(response.toString(), ExpressRuleResponse.class);
+                mExpressRuleResponse = expressRuleResponse;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
     }
 }

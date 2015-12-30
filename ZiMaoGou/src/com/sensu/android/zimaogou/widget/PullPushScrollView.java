@@ -53,7 +53,8 @@ public class PullPushScrollView extends ScrollView implements View.OnClickListen
         mProductDetailData = productDetailData;
         ((TextView) findViewById(R.id.product_name)).setText(productDetailData.name);
         ((TextView) findViewById(R.id.now_price)).setText(productDetailData.price);
-        ((TextView) findViewById(R.id.price_market)).setText(productDetailData.price_market);
+        ((TextView) findViewById(R.id.price_market)).setText("¥" + productDetailData.price_market);
+        com.sensu.android.zimaogou.utils.TextUtils.addLineCenter(((TextView) findViewById(R.id.price_market)));
         if (TextUtils.isEmpty(productDetailData.sale_title)) {
             findViewById(R.id.sale_title).setVisibility(GONE);
         } else {
