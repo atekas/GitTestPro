@@ -6,13 +6,21 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import com.alibaba.fastjson.JSON;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.ReqResponse.HotKeywordsResponse;
 import com.sensu.android.zimaogou.adapter.SearchGirdAdapter;
 import com.sensu.android.zimaogou.adapter.SearchListAdapter;
 import com.sensu.android.zimaogou.external.greendao.helper.GDSearchKeywordHelper;
 import com.sensu.android.zimaogou.external.greendao.model.SearchKeyword;
+import com.sensu.android.zimaogou.utils.HttpUtil;
+import com.sensu.android.zimaogou.widget.HotKeywordsListView;
 import com.sensu.android.zimaogou.widget.NoScrollGridView;
 import com.sensu.android.zimaogou.widget.NoScrollListView;
+import org.apache.http.Header;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -21,7 +29,7 @@ import java.util.List;
  */
 public class SearchActivity extends BaseActivity implements View.OnClickListener {
 
-    private NoScrollGridView mSearchGirdView;
+//    private NoScrollGridView mSearchGirdView;
     private NoScrollListView mSearchListView;
 
     private SearchListAdapter mSearchListAdapter;
@@ -40,7 +48,10 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void initViews() {
-        mSearchGirdView = (NoScrollGridView) findViewById(R.id.gv_hot_search);
+
+        getHotKeyword();
+
+//        mSearchGirdView = (NoScrollGridView) findViewById(R.id.gv_hot_search);
         mSearchListView = (NoScrollListView) findViewById(R.id.lv_search);
         mSearchListAdapter = new SearchListAdapter(this);
 
@@ -51,7 +62,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         findViewById(R.id.search).setOnClickListener(this);
         mClearHistoryText.setOnClickListener(this);
 
-        mSearchGirdView.setAdapter(new SearchGirdAdapter(this));
+//        mSearchGirdView.setAdapter(new SearchGirdAdapter(this));
         mSearchListView.setAdapter(mSearchListAdapter);
     }
 
@@ -85,6 +96,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                     Intent intent = new Intent(this, ProductListActivity.class);
                     intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
                     intent.putExtra(ProductListActivity.PRODUCT_LIST_KEYWORD, keyword);
+                    intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, "搜索");
                     startActivity(intent);
                     SearchKeyword searchKeyword = new SearchKeyword();
                     searchKeyword.setKeyword(keyword);
@@ -98,5 +110,21 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 mSearchListView.setVisibility(View.GONE);
                 break;
         }
+    }
+
+    private void getHotKeyword() {
+        HttpUtil.get(IConstants.sHotKeywords, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                HotKeywordsResponse hotKeywordsResponse = JSON.parseObject(response.toString(), HotKeywordsResponse.class);
+                ((HotKeywordsListView) findViewById(R.id.gv_hot_search)).setHotKeywords(hotKeywordsResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
     }
 }

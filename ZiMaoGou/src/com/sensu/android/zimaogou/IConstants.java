@@ -87,4 +87,7 @@ public class IConstants {
     //获取我的订单
     public static final String sGetMyOrder = "my/order";
 
+    //搜索热词
+    public static final String sHotKeywords = "goods/search/keywords";
+
 }
