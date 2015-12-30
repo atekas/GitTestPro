@@ -86,6 +86,13 @@ public class IConstants {
 
     //获取我的订单
     public static final String sGetMyOrder = "my/order";
+    //获取我的收藏
+    public static final String sGetCollect = "my/favorite";
+    //获取我的游购
+    public static final String sGetMyTravel = "my/travels";
+
+    //获取支付charge
+    public static final String sGetPayCharge = "pay";
 
     //搜索热词
     public static final String sHotKeywords = "goods/search/keywords";

@@ -17,7 +17,7 @@ public class HttpUtil {
     public static final String HOST = "http://139.196.108.137:80/v1/";
 
     static {
-        client.setTimeout(30000);//设置超时
+        client.setTimeout(60000);//设置超时
     }
 
     public static AsyncHttpClient getClient() {

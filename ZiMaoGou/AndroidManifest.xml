@@ -148,6 +148,8 @@
 
         <activity android:name=".activity.mycenter.CollectActivity" android:screenOrientation="portrait" />
 
+        <activity android:name=".activity.mycenter.MyTravelActivity" android:screenOrientation="portrait" />
+
         <activity android:name=".activity.mycenter.SettingActivity" android:screenOrientation="portrait" />
 
         <activity android:name=".activity.mycenter.MyInformationActivity" android:screenOrientation="portrait" />
@@ -230,12 +232,13 @@
         <!-- *************************    分享相关的注册 START **************************** -->
         <!-- 分享内容编辑页 -->
         <activity
-                android:name="com.umeng.socialize.view.ShareActivity"
-                android:configChanges="orientation|keyboard"
-                android:launchMode="singleTask"
-                android:noHistory="true"
-                android:theme="@android:style/Theme.Translucent.NoTitleBar"
-                android:windowSoftInputMode="stateVisible|adjustResize" >
+                android:name=".WBShareActivity"
+                android:configChanges="keyboardHidden|orientation"
+                android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
 
         <!--&lt;!&ndash; 腾讯SSO授权的Activity注册 &ndash;&gt;-->
@@ -396,7 +399,7 @@
 
         <meta-data
                 android:name="UMENG_APPKEY"
-                android:value="565e9162e0f55ace710020a1" >
+                android:value="55ed35ca67e58ee4ab000dc3" >
         </meta-data>
         <meta-data
                 android:name="UMENG_MESSAGE_SECRET"
@@ -411,5 +414,28 @@
                  android:exported="false" />
         <service android:name="com.umeng.message.local.UmengLocalNotificationService"
                  android:exported="false"  />
+        <!--############################################### ping ++ 支付  ##############################################-->
+        <!-- Ping++ SDK 注册 -->
+        <activity
+                android:name="com.pingplusplus.android.PaymentActivity"
+                android:launchMode="singleTop"
+                android:configChanges="orientation|screenSize"
+                android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- 微信支付注册 -->
+        <activity-alias
+                android:name=".wxapi.WXPayEntryActivity"
+                android:exported="true"
+                android:targetActivity="com.pingplusplus.android.PaymentActivity" />
+        <!-- 支付宝注册 -->
+        <activity
+                android:name="com.alipay.sdk.app.H5PayActivity"
+                android:configChanges="orientation|keyboardHidden|navigation"
+                android:exported="false"
+                android:screenOrientation="behind" />
+        <activity
+                android:name="com.alipay.sdk.auth.AuthActivity"
+                android:configChanges="orientation|keyboardHidden|navigation"
+                android:exported="false"
+                android:screenOrientation="behind" />
     </application>
 </manifest>

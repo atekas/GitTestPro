@@ -22,7 +22,6 @@ import com.sensu.android.zimaogou.activity.BaseActivity;
 import com.sensu.android.zimaogou.activity.login.LoginActivity;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
-import com.sensu.android.zimaogou.external.umeng.share.UmengShare;
 import com.sensu.android.zimaogou.utils.*;
 import com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout;
 import com.sensu.android.zimaogou.widget.RoundImageView;
@@ -43,12 +42,11 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
 
     private ListView mTourDetailsListView;
     private TourBuyDetailsAdapter mTourBuyDetailsAdapter;
-    private UmengShare mUmengShare;
     private LinearLayout mLikeUsersLinearLayout,mImageLinearLayout;
     private View mHeaderView;
     private RelativeLayout mBottomRelativeLayout;
     private Button mCommentSureButton, mCloseButton;
-    private TravelMode travelMode;
+    private TravelMode travelMode = new TravelMode();
     private TextView mLikeNumTextView, mCommentNum, mLikeTextView,mFavoriteTextView,mUserNameTextView,mSendTimeTextView,mCityTextView,mBrowsersTextView,mContentTextView;
     private EditText mCommentEditText;
     private RoundImageView mUserHeadPicImageView;
@@ -73,7 +71,6 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
     }
 
     private void initViews() {
-        mUmengShare = UmengShare.getInstance(this);
         mTourDetailsListView = (ListView) findViewById(R.id.review_details);
         mBottomRelativeLayout = (RelativeLayout) findViewById(R.id.rl_bottom);
         mCommentEditText = (EditText) findViewById(R.id.et_comment);
@@ -421,11 +418,7 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
                 finish();
                 break;
             case R.id.share:
-                mUmengShare.configPlatforms();
-                mUmengShare.setShareContent();
-                mUmengShare.mController.getConfig().setPlatforms(SHARE_MEDIA.WEIXIN,
-                        SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.SINA);
-                mUmengShare.mController.openShare(this, false);
+
                 break;
         }
     }

@@ -30,7 +30,6 @@ import com.sensu.android.zimaogou.adapter.ProductEvaluateAdapter;
 import com.sensu.android.zimaogou.adapter.ProductSpecificationAdapter;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
-import com.sensu.android.zimaogou.external.umeng.share.UmengShare;
 import com.sensu.android.zimaogou.utils.*;
 import com.sensu.android.zimaogou.view.ProductTypeLinearLayout;
 import com.sensu.android.zimaogou.widget.ProductTypeListView;
@@ -57,7 +56,6 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
 
     private ScrollViewContainer mScrollViewContainer;
     private int mProductCount = 1;
-    private UmengShare mUmengShare;
 
     private int offset = 0;// 偏移量
     private int currIndex = 0;// 对应不同的Tab
@@ -193,7 +191,6 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         if (mProductId != null) {
             getProductById(mProductId, mSource);
         }
-        mUmengShare = UmengShare.getInstance(this);
         mScrollViewContainer = (ScrollViewContainer) findViewById(R.id.scroll_view_container);
         mProductDetailTextView = (TextView) findViewById(R.id.tv_productDetail);
         mProductSpecificationTextView = (TextView) findViewById(R.id.tv_productSpecification);
@@ -252,11 +249,6 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.product_share:
                 PromptUtils.showToast("分享");
-                mUmengShare.configPlatforms();
-                mUmengShare.setShareContent();
-                mUmengShare.mController.getConfig().setPlatforms(SHARE_MEDIA.WEIXIN,
-                        SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.SINA);
-                mUmengShare.mController.openShare(this, false);
                 break;
             case R.id.cancel:
                 mChooseDialog.dismiss();

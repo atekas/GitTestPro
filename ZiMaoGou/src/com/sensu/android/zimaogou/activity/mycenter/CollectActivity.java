@@ -16,13 +16,25 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import com.alibaba.fastjson.JSON;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.ReqResponse.ProductListResponse;
+import com.sensu.android.zimaogou.ReqResponse.TravelResponse;
 import com.sensu.android.zimaogou.activity.BaseActivity;
 import com.sensu.android.zimaogou.adapter.ProductsDetailsAdapter;
 import com.sensu.android.zimaogou.adapter.TourBuyAdapter;
+import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
+import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.DisplayUtils;
+import com.sensu.android.zimaogou.utils.HttpUtil;
+import com.sensu.android.zimaogou.utils.LogUtils;
 import com.sensu.android.zimaogou.widget.OnRefreshListener;
 import com.sensu.android.zimaogou.widget.RefreshListView;
+import org.apache.http.Header;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +54,9 @@ public class CollectActivity extends BaseActivity {
     private ImageView mCursorImageView,mBackImageView;
     private ViewPager mCollectViewPage;
     RefreshListView mTourBuyListView;
+    ProductListResponse productListResponse = new ProductListResponse();
+    TravelResponse travelResponse = new TravelResponse();
+    UserInfo userInfo ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +75,7 @@ public class CollectActivity extends BaseActivity {
         });
         mProductTitle.setTextColor(getResources().getColor(R.color.red));
         mTourTitle.setTextColor(getResources().getColor(R.color.black_444444));
+        userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
         InitImageView();
 
         mProductTitle.setOnClickListener(new MyOnClickListener(0));
@@ -108,7 +124,6 @@ public class CollectActivity extends BaseActivity {
         mTourBuyListView.setAdapter(mTourBuyAdapter);
         mTourBuyListView.setOnRefreshListener(mOnRefreshListener);
         mListView.add(tourView);
-
         mCollectViewPage.setAdapter(new MyPagerAdapter(mListView));
         mCollectViewPage.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -126,6 +141,7 @@ public class CollectActivity extends BaseActivity {
 
             }
         });
+        setData(mProductsDetailsAdapter,mTourBuyAdapter);
     }
     private OnRefreshListener mOnRefreshListener = new OnRefreshListener() {
         @Override
@@ -265,4 +281,39 @@ public class CollectActivity extends BaseActivity {
         mCollectViewPage.setCurrentItem(index);
         mCursorImageView.startAnimation(animation);
     }
+
+    /**
+     * 填充数据
+     * @param productsDetailsAdapter
+     * @param tourBuyAdapter
+     */
+    private void setData(final ProductsDetailsAdapter productsDetailsAdapter, final TourBuyAdapter tourBuyAdapter){
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("uid",userInfo.getUid());
+        requestParams.put("tab","1");
+        HttpUtil.getWithSign(userInfo.getToken(), IConstants.sGetCollect,requestParams,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                LogUtils.d("获取我的收藏（商品）:",response.toString());
+                productListResponse = JSON.parseObject(response.toString(),ProductListResponse.class);
+                productsDetailsAdapter.setProductList(productListResponse);
+            }
+        });
+        RequestParams requestParams1 = new RequestParams();
+        requestParams1.put("uid",userInfo.getUid());
+        requestParams1.put("tab","2");
+        HttpUtil.getWithSign(userInfo.getToken(), IConstants.sGetCollect,requestParams1,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                LogUtils.d("获取我的收藏（游购）:",response.toString());
+                travelResponse = JSON.parseObject(response.toString(),TravelResponse.class);
+                tourBuyAdapter.flush(travelResponse.data);
+            }
+        });
+
+    }
+
+
 }

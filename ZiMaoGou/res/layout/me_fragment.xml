@@ -284,7 +284,7 @@
                 android:layout_marginLeft="50dp"
                 android:background="#e5e5e5"/>
         <LinearLayout
-                android:id="@+id/my_collection"
+                android:id="@+id/my_travel"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="center_vertical"

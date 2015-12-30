@@ -251,4 +251,6 @@ public class RefreshListView extends ListView implements OnScrollListener {
 		footerView.setPadding(0, -footerViewHeight, 0, 0);
 		isLoadingMore = false;
 	}
+
+
 }

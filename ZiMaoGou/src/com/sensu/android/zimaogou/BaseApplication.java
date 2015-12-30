@@ -17,6 +17,7 @@ import com.umeng.message.PushAgent;
 import com.umeng.message.UTrack;
 import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.entity.UMessage;
+import com.umeng.socialize.PlatformConfig;
 
 
 import java.io.File;
@@ -49,6 +50,9 @@ public class BaseApplication extends Application {
         super.onCreate();
         mChooseAddress = new ProvinceMode();
         mBaseApplication = this;
+        PlatformConfig.setWeixin("wx22e5d0e3792db66a", "dfbe36c15fe8317f34ad8a17170c7a4c");
+        //新浪微博
+        PlatformConfig.setSinaWeibo("3379781848", "4694a246726f6fdd1e93aabdfbd444c0");
 
         // /storage/emulated/0/general/
         mUserDir = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "zimaogou" + File.separator;

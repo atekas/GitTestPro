@@ -1,6 +1,7 @@
 package com.sensu.android.zimaogou.activity_home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.util.DisplayMetrics;
@@ -10,8 +11,11 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.sensu.android.zimaogou.Mode.ProductMode;
 import com.sensu.android.zimaogou.Mode.StoreMode;
+import com.sensu.android.zimaogou.Mode.TravelMode;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.activity.tour.TourBuyDetailsActivity;
 import com.sensu.android.zimaogou.utils.DisplayUtils;
+import com.sensu.android.zimaogou.utils.ImageUtils;
 
 import java.util.ArrayList;
 
@@ -21,9 +25,9 @@ public class StoreHorizontalListViewAdapter extends BaseAdapter {
     Bitmap iconBitmap;
     private int selectIndex = -1;
     int Size = 3;
-    ArrayList<StoreMode> stors = new ArrayList<StoreMode>();
+    ArrayList<TravelMode> stors = new ArrayList<TravelMode>();
 
-    public StoreHorizontalListViewAdapter(Context context, ArrayList<StoreMode> stores) {
+    public StoreHorizontalListViewAdapter(Context context, ArrayList<TravelMode> stores) {
         this.mContext = context;
         this.stors = stores;
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);//LayoutInflater.from(mContext);
@@ -45,7 +49,7 @@ public class StoreHorizontalListViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         DailyRecViewHolder holder;
             if (convertView == null) {
@@ -56,6 +60,7 @@ public class StoreHorizontalListViewAdapter extends BaseAdapter {
                 holder.mRl_img = (RelativeLayout) convertView.findViewById(R.id.rl_img);
                 holder.mCountryImage = (ImageView) convertView.findViewById(R.id.img_country);
                 holder.mCountryName = (TextView) convertView.findViewById(R.id.tv_countryName);
+                holder.mPlayImage = (ImageView) convertView.findViewById(R.id.img_play);
                 DisplayMetrics metric = new DisplayMetrics();
                 int width = DisplayUtils.getDisplayWidth();//获得屏幕宽度
                 LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) holder.mRl_img.getLayoutParams();
@@ -76,13 +81,15 @@ public class StoreHorizontalListViewAdapter extends BaseAdapter {
                 convertView.setSelected(false);
             }
 
-            holder.mTitle.setText(stors.get(position).getStoreName());
-            holder.mImage.setImageResource(stors.get(position).getTestStoreImage());
-            holder.mCountryImage.setImageResource(stors.get(position).getTestCountryImage());
-            holder.mCountryName.setText(stors.get(position).getTestCountryName());
-//		iconBitmap = getPropThumnail(mIconIDs[position]);
-//		holder.mImage.setImageBitmap(iconBitmap);
-//		holder.mImage.setim
+            holder.mTitle.setText(stors.get(position).getContent());
+            if(stors.get(position).getCategory().equals("1")){
+                ImageUtils.displayImage(stors.get(position).getMedia().image.get(0),holder.mImage);
+                holder.mPlayImage.setVisibility(View.GONE);
+            }else{
+                holder.mPlayImage.setVisibility(View.VISIBLE);
+                ImageUtils.displayImage(stors.get(position).getMedia().cover,holder.mImage);
+            }
+            holder.mCountryName.setText(stors.get(position).getCountry());
 
         return convertView;
     }
@@ -91,7 +98,7 @@ public class StoreHorizontalListViewAdapter extends BaseAdapter {
 
     private static class DailyRecViewHolder {
         private TextView mTitle,mCountryName;
-        private ImageView mImage,mCountryImage;
+        private ImageView mImage,mCountryImage,mPlayImage;
         private RelativeLayout mRl_img;
     }
 

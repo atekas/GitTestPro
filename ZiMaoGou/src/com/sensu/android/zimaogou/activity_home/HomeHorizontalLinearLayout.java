@@ -18,6 +18,7 @@ import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.CommendProductResponse;
 import com.sensu.android.zimaogou.ReqResponse.GroupBuyListResponse;
 import com.sensu.android.zimaogou.ReqResponse.ProductDetailsResponse;
+import com.sensu.android.zimaogou.ReqResponse.TravelResponse;
 import com.sensu.android.zimaogou.activity.GoodShopActivity;
 import com.sensu.android.zimaogou.activity.ProductDetailsActivity;
 import com.sensu.android.zimaogou.activity.SpellOrderActivity;
@@ -53,6 +54,7 @@ public class HomeHorizontalLinearLayout extends LinearLayout implements AdapterV
         super(context, attrs);
     }
 
+    TravelResponse travelResponse = new TravelResponse();
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
@@ -90,8 +92,7 @@ public class HomeHorizontalLinearLayout extends LinearLayout implements AdapterV
                 linearParams.height = width/3 + DisplayUtils.dp2px(28);
                 mhListView.setLayoutParams(linearParams);
 //                mhListView.setPadding(DisplayUtils.dp2px(6),0,0,0);
-                mStoreListAdapter = new StoreHorizontalListViewAdapter(getContext(),stors);
-                mhListView.setAdapter(mStoreListAdapter);
+                getFindGoodStore();
                 break;
 
         }
@@ -123,7 +124,8 @@ public class HomeHorizontalLinearLayout extends LinearLayout implements AdapterV
                 break;
             case 3:
                 PromptUtils.showToast("好店铺详情");
-                getContext().startActivity(new Intent(getContext(), TourBuyDetailsActivity.class));
+
+                getContext().startActivity(new Intent(getContext(), TourBuyDetailsActivity.class).putExtra("travel",travelResponse.data.get(i)));
                 break;
         }
     }
@@ -161,6 +163,9 @@ public class HomeHorizontalLinearLayout extends LinearLayout implements AdapterV
         });
     }
 
+    /**
+     * 获取拼单特价数据
+     */
     private void getGroupProducts(){
 
         RequestParams requestParams = new RequestParams();
@@ -177,5 +182,25 @@ public class HomeHorizontalLinearLayout extends LinearLayout implements AdapterV
 
 
         });
+    }
+
+
+    /**
+     * 获取发现好店铺数据
+     */
+    private void getFindGoodStore(){
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("is_shop","1");
+        HttpUtil.get(IConstants.sGetTravelList,requestParams,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                LogUtils.d("发现好店铺返回：",response.toString());
+                travelResponse = JSON.parseObject(response.toString(),TravelResponse.class);
+                mStoreListAdapter = new StoreHorizontalListViewAdapter(getContext(),travelResponse.data);
+                mhListView.setAdapter(mStoreListAdapter);
+            }
+        });
+
     }
 }
