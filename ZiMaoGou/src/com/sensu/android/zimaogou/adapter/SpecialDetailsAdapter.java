@@ -50,7 +50,7 @@ public class SpecialDetailsAdapter extends SimpleBaseAdapter {
         }
 
         ThemeDetailResponse.ThemeDetailData themeDetailData = mThemeDetailResponse.data.get(i);
-//        ImageUtils.displayImage(themeDetailData.media, viewHolder.mPic);
+        ImageUtils.displayImage(themeDetailData.media.image.get(0), viewHolder.mPic);
         viewHolder.mName.setText(themeDetailData.name);
         viewHolder.mNewPrice.setText(themeDetailData.price);
         viewHolder.mContent.setText(themeDetailData.sale_title);

@@ -11,6 +11,7 @@ import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.ProductListResponse;
 import com.sensu.android.zimaogou.utils.DisplayUtils;
 import com.sensu.android.zimaogou.utils.ImageUtils;
+import com.sensu.android.zimaogou.utils.StringUtils;
 
 /**
  * Created by zhangwentao on 2015/11/18.
@@ -56,7 +57,7 @@ public class ProductsDetailsAdapter extends SimpleBaseAdapter {
         //todo 塞数据
         ProductListResponse.ProductListData productListData = mProductListResponse.data.get(i);
         viewHolder.mProductName.setText(productListData.name);
-        viewHolder.mPrice.setText(productListData.price);
+        viewHolder.mPrice.setText(StringUtils.deleteZero(productListData.price));
         if (productListData.media.type.equals("1")) {
             ImageUtils.displayImage(productListData.media.image.get(0), viewHolder.mProductPic);
         } else {

@@ -13,6 +13,7 @@ import com.sensu.android.zimaogou.ReqResponse.CommendProductResponse;
 import com.sensu.android.zimaogou.ReqResponse.GroupBuyListResponse;
 import com.sensu.android.zimaogou.utils.DisplayUtils;
 import com.sensu.android.zimaogou.utils.ImageUtils;
+import com.sensu.android.zimaogou.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,8 +73,8 @@ public class HomeGroupAdapter extends BaseAdapter {
         ImageUtils.displayImage(pros.get(position).goods_image,gsHolder.mImage);
         gsHolder.mTitle.setText(pros.get(position).content);
         gsHolder.mPersons.setText(pros.get(position).max_num+"人成团");
-        gsHolder.mSalePrice.setText(pros.get(position).price);
-        gsHolder.mOrigPrice.setText("￥"+pros.get(position).price_market);
+        gsHolder.mSalePrice.setText(StringUtils.deleteZero(pros.get(position).price));
+        gsHolder.mOrigPrice.setText("￥"+ StringUtils.deleteZero(pros.get(position).price_market));
         gsHolder.mTitle.setText(pros.get(position).name);
 
 

@@ -14,6 +14,7 @@ import com.sensu.android.zimaogou.ReqResponse.CommendProductResponse;
 import com.sensu.android.zimaogou.ReqResponse.ProductDetailsResponse;
 import com.sensu.android.zimaogou.utils.DisplayUtils;
 import com.sensu.android.zimaogou.utils.ImageUtils;
+import com.sensu.android.zimaogou.utils.StringUtils;
 
 import java.util.ArrayList;
 
@@ -100,8 +101,8 @@ public class HorizontalListViewAdapter extends BaseAdapter {
                 holder.mVideoImage.setVisibility(View.VISIBLE);
                 ImageUtils.displayImage(pros.get(position).media.cover,holder.mImage);
             }
-            holder.mSalePrice.setText(pros.get(position).price);
-            holder.mOrigPrice.setText("￥"+pros.get(position).price_market);
+            holder.mSalePrice.setText(StringUtils.deleteZero(pros.get(position).price));
+            holder.mOrigPrice.setText("￥"+ StringUtils.deleteZero(pros.get(position).price_market));
 //		iconBitmap = getPropThumnail(mIconIDs[position]);
 //		holder.mImage.setImageBitmap(iconBitmap);
 //		holder.mImage.setim

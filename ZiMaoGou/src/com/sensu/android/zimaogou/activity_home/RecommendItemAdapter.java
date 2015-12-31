@@ -10,6 +10,7 @@ import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.CommendProductResponse;
 import com.sensu.android.zimaogou.adapter.SimpleBaseAdapter;
 import com.sensu.android.zimaogou.utils.ImageUtils;
+import com.sensu.android.zimaogou.utils.StringUtils;
 
 import java.util.ArrayList;
 
@@ -55,7 +56,7 @@ public class RecommendItemAdapter extends SimpleBaseAdapter {
             ImageUtils.displayImage(commendProductModes.get(i).media.cover,viewHolder.mImageView);
         }
         viewHolder.mProductName.setText(commendProductModes.get(i).name);
-        viewHolder.mPrice.setText("￥"+commendProductModes.get(i).price);
+        viewHolder.mPrice.setText("￥"+ StringUtils.deleteZero(commendProductModes.get(i).price));
         viewHolder.mDescribe.setText(commendProductModes.get(i).sale_title);
         return view;
     }

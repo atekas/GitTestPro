@@ -9,6 +9,7 @@ import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.ThemeListResponse;
 import com.sensu.android.zimaogou.adapter.SimpleBaseAdapter;
 import com.sensu.android.zimaogou.utils.ImageUtils;
+import com.sensu.android.zimaogou.utils.StringUtils;
 
 
 public class RecommendThemeAdapter extends SimpleBaseAdapter {
@@ -49,7 +50,7 @@ public class RecommendThemeAdapter extends SimpleBaseAdapter {
 
         ImageUtils.displayImage(themeListData.media.cover, viewHolder.mImage);
 
-        viewHolder.mPrice.setText(themeListData.price + "元起");
+        viewHolder.mPrice.setText(StringUtils.deleteZero(themeListData.price) + "元起");
         viewHolder.mName.setText(themeListData.name);
 
         if (position == mThemeListResponse.data.size() - 1) {

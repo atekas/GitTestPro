@@ -18,6 +18,7 @@ import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.utils.PromptUtils;
+import com.sensu.android.zimaogou.utils.StringUtils;
 import com.sensu.android.zimaogou.view.PhotoView;
 import org.apache.http.Header;
 import org.json.JSONObject;
@@ -52,8 +53,8 @@ public class PullPushScrollView extends ScrollView implements View.OnClickListen
         ProductDetailsResponse.ProductDetailData productDetailData = productDetailsResponse.data;
         mProductDetailData = productDetailData;
         ((TextView) findViewById(R.id.product_name)).setText(productDetailData.name);
-        ((TextView) findViewById(R.id.now_price)).setText(productDetailData.price);
-        ((TextView) findViewById(R.id.price_market)).setText("¥" + productDetailData.price_market);
+        ((TextView) findViewById(R.id.now_price)).setText(StringUtils.deleteZero(productDetailData.price));
+        ((TextView) findViewById(R.id.price_market)).setText("¥" + StringUtils.deleteZero(productDetailData.price_market));
         com.sensu.android.zimaogou.utils.TextUtils.addLineCenter(((TextView) findViewById(R.id.price_market)));
         if (TextUtils.isEmpty(productDetailData.sale_title)) {
             findViewById(R.id.sale_title).setVisibility(GONE);
