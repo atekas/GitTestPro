@@ -51,6 +51,7 @@ public class OrderActivity extends BaseActivity {
     String EXTRA_CHARGE = "com.pingplusplus.android.PaymentActivity.CHARGE";
     int REQUEST_CODE_PAYMENT = 1001;
     MyOrderResponse myOrderResponse = new MyOrderResponse();
+    Button mPayButton;//用来防止重复支付点击的Button
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -198,12 +199,8 @@ public class OrderActivity extends BaseActivity {
                     viewHolder.bt_comment.setVisibility(View.GONE);
                     viewHolder.bt_submit.setText("付款");
                     viewHolder.tv_orderType.setText("待付款");
-                    viewHolder.bt_submit.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            goPay();
-                        }
-                    });
+                    mPayButton = viewHolder.bt_submit;
+                    viewHolder.bt_submit.setOnClickListener(new PayClickListener());
                     break;
                 case 1:
                     viewHolder.rl_button.setVisibility(View.VISIBLE);
@@ -270,6 +267,7 @@ public class OrderActivity extends BaseActivity {
     }
 
     private void goPay() {
+
         RequestParams requestParams = new RequestParams();
         requestParams.put("uid", "21");
         HttpUtil.postWithSign(GDUserInfoHelper.getInstance(this).getUserInfo().getToken(), IConstants.sGetPayCharge, requestParams, new JsonHttpResponseHandler() {
@@ -292,7 +290,15 @@ public class OrderActivity extends BaseActivity {
         });
     }
 
+    private class PayClickListener implements View.OnClickListener {
 
+
+        @Override
+        public void onClick(View view) {
+            mPayButton.setOnClickListener(null);//防止重复点击
+            goPay();
+        }
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -308,6 +314,7 @@ public class OrderActivity extends BaseActivity {
                 String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
                 String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
                 PromptUtils.showToast("支付返回："+result+"  "+errorMsg+"  "+extraMsg);
+                mPayButton.setOnClickListener(new PayClickListener());
             }
         }
     }

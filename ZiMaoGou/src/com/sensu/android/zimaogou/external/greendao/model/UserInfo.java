@@ -52,9 +52,14 @@ public class UserInfo {
     }
 
     public String getMobile() {
+        String hintMobile = "";
+        hintMobile = mobile.substring(0,3)+"****"+mobile.substring(7,mobile.length());
+        return hintMobile;
+    }
+    public String getRealMobile(){
+
         return mobile;
     }
-
     public void setMobile(String mobile) {
         this.mobile = mobile;
     }

@@ -1,9 +1,11 @@
 <com.sensu.android.zimaogou.widget.VideoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                                      xmlns:tools="http://schemas.android.com/tools"
+                                                     xmlns:videojj="http://schemas.android.com/apk/res-auto"
+
                                                      android:layout_width="match_parent"
                                                      android:layout_height="match_parent"
                                                      android:orientation="vertical"
-                                                     tools:context="com.sensu.android.zimaogou.activity.ProductDetailsActivity">
+                                                     >
     <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent">
 
 
@@ -16,13 +18,15 @@
             <cn.com.video.venvy.param.JjVideoView
                     android:id="@+id/video"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    videojj:VideoJjAppKay="N1-sEJF4l"
+                    videojj:VideoJjPageName="com.sensu.android.zimaogou"/>
 
             <include
                     android:id="@+id/sdk_ijk_progress_bar_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    layout="@layout/venvy_fragment_video_progress_bar_sdk"/>
+                    layout="@layout/venvy_fragment_video_progress_bar_sdk" />
 
             <include
                     android:id="@+id/sdk_load_layout"
@@ -31,7 +35,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     layout="@layout/venvy_video_ijk_load_sdk"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
         </cn.com.video.venvy.param.JjVideoRelativeLayout>
         <ImageView
                 android:id="@+id/img_cover"

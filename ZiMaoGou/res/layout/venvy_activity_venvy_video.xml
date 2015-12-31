@@ -1,0 +1,19 @@
+<cn.com.video.venvy.widget.CenterLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sdk_ijk_video_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
+    <!--自定义SurfaceView-->
+    <cn.com.video.venvy.widget.VideoSurfaceView
+        android:id="@+id/sdk_ijk_surfaceView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:saveEnabled="true" />
+
+    <include
+        android:id="@+id/sdk_ijk_progress_bar_layout"
+        layout="@layout/venvy_video_progress_bar_sdk"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</cn.com.video.venvy.widget.CenterLayout>

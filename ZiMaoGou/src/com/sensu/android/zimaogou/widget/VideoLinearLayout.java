@@ -9,6 +9,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import cn.com.video.venvy.param.*;
 import com.sensu.android.zimaogou.R;
@@ -33,6 +34,7 @@ public class VideoLinearLayout extends LinearLayout {
         super(context, attrs);
     }
     boolean isFirst = true;
+    boolean isCompletion = false;
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
@@ -42,6 +44,9 @@ public class VideoLinearLayout extends LinearLayout {
         mLoadText = (TextView) findViewById(R.id.sdk_ijk_progress_bar_text);
         mLoadBufferView = findViewById(R.id.sdk_load_layout);
         mLoadBufferTextView = (TextView) findViewById(R.id.sdk_sdk_ijk_load_buffer_text);
+        mVideoView.setMediaController(new VideoJjMediaContoller(getContext(), true));
+        mLoadBufferTextView.setTextColor(Color.RED);
+
         mCoverImageView = (ImageView) findViewById(R.id.img_cover);
         mPlayImageView = (ImageView) findViewById(R.id.img_play);
         mPlayImageView.setOnClickListener(new OnClickListener() {
@@ -57,7 +62,7 @@ public class VideoLinearLayout extends LinearLayout {
         // mVideoView.setMediaController(new
         // UsetMediaContoller(this));//用户自定义控制器
 
-//        mVideoView.setMediaController(new VideoJjMediaContoller(getContext(), true));// 内部写好的控制器
+        mVideoView.setMediaController(new VideoJjMediaContoller(getContext(), true));// 内部写好的控制器
 //        mVideoView.setMediaController(new UsetMediaContoller(getContext()));
         // 参数必须true
         mLoadBufferTextView.setTextColor(Color.RED);
@@ -130,7 +135,8 @@ public class VideoLinearLayout extends LinearLayout {
          */
         mVideoView.setVideoJjAppKey("N1-sEJF4l");
         mVideoView.setVideoJjPageName("com.sensu.android.zimaogou");
-        mVideoView.setMediaCodecEnabled(true);// 是否开启 硬解 硬解对一些手机有限制
+        mVideoView.setVideoJjType(0);
+//        mVideoView.setMediaCodecEnabled(true);// 是否开启 硬解 硬解对一些手机有限制
         // 判断是否源 0 代表 8大视频网站url 1代表自己服务器的视频源 2代表直播地址 3代表本地视频(手机上的视频源),4特殊需求
         mVideoView.setVideoJjType(1);
         /***
@@ -141,18 +147,21 @@ public class VideoLinearLayout extends LinearLayout {
         /***
          * 指定时间开始播放 毫秒
          */
-        mVideoView.setVideoJjSeekToTime(Long.valueOf(20000));
+//        mVideoView.setVideoJjSeekToTime(Long.valueOf(20000));
         mVideoView.setVideoJjTitle("测试视频");
         mVideoView.setOnJjCompletionListener(new OnJjCompletionListener() {
             @Override
             public void onJjCompletion() {
                 isFirst = true;
+                isCompletion = true;
                 mPlayImageView.setImageResource(R.drawable.video);
                 mCoverImageView.setVisibility(View.VISIBLE);
                 mPlayImageView.setVisibility(View.VISIBLE);
+                mPlayImageView.setAlpha(1.0f);
             }
         });
 //        mVideoView.setResourceVideo("http://wsv.videojj.com/haoyigou_ctrd.mp4");
+
     }
 
     public void setURL(String coverImageUrl,String videoUrl){
@@ -170,23 +179,32 @@ public class VideoLinearLayout extends LinearLayout {
         outAnimation.setStartOffset(500);
         outAnimation.setAnimationListener(new RemoveAnimationListener());
         inAnimation.setAnimationListener(new RemoveAnimationListener());
-        if(mVideoView.isPlaying()){
-            mVideoView.pause();
-            mPlayImageView.setImageResource(R.drawable.video);
-            mPlayImageView.setAlpha(1.0f);
-            mPlayImageView.startAnimation(outAnimation);
-        }else{
-            mVideoView.start();
-            mPlayImageView.setImageResource(R.drawable.video_stop);
-            mPlayImageView.startAnimation(inAnimation);
-        }
+
 
         if(isFirst) {
+            if(isCompletion) {
+                mVideoView.seekTo(1);
+                mVideoView.start();
+            }else {
+                mVideoView.setVideoJjResetState();
+            }
+            mVideoView.setVideoJjType(3);
             mVideoView.setResourceVideo(mPlayUrl);
             mPlayImageView.setImageResource(R.drawable.video_stop);
             mPlayImageView.startAnimation(outAnimation);
             mCoverImageView.setVisibility(View.GONE);
             isFirst = false;
+        }else{
+            if(mVideoView.isPlaying()){
+                mVideoView.pause();
+                mPlayImageView.setImageResource(R.drawable.video);
+                mPlayImageView.setAlpha(1.0f);
+                mPlayImageView.startAnimation(outAnimation);
+            }else{
+                mVideoView.start();
+                mPlayImageView.setImageResource(R.drawable.video_stop);
+                mPlayImageView.startAnimation(inAnimation);
+            }
         }
 
     }
@@ -197,6 +215,7 @@ public class VideoLinearLayout extends LinearLayout {
             System.out.println("onAnimationEnd");
             if(mVideoView.isPlaying()){
                 mPlayImageView.setAlpha(0.0f);
+                mPlayImageView.setVisibility(View.GONE);
             }else{
                 mPlayImageView.setAlpha(1.0f);
             }

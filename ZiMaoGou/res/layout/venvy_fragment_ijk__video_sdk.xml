@@ -5,13 +5,12 @@
     android:layout_height="match_parent"
     android:background="#E0000000"
     android:orientation="vertical" >
-
-    <cn.com.video.venvy.param.JjVideoView
+    <cn.com.video.venvy.param.JjVideoView
         android:id="@+id/video"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        videojj:VideoJjAppKay="N1-sEJF4l"
-        videojj:VideoJjPageName="com.sensu.android.zimaogou" />
+        videojj:VideoJjAppKay="4JCsi_Cfe"
+        videojj:VideoJjPageName="cn.com.video.venvy" />
 
     <include
         android:id="@+id/sdk_ijk_progress_bar_layout"

@@ -1,72 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/video_sdk_dg_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F0F0F0"
+    android:clickable="true"
     android:orientation="horizontal" >
 
-    <RelativeLayout
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/video_sdk_dg_layout"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="#303030" >
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:visibility="gone" >
 
-        <cn.com.video.venvy.view.AutoScrollViewPager
-            android:id="@+id/video_sdk_viewpager_auto"
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#303030" >
+
+            <cn.com.video.venvy.view.AutoScrollViewPager
+                android:id="@+id/video_sdk_viewpager_auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <cn.com.video.venvy.view.CirclePageIndicator
+                android:id="@+id/video_sdk_indicator"
+                style="@style/venvy_video_dg_Indicator_style"
+                android:layout_alignParentLeft="true"
+                android:padding="10dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/video_sdk_dg_content"
+            style="@style/venvy_video_dg_content_layout_style" >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="73dp"
+                android:layout_alignLeft="@+id/video_sdk_dg_link"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/venvy_sdk_shadow_link_bg" />
+
+            <TextView
+                android:id="@+id/video_sdk_dg_link"
+                style="@style/venvy_video_dg_link_style" />
+
+            <ImageButton
+                android:id="@+id/video_sdk_dg_close"
+                style="@style/venvy_video_dg_close_style" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/video_sdk_dg_link"
+                android:layout_below="@+id/video_sdk_dg_close"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="-20dp"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/video_sdk_dg_class"
+                    style="@style/venvy_video_dg_class_style"
+                    android:src="@drawable/venvy_sdk_dg_shop_tag" />
+
+                <TextView
+                    android:id="@+id/video_sdk_dg_title"
+                    style="@style/venvy_video_dg_title_style"
+                    android:layout_marginTop="15dp" />
+
+                <TextView
+                    android:id="@+id/video_sdk_dg_des"
+                    style="@style/venvy_video_dg_des_style"
+                    android:lineSpacingMultiplier="1.2" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/video_sdk_webview_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ProgressBar
+            android:id="@+id/video_sdk_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:progressDrawable="@drawable/venvy_video_sdk_webview_load_bg" />
+
+        <WebView
+            android:id="@+id/video_sdk_webview"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+    </LinearLayout>
 
-        <cn.com.video.venvy.view.CirclePageIndicator
-            android:id="@+id/video_sdk_indicator"
-            style="@style/venvy_video_dg_Indicator_style"
-            android:layout_alignParentLeft="true"
-            android:padding="10dp" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/video_sdk_dg_content"
-        style="@style/venvy_video_dg_content_layout_style" >
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="73dp"
-            android:layout_alignLeft="@+id/video_sdk_dg_link"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/venvy_sdk_shadow_link_bg" />
-
-        <TextView
-            android:id="@+id/video_sdk_dg_link"
-            style="@style/venvy_video_dg_link_style" />
-
-        <ImageButton
-            android:id="@+id/video_sdk_dg_close"
-            style="@style/venvy_video_dg_close_style" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/video_sdk_dg_link"
-            android:layout_below="@+id/video_sdk_dg_close"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="-20dp"
-            android:orientation="vertical" >
-
-            <ImageView
-                android:id="@+id/video_sdk_dg_class"
-                style="@style/venvy_video_dg_class_style"
-                android:src="@drawable/venvy_sdk_dg_shop_tag" />
-
-            <TextView
-                android:id="@+id/video_sdk_dg_title"
-                style="@style/venvy_video_dg_title_style"
-                android:layout_marginTop="15dp" />
-
-            <TextView
-                android:id="@+id/video_sdk_dg_des"
-                style="@style/venvy_video_dg_des_style"
-                android:lineSpacingMultiplier="1.2" />
-        </LinearLayout>
-    </RelativeLayout>
-
-</LinearLayout>
+</FrameLayout>

@@ -13,6 +13,7 @@
 
     <LinearLayout
         android:id="@+id/sdk_media_controller_panel"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="@dimen/venvy_video_sdk_panel_height"
         android:gravity="center_horizontal|center"
@@ -97,6 +98,7 @@
 
             <ImageButton
                 android:id="@+id/sdk_media_controller_direction"
+                android:visibility="gone"
                 android:layout_width="@dimen/venvy_video_sdk_panel_height"
                 android:layout_height="@dimen/venvy_video_sdk_panel_height"
                 android:layout_alignParentEnd="true"

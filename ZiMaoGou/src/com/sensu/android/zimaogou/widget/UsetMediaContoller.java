@@ -15,10 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import cn.com.video.venvy.param.Gestures;
-import cn.com.video.venvy.param.JjMediaContoller;
-import cn.com.video.venvy.param.MediaContollerTouchListener;
-import cn.com.video.venvy.param.MediaPlayerControl;
+import cn.com.video.venvy.param.*;
 import com.sensu.android.zimaogou.R;
 
 import java.lang.ref.WeakReference;
@@ -28,7 +25,7 @@ import java.lang.reflect.Field;
  * Created by super on 2015/7/25. Video++视频控制器 自定义
  * 修改venvy_video_user_media_controller_sdk.xml重写
  */
-public class UsetMediaContoller extends JjMediaContoller {
+public class UsetMediaContoller extends VideoJjMediaContoller {
 	/**
 	 * 控制器接口
 	 */
@@ -62,8 +59,8 @@ public class UsetMediaContoller extends JjMediaContoller {
 	 */
 	private boolean mDragging;
 	/***
-	 *
-	 */
+     *
+     */
 	private boolean mInstantSeeking = true;
 	/***
 	 * 默认时间
@@ -151,21 +148,21 @@ public class UsetMediaContoller extends JjMediaContoller {
 
 	/***
 	 * 构造函数
-	 *
+	 * 
 	 * @param context
 	 *            上下文
 	 */
-	public UsetMediaContoller(Context context) {
-		super(context);
+	public UsetMediaContoller(Context context,boolean choose) {
+		super(context,choose);
 		initResources();
 	}
 
-//	/***
-//	 * 构造函数
-//	 *
-//	 * @param
-//	 *            上下文
-//	 */
+	/***
+	 * 构造函数
+	 * 
+	 * @param
+	 *
+	 */
 	// public UsetMediaContoller(Context context, AttributeSet attrs) {
 	// super(context, attrs);
 	// lock(mScreenLocked);
@@ -208,13 +205,13 @@ public class UsetMediaContoller extends JjMediaContoller {
 	}
 
 	@Override
-	public void setAnchorView(View view) {
+	public void setAnchorView(ViewGroup view) {
 		super.setAnchorView(view);
 	}
 
 	/***
 	 * find加载布局的控件
-	 *
+	 * 
 	 * @param v
 	 *            RootView
 	 */
@@ -232,7 +229,7 @@ public class UsetMediaContoller extends JjMediaContoller {
 		 * 头部控制器区域
 		 */
 		mSystemInfoLayout = v.findViewById(R.id.sdk_media_controller_panel);
-		mSystemInfoLayout.setVisibility(View.GONE);
+		mSystemInfoLayout.setVisibility(GONE);
 		/**
 		 * 视频总时间
 		 */
@@ -311,7 +308,6 @@ public class UsetMediaContoller extends JjMediaContoller {
 		mDirectionView = (ImageButton) v
 				.findViewById(R.id.sdk_media_controller_direction);
 		mDirectionView.setOnClickListener(mDirectionListener);
-		mDirectionView.setVisibility(View.INVISIBLE);
 		/**
 		 * 设置清晰度View
 		 */
@@ -321,7 +317,7 @@ public class UsetMediaContoller extends JjMediaContoller {
 
 	/**
 	 * 设置控制器锁定状态方法
-	 *
+	 * 
 	 * @param toLock
 	 */
 	private void lock(boolean toLock) {
@@ -346,7 +342,7 @@ public class UsetMediaContoller extends JjMediaContoller {
 
 	/***
 	 * 判断屏幕是否是锁状态
-	 *
+	 * 
 	 * @return
 	 */
 	public boolean isLocked() {
@@ -355,7 +351,7 @@ public class UsetMediaContoller extends JjMediaContoller {
 
 	/***
 	 * 设置弹出内容区方法
-	 *
+	 * 
 	 * @param info
 	 * @param time
 	 */
@@ -390,37 +386,37 @@ public class UsetMediaContoller extends JjMediaContoller {
 				return;
 
 			switch (msg.what) {
-				case MSG_FADE_OUT:
-					c.hide();
-					break;
-				case MSG_SHOW_PROGRESS:
-					long pos = c.setProgress();
-					if (!c.mDragging && c.mShowing) {
-						msg = obtainMessage(MSG_SHOW_PROGRESS);
-						sendMessageDelayed(msg, 1000 - (pos % 1000));
-						c.updatePausePlay();
-					}
-					break;
-				case MSG_HIDE_SYSTEM_UI:
-					if (!c.mShowing)
-						c.showSystemUi(false);
-					break;
-				case MSG_TIME_TICK:
-					sendEmptyMessageDelayed(MSG_TIME_TICK, TIME_TICK_INTERVAL);
-					break;
-				case MSG_HIDE_OPERATION_INFO:
-					c.mPopupInfoView.setVisibility(View.GONE);
-					break;
-				case MSG_HIDE_OPERATION_VOLLUM:
-					c.mOperationVolLum.setVisibility(View.GONE);
-					break;
+			case MSG_FADE_OUT:
+				c.hide();
+				break;
+			case MSG_SHOW_PROGRESS:
+				long pos = c.setProgress();
+				if (!c.mDragging && c.mShowing) {
+					msg = obtainMessage(MSG_SHOW_PROGRESS);
+					sendMessageDelayed(msg, 1000 - (pos % 1000));
+					c.updatePausePlay();
+				}
+				break;
+			case MSG_HIDE_SYSTEM_UI:
+				if (!c.mShowing)
+					c.showSystemUi(false);
+				break;
+			case MSG_TIME_TICK:
+				sendEmptyMessageDelayed(MSG_TIME_TICK, TIME_TICK_INTERVAL);
+				break;
+			case MSG_HIDE_OPERATION_INFO:
+				c.mPopupInfoView.setVisibility(View.GONE);
+				break;
+			case MSG_HIDE_OPERATION_VOLLUM:
+				c.mOperationVolLum.setVisibility(View.GONE);
+				break;
 			}
 		}
 	}
 
 	/**
 	 * 设置SeekBar进度
-	 *
+	 * 
 	 * @return
 	 */
 	private long setProgress() {
@@ -474,7 +470,7 @@ public class UsetMediaContoller extends JjMediaContoller {
 
 	/***
 	 * 设置亮度 手势操作
-	 *
+	 * 
 	 * @param scale
 	 */
 	private void setBrightnessScale(float scale) {
@@ -487,7 +483,7 @@ public class UsetMediaContoller extends JjMediaContoller {
 
 	/***
 	 * 设置声音 手势操作
-	 *
+	 * 
 	 * @param scale
 	 *            进度条
 	 */
@@ -505,7 +501,7 @@ public class UsetMediaContoller extends JjMediaContoller {
 
 	/***
 	 * 设置亮度
-	 *
+	 * 
 	 * @param f
 	 *            进度
 	 */
@@ -521,7 +517,7 @@ public class UsetMediaContoller extends JjMediaContoller {
 
 	/***
 	 * 设置声音
-	 *
+	 * 
 	 * @param v
 	 *            进度
 	 */
@@ -551,7 +547,7 @@ public class UsetMediaContoller extends JjMediaContoller {
 
 		@Override
 		public void onProgressChanged(SeekBar bar, int progress,
-									  boolean fromuser) {
+				boolean fromuser) {
 			if (!fromuser)
 				return;
 
@@ -580,7 +576,7 @@ public class UsetMediaContoller extends JjMediaContoller {
 
 	/**
 	 * 设置 快进 快退进度条 手势结束设置
-	 *
+	 * 
 	 * @return
 	 */
 	private long setPlanProgress(long position) {
@@ -640,7 +636,7 @@ public class UsetMediaContoller extends JjMediaContoller {
 
 	/**
 	 * 转换时间显示
-	 *
+	 * 
 	 * @param time
 	 *            毫秒
 	 * @return
@@ -670,7 +666,7 @@ public class UsetMediaContoller extends JjMediaContoller {
 
 	/***
 	 * 设置设置为横屏 竖
-	 *
+	 * 
 	 * @param context
 	 */
 	public static void setScreenlandscape(Activity context) {
@@ -722,7 +718,7 @@ public class UsetMediaContoller extends JjMediaContoller {
 
 		/***
 		 * 控制亮度
-		 *
+		 * 
 		 * @param percent
 		 */
 		@Override
@@ -733,7 +729,7 @@ public class UsetMediaContoller extends JjMediaContoller {
 
 		/***
 		 * 控制声音
-		 *
+		 * 
 		 * @param percent
 		 */
 		@Override
@@ -744,7 +740,7 @@ public class UsetMediaContoller extends JjMediaContoller {
 
 		/**
 		 * 快退
-		 *
+		 * 
 		 * @param percent
 		 */
 		@Override
@@ -754,7 +750,7 @@ public class UsetMediaContoller extends JjMediaContoller {
 
 		/**
 		 * 快进
-		 *
+		 * 
 		 * @param percent
 		 */
 		@Override
@@ -789,12 +785,12 @@ public class UsetMediaContoller extends JjMediaContoller {
 		@Override
 		public void onScale(float scaleFactor, int state) {
 			switch (state) {
-				case Gestures.SCALE_STATE_BEGIN:
-					break;
-				case Gestures.SCALE_STATE_SCALEING:
-					break;
-				case Gestures.SCALE_STATE_END:
-					break;
+			case Gestures.SCALE_STATE_BEGIN:
+				break;
+			case Gestures.SCALE_STATE_SCALEING:
+				break;
+			case Gestures.SCALE_STATE_END:
+				break;
 			}
 		}
 
@@ -840,7 +836,7 @@ public class UsetMediaContoller extends JjMediaContoller {
 						show();
 				} else {
 					mControlsLayout.startAnimation(mAnimSlideOutTop);
-					mSystemInfoLayout.startAnimation(mAnimSlideOutBottom);
+//					mSystemInfoLayout.startAnimation(mAnimSlideOutBottom);
 					mShowing = false;
 					mCompletiond = false;
 				}
@@ -860,7 +856,7 @@ public class UsetMediaContoller extends JjMediaContoller {
 
 	/***
 	 * 复写Touch事件
-	 *
+	 * 
 	 * @param event
 	 * @return
 	 */
@@ -879,7 +875,7 @@ public class UsetMediaContoller extends JjMediaContoller {
 
 	/***
 	 * 事件分发
-	 *
+	 * 
 	 * @param event
 	 * @return
 	 */
@@ -888,16 +884,16 @@ public class UsetMediaContoller extends JjMediaContoller {
 		int keyCode = event.getKeyCode();
 
 		switch (keyCode) {
-			case KeyEvent.KEYCODE_VOLUME_MUTE:
-				return super.dispatchKeyEvent(event);
-			case KeyEvent.KEYCODE_VOLUME_UP:
-			case KeyEvent.KEYCODE_VOLUME_DOWN:
-				mVolume = mAM.getStreamVolume(AudioManager.STREAM_MUSIC);
-				int step = keyCode == KeyEvent.KEYCODE_VOLUME_UP ? 1 : -1;
-				setVolume(mVolume + step);
-				mHandler.removeMessages(MSG_HIDE_OPERATION_VOLLUM);
-				mHandler.sendEmptyMessageDelayed(MSG_HIDE_OPERATION_VOLLUM, 500);
-				return true;
+		case KeyEvent.KEYCODE_VOLUME_MUTE:
+			return super.dispatchKeyEvent(event);
+		case KeyEvent.KEYCODE_VOLUME_UP:
+		case KeyEvent.KEYCODE_VOLUME_DOWN:
+			mVolume = mAM.getStreamVolume(AudioManager.STREAM_MUSIC);
+			int step = keyCode == KeyEvent.KEYCODE_VOLUME_UP ? 1 : -1;
+			setVolume(mVolume + step);
+			mHandler.removeMessages(MSG_HIDE_OPERATION_VOLLUM);
+			mHandler.sendEmptyMessageDelayed(MSG_HIDE_OPERATION_VOLLUM, 500);
+			return true;
 		}
 
 		if (isLocked()) {
@@ -907,7 +903,7 @@ public class UsetMediaContoller extends JjMediaContoller {
 
 		if (event.getRepeatCount() == 0
 				&& (keyCode == KeyEvent.KEYCODE_HEADSETHOOK
-				|| keyCode == KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE || keyCode == KeyEvent.KEYCODE_SPACE)) {
+						|| keyCode == KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE || keyCode == KeyEvent.KEYCODE_SPACE)) {
 			doPauseResume();
 			show(DEFAULT_TIME_OUT);
 			return true;
@@ -916,10 +912,6 @@ public class UsetMediaContoller extends JjMediaContoller {
 				mPlayer.pause();
 				updatePausePlay();
 			}
-			return true;
-		} else if (keyCode == KeyEvent.KEYCODE_BACK) {
-			release();
-			mPlayer.pause();
 			return true;
 		} else {
 			show(DEFAULT_TIME_OUT);
@@ -949,7 +941,7 @@ public class UsetMediaContoller extends JjMediaContoller {
 				mHandler.removeMessages(MSG_SHOW_PROGRESS);
 				if (mPlayer.isPlaying()) {
 					mControlsLayout.startAnimation(mAnimSlideOutTop);
-					mSystemInfoLayout.startAnimation(mAnimSlideOutBottom);
+//					mSystemInfoLayout.startAnimation(mAnimSlideOutBottom);
 					mShowing = false;
 				} else {
 					mShowing = true;
@@ -970,7 +962,7 @@ public class UsetMediaContoller extends JjMediaContoller {
 
 	/***
 	 * 设置上下控制器显示时间
-	 *
+	 * 
 	 * @param timeout
 	 */
 	@Override
@@ -988,7 +980,7 @@ public class UsetMediaContoller extends JjMediaContoller {
 			mPauseButton.requestFocus();
 			if (mPlayer.isPlaying()) {
 				mControlsLayout.startAnimation(mAnimSlideInTop);
-				mSystemInfoLayout.startAnimation(mAnimSlideInBottom);
+//				mSystemInfoLayout.startAnimation(mAnimSlideInBottom);
 				mShowing = true;
 			}
 			mMediaController.setVisibility(View.VISIBLE);
