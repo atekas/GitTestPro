@@ -1,5 +1,7 @@
 package com.sensu.android.zimaogou.activity.fragment;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.sensu.android.zimaogou.R;
@@ -196,16 +199,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             case R.id.recommend_friends:
                 //TODO 推荐给好友
                 PromptUtils.showToast("推荐给好友");
-                UMImage image = new UMImage(mParentActivity, "http://www.umeng.com/images/pic/social/integrated_3.png");
-                new ShareAction(mParentActivity).setPlatform(SHARE_MEDIA.SINA).setCallback(umShareListener)
-                        .withText("hello umeng video")
-                        .withTargetUrl("http://www.baidu.com")
-                        .withMedia(image)
-                        .share();
-//                new ShareAction(mParentActivity).setPlatform(SHARE_MEDIA.WEIXIN).setCallback(umShareListener)
-//                        .withText("hello wx")
-////                        .withMedia(video)
-//                        .share();
+                ShareDialog() ;
                 break;
             case R.id.online_service:
                 //TODO 在线客服
@@ -293,5 +287,51 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         /** attention to this below ,must add this**/
         UMShareAPI.get(mParentActivity).onActivityResult(requestCode, resultCode, data);
 
+    }
+
+    /**
+     * 分享
+     */
+    Dialog mShareDialog;
+
+    private void ShareDialog() {
+        mShareDialog = new Dialog(mParentActivity, R.style.dialog);
+        mShareDialog.setCancelable(true);
+        mShareDialog.setContentView(R.layout.share_dialog);
+        LinearLayout ll_wx = (LinearLayout) mShareDialog.findViewById(R.id.ll_wx);
+        LinearLayout ll_friends = (LinearLayout) mShareDialog.findViewById(R.id.ll_friends);
+        LinearLayout ll_sina = (LinearLayout) mShareDialog.findViewById(R.id.ll_sina);
+        ll_sina.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UMImage image = new UMImage(mParentActivity, "http://www.umeng.com/images/pic/social/integrated_3.png");
+                new ShareAction(mParentActivity).setPlatform(SHARE_MEDIA.SINA).setCallback(umShareListener)
+                        .withText("hello umeng video")
+                        .withTargetUrl("http://www.baidu.com")
+                        .withMedia(image)
+                        .share();
+                mShareDialog.dismiss();
+            }
+        });
+        ll_wx.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ShareAction(mParentActivity).setPlatform(SHARE_MEDIA.WEIXIN).setCallback(umShareListener)
+                        .withText("hello wx")
+                        .share();
+                mShareDialog.dismiss();
+            }
+        });
+        ll_friends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ShareAction(mParentActivity).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).setCallback(umShareListener)
+                        .withText("hello umeng")
+                        .share();
+                mShareDialog.dismiss();
+            }
+        });
+
+        mShareDialog.show();
     }
 }

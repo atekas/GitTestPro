@@ -1,10 +1,12 @@
 package com.sensu.android.zimaogou.utils;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import com.sensu.android.zimaogou.R;
 
 /**
  * Created by qi.yang on 2015/11/13.
@@ -35,6 +37,8 @@ public class UiUtils {
         params.height = totalHeight + totalDividerHeight;
         listView.setLayoutParams(params);
     }
+
+
 
 
 }
