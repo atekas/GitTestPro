@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.GroupBuyListResponse;
 import com.sensu.android.zimaogou.utils.ImageUtils;
+import com.sensu.android.zimaogou.utils.StringUtils;
 import com.sensu.android.zimaogou.utils.TextUtils;
 
 /**
@@ -53,8 +54,8 @@ public class SpellOrderAdapter extends SimpleBaseAdapter {
         GroupBuyListResponse.GroupBuyListData groupBuyListData = mGroupBuyListResponse.data.get(i);
         viewHolder.mProductName.setText(groupBuyListData.name);
         viewHolder.mProductDescribe.setText(groupBuyListData.content);
-        viewHolder.mGroupPrice.setText(groupBuyListData.price);
-        viewHolder.mOldPrice.setText("¥" + groupBuyListData.price_market);
+        viewHolder.mGroupPrice.setText(StringUtils.deleteZero(groupBuyListData.price));
+        viewHolder.mOldPrice.setText("¥" + StringUtils.deleteZero(groupBuyListData.price_market));
         viewHolder.mGroupPersonSize.setText(groupBuyListData.min_num + "人成团");
         ImageUtils.displayImage(groupBuyListData.media, viewHolder.mImageView);
 

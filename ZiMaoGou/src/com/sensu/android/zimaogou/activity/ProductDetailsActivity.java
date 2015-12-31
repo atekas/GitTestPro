@@ -22,6 +22,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.Mode.ProductTypeModel;
+import com.sensu.android.zimaogou.Mode.SelectProductModel;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.ProductDetailsResponse;
 import com.sensu.android.zimaogou.activity.login.LoginActivity;
@@ -276,7 +277,10 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 ChooseTypeAndColorClick(findViewById(R.id.add_to_buy_bag));
                 break;
             case R.id.pay:
-                startActivity(new Intent(this, VerifyOrderActivity.class));
+                SelectProductModel selectProductModel = new SelectProductModel();
+                Intent intent1 = new Intent(this, VerifyOrderActivity.class);
+                intent1.putExtra(VerifyOrderActivity.PRODUCT_FOR_PAY, selectProductModel);
+                startActivity(intent1);
                 break;
         }
     }

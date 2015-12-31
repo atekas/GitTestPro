@@ -96,10 +96,14 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
             case R.id.newest:
                 findViewById(R.id.moods_text).setSelected(false);
                 findViewById(R.id.newest_text).setSelected(true);
+                mOrderBy = "2";
+                getProductList();
                 break;
             case R.id.moods:
                 findViewById(R.id.moods_text).setSelected(true);
                 findViewById(R.id.newest_text).setSelected(false);
+                mOrderBy = "1";
+                getProductList();
                 break;
         }
     }

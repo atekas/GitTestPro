@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.ThemeDetailResponse;
 import com.sensu.android.zimaogou.utils.ImageUtils;
+import com.sensu.android.zimaogou.utils.StringUtils;
+import com.sensu.android.zimaogou.utils.TextUtils;
 
 /**
  * Created by zhangwentao on 2015/11/18.
@@ -44,7 +46,8 @@ public class SpecialDetailsAdapter extends SimpleBaseAdapter {
             viewHolder.mNewPrice = (TextView) view.findViewById(R.id.new_price);
             viewHolder.mOldPrice = (TextView) view.findViewById(R.id.old_price);
             viewHolder.mContent = (TextView) view.findViewById(R.id.content);
-            viewHolder.mOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+            TextUtils.addLineCenter(viewHolder.mOldPrice);
+            view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
@@ -52,8 +55,9 @@ public class SpecialDetailsAdapter extends SimpleBaseAdapter {
         ThemeDetailResponse.ThemeDetailData themeDetailData = mThemeDetailResponse.data.get(i);
         ImageUtils.displayImage(themeDetailData.media.image.get(0), viewHolder.mPic);
         viewHolder.mName.setText(themeDetailData.name);
-        viewHolder.mNewPrice.setText(themeDetailData.price);
+        viewHolder.mNewPrice.setText("¥" + StringUtils.deleteZero(themeDetailData.price));
         viewHolder.mContent.setText(themeDetailData.sale_title);
+        viewHolder.mOldPrice.setText("¥" + StringUtils.deleteZero(themeDetailData.price_market));
 
         return view;
     }

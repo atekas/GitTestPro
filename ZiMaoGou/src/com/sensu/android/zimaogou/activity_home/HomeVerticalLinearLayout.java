@@ -65,7 +65,7 @@ public class HomeVerticalLinearLayout extends LinearLayout implements AdapterVie
                 mListView.setAdapter(mRecommendThemeAdapter);
                 break;
             case 5:
-                mTitle.setText("推荐单品");
+                mTitle.setText("甜蜜心跳");
                 getCommendProducts();
                 break;
         }

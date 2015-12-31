@@ -12,12 +12,12 @@
     <string name="wait_receive_goods">待收货</string>
     <string name="sales_reture">退货单</string>
     <string name="all_orders">全部订单</string>
-    <string name="buyRead">购物须知</string>
-    <string name="hotGoods">人气商品</string>
-    <string name="Latest">最新上架</string>
-    <string name="featureVideos">精选视频</string>
+    <string name="buyRead">诞生秘密</string>
+    <string name="hotGoods">不得不爱</string>
+    <string name="Latest">限时特惠</string>
+    <string name="featureVideos">星梦奇缘</string>
     <string name="daily_recommend">每日推荐</string>
-    <string name="group_special">拼团特价</string>
+    <string name="group_special">姐妹成团</string>
     <string name="register">注册</string>
     <string name="phone_num">手机号</string>
     <string name="password">密码</string>
@@ -31,7 +31,7 @@
     <string name="next">下一步</string>
     <string name="finish">完成</string>
     <string name="password_rules">不少于6位的数字字母</string>
-    <string name="find_shop">发现好店铺</string>
+    <string name="find_shop">制作人</string>
     <string name="lively">推荐专题</string>
     <string name="cancel">取消</string>
     <string name="release">发布</string>

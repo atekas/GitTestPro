@@ -36,7 +36,7 @@
             android:layout_height="2px"
             android:background="@color/home_line"/>
 
-    <com.sensu.android.zimaogou.widget.RefreshListView
+    <ListView
             android:id="@+id/special_details_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

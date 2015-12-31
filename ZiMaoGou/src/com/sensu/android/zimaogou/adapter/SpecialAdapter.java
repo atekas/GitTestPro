@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.ThemeListResponse;
 import com.sensu.android.zimaogou.utils.ImageUtils;
+import com.sensu.android.zimaogou.utils.StringUtils;
 
 /**
  * Created by zhangwentao on 2015/11/18.
@@ -49,7 +50,7 @@ public class SpecialAdapter extends SimpleBaseAdapter {
 
         ImageUtils.displayImage(themeListData.media.cover, viewHolder.mSpecialPic);
         viewHolder.mName.setText(themeListData.name);
-        viewHolder.mPrice.setText(themeListData.price);
+        viewHolder.mPrice.setText("¥" + StringUtils.deleteZero(themeListData.price));
 
         return view;
     }
