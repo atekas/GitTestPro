@@ -24,6 +24,7 @@ import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.Mode.ProductTypeModel;
 import com.sensu.android.zimaogou.Mode.SelectProductModel;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.ReqResponse.CartDataResponse;
 import com.sensu.android.zimaogou.ReqResponse.ProductDetailsResponse;
 import com.sensu.android.zimaogou.activity.login.LoginActivity;
 import com.sensu.android.zimaogou.activity.video.ProductShopCarActivity;
@@ -230,10 +231,28 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
 
         listView = (ListView) findViewById(R.id.product_evaluate_list);
 
-
         mProductDetailTextView.setOnClickListener(new MyOnClickListener(0));
         mProductSpecificationTextView.setOnClickListener(new MyOnClickListener(1));
         mProductCommentTextView.setOnClickListener(new MyOnClickListener(2));
+    }
+
+    UserInfo mUserInfo;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (mCartNum != 0) {
+            findViewById(R.id.cart_num).setVisibility(View.VISIBLE);
+            ((TextView) findViewById(R.id.cart_num)).setText(mCartNum + "");
+        } else {
+            findViewById(R.id.cart_num).setVisibility(View.GONE);
+        }
+
+        mUserInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
+        if (mUserInfo != null) {
+            getCart();
+        }
     }
 
     @Override
@@ -260,8 +279,13 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                     PromptUtils.showToast("请选择规格");
                     return;
                 }
-                String num = ((EditText) mChooseDialog.findViewById(R.id.product_num)).getText().toString();
-                addToCart(getSpecId(), num);
+
+                if (mUserInfo == null) {
+                    startActivity(new Intent(this, LoginActivity.class));
+                } else {
+                    String num = ((EditText) mChooseDialog.findViewById(R.id.product_num)).getText().toString();
+                    addToCart(getSpecId(), num);
+                }
                 break;
             case R.id.bt_subtract:
                 if (mProductCount > 1) {
@@ -472,18 +496,14 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
     }
 
     private void addToCart(String id, String num) {
-        UserInfo userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
-        if (userInfo == null) {
-            startActivity(new Intent(this, LoginActivity.class));
-            return;
-        }
+
         RequestParams requestParams = new RequestParams();
 
-        requestParams.put("uid", userInfo.getUid());
+        requestParams.put("uid", mUserInfo.getUid());
         requestParams.put("source", mSource);
         requestParams.put("num", num);
         requestParams.put("spec_id", id);
-        HttpUtil.postWithSign(userInfo.getToken(), IConstants.sCart, requestParams, new JsonHttpResponseHandler() {
+        HttpUtil.postWithSign(mUserInfo.getToken(), IConstants.sCart, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -511,5 +531,39 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 ImageUtils.displayImage(url, imageView);
             }
         }
+    }
+
+    int mCartNum;
+
+    private void getCart() {
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("uid", mUserInfo.getUid());
+        HttpUtil.getWithSign(mUserInfo.getToken(), IConstants.sCart, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                //todo 接口通,等数据
+                CartDataResponse cartDataResponse = JSON.parseObject(response.toString(), CartDataResponse.class);
+
+                for (CartDataResponse.CartDataGroup cartDataGroup : cartDataResponse.data) {
+                    for (CartDataResponse.CartDataChild cartDataChild : cartDataGroup.data) {
+                        mCartNum += Integer.parseInt(cartDataChild.num);
+                    }
+                }
+
+                if (mCartNum != 0) {
+                    findViewById(R.id.cart_num).setVisibility(View.VISIBLE);
+                    ((TextView) findViewById(R.id.cart_num)).setText(mCartNum + "");
+                } else {
+                    findViewById(R.id.cart_num).setVisibility(View.GONE);
+                }
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
     }
 }

@@ -29,15 +29,33 @@
                 android:textColor="@color/black"
                 android:text="详情"/>
 
-        <ImageView
+        <FrameLayout
                 android:id="@+id/shopping_bag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/shopping_bag"
-                android:layout_centerVertical="true"
-                android:padding="@dimen/dip_5"
                 android:layout_marginRight="@dimen/dip_10"
-                android:layout_toLeftOf="@+id/product_share"/>
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/product_share">
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/shopping_bag"
+                    android:padding="@dimen/dip_5"/>
+
+            <TextView
+                    android:id="@+id/cart_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:background="@drawable/cart_num_back"
+                    android:layout_gravity="right"
+                    android:gravity="center"
+                    android:padding="2dp"
+                    android:textColor="@color/white"
+                    android:text="12"/>
+
+        </FrameLayout>
 
         <ImageView
                 android:id="@+id/product_share"
@@ -128,20 +146,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/white">
-            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
-                          android:orientation="vertical">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
                 <WebView
                         android:id="@+id/productDetail_webView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
                 </WebView>
+
                 <ListView
                         android:id="@+id/product_specification_list"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:divider="@null"
-                        android:dividerHeight="0dp"></ListView>
+                        android:dividerHeight="0dp"/>
                 <com.sensu.android.zimaogou.widget.NoScrollListView
                         android:id="@+id/product_evaluate_list"
                         android:layout_width="match_parent"
