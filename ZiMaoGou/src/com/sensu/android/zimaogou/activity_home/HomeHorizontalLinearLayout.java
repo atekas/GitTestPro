@@ -59,6 +59,8 @@ public class HomeHorizontalLinearLayout extends LinearLayout implements AdapterV
     protected void onFinishInflate() {
         super.onFinishInflate();
         mhListView = (HorizontalListView) findViewById(R.id.lv_recommend);
+
+        
         mTitle = (TextView) findViewById(R.id.tv_title);
 
         findViewById(R.id.more).setOnClickListener(this);
