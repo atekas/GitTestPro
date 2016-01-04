@@ -20,7 +20,7 @@ public class StringUtils {
 
     //double保留两位小数  返回带两位小数的字符串
     public static String getDoubleWithTwo(double db) {
-        DecimalFormat decimalFormat = new DecimalFormat("#.00");
+        DecimalFormat decimalFormat = new DecimalFormat("#0.00");
         return decimalFormat.format(db);
     }
 }

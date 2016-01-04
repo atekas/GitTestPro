@@ -34,6 +34,8 @@ public class ShoppingBagFragment extends BaseFragment implements View.OnClickLis
 
     private TextView mEditText;
 
+    private CartDataResponse mCartDataResponse;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.shopping_bag_fragment, container, false);
@@ -50,7 +52,9 @@ public class ShoppingBagFragment extends BaseFragment implements View.OnClickLis
         if (hidden) {
 
         } else {
-
+            if (mCartDataResponse == null) {
+                getCart();
+            }
         }
     }
 
@@ -98,6 +102,7 @@ public class ShoppingBagFragment extends BaseFragment implements View.OnClickLis
                 super.onSuccess(statusCode, headers, response);
                 //todo 接口通,等数据
                 CartDataResponse cartDataResponse = JSON.parseObject(response.toString(), CartDataResponse.class);
+                mCartDataResponse = cartDataResponse;
                 mShoppingBagAdapter.setCartDataGroup(cartDataResponse);
             }
 

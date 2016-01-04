@@ -25,6 +25,7 @@ import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.sensu.android.zimaogou.utils.RateUtil;
+import com.sensu.android.zimaogou.utils.StringUtils;
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -97,16 +98,16 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
             getExpressMoney();
 
             mVerifyOrderAdapter.setSelectProductModel(mSelectProductModel);
-            ((TextView) findViewById(R.id.amount_money)).setText("¥ " + mSelectProductModel.getTotalMoney());
+            ((TextView) findViewById(R.id.amount_money)).setText("¥ " + StringUtils.getDoubleWithTwo(mSelectProductModel.getTotalMoney()));
             mRateMoney = getAmountRate();
-            ((TextView) findViewById(R.id.rate)).setText("¥ " + mRateMoney);
+            ((TextView) findViewById(R.id.rate)).setText("¥ " + StringUtils.getDoubleWithTwo(mRateMoney));
 
-            ((TextView) findViewById(R.id.coupon_money)).setText("-¥ 0");
+            ((TextView) findViewById(R.id.coupon_money)).setText("-¥ 0.00");
 
             mAmountMoney = mSelectProductModel.getTotalMoney() + getAmountRate();
-            mAmountMoneyView.setText("¥ " + mAmountMoney);
+            mAmountMoneyView.setText("¥ " + StringUtils.getDoubleWithTwo(mAmountMoney));
 
-            ((TextView) findViewById(R.id.express_money)).setText("¥ " + mExpressMoney);
+            ((TextView) findViewById(R.id.express_money)).setText("¥ " + StringUtils.getDoubleWithTwo(mExpressMoney));
         }
     }
 
@@ -127,9 +128,8 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
         if (mExpressRuleResponse != null) {
             for (ExpressRuleResponse.ExpressRuleData expressRuleData : mExpressRuleResponse.data) {
                 if (expressRuleData.deliver_address.equals(mSelectProductModel.getDeliverAddress())) {
-                    if (mSelectProductModel.getTotalMoney() > Double.parseDouble(expressRuleData.end_amount)) {
-                        mExpressMoney = 0;
-                    } else {
+                    if (mSelectProductModel.getTotalMoney() > Double.parseDouble(expressRuleData.start_amount)
+                            && mSelectProductModel.getTotalMoney() < Double.parseDouble(expressRuleData.end_amount)) {
                         mExpressMoney = Double.parseDouble(expressRuleData.express_amount);
                     }
                 }

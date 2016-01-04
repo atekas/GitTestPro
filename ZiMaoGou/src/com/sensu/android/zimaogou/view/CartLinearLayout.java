@@ -19,6 +19,7 @@ import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.utils.ImageUtils;
 import com.sensu.android.zimaogou.utils.PromptUtils;
+import com.sensu.android.zimaogou.utils.StringUtils;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
@@ -175,7 +176,7 @@ public class CartLinearLayout extends LinearLayout {
         });
 
         mSelectNum.setText("已选商品" + getSelectNum() + "件");
-        mSumPrice.setText("¥" + getAllMoney());
+        mSumPrice.setText("¥" + StringUtils.getDoubleWithTwo(getAllMoney()));
 
         addView(bottomView);
     }
@@ -234,7 +235,7 @@ public class CartLinearLayout extends LinearLayout {
     }
 
     private double getAllMoney() {
-        double allMoney = 0;
+        double allMoney = 0.00;
         for (CartDataResponse.CartDataChild cartDataChild : mCartDataGroup.data) {
             if (cartDataChild.getIsSelect()) {
                 double price = Double.parseDouble(cartDataChild.price);
