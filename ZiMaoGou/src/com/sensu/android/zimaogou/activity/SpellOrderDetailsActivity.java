@@ -89,7 +89,7 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
         ((TextView) findViewById(R.id.group_min_size)).setText(mGroupDetailsResponse.data.min_num + "人成团");
         ((TextView) findViewById(R.id.group_buy_price)).setText("¥" + mGroupDetailsResponse.data.price);
         ((TextView) findViewById(R.id.price_market)).setText("自贸购特价¥" + mGroupDetailsResponse.data.price_goods);
-        mOldPriceText.setText("¥" + mGroupDetailsResponse.data.price_market);
+        mOldPriceText.setText("¥" + mGroupDetailsResponse.data.price_goods);
         double saveMoney = Double.parseDouble(mGroupDetailsResponse.data.price_market) - Double.parseDouble(mGroupDetailsResponse.data.price);
         ((TextView) findViewById(R.id.save_money)).setText("立省¥" + String.valueOf(saveMoney));
         ((WebView) findViewById(R.id.web_view)).loadUrl(mGroupDetailsResponse.data.description);
@@ -162,7 +162,10 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
                 finish();
                 break;
             case R.id.buy_directly:
-                startActivity(new Intent(this, ProductDetailsActivity.class));
+                Intent intent = new Intent(this, ProductDetailsActivity.class);
+                intent.putExtra(ProductDetailsActivity.PRODUCT_ID, mGroupDetailsResponse.data.id);
+                intent.putExtra(ProductDetailsActivity.FROM_SOURCE, "2");
+                startActivity(intent);
                 break;
             case R.id.create_group:
                 if (mUserInfo == null) {

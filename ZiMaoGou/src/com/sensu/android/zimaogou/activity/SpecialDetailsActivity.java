@@ -33,6 +33,8 @@ public class SpecialDetailsActivity extends BaseActivity implements View.OnClick
 
     private ThemeListResponse.ThemeListData mThemeListData;
 
+    private ThemeDetailResponse mThemeDetailResponse;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +86,7 @@ public class SpecialDetailsActivity extends BaseActivity implements View.OnClick
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 ThemeDetailResponse themeDetailResponse = JSON.parseObject(response.toString(), ThemeDetailResponse.class);
+                mThemeDetailResponse = themeDetailResponse;
                 mSpecialDetailsAdapter.setThemeDetailData(themeDetailResponse);
             }
         });
@@ -91,8 +94,12 @@ public class SpecialDetailsActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//        if (i > 1) {
-//            startActivity(new Intent(this, ProductDetailsActivity.class));
-//        }
+        if (i > 0) {
+            ThemeDetailResponse.ThemeDetailData themeDetailData = mThemeDetailResponse.data.get(i-1);
+            Intent intent = new Intent(this, ProductDetailsActivity.class);
+            intent.putExtra(ProductDetailsActivity.PRODUCT_ID, themeDetailData.id);
+            intent.putExtra(ProductDetailsActivity.FROM_SOURCE, themeDetailData.source);
+            startActivity(intent);
+        }
     }
 }

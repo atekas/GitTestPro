@@ -55,7 +55,7 @@ public class SpellOrderAdapter extends SimpleBaseAdapter {
         viewHolder.mProductName.setText(groupBuyListData.name);
         viewHolder.mProductDescribe.setText(groupBuyListData.content);
         viewHolder.mGroupPrice.setText(StringUtils.deleteZero(groupBuyListData.price));
-        viewHolder.mOldPrice.setText("¥" + StringUtils.deleteZero(groupBuyListData.price_market));
+        viewHolder.mOldPrice.setText("¥" + StringUtils.deleteZero(groupBuyListData.price_goods));
         viewHolder.mGroupPersonSize.setText(groupBuyListData.min_num + "人成团");
         ImageUtils.displayImage(groupBuyListData.media, viewHolder.mImageView);
 
