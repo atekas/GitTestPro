@@ -1,12 +1,15 @@
 package com.sensu.android.zimaogou.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.ProductListResponse;
 import com.sensu.android.zimaogou.utils.DisplayUtils;
@@ -20,6 +23,17 @@ public class ProductsDetailsAdapter extends SimpleBaseAdapter {
 
     private ProductListResponse mProductListResponse;
     private int mPicSize;
+
+    private DisplayImageOptions mProductOptions = new DisplayImageOptions.Builder()
+            .considerExifParams(true)
+            .imageScaleType(ImageScaleType.EXACTLY)
+            .bitmapConfig(Bitmap.Config.RGB_565)
+            .resetViewBeforeLoading(true)
+            .showImageOnLoading(R.drawable.category_default)
+            .showImageOnFail(R.drawable.category_default)
+            .showImageForEmptyUri(R.drawable.category_default)
+            .resetViewBeforeLoading(true)
+            .build();
 
     public ProductsDetailsAdapter(Context context) {
         super(context);
@@ -59,9 +73,9 @@ public class ProductsDetailsAdapter extends SimpleBaseAdapter {
         viewHolder.mProductName.setText(productListData.name);
         viewHolder.mPrice.setText(StringUtils.deleteZero(productListData.price));
         if (productListData.media.type.equals("2")) {
-            ImageUtils.displayImage(productListData.media.cover, viewHolder.mProductPic);
+            ImageUtils.displayImage(productListData.media.cover, viewHolder.mProductPic, mProductOptions);
         } else {
-            ImageUtils.displayImage(productListData.media.image.get(0), viewHolder.mProductPic);
+            ImageUtils.displayImage(productListData.media.image.get(0), viewHolder.mProductPic, mProductOptions);
         }
 
         return view;

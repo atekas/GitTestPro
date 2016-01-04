@@ -1,11 +1,14 @@
 package com.sensu.android.zimaogou.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.ProductClassificationResponse;
 import com.sensu.android.zimaogou.utils.ImageUtils;
@@ -16,6 +19,17 @@ import com.sensu.android.zimaogou.utils.ImageUtils;
 public class ClassificationGridAdapter extends SimpleBaseAdapter {
 
     private ProductClassificationResponse.ProductCategory mProductCategory;
+
+    private DisplayImageOptions mCategoryOptions = new DisplayImageOptions.Builder()
+            .considerExifParams(true)
+            .imageScaleType(ImageScaleType.EXACTLY)
+            .bitmapConfig(Bitmap.Config.RGB_565)
+            .resetViewBeforeLoading(true)
+            .showImageOnLoading(R.drawable.category_default)
+            .showImageOnFail(R.drawable.category_default)
+            .showImageForEmptyUri(R.drawable.category_default)
+            .resetViewBeforeLoading(true)
+            .build();
 
     public ClassificationGridAdapter(Context context) {
         super(context);
@@ -47,7 +61,7 @@ public class ClassificationGridAdapter extends SimpleBaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
         ProductClassificationResponse.CategoryList categoryList = mProductCategory.sub.get(i);
-        ImageUtils.displayImage(categoryList.image, viewHolder.mImageView);
+        ImageUtils.displayImage(categoryList.image, viewHolder.mImageView, mCategoryOptions);
         viewHolder.mTextView.setText(categoryList.name);
 
         return view;

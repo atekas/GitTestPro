@@ -1,11 +1,14 @@
 package com.sensu.android.zimaogou.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.GroupBuyListResponse;
 import com.sensu.android.zimaogou.utils.ImageUtils;
@@ -18,6 +21,17 @@ import com.sensu.android.zimaogou.utils.TextUtils;
 public class SpellOrderAdapter extends SimpleBaseAdapter {
 
     private GroupBuyListResponse mGroupBuyListResponse;
+
+    private DisplayImageOptions mGroupListOptions = new DisplayImageOptions.Builder()
+            .considerExifParams(true)
+            .imageScaleType(ImageScaleType.EXACTLY)
+            .bitmapConfig(Bitmap.Config.RGB_565)
+            .resetViewBeforeLoading(true)
+            .showImageOnLoading(R.drawable.group_list_default)
+            .showImageOnFail(R.drawable.group_list_default)
+            .showImageForEmptyUri(R.drawable.group_list_default)
+            .resetViewBeforeLoading(true)
+            .build();
 
     public SpellOrderAdapter(Context context) {
         super(context);
@@ -57,7 +71,7 @@ public class SpellOrderAdapter extends SimpleBaseAdapter {
         viewHolder.mGroupPrice.setText(StringUtils.deleteZero(groupBuyListData.price));
         viewHolder.mOldPrice.setText("¥" + StringUtils.deleteZero(groupBuyListData.price_goods));
         viewHolder.mGroupPersonSize.setText(groupBuyListData.min_num + "人成团");
-        ImageUtils.displayImage(groupBuyListData.media, viewHolder.mImageView);
+        ImageUtils.displayImage(groupBuyListData.media, viewHolder.mImageView, mGroupListOptions);
 
         return view;
     }
