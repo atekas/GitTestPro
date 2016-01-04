@@ -61,17 +61,17 @@ public class TourBuyAdapter extends SimpleBaseAdapter {
             viewHolder.tv_reviewCount = (TextView) view.findViewById(R.id.review_count);
             viewHolder.tv_sendTime = (TextView) view.findViewById(R.id.send_time);
             viewHolder.tv_userName = (TextView) view.findViewById(R.id.user_name);
-            viewHolder.tv_delete = (TextView) view.findViewById(R.id.delete);
-            viewHolder.tv_delete.setOnClickListener(new View.OnClickListener() {
+            viewHolder.img_delete = (ImageView) view.findViewById(R.id.delete);
+            viewHolder.img_delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     DeleteTravelDialog(position);
                 }
             });
             if(isFromMy){
-                viewHolder.tv_delete.setVisibility(View.VISIBLE);
+                viewHolder.img_delete.setVisibility(View.VISIBLE);
             }else{
-                viewHolder.tv_delete.setVisibility(View.GONE);
+                viewHolder.img_delete.setVisibility(View.GONE);
             }
             //TODO 查找控件
             view.setTag(viewHolder);
@@ -104,8 +104,8 @@ public class TourBuyAdapter extends SimpleBaseAdapter {
     }
 
     private static class ViewHolder {
-        ImageView img_userHead,img_contentPic,img_videoPic;
-        TextView tv_userName,tv_sendTime,tv_location,tv_content,tv_marks,tv_reviewCount,tv_praiseCount,tv_delete;
+        ImageView img_userHead,img_contentPic,img_videoPic,img_delete;
+        TextView tv_userName,tv_sendTime,tv_location,tv_content,tv_marks,tv_reviewCount,tv_praiseCount;
     }
 
     /**

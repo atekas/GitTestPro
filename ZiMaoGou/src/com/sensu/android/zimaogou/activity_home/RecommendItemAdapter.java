@@ -50,11 +50,11 @@ public class RecommendItemAdapter extends SimpleBaseAdapter {
         }
         if(commendProductModes.get(i).media.type.equals("1")){
             viewHolder.mVideoImage.setVisibility(View.GONE);
-            ImageUtils.displayImage(commendProductModes.get(i).media.image.get(0),viewHolder.mImageView);
+
         }else{
-            viewHolder.mVideoImage.setVisibility(View.GONE);
-            ImageUtils.displayImage(commendProductModes.get(i).media.cover,viewHolder.mImageView);
+            viewHolder.mVideoImage.setVisibility(View.VISIBLE);
         }
+        ImageUtils.displayImage(commendProductModes.get(i).broad_image,viewHolder.mImageView);
         viewHolder.mProductName.setText(commendProductModes.get(i).name);
         viewHolder.mPrice.setText("￥"+ StringUtils.deleteZero(commendProductModes.get(i).price));
         viewHolder.mDescribe.setText(commendProductModes.get(i).sale_title);

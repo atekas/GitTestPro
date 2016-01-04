@@ -20,9 +20,11 @@ import com.sensu.android.zimaogou.adapter.CouponValidListAdapter;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.HttpUtil;
+import com.sensu.android.zimaogou.utils.TextUtils;
 import com.sensu.android.zimaogou.utils.UiUtils;
 import org.apache.http.Header;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -42,7 +44,7 @@ public class CouponActivity extends BaseActivity implements AdapterView.OnItemCl
     ImageView mBackImageView;
 
     private String mTotalAmount;
-
+    private String sourceType ="";
     private CouponValidListAdapter mCouponValidListAdapter;
     private CouponInvalidListAdapter mCouponInvalidListAdapter;
 
@@ -53,6 +55,9 @@ public class CouponActivity extends BaseActivity implements AdapterView.OnItemCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.coupon_activity);
         initView();
+        if(getIntent().getExtras() != null){
+            sourceType = getIntent().getExtras().getString("type","");
+        }
     }
 
     private void initView() {
@@ -95,13 +100,15 @@ public class CouponActivity extends BaseActivity implements AdapterView.OnItemCl
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        CouponResponse.Coupon coupon = mCanUseCouponList.get(i);
-        Intent intent = new Intent();
-        intent.putExtra(COUPON_ID, coupon.id);
-        intent.putExtra(COUPON_AMOUNT, coupon.amount);
-        intent.putExtra(COUPON_NAME, coupon.name);
-        setResult(RESULT_OK, intent);
-        finish();
+        if(TextUtils.isEmpty(sourceType)) {
+            CouponResponse.Coupon coupon = mCanUseCouponList.get(i);
+            Intent intent = new Intent();
+            intent.putExtra(COUPON_ID, coupon.id);
+            intent.putExtra(COUPON_AMOUNT, coupon.amount);
+            intent.putExtra(COUPON_NAME, coupon.name);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
     }
 
     /**

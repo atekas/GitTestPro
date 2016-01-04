@@ -20,5 +20,6 @@ public class CommendProductResponse extends BaseReqResponse {
         public String price;
         public String price_market;
         public ProductDetailsResponse.MediaData media;
+        public String broad_image;
     }
 }

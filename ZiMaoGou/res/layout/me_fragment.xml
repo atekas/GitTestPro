@@ -54,8 +54,8 @@
             </LinearLayout>
             <RelativeLayout
                     android:id="@+id/rl_message"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="25dp"
@@ -64,15 +64,15 @@
                            android:layout_height="25dp"
                            android:layout_centerInParent="true"
                            android:src="@drawable/img_message"/>
-                <TextView
+                <ImageView
                         android:id="@+id/tv_numOfMessage"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
                         android:textSize="12sp"
                         android:textColor="@color/red"
                         android:gravity="center"
                         android:layout_alignParentRight="true"
-                        android:background="@drawable/message_num"
+                        android:src="@drawable/message_unread"
                         android:text="1"/>
             </RelativeLayout>
         </RelativeLayout>
@@ -100,14 +100,14 @@
                         android:text="@string/wait_pay"/>
                 <TextView
                         android:id="@+id/tv_numOfOrder1"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:textSize="12sp"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:textSize="10sp"
                         android:textColor="@color/red"
                         android:gravity="center"
                         android:layout_alignParentRight="true"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="25dp"
+                        android:layout_marginTop="9dp"
+                        android:layout_marginRight="27dp"
                         android:background="@drawable/message_num"
                         android:text="1"/>
             </RelativeLayout>
@@ -133,14 +133,14 @@
                         android:text="@string/wait_receive_goods"/>
                 <TextView
                         android:id="@+id/tv_numOfOrder2"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:textSize="12sp"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:textSize="10sp"
                         android:textColor="@color/red"
                         android:gravity="center"
                         android:layout_alignParentRight="true"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="25dp"
+                        android:layout_marginTop="9dp"
+                        android:layout_marginRight="27dp"
                         android:background="@drawable/message_num"
                         android:text="13"/>
             </RelativeLayout>
@@ -166,14 +166,14 @@
                         android:text="@string/sales_reture"/>
                 <TextView
                         android:id="@+id/tv_numOfOrder3"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:textSize="12sp"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:textSize="10sp"
                         android:textColor="@color/red"
                         android:gravity="center"
                         android:layout_alignParentRight="true"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="25dp"
+                        android:layout_marginTop="9dp"
+                        android:layout_marginRight="27dp"
                         android:background="@drawable/message_num"
                         android:text="1"/>
             </RelativeLayout>
@@ -460,7 +460,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:textColor="#444444"
-                    android:text="02183294532"/>
+                    android:text="022-27963101"/>
 
             <ImageView
                     android:layout_width="wrap_content"

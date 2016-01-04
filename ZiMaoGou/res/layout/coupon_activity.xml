@@ -51,6 +51,7 @@
                     android:id="@+id/lv_valid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:listSelector="@android:color/transparent"
                     android:scrollbars="none">
 
             </ListView>
@@ -82,6 +83,7 @@
                     android:id="@+id/lv_invalid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:listSelector="@android:color/transparent"
                     android:scrollbars="none">
 
             </ListView>

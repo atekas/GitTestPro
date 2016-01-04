@@ -32,8 +32,8 @@ import com.umeng.socialize.media.UMImage;
  */
 public class MeFragment extends BaseFragment implements View.OnClickListener {
 
-    private ImageView mHeadPicImageView;
-    private TextView mNicknameTextView,mLoginTextView,mNumOfOrder1,mNumOfOrder2,mNumOfOrder3, mNumOfMessage;
+    private ImageView mHeadPicImageView,mNumOfMessage;
+    private TextView mNicknameTextView,mLoginTextView,mNumOfOrder1,mNumOfOrder2,mNumOfOrder3;
 
 //    String shareUrl = URL.BASEURL+"/download";
 //    String ImageUrl = URL.BASEURL+"/images/img_app_1.png";
@@ -60,7 +60,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         mNumOfOrder1 = (TextView) mParentActivity.findViewById(R.id.tv_numOfOrder1);
         mNumOfOrder2 = (TextView) mParentActivity.findViewById(R.id.tv_numOfOrder2);
         mNumOfOrder3 = (TextView) mParentActivity.findViewById(R.id.tv_numOfOrder3);
-        mNumOfMessage = (TextView) mParentActivity.findViewById(R.id.tv_numOfMessage);
+        mNumOfMessage = (ImageView) mParentActivity.findViewById(R.id.tv_numOfMessage);
 
         mHeadPicImageView.setOnClickListener(this);
         mLoginTextView = (TextView) mParentActivity.findViewById(R.id.login_register);
@@ -167,7 +167,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             case R.id.my_coupon:
                 //TODO 我的优惠券
                 if(checkLogin()) {
-                    startActivity(new Intent(mParentActivity, CouponActivity.class));
+                    startActivity(new Intent(mParentActivity, CouponActivity.class).putExtra("type","isMy"));
                 }else{
                     startActivity(new Intent(mParentActivity,LoginActivity.class));
                 }
