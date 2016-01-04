@@ -67,11 +67,19 @@
             android:id="@+id/describe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
             android:textSize="13sp"
             android:textColor="@color/gray_9b9b9b"
             android:singleLine="true"
+            android:layout_marginBottom="12dp"
             android:ellipsize="end"
             android:text="连续N年被评为优秀先进单位成为国家一流企业"/>
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:visibility="gone"
+            android:background="@color/home_line"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"/>
+
 
 </LinearLayout>

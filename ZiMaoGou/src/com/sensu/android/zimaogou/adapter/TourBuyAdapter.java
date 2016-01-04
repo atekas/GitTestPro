@@ -1,15 +1,22 @@
 package com.sensu.android.zimaogou.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.Mode.TravelMode;
 import com.sensu.android.zimaogou.R;
-import com.sensu.android.zimaogou.utils.DateUtils;
-import com.sensu.android.zimaogou.utils.ImageUtils;
+import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
+import com.sensu.android.zimaogou.utils.*;
+import org.apache.http.Header;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -19,9 +26,15 @@ import java.util.ArrayList;
 public class TourBuyAdapter extends SimpleBaseAdapter {
     ArrayList<TravelMode> travelModes = new ArrayList<TravelMode>();
 
+    boolean isFromMy = false;
     public TourBuyAdapter(Context context) {
         super(context);
     }
+    public TourBuyAdapter(Context context,boolean isFromMy){
+        super(context);
+        this.isFromMy = isFromMy;
+    }
+
     public void flush(ArrayList<TravelMode> travelModes){
         this.travelModes = travelModes;
         notifyDataSetChanged();
@@ -34,6 +47,7 @@ public class TourBuyAdapter extends SimpleBaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder viewHolder;
+        final int position = i;
         if (view == null) {
             view = LayoutInflater.from(mContext).inflate(R.layout.tour_buy_list_item, null);
             viewHolder = new ViewHolder();
@@ -47,8 +61,18 @@ public class TourBuyAdapter extends SimpleBaseAdapter {
             viewHolder.tv_reviewCount = (TextView) view.findViewById(R.id.review_count);
             viewHolder.tv_sendTime = (TextView) view.findViewById(R.id.send_time);
             viewHolder.tv_userName = (TextView) view.findViewById(R.id.user_name);
-
-
+            viewHolder.tv_delete = (TextView) view.findViewById(R.id.delete);
+            viewHolder.tv_delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    DeleteTravelDialog(position);
+                }
+            });
+            if(isFromMy){
+                viewHolder.tv_delete.setVisibility(View.VISIBLE);
+            }else{
+                viewHolder.tv_delete.setVisibility(View.GONE);
+            }
             //TODO 查找控件
             view.setTag(viewHolder);
         } else {
@@ -81,6 +105,57 @@ public class TourBuyAdapter extends SimpleBaseAdapter {
 
     private static class ViewHolder {
         ImageView img_userHead,img_contentPic,img_videoPic;
-        TextView tv_userName,tv_sendTime,tv_location,tv_content,tv_marks,tv_reviewCount,tv_praiseCount;
+        TextView tv_userName,tv_sendTime,tv_location,tv_content,tv_marks,tv_reviewCount,tv_praiseCount,tv_delete;
+    }
+
+    /**
+     * 删除游购
+     */
+    Dialog mDeleteAddressDialog;
+
+    private void DeleteTravelDialog(final int position) {
+        mDeleteAddressDialog = new Dialog(mContext, R.style.dialog);
+        mDeleteAddressDialog.setCancelable(true);
+        mDeleteAddressDialog.setContentView(R.layout.delete_address_dialog);
+
+        Button bt_sure = (Button) mDeleteAddressDialog.findViewById(R.id.bt_sure);
+        Button bt_cancel = (Button) mDeleteAddressDialog.findViewById(R.id.bt_cancel);
+        TextView tv_tip = (TextView) mDeleteAddressDialog.findViewById(R.id.tv_tip);
+        tv_tip.setText("删除该条足迹");
+        bt_sure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                deleteTravel(position);
+                mDeleteAddressDialog.dismiss();
+            }
+        });
+        bt_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDeleteAddressDialog.dismiss();
+            }
+        });
+        mDeleteAddressDialog.show();
+    }
+
+    private void deleteTravel(final int position){
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("uid", GDUserInfoHelper.getInstance(mContext).getUserInfo().getUid());
+        requestParams.put("travel_id",travelModes.get(position).getId());
+        HttpUtil.postWithSign(GDUserInfoHelper.getInstance(mContext).getUserInfo().getToken(), IConstants.sDeleteTravel,requestParams,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                LogUtils.d("删除我的足迹返回：",response.toString());
+                if(response.optInt("ret")>=0){
+                    PromptUtils.showToast("删除成功");
+                    travelModes.remove(position);
+                    flush(travelModes);
+                }else{
+                    PromptUtils.showToast(response.optString("msg"));
+                }
+            }
+        });
     }
 }

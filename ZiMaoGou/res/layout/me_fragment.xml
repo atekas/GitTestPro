@@ -295,7 +295,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:src="@drawable/my_collection"/>
+                    android:src="@drawable/my_travel"/>
 
             <TextView
                     android:layout_width="0dp"
@@ -303,7 +303,7 @@
                     android:layout_weight="1"
                     android:layout_marginLeft="15dp"
                     android:textColor="@color/black"
-                    android:text="我的游购"/>
+                    android:text="我的足迹"/>
 
             <ImageView
                     android:layout_width="wrap_content"

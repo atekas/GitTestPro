@@ -66,7 +66,7 @@ public class MyTravelActivity extends BaseActivity {
             }
         });
         mTourBuyListView = (RefreshListView) findViewById(R.id.tour_list);
-        mTourBuyAdapter = new TourBuyAdapter(this);
+        mTourBuyAdapter = new TourBuyAdapter(this,true);
         mTourBuyListView.setAdapter(mTourBuyAdapter);
 
         mTourBuyListView.setOnRefreshListener(mOnRefreshListener);

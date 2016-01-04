@@ -160,6 +160,7 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
                     return;
                 }
                 JSONObject item = null;
+                likeUsers.clear();
                 for (int i = 0; i < data.length(); i++) {
                     try {
                         item = (JSONObject) data.get(i);
@@ -279,6 +280,7 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
                 super.onSuccess(statusCode, headers, response);
                 LogUtils.d("提交点赞返回：", response.toString());
                 mLikeTextView.setSelected(true);
+                getDataForLike();
             }
         });
 

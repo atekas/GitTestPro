@@ -27,7 +27,7 @@
                 android:layout_centerInParent="true"
                 android:textSize="18sp"
                 android:textColor="@color/black"
-                android:text="我的游购"/>
+                android:text="我的足迹"/>
 
         <Button
                 android:onClick="SaveClick"

@@ -35,7 +35,8 @@ public class StoreHorizontalListViewAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return stors.size();
+
+        return stors.size()>=3?3:stors.size();
     }
 
     @Override

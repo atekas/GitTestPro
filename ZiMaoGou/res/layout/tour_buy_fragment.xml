@@ -16,7 +16,7 @@
                 android:textColor="#222222"
                 android:layout_centerInParent="true"
                 android:textSize="20sp"
-                android:text="游购"/>
+                android:text="足迹"/>
 
         <ImageView
                 android:id="@+id/tour_buy_send"

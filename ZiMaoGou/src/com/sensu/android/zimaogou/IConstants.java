@@ -90,7 +90,8 @@ public class IConstants {
     public static final String sGetCollect = "my/favorite";
     //获取我的游购
     public static final String sGetMyTravel = "my/travels";
-
+    //删除我的足迹
+    public static final String sDeleteTravel = "my/travels_delete";
     //获取支付charge
     public static final String sGetPayCharge = "pay";
 

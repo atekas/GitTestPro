@@ -43,13 +43,23 @@
 
             <TextView
                     android:id="@+id/tv_location"
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/user_name"
                     android:layout_toRightOf="@+id/send_time"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="8dp"
-                    android:text="大学路"/>
+                    android:text=""/>
+            <TextView
+                    android:id="@+id/delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_15"
+                    android:textColor="@color/black_222222"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:text="删除"/>
         </RelativeLayout>
     </RelativeLayout>
 
