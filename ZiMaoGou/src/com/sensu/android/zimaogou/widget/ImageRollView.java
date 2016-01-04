@@ -7,6 +7,7 @@
 package com.sensu.android.zimaogou.widget;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Parcelable;
@@ -23,6 +24,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.RelativeLayout;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.sensu.android.zimaogou.R;
@@ -301,6 +303,12 @@ public class ImageRollView extends RelativeLayout {
 
 	private class ImagePagerAdapter extends PagerAdapter {
 
+		DisplayImageOptions options = new DisplayImageOptions.Builder()
+				.showStubImage(R.drawable.home_banner)
+				.showImageForEmptyUri(R.drawable.home_banner)
+				.showImageOnFail(R.drawable.home_banner).cacheInMemory()
+				.cacheOnDisc().bitmapConfig(Bitmap.Config.RGB_565).build();
+
 		@Override
 		public void destroyItem(ViewGroup container, int position, Object object) {
 			((ViewPager) container).removeView((View) object);
@@ -332,7 +340,7 @@ public class ImageRollView extends RelativeLayout {
 				imageLoader.init(ImageLoaderConfiguration.createDefault(context));
 			}
 
-			ImageUtils.displayImage(mImageUrls.get(position), imageView);
+			ImageUtils.displayImage(mImageUrls.get(position), imageView, options);
 
 			imageView.setOnTouchListener(onTouchListener);
 			imageView.setClickable(true);

@@ -97,4 +97,8 @@ public class IConstants {
     //搜索热词
     public static final String sHotKeywords = "goods/search/keywords";
 
+
+    //我的优惠券
+    public static final String sMyCoupon = "my/coupon";
+
 }

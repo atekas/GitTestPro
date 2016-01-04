@@ -57,6 +57,8 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
     private double mAmountMoney;
     private double mRateMoney;
     private double mExpressMoney;
+    private String mCouponId;
+    private String mCouponMoney;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +93,9 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
         mVerifyOrderAdapter = new VerifyOrderAdapter(this);
         mListView.setAdapter(mVerifyOrderAdapter);
 
+        mCouponId = "0";
+        mCouponMoney = "0.00";
+
         getAddressDefault();
 
         if (mSelectProductModel != null) {
@@ -102,7 +107,7 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
             mRateMoney = getAmountRate();
             ((TextView) findViewById(R.id.rate)).setText("¥ " + StringUtils.getDoubleWithTwo(mRateMoney));
 
-            ((TextView) findViewById(R.id.coupon_money)).setText("-¥ 0.00");
+            ((TextView) findViewById(R.id.coupon_money)).setText("-¥ " + mCouponMoney);
 
             mAmountMoney = mSelectProductModel.getTotalMoney() + getAmountRate();
             mAmountMoneyView.setText("¥ " + StringUtils.getDoubleWithTwo(mAmountMoney));
@@ -163,7 +168,9 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.coupon:
                 PromptUtils.showToast("进入到我的优惠券页面");
-                startActivityForResult(new Intent(this, CouponActivity.class), CHOOSE_COUPON_CODE);
+                Intent intent1 = new Intent(this, CouponActivity.class);
+                intent1.putExtra(CouponActivity.TOTAL_AMOUNT, String.valueOf(mSelectProductModel.getTotalMoney()));
+                startActivityForResult(intent1, CHOOSE_COUPON_CODE);
                 break;
             case R.id.verify_order:
                 if (TextUtils.isEmpty(getAddressJson()) || TextUtils.isEmpty(getGoodsJson())) {
@@ -203,6 +210,19 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
                 ((TextView) findViewById(R.id.phone_num)).setText(mAddressDefault.getMobile());
                 ((TextView) findViewById(R.id.address)).setText(mAddressDefault.getAddress());
                 break;
+            case CHOOSE_COUPON_CODE:
+                mCouponId = data.getStringExtra(CouponActivity.COUPON_ID);
+                mCouponMoney = data.getStringExtra(CouponActivity.COUPON_AMOUNT);
+                String couponName = data.getStringExtra(CouponActivity.COUPON_NAME);
+
+                ((TextView) findViewById(R.id.coupon_name)).setText(couponName);
+                ((TextView) findViewById(R.id.coupon_money)).setText("-¥ " + mCouponMoney);
+
+                mAmountMoney = mSelectProductModel.getTotalMoney() + getAmountRateWithCoupon(getAmountRate(), Double.parseDouble(mCouponMoney))
+                        - Double.parseDouble(mCouponMoney);
+                mAmountMoneyView.setText("¥ " + StringUtils.getDoubleWithTwo(mAmountMoney));
+
+                break;
         }
     }
 
@@ -212,7 +232,8 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
         requestParams.put("uid", userInfo.getUid());
         requestParams.put("amount_goods", mAmountMoney);
         requestParams.put("amount_express", "0");
-        requestParams.put("amount_coupon", "0");
+        requestParams.put("amount_coupon", mCouponMoney);
+        requestParams.put("coupon_id", mCouponId);
         requestParams.put("amount_tax", mRateMoney);
         requestParams.put("weight", "0");
         requestParams.put("pay_type", "1");
@@ -245,7 +266,12 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
         return amountRate;
     }
 
-    //选择优惠券后新的税费
+    /**
+     * 选择优惠券后新的税费
+     * allMoney 商品总金额
+     * coupon 优惠金额
+     */
+
     private double getAmountRateWithCoupon(double allMoney, double coupon) {
         return RateUtil.getRateMoneyWithCoupon(allMoney, getAmountRate(), coupon);
     }

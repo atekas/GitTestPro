@@ -34,7 +34,11 @@ public class RateUtil {
      * @return  打折后的税费
      */
     public static double getRateMoneyWithCoupon(double amountMoney, double rate, double coupon) {
-        return (amountMoney - coupon) / amountMoney * rate;
+        if (StringUtils.getDoubleWithTwo(rate).equals("0.00")) {
+            return 0.00;
+        } else {
+            return (amountMoney - coupon) / amountMoney * rate;
+        }
     }
 
 }
