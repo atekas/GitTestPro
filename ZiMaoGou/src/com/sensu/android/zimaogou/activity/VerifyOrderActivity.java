@@ -243,6 +243,14 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
+                try {
+                    String payInfo = response.getJSONObject("data").getJSONObject("pay_info").toString();
+                    Intent intent = new Intent(VerifyOrderActivity.this, PayResultActivity.class);
+                    intent.putExtra(PayResultActivity.ORDER_DATA, payInfo);
+                    startActivity(intent);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
