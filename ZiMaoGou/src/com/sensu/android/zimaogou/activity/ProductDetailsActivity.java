@@ -495,7 +495,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         mProductCommentTextView.setText("评价" + mProductDetailsResponse.data.comment.size());
     }
 
-    private void addToCart(String id, String num) {
+    private void addToCart(String id, final String num) {
 
         RequestParams requestParams = new RequestParams();
 
@@ -508,6 +508,8 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 mChooseDialog.dismiss();
+                findViewById(R.id.cart_num).setVisibility(View.VISIBLE);
+                ((TextView) findViewById(R.id.cart_num)).setText(mCartNum + num + "");
             }
 
             @Override

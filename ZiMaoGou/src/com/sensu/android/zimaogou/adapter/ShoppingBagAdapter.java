@@ -92,11 +92,13 @@ public class ShoppingBagAdapter extends SimpleBaseAdapter {
             public void onClick(View view) {
                 if (cartDataGroup.getIsAllSelect()) {
                     cartDataGroup.setIsAllSelect(false);
+                    cartDataGroup.setEnable(false);
                     for (CartDataResponse.CartDataChild cartDataChild : cartDataGroup.data) {
                         cartDataChild.setIsSelect(false);
                     }
                 } else {
                     cartDataGroup.setIsAllSelect(true);
+                    cartDataGroup.setEnable(true);
                     for (CartDataResponse.CartDataChild cartDataChild : cartDataGroup.data) {
                         cartDataChild.setIsSelect(true);
                     }

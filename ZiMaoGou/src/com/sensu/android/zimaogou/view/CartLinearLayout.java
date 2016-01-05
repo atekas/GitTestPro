@@ -139,6 +139,17 @@ public class CartLinearLayout extends LinearLayout {
         mSelectNum = (TextView) bottomView.findViewById(R.id.product_count);
         mSumPrice = (TextView) bottomView.findViewById(R.id.total_money);
 
+        for (CartDataResponse.CartDataChild cartDataChild : cartDataGroup.data) {
+            if (cartDataChild.getIsSelect()) {
+                cartDataGroup.setEnable(true);
+                break;
+            } else {
+                cartDataGroup.setEnable(false);
+            }
+        }
+
+        mSubmitBtm.setEnabled(cartDataGroup.getEnable());
+
         mSubmitBtm.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

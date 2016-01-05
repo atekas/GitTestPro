@@ -39,8 +39,10 @@ public class HotKeywordsListView extends FlowLayout {
 
     private void inflateView(final HotKeywordsResponse.HotKeywordsData hotKeywordsData) {
         TextView textView = new TextView(getContext());
-        textView.setTextSize(17);
-        textView.setTextColor(getResources().getColor(R.color.red));
+        textView.setTextSize(14);
+        textView.setTextColor(getResources().getColor(R.color.black_959595));
+        textView.setBackground(getContext().getResources().getDrawable(R.drawable.drawable_choose_product_border));
+        textView.setPadding(5, 5, 5, 5);
         textView.setText(hotKeywordsData.name);
         textView.setOnClickListener(new OnClickListener() {
             @Override

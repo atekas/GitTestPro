@@ -20,6 +20,15 @@ public class CartDataResponse extends BaseReqResponse {
         public void setIsAllSelect(boolean isAllSelect) {
             mIsAllSelect = isAllSelect;
         }
+
+        private boolean mEnable;
+        public void setEnable(boolean enable) {
+            mEnable = enable;
+        }
+
+        public boolean getEnable() {
+            return mEnable;
+        }
     }
 
     public static class CartDataChild {

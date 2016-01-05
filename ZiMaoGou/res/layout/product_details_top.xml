@@ -210,7 +210,7 @@
                         android:drawablePadding="@dimen/dip_5"
                         android:textSize="13sp"
                         android:textColor="@color/black_333333"
-                        android:text="14天无忧退货"/>
+                        android:text="7天无忧退货"/>
 
                 <TextView
                         android:layout_width="0dp"
