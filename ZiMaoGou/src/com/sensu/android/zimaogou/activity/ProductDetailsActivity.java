@@ -509,7 +509,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 super.onSuccess(statusCode, headers, response);
                 mChooseDialog.dismiss();
                 findViewById(R.id.cart_num).setVisibility(View.VISIBLE);
-                ((TextView) findViewById(R.id.cart_num)).setText(mCartNum + num + "");
+                ((TextView) findViewById(R.id.cart_num)).setText(mCartNum + Integer.parseInt(num) + "");
             }
 
             @Override
