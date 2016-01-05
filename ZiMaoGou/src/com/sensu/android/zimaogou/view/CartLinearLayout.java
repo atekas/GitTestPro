@@ -67,6 +67,47 @@ public class CartLinearLayout extends LinearLayout {
             ((TextView) childView.findViewById(R.id.product_type))
                     .setText(cartDataGroup.data.get(i).spec);
             ((EditText) childView.findViewById(R.id.et_productNum)).setText(cartDataGroup.data.get(i).num);
+
+            if (Integer.parseInt(cartDataGroup.data.get(i).real_num) < 21) {
+                childView.findViewById(R.id.real_num).setVisibility(VISIBLE);
+                ((TextView) childView.findViewById(R.id.real_num)).setText("库存 " + cartDataGroup.data.get(i).real_num);
+            } else {
+                childView.findViewById(R.id.real_num).setVisibility(GONE);
+            }
+
+            /**
+             * 1   商品正常
+             *
+             * 不是1时判断为下架, 正常情况下判断库存
+             */
+            if (!cartDataGroup.data.get(i).state.equals("1")) {
+                childView.findViewById(R.id.product_info).setVisibility(VISIBLE);
+                ((TextView) childView.findViewById(R.id.product_info)).setText("宝贝已下架");
+                childView.findViewById(R.id.img_choose).setEnabled(false);
+            } else {
+                if (Integer.parseInt(cartDataGroup.data.get(i).num) > Integer.parseInt(cartDataGroup.data.get(i).real_num)) {
+                    childView.findViewById(R.id.product_info).setVisibility(VISIBLE);
+                    ((TextView) childView.findViewById(R.id.product_info)).setText("宝贝库存不足");
+                    childView.findViewById(R.id.img_choose).setEnabled(false);
+                } else {
+                    childView.findViewById(R.id.product_info).setVisibility(GONE);
+                    childView.findViewById(R.id.img_choose).setEnabled(true);
+                }
+            }
+
+            String num = cartDataGroup.data.get(i).num;
+            if (num.equals("1")) {
+                childView.findViewById(R.id.bt_subtract).setEnabled(false);
+            } else {
+                childView.findViewById(R.id.bt_subtract).setEnabled(true);
+            }
+
+            if (Integer.parseInt(num) < Integer.parseInt(cartDataGroup.data.get(i).real_num)) {
+                childView.findViewById(R.id.bt_add).setEnabled(true);
+            } else {
+                childView.findViewById(R.id.bt_add).setEnabled(false);
+            }
+
             if (cartDataGroup.data.get(i).getIsSelect()) {
                 childView.findViewById(R.id.img_choose).setSelected(true);
             } else {
@@ -149,6 +190,16 @@ public class CartLinearLayout extends LinearLayout {
         }
 
         mSubmitBtm.setEnabled(cartDataGroup.getEnable());
+
+        if (getSelectNum() > 1) {
+            if (getAllMoney() > 1000.00) {
+                bottomView.findViewById(R.id.toast).setVisibility(VISIBLE);
+                mSubmitBtm.setEnabled(false);
+            } else {
+                bottomView.findViewById(R.id.toast).setVisibility(GONE);
+                mSubmitBtm.setEnabled(true);
+            }
+        }
 
         mSubmitBtm.setOnClickListener(new OnClickListener() {
             @Override

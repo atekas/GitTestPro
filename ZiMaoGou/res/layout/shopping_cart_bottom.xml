@@ -1,51 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/dip_14"
-                android:background="@color/white">
 
-    <View
-            android:layout_width="match_parent"
-            android:layout_height="2px"
-            android:background="@color/home_line"
-            android:layout_marginLeft="49dp" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:paddingBottom="@dimen/dip_14"
+              android:background="@color/white">
+
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/home_line"
+                android:layout_marginLeft="49dp"/>
+
+        <TextView
+                android:id="@+id/product_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dip_17"
+                android:layout_marginLeft="49dp"
+                android:textSize="@dimen/text_size_16"
+                android:textColor="@color/black_222222"
+                android:text="已选商品2件"/>
+
+        <LinearLayout
+                android:id="@+id/ll_bottom_center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="13dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:textColor="@color/black_222222"
+                    android:text="合计:"/>
+
+            <TextView
+                    android:id="@+id/total_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="17sp"
+                    android:textColor="@color/red"
+                    android:text="￥108"/>
+        </LinearLayout>
+
+    </RelativeLayout>
 
     <TextView
-            android:id="@+id/product_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dip_17"
+            android:id="@+id/toast"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@color/red"
             android:layout_marginLeft="49dp"
-            android:textSize="@dimen/text_size_16"
-            android:textColor="@color/black_222222"
-            android:text="已选商品2件"/>
-
-    <LinearLayout
-            android:id="@+id/ll_bottom_center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="15dp"
             android:layout_marginRight="13dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:textColor="@color/black_222222"
-                android:text="合计:"/>
-
-        <TextView
-                android:id="@+id/total_money"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="17sp"
-                android:textColor="@color/red"
-                android:text="￥108"/>
-    </LinearLayout>
+            android:layout_marginTop="@dimen/dip_5"
+            android:textSize="@dimen/text_size_15"
+            android:background="@drawable/toast_back"
+            android:text="海关规定购买多件的总价不能超过¥1000,请您分多次购买"/>
 
     <Button
             android:id="@+id/bt_submit"
@@ -55,10 +76,10 @@
             android:layout_marginRight="13dp"
             android:layout_marginTop="10dp"
             android:padding="@dimen/dip_10"
+            android:layout_gravity="right"
             android:layout_below="@+id/ll_bottom_center"
             android:background="@drawable/account_button_selector"
             android:textColor="@color/white"
             android:textSize="17sp"
-            android:text="去结算"/>
-
-</RelativeLayout>
+            android:text="结算"/>
+</LinearLayout>

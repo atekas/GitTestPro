@@ -29,6 +29,8 @@ import org.json.JSONObject;
 public class SpellOrderActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
     public static final String TB_ID = "tb_id";
 
+    public String mIsMyTbList = "0";
+
     private ListView mListView;
     private SpellOrderAdapter mSpellOrderAdapter;
     private GroupBuyListResponse mGroupBuyListResponse;
@@ -39,12 +41,13 @@ public class SpellOrderActivity extends BaseActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.spell_order_activity);
+
+        initViews();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        initViews();
     }
 
     private void initViews() {
@@ -73,11 +76,22 @@ public class SpellOrderActivity extends BaseActivity implements View.OnClickList
                 findViewById(R.id.group_buy_selection_text).setSelected(true);
                 findViewById(R.id.my_group_buy_text).setSelected(false);
                 findViewById(R.id.bottom_layout).setVisibility(View.VISIBLE);
+
+                if (mIsMyTbList.equals("1")) {
+                    getTbList();
+                }
+                mIsMyTbList = "0";
                 break;
             case R.id.my_group_buy:
                 findViewById(R.id.group_buy_selection_text).setSelected(false);
                 findViewById(R.id.my_group_buy_text).setSelected(true);
                 findViewById(R.id.bottom_layout).setVisibility(View.GONE);
+
+                if (mIsMyTbList.equals("0")) {
+                    getMyTbList();
+                }
+                mIsMyTbList = "1";
+
                 break;
             case R.id.input_word:
                 if (mUserInfo == null) {
@@ -127,6 +141,31 @@ public class SpellOrderActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
+                GroupBuyListResponse groupBuyListResponse = JSON.parseObject(response.toString(), GroupBuyListResponse.class);
+                if (groupBuyListResponse.getRet().equals("-1")) {
+                    PromptUtils.showToast(groupBuyListResponse.getMsg());
+                    return;
+                }
+                mGroupBuyListResponse = groupBuyListResponse;
+                mSpellOrderAdapter.setGroupBuyList(groupBuyListResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
+    }
+
+    private void getMyTbList() {
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("uid", mUserInfo.getUid());
+
+        HttpUtil.getWithSign(mUserInfo.getToken(), IConstants.sMyTb_list, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+
                 GroupBuyListResponse groupBuyListResponse = JSON.parseObject(response.toString(), GroupBuyListResponse.class);
                 if (groupBuyListResponse.getRet().equals("-1")) {
                     PromptUtils.showToast(groupBuyListResponse.getMsg());

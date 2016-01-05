@@ -69,6 +69,7 @@ public class IConstants {
     public static final String sGroup_create = "tb/build";
     public static final String sTb_member = "tb/member";
     public static final String sTb_detail = "tb/";
+    public static final String sMyTb_list = "my/tb";
 
     //订单
     public static final String sOrder = "order";
