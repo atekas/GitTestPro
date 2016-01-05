@@ -248,6 +248,7 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
                     Intent intent = new Intent(VerifyOrderActivity.this, PayResultActivity.class);
                     intent.putExtra(PayResultActivity.ORDER_DATA, payInfo);
                     startActivity(intent);
+                    finish();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

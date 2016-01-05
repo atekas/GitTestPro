@@ -5,6 +5,11 @@ package com.sensu.android.zimaogou;
  */
 public class IConstants {
 
+    //ping++支付页面
+    public static final String EXTRA_CHARGE = "com.pingplusplus.android.PaymentActivity.CHARGE";
+
+
+
     //获取时间戳
     public static final String sTimeStamp = "comm/timestamp";
     //验证短信验证码

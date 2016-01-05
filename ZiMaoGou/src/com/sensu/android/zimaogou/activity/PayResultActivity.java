@@ -3,6 +3,7 @@ package com.sensu.android.zimaogou.activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
+import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 
 /**
@@ -11,6 +12,7 @@ import com.sensu.android.zimaogou.R;
 public class PayResultActivity extends BaseActivity {
 
     public static final String ORDER_DATA = "order_data";
+    public static final int PAYMENT_REQUEST_CODE = 1000;
 
     private String mPayInfo;
 
@@ -29,8 +31,8 @@ public class PayResultActivity extends BaseActivity {
             String packageName = getPackageName();
             ComponentName componentName = new ComponentName(packageName, packageName + ".wxapi.WXPayEntryActivity");
             intent.setComponent(componentName);
-//            intent.putExtra(EXTRA_CHARGE, charge);
-//            startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+            intent.putExtra(IConstants.EXTRA_CHARGE, mPayInfo);
+            startActivityForResult(intent, PAYMENT_REQUEST_CODE);
         }
     }
 }

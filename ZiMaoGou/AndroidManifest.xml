@@ -206,6 +206,8 @@
 
         <activity android:name=".activity.VerifyOrderActivity" android:screenOrientation="portrait" />
 
+        <activity android:name=".activity.PayResultActivity" android:screenOrientation="portrait" />
+
         <activity android:name=".activity.SpellOrderActivity" android:screenOrientation="portrait" />
 
         <activity android:name=".activity.video.CameraActivity" android:screenOrientation="portrait" />
