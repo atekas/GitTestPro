@@ -199,7 +199,7 @@ public class MovieRecorderView extends LinearLayout implements OnErrorListener {
         // 设置录制的视频编码h263 h264
         mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
         // 设置视频录制的分辨率。必须放在设置编码和格式的后面，否则报错
-        mMediaRecorder.setVideoSize(mWidth, mHeight);
+        mMediaRecorder.setVideoSize(320, 240);
         // 设置录制的视频帧率。必须放在设置编码和格式的后面，否则报错
         mMediaRecorder.setVideoFrameRate(20);
         mMediaRecorder.setPreviewDisplay(mSurfaceHolder.getSurface());

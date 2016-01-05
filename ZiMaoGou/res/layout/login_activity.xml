@@ -189,15 +189,21 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginBottom="21dp">
-                <Button android:layout_width="35dp"
+                <Button
+                        android:id="@+id/bt_wx"
+                        android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:background="@drawable/wx_img"/>
-                <Button android:layout_width="35dp"
+                <Button
+                        android:id="@+id/bt_qq"
+                        android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="45dp"
                         android:layout_marginRight="45dp"
                         android:background="@drawable/qq_img"/>
-                <Button android:layout_width="35dp"
+                <Button
+                        android:id="@+id/bt_wb"
+                        android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:background="@drawable/wb_img"/>
             </LinearLayout>

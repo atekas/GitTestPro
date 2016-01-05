@@ -226,5 +226,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" exported="" name="SocialSDK_QQZone_3" level="project" />
   </component>
 </module>
