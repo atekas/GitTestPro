@@ -150,7 +150,7 @@ public class CouponActivity extends BaseActivity implements AdapterView.OnItemCl
         UserInfo userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
         RequestParams requestParams = new RequestParams();
         requestParams.put("uid", userInfo.getUid());
-        requestParams.put("total_amount", mTotalAmount);
+        requestParams.put("goods_amount", mTotalAmount);
 
         HttpUtil.getWithSign(userInfo.getToken(), IConstants.sMyCoupon, requestParams, new JsonHttpResponseHandler() {
             @Override

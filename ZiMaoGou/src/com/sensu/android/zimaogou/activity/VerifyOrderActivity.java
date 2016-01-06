@@ -106,10 +106,17 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
             ((TextView) findViewById(R.id.amount_money)).setText("¥ " + StringUtils.getDoubleWithTwo(mSelectProductModel.getTotalMoney()));
             mRateMoney = getAmountRate();
             ((TextView) findViewById(R.id.rate)).setText("¥ " + StringUtils.getDoubleWithTwo(mRateMoney));
+            if (mRateMoney > 50.00) {
+                findViewById(R.id.rate_toast).setVisibility(View.VISIBLE);
+                mAmountMoney = mSelectProductModel.getTotalMoney() + getAmountRate();
+            } else {
+                findViewById(R.id.rate_toast).setVisibility(View.GONE);
+                com.sensu.android.zimaogou.utils.TextUtils.addLineCenter(((TextView) findViewById(R.id.rate)));
+                mAmountMoney = mSelectProductModel.getTotalMoney();
+            }
 
             ((TextView) findViewById(R.id.coupon_money)).setText("-¥ " + mCouponMoney);
 
-            mAmountMoney = mSelectProductModel.getTotalMoney() + getAmountRate();
             mAmountMoneyView.setText("¥ " + StringUtils.getDoubleWithTwo(mAmountMoney));
 
             ((TextView) findViewById(R.id.express_money)).setText("¥ " + StringUtils.getDoubleWithTwo(mExpressMoney));
@@ -218,10 +225,17 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
                 ((TextView) findViewById(R.id.coupon_name)).setText(couponName);
                 ((TextView) findViewById(R.id.coupon_money)).setText("-¥ " + mCouponMoney);
 
-                mAmountMoney = mSelectProductModel.getTotalMoney() + getAmountRateWithCoupon(getAmountRate(), Double.parseDouble(mCouponMoney))
-                        - Double.parseDouble(mCouponMoney);
+                mRateMoney = getAmountRateWithCoupon(getAmountRate(), Double.parseDouble(mCouponMoney));
+                ((TextView) findViewById(R.id.rate)).setText("¥ " + StringUtils.getDoubleWithTwo(mRateMoney));
+                if (mRateMoney > 50.00) {
+                    findViewById(R.id.rate_toast).setVisibility(View.VISIBLE);
+                    mAmountMoney = mSelectProductModel.getTotalMoney() + mRateMoney - Double.parseDouble(mCouponMoney);
+                } else {
+                    findViewById(R.id.rate_toast).setVisibility(View.GONE);
+                    com.sensu.android.zimaogou.utils.TextUtils.addLineCenter(((TextView) findViewById(R.id.rate)));
+                    mAmountMoney = mSelectProductModel.getTotalMoney() - Double.parseDouble(mCouponMoney);
+                }
                 mAmountMoneyView.setText("¥ " + StringUtils.getDoubleWithTwo(mAmountMoney));
-
                 break;
         }
     }

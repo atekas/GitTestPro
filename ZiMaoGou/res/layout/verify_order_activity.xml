@@ -348,6 +348,15 @@
                         android:text="@string/shuifei"/>
 
                 <TextView
+                        android:id="@+id/rate_toast"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_15"
+                        android:layout_marginRight="@dimen/dip_5"
+                        android:textColor="@color/red"
+                        android:text="@string/rate_toast"/>
+
+                <TextView
                         android:id="@+id/rate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

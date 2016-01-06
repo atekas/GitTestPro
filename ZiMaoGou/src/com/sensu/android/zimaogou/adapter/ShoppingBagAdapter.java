@@ -100,7 +100,11 @@ public class ShoppingBagAdapter extends SimpleBaseAdapter {
                     cartDataGroup.setIsAllSelect(true);
                     cartDataGroup.setEnable(true);
                     for (CartDataResponse.CartDataChild cartDataChild : cartDataGroup.data) {
-                        cartDataChild.setIsSelect(true);
+                        if (!cartDataChild.state.equals("1") || Integer.parseInt(cartDataChild.num) > Integer.parseInt(cartDataChild.real_num)) {
+                            cartDataChild.setIsSelect(false);
+                        } else {
+                            cartDataChild.setIsSelect(true);
+                        }
                     }
                 }
                 notifyDataSetChanged();
