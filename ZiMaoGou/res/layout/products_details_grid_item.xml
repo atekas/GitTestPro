@@ -5,12 +5,26 @@
               android:layout_height="match_parent"
               android:background="@color/white">
 
-    <ImageView
-            android:id="@+id/product_pic"
+    <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            android:src="@drawable/product3"/>
+            android:layout_height="wrap_content">
+
+        <ImageView
+                android:id="@+id/product_pic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@drawable/product3"/>
+
+        <ImageView
+                android:id="@+id/video_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:src="@drawable/video_icon"/>
+
+    </FrameLayout>
 
     <TextView
             android:id="@+id/product_detail_name"
@@ -51,7 +65,7 @@
         <View
                 android:layout_width="0dp"
                 android:layout_height="1px"
-                android:layout_weight="1" />
+                android:layout_weight="1"/>
 
         <ImageView
                 android:id="@+id/country_icon"

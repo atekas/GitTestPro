@@ -3,7 +3,9 @@ package com.sensu.android.zimaogou.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
@@ -27,7 +29,7 @@ import java.util.List;
 /**
  * Created by zhangwentao on 2015/11/26.
  */
-public class SearchActivity extends BaseActivity implements View.OnClickListener {
+public class SearchActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
 //    private NoScrollGridView mSearchGirdView;
     private NoScrollListView mSearchListView;
@@ -51,19 +53,26 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
         getHotKeyword();
 
-//        mSearchGirdView = (NoScrollGridView) findViewById(R.id.gv_hot_search);
         mSearchListView = (NoScrollListView) findViewById(R.id.lv_search);
         mSearchListAdapter = new SearchListAdapter(this);
 
         mSearchEdit = (EditText) findViewById(R.id.search_edit);
+        //屏蔽回车
+        mSearchEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                return (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER);
+            }
+        });
+
         mClearHistoryText = (TextView) findViewById(R.id.clear_history);
 
         findViewById(R.id.back).setOnClickListener(this);
         findViewById(R.id.search).setOnClickListener(this);
         mClearHistoryText.setOnClickListener(this);
 
-//        mSearchGirdView.setAdapter(new SearchGirdAdapter(this));
         mSearchListView.setAdapter(mSearchListAdapter);
+        mSearchListView.setOnItemClickListener(this);
     }
 
     @Override
@@ -91,12 +100,12 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 finish();
                 break;
             case R.id.search:
-                String keyword = mSearchEdit.getText().toString();
+                String keyword = mSearchEdit.getText().toString().trim();
                 if (!TextUtils.isEmpty(keyword)) {
                     Intent intent = new Intent(this, ProductListActivity.class);
                     intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
                     intent.putExtra(ProductListActivity.PRODUCT_LIST_KEYWORD, keyword);
-                    intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, "搜索");
+                    intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, keyword);
                     startActivity(intent);
                     SearchKeyword searchKeyword = new SearchKeyword();
                     searchKeyword.setKeyword(keyword);
@@ -126,5 +135,18 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 super.onFailure(statusCode, headers, responseString, throwable);
             }
         });
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        if (mSearchKeywordList == null) {
+            return;
+        }
+        String keyword = mSearchKeywordList.get(i).getKeyword();
+        Intent intent = new Intent(this, ProductListActivity.class);
+        intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
+        intent.putExtra(ProductListActivity.PRODUCT_LIST_KEYWORD, keyword);
+        intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, keyword);
+        startActivity(intent);
     }
 }

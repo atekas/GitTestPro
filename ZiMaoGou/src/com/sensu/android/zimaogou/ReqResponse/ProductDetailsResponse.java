@@ -29,6 +29,7 @@ public class ProductDetailsResponse extends BaseReqResponse {
         public String capacity;
         public String category_sub;
 
+        public PriceInterval price_interval;
         public MediaData media;
         public List<NormalSpec> normal_spec;
         public List<ColorImage> color_image;
@@ -70,5 +71,12 @@ public class ProductDetailsResponse extends BaseReqResponse {
         public String price_market;
         public String num;
         public String seller_no;
+    }
+
+    public static class PriceInterval {
+        public String min_price;
+        public String max_price;
+        public String min_price_market;
+        public String max_price_market;
     }
 }

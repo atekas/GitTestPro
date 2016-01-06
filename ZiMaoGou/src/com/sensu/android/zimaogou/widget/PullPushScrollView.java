@@ -53,8 +53,21 @@ public class PullPushScrollView extends ScrollView implements View.OnClickListen
         ProductDetailsResponse.ProductDetailData productDetailData = productDetailsResponse.data;
         mProductDetailData = productDetailData;
         ((TextView) findViewById(R.id.product_name)).setText(productDetailData.name);
-        ((TextView) findViewById(R.id.now_price)).setText(StringUtils.deleteZero(productDetailData.price));
-        ((TextView) findViewById(R.id.price_market)).setText("¥" + StringUtils.deleteZero(productDetailData.price_market));
+
+        if (productDetailData.price_interval.min_price.equals(productDetailData.price_interval.max_price)) {
+            ((TextView) findViewById(R.id.now_price)).setText(StringUtils.deleteZero(productDetailData.price_interval.min_price));
+        } else {
+            ((TextView) findViewById(R.id.now_price)).setText(StringUtils.deleteZero(productDetailData.price_interval.min_price) + "-" +
+                    StringUtils.deleteZero(productDetailData.price_interval.max_price));
+        }
+
+        if (productDetailData.price_interval.min_price_market.equals(productDetailData.price_interval.max_price_market)) {
+            ((TextView) findViewById(R.id.price_market)).setText("¥" + StringUtils.deleteZero(productDetailData.price_interval.min_price_market));
+        } else {
+            ((TextView) findViewById(R.id.price_market)).setText("¥" + StringUtils.deleteZero(productDetailData.price_interval.min_price_market)
+             + "-" + StringUtils.deleteZero(productDetailData.price_interval.max_price_market));
+        }
+
         com.sensu.android.zimaogou.utils.TextUtils.addLineCenter(((TextView) findViewById(R.id.price_market)));
         if (TextUtils.isEmpty(productDetailData.sale_title)) {
             findViewById(R.id.sale_title).setVisibility(GONE);

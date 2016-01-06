@@ -262,9 +262,11 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 finish();
                 break;
             case R.id.shopping_bag:
+                if (mUserInfo == null) {
+                    startActivity(new Intent(this, LoginActivity.class));
+                    return;
+                }
                 Intent intent = new Intent(this, ProductShopCarActivity.class);
-//                intent.putExtra(MainActivity.SELECT_TAB, MainActivity.SHOPPING_BAG_FM_CODE);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
                 break;
             case R.id.product_share:
@@ -546,6 +548,8 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 super.onSuccess(statusCode, headers, response);
                 //todo 接口通,等数据
                 CartDataResponse cartDataResponse = JSON.parseObject(response.toString(), CartDataResponse.class);
+
+                mCartNum = 0;
 
                 for (CartDataResponse.CartDataGroup cartDataGroup : cartDataResponse.data) {
                     for (CartDataResponse.CartDataChild cartDataChild : cartDataGroup.data) {

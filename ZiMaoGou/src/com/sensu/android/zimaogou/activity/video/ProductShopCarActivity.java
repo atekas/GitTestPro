@@ -6,29 +6,40 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
+import com.alibaba.fastjson.JSON;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.ReqResponse.CartDataResponse;
 import com.sensu.android.zimaogou.activity.BaseActivity;
 import com.sensu.android.zimaogou.activity.VerifyOrderActivity;
 import com.sensu.android.zimaogou.adapter.ShoppingBagAdapter;
+import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
+import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
+import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.widget.OnRefreshListener;
 import com.sensu.android.zimaogou.widget.RefreshListView;
+import org.apache.http.Header;
+import org.json.JSONObject;
 
 /**
  * Created by qi.yang on 2015/12/2.
  */
 public class ProductShopCarActivity extends BaseActivity implements View.OnClickListener{
-    private RefreshListView mGoodsListView;
+
+    private ListView mListView;
     private ShoppingBagAdapter mShoppingBagAdapter;
+    private boolean mIsEdit;
 
-    private TextView mTitleEdit;
-    private TextView mSubmit;
-    private LinearLayout mTotalLayout;
-    private TextView mTotalMoney;
-    private ImageView mIsAllSelectView,mBackImageView;
+    private UserInfo mUserInfo;
 
-    private boolean mIsEditProduct;
-    private boolean mIsAllSelect = true;
+    private TextView mEditText;
+
+    private CartDataResponse mCartDataResponse;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,103 +47,59 @@ public class ProductShopCarActivity extends BaseActivity implements View.OnClick
         initView();
     }
     private void initView(){
-        mTitleEdit = (TextView) findViewById(R.id.goods_edit);
-        mSubmit = (TextView) findViewById(R.id.bt_submit);
-        mTotalLayout = (LinearLayout) findViewById(R.id.ll_bottom_center);
-        mTotalMoney = (TextView) findViewById(R.id.total_money);
-        mIsAllSelectView = (ImageView) findViewById(R.id.is_all_select);
-        mGoodsListView = (RefreshListView) findViewById(R.id.bag_goods_list);
-        mBackImageView = (ImageView) findViewById(R.id.back);
 
-        mShoppingBagAdapter = new ShoppingBagAdapter(this, mGoodsListView);
-        mGoodsListView.setAdapter(mShoppingBagAdapter);
-        mGoodsListView.setOnRefreshListener(mOnRefreshListener);
+        mUserInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
 
-        mBackImageView.setOnClickListener(this);
-        mTitleEdit.setOnClickListener(this);
-        mSubmit.setOnClickListener(this);
-        mIsAllSelectView.setOnClickListener(this);
-        //默认全选
-        mIsAllSelectView.setSelected(true);
-        mShoppingBagAdapter.notifyDataSetChanged();
+        mListView = (ListView) findViewById(R.id.bag_goods_list);
+        mShoppingBagAdapter = new ShoppingBagAdapter(this, mListView);
+        mListView.setAdapter(mShoppingBagAdapter);
+        mEditText = (TextView) findViewById(R.id.goods_edit);
+        mEditText.setOnClickListener(this);
+        getCart();
 
+        findViewById(R.id.back).setOnClickListener(this);
     }
-    private Handler mHandler = new Handler();
-    private OnRefreshListener mOnRefreshListener = new OnRefreshListener() {
-        @Override
-        public void onDownPullRefresh() {
-            //下拉刷新接口
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mGoodsListView.hideHeaderView();
-                }
-            }, 2000);
-        }
 
-        @Override
-        public void onLoadingMore() {
-            //上拉加载接口
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mGoodsListView.hideFooterView();
-                }
-            }, 2000);
-        }
-    };
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.goods_edit:
-                if (mIsEditProduct) {
-                    statueIsEdit();
+                if (mIsEdit) {
+                    //todo 编辑状态
+                    mIsEdit = false;
+                    mEditText.setText("编辑");
                 } else {
-                    statueIsNotEdit();
+                    //todo 非编辑状态
+                    mIsEdit = true;
+                    mEditText.setText("完成");
                 }
+                mShoppingBagAdapter.setIsEditProduct(mIsEdit);
                 break;
-            case R.id.bt_submit:
-                if (mIsEditProduct) {
-                    //todo 删除选中的商品
-                } else {
-                    //todo 提交选中商品订单  进入到确认订单页面
-                    startActivity(new Intent(this, VerifyOrderActivity.class));
-                }
-                break;
-            case R.id.is_all_select:
-                //todo 所有商品全部选择
-                if (mIsAllSelect) {
-                    mIsAllSelect = false;
-                    mIsAllSelectView.setSelected(false);
-                    mShoppingBagAdapter.notifyDataSetChanged();
-                } else {
-                    mIsAllSelect = true;
-                    mIsAllSelectView.setSelected(true);
-                    mShoppingBagAdapter.notifyDataSetChanged();
-                }
+
             case R.id.back:
                 onBackPressed();
                 break;
         }
     }
 
-    private void statueIsEdit() {
-        mIsEditProduct = false;
-        mTitleEdit.setText("完成");
-        mSubmit.setText("删除");
-        mTotalLayout.setVisibility(View.GONE);
-        mIsAllSelectView.setSelected(false);
-        mShoppingBagAdapter.mIsEditProduct = true;
-        mShoppingBagAdapter.notifyDataSetChanged();
-    }
+    private void getCart() {
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("uid", mUserInfo.getUid());
+        HttpUtil.getWithSign(mUserInfo.getToken(), IConstants.sCart, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                //todo 接口通,等数据
+                CartDataResponse cartDataResponse = JSON.parseObject(response.toString(), CartDataResponse.class);
+                mCartDataResponse = cartDataResponse;
+                mShoppingBagAdapter.setCartDataGroup(cartDataResponse);
+            }
 
-    private void statueIsNotEdit() {
-        mIsEditProduct = true;
-        mTitleEdit.setText("编辑");
-        mSubmit.setText("去结算");
-        mTotalLayout.setVisibility(View.VISIBLE);
-        mShoppingBagAdapter.mIsEditProduct = false;
-        mShoppingBagAdapter.notifyDataSetChanged();
-        //todo 总金额塞入最新金额
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
     }
 }

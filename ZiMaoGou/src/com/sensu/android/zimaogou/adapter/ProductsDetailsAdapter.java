@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -59,11 +60,12 @@ public class ProductsDetailsAdapter extends SimpleBaseAdapter {
             view = LayoutInflater.from(mContext).inflate(R.layout.products_details_grid_item, null);
             viewHolder = new ViewHolder();
             viewHolder.mProductPic = (ImageView) view.findViewById(R.id.product_pic);
-            viewHolder.mProductPic.setLayoutParams(new LinearLayout.LayoutParams(mPicSize, mPicSize));
+            viewHolder.mProductPic.setLayoutParams(new FrameLayout.LayoutParams(mPicSize, mPicSize));
 
             viewHolder.mProductName = (TextView) view.findViewById(R.id.product_detail_name);
             viewHolder.mPrice = (TextView) view.findViewById(R.id.product_price);
             viewHolder.mCountryIcon = (ImageView) view.findViewById(R.id.country_icon);
+            viewHolder.mVideoIcon = (ImageView) view.findViewById(R.id.video_icon);
             view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) view.getTag();
@@ -73,8 +75,13 @@ public class ProductsDetailsAdapter extends SimpleBaseAdapter {
         viewHolder.mProductName.setText(productListData.name);
         viewHolder.mPrice.setText(StringUtils.deleteZero(productListData.price));
         if (productListData.media.type.equals("2")) {
+            viewHolder.mVideoIcon.setVisibility(View.VISIBLE);
             ImageUtils.displayImage(productListData.media.cover, viewHolder.mProductPic, mProductOptions);
+        } else if (productListData.media.type.equals("12")){
+            viewHolder.mVideoIcon.setVisibility(View.VISIBLE);
+            ImageUtils.displayImage(productListData.media.image.get(0), viewHolder.mProductPic, mProductOptions);
         } else {
+            viewHolder.mVideoIcon.setVisibility(View.GONE);
             ImageUtils.displayImage(productListData.media.image.get(0), viewHolder.mProductPic, mProductOptions);
         }
 
@@ -86,5 +93,6 @@ public class ProductsDetailsAdapter extends SimpleBaseAdapter {
         TextView mProductName;
         TextView mPrice;
         ImageView mCountryIcon;
+        ImageView mVideoIcon;
     }
 }
