@@ -22,6 +22,7 @@
 
         <TextView
                 android:id="@+id/price"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -33,7 +34,6 @@
                 android:id="@+id/theme_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
                 android:textSize="13sp"
                 android:textColor="@color/black_333333"
                 android:singleLine="true"

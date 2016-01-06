@@ -16,6 +16,7 @@ public class ThemeListResponse extends BaseReqResponse {
         public String price;
         public Media media;
         public String name;
+        public String url;
     }
 
     public static class Media implements Serializable {

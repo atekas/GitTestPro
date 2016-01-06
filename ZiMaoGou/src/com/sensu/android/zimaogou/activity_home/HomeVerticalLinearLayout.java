@@ -19,10 +19,8 @@ import com.sensu.android.zimaogou.activity.ProductDetailsActivity;
 import com.sensu.android.zimaogou.activity.ProductListActivity;
 import com.sensu.android.zimaogou.activity.SpecialActivity;
 import com.sensu.android.zimaogou.activity.SpecialDetailsActivity;
-import com.sensu.android.zimaogou.utils.HttpUtil;
-import com.sensu.android.zimaogou.utils.LogUtils;
-import com.sensu.android.zimaogou.utils.PromptUtils;
-import com.sensu.android.zimaogou.utils.UiUtils;
+import com.sensu.android.zimaogou.activity.mycenter.WebViewActivity;
+import com.sensu.android.zimaogou.utils.*;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
@@ -39,6 +37,7 @@ public class HomeVerticalLinearLayout extends LinearLayout implements AdapterVie
 
     private RecommendThemeAdapter mRecommendThemeAdapter;
     private CommendProductResponse mCommendProduct = new CommendProductResponse();
+
     public HomeVerticalLinearLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -80,9 +79,15 @@ public class HomeVerticalLinearLayout extends LinearLayout implements AdapterVie
                     return;
                 }
                 ThemeListResponse.ThemeListData themeListData = mThemeListResponse.data.get(i);
-                Intent intent = new Intent(getContext(), SpecialDetailsActivity.class);
-                intent.putExtra(SpecialActivity.THEME_TITLE, themeListData);
-                getContext().startActivity(intent);
+                if (TextUtils.isEmpty(themeListData.url)) {
+                    Intent intent = new Intent(getContext(), SpecialDetailsActivity.class);
+                    intent.putExtra(SpecialActivity.THEME_TITLE, themeListData);
+                    getContext().startActivity(intent);
+                } else {
+                    getContext().startActivity(new Intent(getContext(), WebViewActivity.class)
+                            .putExtra("title", "专题详情")
+                            .putExtra("url", themeListData.url));
+                }
                 break;
             case 5:
                 PromptUtils.showToast("推荐单品");
@@ -135,17 +140,18 @@ public class HomeVerticalLinearLayout extends LinearLayout implements AdapterVie
             }
         });
     }
-    private void getCommendProducts(){
+
+    private void getCommendProducts() {
         final RequestParams requestParams = new RequestParams();
-        requestParams.put("tag","5");
-        HttpUtil.get(IConstants.sGoodList,requestParams,new JsonHttpResponseHandler(){
+        requestParams.put("tag", "5");
+        HttpUtil.get(IConstants.sGoodList, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 LogUtils.d("推荐单品返回：", response.toString());
                 mCommendProduct = JSON.parseObject(response.toString(), CommendProductResponse.class);
 
-                mListView.setAdapter(new RecommendItemAdapter(getContext(),mCommendProduct.data));
+                mListView.setAdapter(new RecommendItemAdapter(getContext(), mCommendProduct.data));
                 UiUtils.setListViewHeightBasedOnChilds(mListView);
             }
         });
