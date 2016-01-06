@@ -61,6 +61,7 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
 
     private void setColor(View view) {
         List<ProductTypeModel> colorProductTypeList = new ArrayList<ProductTypeModel>();
+        boolean canAdd = false;
         for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
 
             if (colorProductTypeList.size() == 0) {
@@ -82,25 +83,30 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
             } else {
                 for (ProductTypeModel productTypeModel : colorProductTypeList) {
                     if (productTypeModel.getTypeName().equals(spec.color)) {
+                        canAdd = false;
                         break;
                     } else {
-                        ProductTypeModel productTypeModel1 = new ProductTypeModel();
-                        productTypeModel1.setIsSelect(false);
-
-                        if (Integer.parseInt(spec.num) > 1) {
-                            productTypeModel1.setEnable(true);
-                        }
-
-                        productTypeModel1.setType("color");
-                        productTypeModel1.setTypeName(spec.color);
-
-                        if (mColor != null) {
-                            if (mColor.equals(spec.color)) {
-                                productTypeModel1.setIsSelect(true);
-                            }
-                        }
-                        colorProductTypeList.add(productTypeModel1);
+                        canAdd = true;
                     }
+                }
+
+                if (canAdd) {
+                    ProductTypeModel productTypeModel1 = new ProductTypeModel();
+                    productTypeModel1.setIsSelect(false);
+
+                    if (Integer.parseInt(spec.num) > 1) {
+                        productTypeModel1.setEnable(true);
+                    }
+
+                    productTypeModel1.setType("color");
+                    productTypeModel1.setTypeName(spec.color);
+
+                    if (mColor != null) {
+                        if (mColor.equals(spec.color)) {
+                            productTypeModel1.setIsSelect(true);
+                        }
+                    }
+                    colorProductTypeList.add(productTypeModel1);
                 }
             }
         }
@@ -110,8 +116,8 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
 
     private void setSize(View view) {
         List<ProductTypeModel> sizeProductTypeList = new ArrayList<ProductTypeModel>();
+        boolean canAdd = false;
         for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
-
             if (sizeProductTypeList.size() == 0) {
                 ProductTypeModel productTypeModel1 = new ProductTypeModel();
                 productTypeModel1.setIsSelect(false);
@@ -131,24 +137,29 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
             } else {
                 for (ProductTypeModel productTypeModel : sizeProductTypeList) {
                     if (productTypeModel.getTypeName().equals(spec.size)) {
+                        canAdd = false;
                         break;
                     } else {
-                        ProductTypeModel productTypeModel1 = new ProductTypeModel();
-                        productTypeModel1.setIsSelect(false);
-
-                        if (Integer.parseInt(spec.num) > 1) {
-                            productTypeModel1.setEnable(true);
-                        }
-
-                        productTypeModel1.setType("size");
-                        productTypeModel1.setTypeName(spec.size);
-                        if (mSize != null) {
-                            if (mSize.equals(spec.size)) {
-                                productTypeModel1.setIsSelect(true);
-                            }
-                        }
-                        sizeProductTypeList.add(productTypeModel1);
+                        canAdd = true;
                     }
+                }
+
+                if (canAdd) {
+                    ProductTypeModel productTypeModel1 = new ProductTypeModel();
+                    productTypeModel1.setIsSelect(false);
+
+                    if (Integer.parseInt(spec.num) > 1) {
+                        productTypeModel1.setEnable(true);
+                    }
+
+                    productTypeModel1.setType("size");
+                    productTypeModel1.setTypeName(spec.size);
+                    if (mSize != null) {
+                        if (mSize.equals(spec.size)) {
+                            productTypeModel1.setIsSelect(true);
+                        }
+                    }
+                    sizeProductTypeList.add(productTypeModel1);
                 }
             }
         }
@@ -158,6 +169,7 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
 
     private void setCapacity(View view) {
         List<ProductTypeModel> capacityProductTypeList = new ArrayList<ProductTypeModel>();
+        boolean canAdd = false;
         for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
 
             if (capacityProductTypeList.size() == 0) {
@@ -179,24 +191,29 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
             } else {
                 for (ProductTypeModel productTypeModel : capacityProductTypeList) {
                     if (productTypeModel.getTypeName().equals(spec.capacity)) {
+                        canAdd = false;
                         break;
                     } else {
-                        ProductTypeModel productTypeModel1 = new ProductTypeModel();
-                        productTypeModel1.setIsSelect(false);
-
-                        if (Integer.parseInt(spec.num) > 1) {
-                            productTypeModel1.setEnable(true);
-                        }
-
-                        productTypeModel1.setType("capacity");
-                        productTypeModel1.setTypeName(spec.capacity);
-                        if (mCapacity != null) {
-                            if (mCapacity.equals(spec.capacity)) {
-                                productTypeModel1.setIsSelect(true);
-                            }
-                        }
-                        capacityProductTypeList.add(productTypeModel1);
+                        canAdd = true;
                     }
+                }
+
+                if (canAdd) {
+                    ProductTypeModel productTypeModel1 = new ProductTypeModel();
+                    productTypeModel1.setIsSelect(false);
+
+                    if (Integer.parseInt(spec.num) > 1) {
+                        productTypeModel1.setEnable(true);
+                    }
+
+                    productTypeModel1.setType("capacity");
+                    productTypeModel1.setTypeName(spec.capacity);
+                    if (mCapacity != null) {
+                        if (mCapacity.equals(spec.capacity)) {
+                            productTypeModel1.setIsSelect(true);
+                        }
+                    }
+                    capacityProductTypeList.add(productTypeModel1);
                 }
             }
         }
