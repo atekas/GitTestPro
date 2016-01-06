@@ -8,7 +8,6 @@ import android.widget.TextView;
 import com.sensu.android.zimaogou.Mode.ProductTypeModel;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.ProductDetailsResponse;
-import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.sensu.android.zimaogou.widget.ProductTypeListView;
 
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
 
     private ProductDetailsResponse mProductDetailsResponse;
 
-    private OnProductColorListener mOnProductColorListener;
+    private OnProductChangedListener mOnProductChangedListener;
 
     public ProductTypeLinearLayout(Context context) {
         super(context);
@@ -39,8 +38,9 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
         super(context, attrs, defStyle);
     }
 
-    public void setProductDetailsResponse(ProductDetailsResponse productDetailsResponse, OnProductColorListener onProductColorListener) {
-        mOnProductColorListener = onProductColorListener;
+    public void setProductDetailsResponse(ProductDetailsResponse productDetailsResponse, OnProductChangedListener onProductChangedListener) {
+        getDefaultType(productDetailsResponse);
+        mOnProductChangedListener = onProductChangedListener;
         mProductDetailsResponse = productDetailsResponse;
         int size = productDetailsResponse.data.spec_attr.size();
         for (int i = 0; i < size; i++) {
@@ -56,6 +56,7 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
             }
             addView(view);
         }
+        mOnProductChangedListener.getProductColor();
     }
 
     private void setColor(View view) {
@@ -72,6 +73,11 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
 
                 productTypeModel1.setType("color");
                 productTypeModel1.setTypeName(spec.color);
+                if (mColor != null) {
+                    if (mColor.equals(spec.color)) {
+                        productTypeModel1.setIsSelect(true);
+                    }
+                }
                 colorProductTypeList.add(productTypeModel1);
             } else {
                 for (ProductTypeModel productTypeModel : colorProductTypeList) {
@@ -87,6 +93,12 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
 
                         productTypeModel1.setType("color");
                         productTypeModel1.setTypeName(spec.color);
+
+                        if (mColor != null) {
+                            if (mColor.equals(spec.color)) {
+                                productTypeModel1.setIsSelect(true);
+                            }
+                        }
                         colorProductTypeList.add(productTypeModel1);
                     }
                 }
@@ -110,6 +122,11 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
 
                 productTypeModel1.setType("size");
                 productTypeModel1.setTypeName(spec.size);
+                if (mSize != null) {
+                    if (mSize.equals(spec.size)) {
+                        productTypeModel1.setIsSelect(true);
+                    }
+                }
                 sizeProductTypeList.add(productTypeModel1);
             } else {
                 for (ProductTypeModel productTypeModel : sizeProductTypeList) {
@@ -125,6 +142,11 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
 
                         productTypeModel1.setType("size");
                         productTypeModel1.setTypeName(spec.size);
+                        if (mSize != null) {
+                            if (mSize.equals(spec.size)) {
+                                productTypeModel1.setIsSelect(true);
+                            }
+                        }
                         sizeProductTypeList.add(productTypeModel1);
                     }
                 }
@@ -148,6 +170,11 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
 
                 productTypeModel1.setType("capacity");
                 productTypeModel1.setTypeName(spec.capacity);
+                if (mCapacity != null) {
+                    if (mCapacity.equals(spec.capacity)) {
+                        productTypeModel1.setIsSelect(true);
+                    }
+                }
                 capacityProductTypeList.add(productTypeModel1);
             } else {
                 for (ProductTypeModel productTypeModel : capacityProductTypeList) {
@@ -163,6 +190,11 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
 
                         productTypeModel1.setType("capacity");
                         productTypeModel1.setTypeName(spec.capacity);
+                        if (mCapacity != null) {
+                            if (mCapacity.equals(spec.capacity)) {
+                                productTypeModel1.setIsSelect(true);
+                            }
+                        }
                         capacityProductTypeList.add(productTypeModel1);
                     }
                 }
@@ -174,9 +206,6 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
 
     @Override
     public void onTypeClick(String type, String value) {
-        if (type.equals("color") && mOnProductColorListener != null) {
-            mOnProductColorListener.getProductColor(value);
-        }
         removeAllViews();
         int size = mProductDetailsResponse.data.spec_attr.size();
         for (int i = 0; i < size; i++) {
@@ -202,6 +231,10 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
                 ((ProductTypeListView) view.findViewById(R.id.product_type_list)).setTypeData(mCapacityProductTypeList, this);
             }
             addView(view);
+        }
+
+        if (mOnProductChangedListener != null) {
+            mOnProductChangedListener.getProductColor();
         }
     }
 
@@ -292,6 +325,27 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
         }
     }
 
+    private String mColor;
+    private String mSize;
+    private String mCapacity;
+
+    private void getDefaultType(ProductDetailsResponse productDetailsResponse) {
+        for (ProductDetailsResponse.Spec spec : productDetailsResponse.data.spec) {
+            if (Integer.parseInt(spec.num) > 0) {
+                if (!spec.capacity.equals("0")) {
+                    mCapacity = spec.capacity;
+                }
+                if (!spec.size.equals("0")) {
+                    mSize = spec.size;
+                }
+                if (!spec.color.equals("0")) {
+                    mColor = spec.color;
+                }
+            }
+        }
+
+    }
+
     public List<ProductTypeModel> getColor() {
         return mColorProductTypeList;
     }
@@ -304,7 +358,7 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
         return mCapacityProductTypeList;
     }
 
-    public interface OnProductColorListener {
-        public void getProductColor(String color);
+    public interface OnProductChangedListener {
+        public void getProductColor();
     }
 }

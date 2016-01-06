@@ -34,10 +34,8 @@ import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.*;
 import com.sensu.android.zimaogou.view.ProductTypeLinearLayout;
-import com.sensu.android.zimaogou.widget.ProductTypeListView;
 import com.sensu.android.zimaogou.widget.PullPushScrollView;
 import com.sensu.android.zimaogou.widget.ScrollViewContainer;
-import com.umeng.socialize.bean.SHARE_MEDIA;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
@@ -48,7 +46,7 @@ import java.util.List;
  * Created by zhangwentao on 2015/11/20.
  * 商品详情
  */
-public class ProductDetailsActivity extends BaseActivity implements View.OnClickListener, ProductTypeLinearLayout.OnProductColorListener {
+public class ProductDetailsActivity extends BaseActivity implements View.OnClickListener, ProductTypeLinearLayout.OnProductChangedListener {
 
     public static final String PRODUCT_ID = "product_id";
     public static final String FROM_SOURCE = "from_source";
@@ -277,7 +275,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.sure:
                 //todo 添加购物车
-                if (TextUtils.isEmpty(getSpecId())) {
+                if (TextUtils.isEmpty(mSpecId)) {
                     PromptUtils.showToast("请选择规格");
                     return;
                 }
@@ -286,7 +284,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                     startActivity(new Intent(this, LoginActivity.class));
                 } else {
                     String num = ((EditText) mChooseDialog.findViewById(R.id.product_num)).getText().toString();
-                    addToCart(getSpecId(), num);
+                    addToCart(mSpecId, num);
                 }
                 break;
             case R.id.bt_subtract:
@@ -333,118 +331,8 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         mChooseDialog.findViewById(R.id.sure).setOnClickListener(this);
         mChooseDialog.findViewById(R.id.bt_subtract).setOnClickListener(this);
         mChooseDialog.findViewById(R.id.bt_add).setOnClickListener(this);
-        ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText("¥" + mProductDetailsResponse.data.price);
 
         ((ProductTypeLinearLayout) mChooseDialog.findViewById(R.id.product_type_layout)).setProductDetailsResponse(mProductDetailsResponse, this);
-    }
-
-    private String getSpecId() {
-        List<ProductTypeModel> mColorList = null;
-        List<ProductTypeModel> mSizeList = null;
-        List<ProductTypeModel> mCapacityList = null;
-        for (ProductDetailsResponse.SpecAttr specAttr : mProductDetailsResponse.data.spec_attr) {
-            if (specAttr.en.equals("color")) {
-                mColorList = ((ProductTypeLinearLayout) mChooseDialog.findViewById(R.id.product_type_layout)).getColor();
-            } else if (specAttr.en.equals("size")) {
-                mSizeList = ((ProductTypeLinearLayout) mChooseDialog.findViewById(R.id.product_type_layout)).getSize();
-            } else if (specAttr.en.equals("capacity")) {
-                mCapacityList = ((ProductTypeLinearLayout) mChooseDialog.findViewById(R.id.product_type_layout)).getCapacity();
-            }
-        }
-
-        String color = "";
-        String size = "";
-        String capacity = "";
-        if (mColorList != null) {
-            for (ProductTypeModel productTypeModel : mColorList) {
-                if (productTypeModel.getIsSelect()) {
-                    color = productTypeModel.getTypeName();
-                }
-            }
-        }
-
-        if (mSizeList != null) {
-            for (ProductTypeModel productTypeModel : mSizeList) {
-                if (productTypeModel.getIsSelect()) {
-                    size = productTypeModel.getTypeName();
-                }
-            }
-        }
-
-        if (mCapacityList != null) {
-            for (ProductTypeModel productTypeModel : mCapacityList) {
-                if (productTypeModel.getIsSelect()) {
-                    capacity = productTypeModel.getTypeName();
-                }
-            }
-        }
-
-        String id = null;
-
-        if (!TextUtils.isEmpty(color) && !TextUtils.isEmpty(capacity)) {
-            for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
-                if (!TextUtils.isEmpty(color)) {
-                    if (spec.color.equals(color)) {
-                        for (ProductDetailsResponse.Spec spec1 : mProductDetailsResponse.data.spec) {
-                            if (!TextUtils.isEmpty(capacity)) {
-                                if (spec1.capacity.equals(capacity)) {
-                                    id = spec1.id;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        } else if (!TextUtils.isEmpty(color) && !TextUtils.isEmpty(size)) {
-            for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
-                if (!TextUtils.isEmpty(color)) {
-                    if (spec.color.equals(color)) {
-                        for (ProductDetailsResponse.Spec spec1 : mProductDetailsResponse.data.spec) {
-                            if (!TextUtils.isEmpty(size)) {
-                                if (spec1.size.equals(size)) {
-                                    id = spec1.id;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        } else if (!TextUtils.isEmpty(capacity) && !TextUtils.isEmpty(size)) {
-            for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
-                if (!TextUtils.isEmpty(capacity)) {
-                    if (spec.capacity.equals(capacity)) {
-                        for (ProductDetailsResponse.Spec spec1 : mProductDetailsResponse.data.spec) {
-                            if (!TextUtils.isEmpty(size)) {
-                                if (spec1.size.equals(size)) {
-                                    id = spec1.id;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        if (mProductDetailsResponse.data.spec_attr.size() == 0) {
-            id = mProductDetailsResponse.data.spec.get(0).id;
-        } else if (mProductDetailsResponse.data.spec_attr.size() == 1) {
-            for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
-                if (!TextUtils.isEmpty(color)) {
-                    if (spec.color.equals(color)) {
-                        id = spec.id;
-                    }
-                } else if (!TextUtils.isEmpty(size)) {
-                    if (spec.size.equals(size)) {
-                        id = spec.id;
-                    }
-                } else if (!TextUtils.isEmpty(capacity)) {
-                    if (spec.capacity.equals(capacity)) {
-                        id = spec.id;
-                    }
-                }
-            }
-        }
-        return id;
     }
 
     private void getProductById(String productId, String source) {
@@ -521,11 +409,134 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         });
     }
 
+    private String mSpecId = null;
+
     @Override
-    public void getProductColor(String color) {
+    public void getProductColor() {
+        List<ProductTypeModel> mColorList = null;
+        List<ProductTypeModel> mSizeList = null;
+        List<ProductTypeModel> mCapacityList = null;
+        for (ProductDetailsResponse.SpecAttr specAttr : mProductDetailsResponse.data.spec_attr) {
+            if (specAttr.en.equals("color")) {
+                mColorList = ((ProductTypeLinearLayout) mChooseDialog.findViewById(R.id.product_type_layout)).getColor();
+            } else if (specAttr.en.equals("size")) {
+                mSizeList = ((ProductTypeLinearLayout) mChooseDialog.findViewById(R.id.product_type_layout)).getSize();
+            } else if (specAttr.en.equals("capacity")) {
+                mCapacityList = ((ProductTypeLinearLayout) mChooseDialog.findViewById(R.id.product_type_layout)).getCapacity();
+            }
+        }
+
+        String color = "";
+        String size = "";
+        String capacity = "";
+        if (mColorList != null) {
+            for (ProductTypeModel productTypeModel : mColorList) {
+                if (productTypeModel.getIsSelect()) {
+                    color = productTypeModel.getTypeName();
+                }
+            }
+        }
+
+        if (mSizeList != null) {
+            for (ProductTypeModel productTypeModel : mSizeList) {
+                if (productTypeModel.getIsSelect()) {
+                    size = productTypeModel.getTypeName();
+                }
+            }
+        }
+
+        if (mCapacityList != null) {
+            for (ProductTypeModel productTypeModel : mCapacityList) {
+                if (productTypeModel.getIsSelect()) {
+                    capacity = productTypeModel.getTypeName();
+                }
+            }
+        }
+
+        if (!TextUtils.isEmpty(color) && !TextUtils.isEmpty(capacity)) {
+            for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
+                if (!TextUtils.isEmpty(color)) {
+                    if (spec.color.equals(color)) {
+                        for (ProductDetailsResponse.Spec spec1 : mProductDetailsResponse.data.spec) {
+                            if (!TextUtils.isEmpty(capacity)) {
+                                if (spec1.capacity.equals(capacity) && spec1.color.equals(color)) {
+                                    mSpecId = spec1.id;
+                                    ((TextView) mChooseDialog.findViewById(R.id.stock)).setText("库存 " + spec1.num);
+                                    ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText("¥" + spec1.price);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } else if (!TextUtils.isEmpty(color) && !TextUtils.isEmpty(size)) {
+            for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
+                if (!TextUtils.isEmpty(color)) {
+                    if (spec.color.equals(color)) {
+                        for (ProductDetailsResponse.Spec spec1 : mProductDetailsResponse.data.spec) {
+                            if (!TextUtils.isEmpty(size)) {
+                                if (spec1.size.equals(size) && spec1.color.equals(color)) {
+                                    mSpecId = spec1.id;
+                                    ((TextView) mChooseDialog.findViewById(R.id.stock)).setText("库存 " + spec1.num);
+                                    ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText("¥" + spec1.price);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } else if (!TextUtils.isEmpty(capacity) && !TextUtils.isEmpty(size)) {
+            for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
+                if (!TextUtils.isEmpty(capacity)) {
+                    if (spec.capacity.equals(capacity)) {
+                        for (ProductDetailsResponse.Spec spec1 : mProductDetailsResponse.data.spec) {
+                            if (!TextUtils.isEmpty(size)) {
+                                if (spec1.size.equals(size) && spec1.capacity.equals(capacity)) {
+                                    mSpecId = spec1.id;
+                                    ((TextView) mChooseDialog.findViewById(R.id.stock)).setText("库存 " + spec1.num);
+                                    ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText("¥" + spec1.price);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (mProductDetailsResponse.data.spec_attr.size() == 0) {
+            mSpecId = mProductDetailsResponse.data.spec.get(0).id;
+            ((TextView) mChooseDialog.findViewById(R.id.stock)).setText("库存 " + mProductDetailsResponse.data.spec.get(0).num);
+            ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText("¥" + mProductDetailsResponse.data.spec.get(0).price);
+        } else if (mProductDetailsResponse.data.spec_attr.size() == 1) {
+            for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
+                if (!TextUtils.isEmpty(color)) {
+                    if (spec.color.equals(color)) {
+                        mSpecId = spec.id;
+                        ((TextView) mChooseDialog.findViewById(R.id.stock)).setText("库存 " + spec.num);
+                        ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText("¥" + spec.price);
+                    }
+                } else if (!TextUtils.isEmpty(size)) {
+                    if (spec.size.equals(size)) {
+                        mSpecId = spec.id;
+                        ((TextView) mChooseDialog.findViewById(R.id.stock)).setText("库存 " + spec.num);
+                        ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText("¥" + spec.price);
+                    }
+                } else if (!TextUtils.isEmpty(capacity)) {
+                    if (spec.capacity.equals(capacity)) {
+                        mSpecId = spec.id;
+                        ((TextView) mChooseDialog.findViewById(R.id.stock)).setText("库存 " + spec.num);
+                        ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText("¥" + spec.price);
+                    }
+                }
+            }
+        }
+
+        ImageView imageView = (ImageView) mChooseDialog.findViewById(R.id.img_pro);
+        String url = null;
         if (!TextUtils.isEmpty(color)) {
-            ImageView imageView = (ImageView) mChooseDialog.findViewById(R.id.img_pro);
-            String url = null;
             for (ProductDetailsResponse.ColorImage colorImage : mProductDetailsResponse.data.color_image) {
                 if (color.equals(colorImage.name)) {
                     url = colorImage.image;
@@ -533,8 +544,14 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
             }
             if (!TextUtils.isEmpty(url)) {
                 ImageUtils.displayImage(url, imageView);
+            } else {
+                ImageUtils.displayImage(mProductDetailsResponse.data.media.image.get(0), imageView);
             }
+        } else {
+            url = mProductDetailsResponse.data.media.image.get(0);
+            ImageUtils.displayImage(url, imageView);
         }
+
     }
 
     int mCartNum;
