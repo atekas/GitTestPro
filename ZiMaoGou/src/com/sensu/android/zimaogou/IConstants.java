@@ -8,7 +8,19 @@ public class IConstants {
     //ping++支付页面
     public static final String EXTRA_CHARGE = "com.pingplusplus.android.PaymentActivity.CHARGE";
 
+    public static final int EXCEPTION_NO_INTERNET = 1;//没有网
 
+    public static final int EXCEPTION_SHOP_IS_NULL = 2;//购物车为空
+
+    public static final int EXCEPTION_ORDER_IS_NULL = 3;//订单为空
+
+    public static final int EXCEPTION_COUPON_IS_NULL = 4;//我的优惠券为空
+
+    public static final int EXCEPTION_ADDRESS_IS_NULL = 5;//我的收货地址为空
+
+    public static final int EXCEPTION_GOODS_IS_NULL = 6;//我的收藏商品为空
+
+    public static final int EXCEPTION_TIPS_IS_NULL = 7;//我的收藏帖子为空
 
     //获取时间戳
     public static final String sTimeStamp = "comm/timestamp";

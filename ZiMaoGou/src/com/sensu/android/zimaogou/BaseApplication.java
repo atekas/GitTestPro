@@ -9,6 +9,7 @@ import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 import com.sensu.android.zimaogou.Mode.ProvinceMode;
+import com.sensu.android.zimaogou.ReqResponse.AddressResponse;
 import com.sensu.android.zimaogou.external.greendao.dao.DaoMaster;
 import com.sensu.android.zimaogou.external.greendao.dao.DaoSession;
 import com.sensu.android.zimaogou.handler.CustomNotificationHandler;
@@ -45,10 +46,13 @@ public class BaseApplication extends Application {
     private static final String TAG = BaseApplication.class.getName();
     private PushAgent mPushAgent;
     public static ProvinceMode mChooseAddress ;
+
+    public static AddressResponse addressResponse;
     @Override
     public void onCreate() {
         super.onCreate();
         mChooseAddress = new ProvinceMode();
+        addressResponse = new AddressResponse();
         mBaseApplication = this;
         PlatformConfig.setWeixin("wx967daebe835fbeac", "5bb696d9ccd75a38c8a0bfe0675559b3");
         //新浪微博
@@ -173,6 +177,15 @@ public class BaseApplication extends Application {
 
         return mChooseAddress;
     }
+
+    public static AddressResponse getAddressResponse() {
+        return addressResponse;
+    }
+
+    public static void setAddressResponse(AddressResponse addressResponse1) {
+        addressResponse = addressResponse1;
+    }
+
     public static String getStr(int resId) {
         return mBaseApplication.getString(resId);
     }

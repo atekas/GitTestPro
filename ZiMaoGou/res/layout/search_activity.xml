@@ -26,6 +26,8 @@
                 android:layout_height="match_parent"
                 android:layout_toRightOf="@+id/back"
                 android:layout_toLeftOf="@+id/search"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
                 android:layout_marginLeft="@dimen/dip_10"
                 android:layout_marginRight="@dimen/dip_10"
                 android:layout_marginTop="@dimen/dip_10"

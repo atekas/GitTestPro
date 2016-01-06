@@ -89,11 +89,11 @@ public class TourBuyAdapter extends SimpleBaseAdapter {
         if(travelModes.get(i).getCategory().equals("1")){
             viewHolder.img_videoPic.setVisibility(View.GONE);
             if(travelModes.get(i).getMedia().image != null&&travelModes.get(i).getMedia().image.size()>0) {
-                ImageUtils.displayImage(travelModes.get(i).getMedia().image.get(0), viewHolder.img_contentPic);
+                ImageUtils.displayImage(travelModes.get(i).getMedia().image.get(0), viewHolder.img_contentPic,ImageUtils.mItemTopOptions);
             }
         }else{
             viewHolder.img_videoPic.setVisibility(View.VISIBLE);
-            ImageUtils.displayImage(travelModes.get(i).getMedia().cover,viewHolder.img_contentPic);
+            ImageUtils.displayImage(travelModes.get(i).getMedia().cover,viewHolder.img_contentPic,ImageUtils.mItemTopOptions);
         }
         viewHolder.tv_marks.setText(travelModes.get(i).getCountry()+tag);
         viewHolder.tv_praiseCount.setText(travelModes.get(i).getLike_num());

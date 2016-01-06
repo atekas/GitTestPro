@@ -4,10 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.*;
 import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -22,6 +19,7 @@ import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.utils.TextUtils;
 import com.sensu.android.zimaogou.utils.UiUtils;
+import com.sensu.android.zimaogou.widget.ExceptionLinearLayout;
 import org.apache.http.Header;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
@@ -42,12 +40,12 @@ public class CouponActivity extends BaseActivity implements AdapterView.OnItemCl
 
     ListView mValidListView, mInvalidListView;
     ImageView mBackImageView;
-
+    LinearLayout mContentLinearLayout;
     private String mTotalAmount;
     private String sourceType ="";
     private CouponValidListAdapter mCouponValidListAdapter;
     private CouponInvalidListAdapter mCouponInvalidListAdapter;
-
+    private RelativeLayout mTipRelative;
     private List<CouponResponse.Coupon> mCanUseCouponList;
 
     @Override
@@ -70,7 +68,8 @@ public class CouponActivity extends BaseActivity implements AdapterView.OnItemCl
         mValidListView = (ListView) findViewById(R.id.lv_valid);
         mInvalidListView = (ListView) findViewById(R.id.lv_invalid);
         mBackImageView = (ImageView) findViewById(R.id.back);
-
+        mContentLinearLayout = (LinearLayout) findViewById(R.id.ll_content);
+        mTipRelative = (RelativeLayout) findViewById(R.id.text_layout);
         if (!mTotalAmount.equals("0")) {
             mInvalidListView.setVisibility(View.GONE);
             findViewById(R.id.text_layout).setVisibility(View.GONE);
@@ -162,6 +161,19 @@ public class CouponActivity extends BaseActivity implements AdapterView.OnItemCl
                 mCouponInvalidListAdapter.setCouponData(couponResponse.mCannotUseCouponList);
                 mCanUseCouponList = couponResponse.mNoUseCouponList;
                 UiUtils.setListViewHeightBasedOnChilds(mValidListView);
+                if(couponResponse.mCannotUseCouponList.size() == 0){
+                    mTipRelative.setVisibility(View.GONE);
+                }else{
+                    mTipRelative.setVisibility(View.VISIBLE);
+
+                }
+                if(couponResponse.mNoUseCouponList.size() == 0 && couponResponse.mCannotUseCouponList.size() == 0){
+                    View view = View.inflate(CouponActivity.this,R.layout.exception_layout,null);
+                    ExceptionLinearLayout exceptionLinearLayout = (ExceptionLinearLayout) view.findViewById(R.id.ll_exception);
+                    exceptionLinearLayout.setException(IConstants.EXCEPTION_COUPON_IS_NULL);
+                    mContentLinearLayout.addView(view);
+
+                }
             }
 
             @Override

@@ -5,15 +5,24 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.alibaba.fastjson.JSON;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.sensu.android.zimaogou.BaseApplication;
+import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.ReqResponse.AddressResponse;
 import com.sensu.android.zimaogou.activity.BuyReadingActivity;
 import com.sensu.android.zimaogou.activity.ProductListActivity;
 import com.sensu.android.zimaogou.activity.ShowImageActivity;
 import com.sensu.android.zimaogou.activity.mycenter.WebViewActivity;
 import com.sensu.android.zimaogou.activity_home.HomeHorizontalLinearLayout;
 import com.sensu.android.zimaogou.activity_home.HomeVerticalLinearLayout;
+import com.sensu.android.zimaogou.utils.HttpUtil;
+import com.sensu.android.zimaogou.utils.LogUtils;
 import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.sensu.android.zimaogou.widget.ImageRollView;
+import org.apache.http.Header;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -38,6 +47,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.home_page_fragment, container, false);
+
     }
 
     @Override
@@ -96,6 +106,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         mParentActivity.findViewById(R.id.ll_hotGoods).setOnClickListener(this);
         mParentActivity.findViewById(R.id.ll_latest).setOnClickListener(this);
         mParentActivity.findViewById(R.id.ll_featureVideos).setOnClickListener(this);
+        getAddress();
     }
 
     @Override
@@ -128,5 +139,15 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
                 startActivity(intent);
                 break;
         }
+    }
+    private void getAddress(){
+        HttpUtil.get(IConstants.sGetProvinceAndCity, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                LogUtils.d("获取城市返回：", response.toString());
+                BaseApplication.setAddressResponse(JSON.parseObject(response.toString(), AddressResponse.class));
+            }
+        });
     }
 }

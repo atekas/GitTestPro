@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -31,7 +32,7 @@ import java.util.List;
  */
 public class SearchActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
-//    private NoScrollGridView mSearchGirdView;
+    //    private NoScrollGridView mSearchGirdView;
     private NoScrollListView mSearchListView;
 
     private SearchListAdapter mSearchListAdapter;
@@ -61,19 +62,47 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         mSearchEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                return (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER);
+                if (i == EditorInfo.IME_ACTION_SEND || (keyEvent != null && keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                    //do something;
+                    String keyword = mSearchEdit.getText().toString().trim();
+                    if (!TextUtils.isEmpty(keyword)) {
+                        Intent intent = new Intent(SearchActivity.this, ProductListActivity.class);
+                        intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
+                        intent.putExtra(ProductListActivity.PRODUCT_LIST_KEYWORD, keyword);
+                        intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, keyword);
+                        startActivity(intent);
+                        SearchKeyword searchKeyword = new SearchKeyword();
+                        searchKeyword.setKeyword(keyword);
+                        GDSearchKeywordHelper.getInstance(SearchActivity.this).insertKeyword(searchKeyword);
+                    }
+                    return false;
+                }
+                return true;
             }
-        });
+        }
+    );
 
-        mClearHistoryText = (TextView) findViewById(R.id.clear_history);
+    mClearHistoryText=(TextView)
 
-        findViewById(R.id.back).setOnClickListener(this);
-        findViewById(R.id.search).setOnClickListener(this);
-        mClearHistoryText.setOnClickListener(this);
+    findViewById(R.id.clear_history);
 
-        mSearchListView.setAdapter(mSearchListAdapter);
-        mSearchListView.setOnItemClickListener(this);
-    }
+    findViewById(R.id.back)
+
+    .
+
+    setOnClickListener(this);
+
+    findViewById(R.id.search)
+
+    .
+
+    setOnClickListener(this);
+
+    mClearHistoryText.setOnClickListener(this);
+
+    mSearchListView.setAdapter(mSearchListAdapter);
+    mSearchListView.setOnItemClickListener(this);
+}
 
     @Override
     protected void onResume() {

@@ -167,7 +167,7 @@ public class VideoLinearLayout extends LinearLayout {
     public void setURL(String coverImageUrl,String videoUrl){
         mCoverUrl = coverImageUrl;
         mPlayUrl = videoUrl;
-        ImageUtils.displayImage(coverImageUrl,mCoverImageView);
+        ImageUtils.displayImage(coverImageUrl,mCoverImageView,ImageUtils.mItemTopOptions);
     }
 
     public void playing(){

@@ -54,7 +54,7 @@ public class RecommendItemAdapter extends SimpleBaseAdapter {
         }else{
             viewHolder.mVideoImage.setVisibility(View.VISIBLE);
         }
-        ImageUtils.displayImage(commendProductModes.get(i).broad_image,viewHolder.mImageView);
+        ImageUtils.displayImage(commendProductModes.get(i).broad_image,viewHolder.mImageView,ImageUtils.mGroupListOptions);
         viewHolder.mProductName.setText(commendProductModes.get(i).name);
         viewHolder.mPrice.setText("￥"+ StringUtils.deleteZero(commendProductModes.get(i).price));
         viewHolder.mDescribe.setText(commendProductModes.get(i).sale_title);

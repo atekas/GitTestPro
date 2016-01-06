@@ -30,18 +30,7 @@ public class HorizontalListViewAdapter extends BaseAdapter {
     ArrayList<CommendProductResponse.CommendProductMode> pros = new ArrayList<CommendProductResponse.CommendProductMode>();
     int width = DisplayUtils.getDisplayWidth();
 
-    private DisplayImageOptions mItemTopOptions = new DisplayImageOptions.Builder()
-            .considerExifParams(true)
-            .imageScaleType(ImageScaleType.EXACTLY)
-            .bitmapConfig(Bitmap.Config.RGB_565)
-            .resetViewBeforeLoading(true)
-            .showImageOnLoading(R.drawable.home_item_top_default)
-            .showImageOnFail(R.drawable.home_item_top_default)
-            .showImageForEmptyUri(R.drawable.home_item_top_default)
-            .cacheInMemory(true)
-            .resetViewBeforeLoading(true)
-            .cacheOnDisk(true)
-            .build();
+
 
     public HorizontalListViewAdapter(Context context, ArrayList<CommendProductResponse.CommendProductMode> pros, int type) {
         this.mContext = context;
@@ -112,10 +101,10 @@ public class HorizontalListViewAdapter extends BaseAdapter {
             holder.mTitle.setText(pros.get(position).name);
             if(pros.get(position).media.type.equals("1")){
                 holder.mVideoImage.setVisibility(View.GONE);
-                ImageUtils.displayImage(pros.get(position).media.image.get(0),holder.mImage, mItemTopOptions);
+                ImageUtils.displayImage(pros.get(position).media.image.get(0),holder.mImage, ImageUtils.mItemTopOptions);
             }else{
                 holder.mVideoImage.setVisibility(View.VISIBLE);
-                ImageUtils.displayImage(pros.get(position).media.cover,holder.mImage, mItemTopOptions);
+                ImageUtils.displayImage(pros.get(position).media.cover,holder.mImage, ImageUtils.mItemTopOptions);
             }
             holder.mSalePrice.setText(StringUtils.deleteZero(pros.get(position).price));
             holder.mOrigPrice.setText("￥"+ StringUtils.deleteZero(pros.get(position).price_market));

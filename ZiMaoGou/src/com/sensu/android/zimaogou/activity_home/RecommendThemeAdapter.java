@@ -48,7 +48,7 @@ public class RecommendThemeAdapter extends SimpleBaseAdapter {
 
         ThemeListResponse.ThemeListData themeListData = mThemeListResponse.data.get(position);
 
-        ImageUtils.displayImage(themeListData.media.cover, viewHolder.mImage);
+        ImageUtils.displayImage(themeListData.media.cover, viewHolder.mImage,ImageUtils.mGroupListOptions);
 
 //        viewHolder.mPrice.setText(StringUtils.deleteZero(themeListData.price) + "元起");
         viewHolder.mName.setText(themeListData.name);

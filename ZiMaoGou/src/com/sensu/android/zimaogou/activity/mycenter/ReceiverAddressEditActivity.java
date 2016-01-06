@@ -33,7 +33,7 @@ public class ReceiverAddressEditActivity extends BaseActivity {
     ImageView mBackImageView,mSwitchImageView;
     TextView mTitleTextView,mProvinceTextView,mSubmitTextView;
     ProvinceMode mResultAddress = BaseApplication.mChooseAddress;
-    AddressResponse addressResponse = new AddressResponse();
+    AddressResponse addressResponse =null;
 
     EditText mReceiverNameEditText,mReceiverPhoneEditText,mReceiverIDEditText,mReceiverStreetEditText;
     boolean isDefault = false;
@@ -48,9 +48,11 @@ public class ReceiverAddressEditActivity extends BaseActivity {
             String title = getIntent().getExtras().getString("title");
             mTitleTextView.setText(title);
             if(title.indexOf("编辑")>=0){
+
                 reveiverAddressMode = (ReceiverAddressMode) getIntent().getExtras().get("data");
             }
         }
+        addressResponse =  BaseApplication.getAddressResponse();
         setData();
     }
 
@@ -84,18 +86,8 @@ public class ReceiverAddressEditActivity extends BaseActivity {
                 onBackPressed();
             }
         });
-        getAddress();
     }
-    private void getAddress(){
-        HttpUtil.get(IConstants.sGetProvinceAndCity, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                LogUtils.d("获取城市返回：",response.toString());
-                addressResponse = JSON.parseObject(response.toString(), AddressResponse.class);
-            }
-        });
-    }
+
 
     @Override
     protected void onResume() {
