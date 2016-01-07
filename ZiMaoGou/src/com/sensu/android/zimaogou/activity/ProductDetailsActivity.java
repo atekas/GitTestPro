@@ -39,7 +39,6 @@ import com.sensu.android.zimaogou.widget.ScrollViewContainer;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -265,6 +264,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                     return;
                 }
                 Intent intent = new Intent(this, ProductShopCarActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
                 break;
             case R.id.product_share:
@@ -298,7 +298,15 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 ((EditText) mChooseDialog.findViewById(R.id.product_num)).setText(mProductCount + "");
                 break;
             case R.id.add_to_buy_bag:
-                ChooseTypeAndColorClick(findViewById(R.id.add_to_buy_bag));
+                if (mProductDetailsResponse.data.spec.size() ==1) {
+                    if (mUserInfo == null) {
+                        startActivity(new Intent(this, LoginActivity.class));
+                    } else {
+                        addToCart(mProductDetailsResponse.data.spec.get(0).id, "1");
+                    }
+                } else {
+                    ChooseTypeAndColorClick(findViewById(R.id.add_to_buy_bag));
+                }
                 break;
             case R.id.pay:
                 SelectProductModel selectProductModel = new SelectProductModel();
@@ -359,10 +367,20 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
     }
 
     private void layoutUi() {
+        int num = 0;
+        for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
+            num += Integer.parseInt(spec.num);
+        }
+
+        if (num == 0) {
+            findViewById(R.id.toast_num).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.toast_num).setVisibility(View.GONE);
+        }
+
         ((PullPushScrollView) findViewById(R.id.product_detail_top)).setProductDetailsResponse(mProductDetailsResponse);
         mProductSpecificationAdapter.setProductDetailData(mProductDetailsResponse.data);
         UiUtils.setListViewHeightBasedOnChilds(mProductSpecificationListView);
-
 
         WebSettings webSettings = mProductWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -379,8 +397,8 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         mProductWebView.loadUrl(mProductDetailsResponse.data.description);
         mProductWebView.setVisibility(View.VISIBLE);
 
-        mProductEvaluateAdapter = new ProductEvaluateAdapter(ProductDetailsActivity.this, mProductDetailsResponse.data.comment);
-        listView.setAdapter(mProductEvaluateAdapter);
+//        mProductEvaluateAdapter = new ProductEvaluateAdapter(ProductDetailsActivity.this, mProductDetailsResponse.data.comment);
+//        listView.setAdapter(mProductEvaluateAdapter);
         listView.setVisibility(View.GONE);
         mProductCommentTextView.setText("评价" + mProductDetailsResponse.data.comment.size());
     }
@@ -397,7 +415,9 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                mChooseDialog.dismiss();
+                if (mChooseDialog != null) {
+                    mChooseDialog.dismiss();
+                }
                 findViewById(R.id.cart_num).setVisibility(View.VISIBLE);
                 ((TextView) findViewById(R.id.cart_num)).setText(mCartNum + Integer.parseInt(num) + "");
             }

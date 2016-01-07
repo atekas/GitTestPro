@@ -134,7 +134,7 @@
     <com.sensu.android.zimaogou.widget.ScrollViewContainer
             android:id="@+id/scroll_view_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@+id/scroll_view_line"
             android:layout_above="@+id/bottom_line">
 
@@ -175,6 +175,17 @@
         </ScrollView>
 
     </com.sensu.android.zimaogou.widget.ScrollViewContainer>
+
+    <TextView
+            android:id="@+id/toast_num"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:visibility="gone"
+            android:padding="@dimen/dip_10"
+            android:layout_above="@+id/bottom_line"
+            android:background="@color/translucence_black_80"
+            android:text="库存不足,我们正在努力补货"/>
 
     <View
             android:id="@+id/bottom_line"

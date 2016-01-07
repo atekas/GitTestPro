@@ -12,6 +12,7 @@ import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.Mode.SelectProductModel;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.CartDataResponse;
+import com.sensu.android.zimaogou.activity.ProductDetailsActivity;
 import com.sensu.android.zimaogou.activity.VerifyOrderActivity;
 import com.sensu.android.zimaogou.adapter.ShoppingBagAdapter;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
@@ -84,14 +85,28 @@ public class CartLinearLayout extends LinearLayout {
                 childView.findViewById(R.id.product_info).setVisibility(VISIBLE);
                 ((TextView) childView.findViewById(R.id.product_info)).setText("宝贝已下架");
                 childView.findViewById(R.id.img_choose).setEnabled(false);
+                childView.findViewById(R.id.tv_productPrice).setVisibility(GONE);
+                childView.findViewById(R.id.tv_productNum).setVisibility(GONE);
+                childView.findViewById(R.id.ll_editNum).setVisibility(VISIBLE);
             } else {
                 if (Integer.parseInt(cartDataGroup.data.get(i).num) > Integer.parseInt(cartDataGroup.data.get(i).real_num)) {
                     childView.findViewById(R.id.product_info).setVisibility(VISIBLE);
                     ((TextView) childView.findViewById(R.id.product_info)).setText("宝贝库存不足");
                     childView.findViewById(R.id.img_choose).setEnabled(false);
+                    childView.findViewById(R.id.tv_productPrice).setVisibility(GONE);
+                    childView.findViewById(R.id.tv_productNum).setVisibility(GONE);
+                    childView.findViewById(R.id.ll_editNum).setVisibility(VISIBLE);
                 } else {
                     childView.findViewById(R.id.product_info).setVisibility(GONE);
                     childView.findViewById(R.id.img_choose).setEnabled(true);
+                    if (mIsEdit) {
+                        //编辑状态
+                        childView.findViewById(R.id.rl_showType).setVisibility(GONE);
+                        childView.findViewById(R.id.ll_editNum).setVisibility(VISIBLE);
+                    } else {
+                        childView.findViewById(R.id.rl_showType).setVisibility(VISIBLE);
+                        childView.findViewById(R.id.ll_editNum).setVisibility(GONE);
+                    }
                 }
             }
 
@@ -115,16 +130,21 @@ public class CartLinearLayout extends LinearLayout {
             }
 
             childView.setId(i);
-            if (mIsEdit) {
-                //编辑状态
-                childView.findViewById(R.id.rl_showType).setVisibility(GONE);
-                childView.findViewById(R.id.ll_editNum).setVisibility(VISIBLE);
-            } else {
-                childView.findViewById(R.id.rl_showType).setVisibility(VISIBLE);
-                childView.findViewById(R.id.ll_editNum).setVisibility(GONE);
-            }
+
 
             final int position = i;
+
+            childView.findViewById(R.id.content).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getContext(), ProductDetailsActivity.class);
+                    intent.putExtra(ProductDetailsActivity.PRODUCT_ID, cartDataGroup.data.get(position).goods_id);
+                    intent.putExtra(ProductDetailsActivity.FROM_SOURCE, cartDataGroup.data.get(position).source);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    getContext().startActivity(intent);
+                }
+            });
+
             childView.findViewById(R.id.img_choose).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {

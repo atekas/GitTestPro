@@ -55,7 +55,7 @@
                         android:layout_gravity="bottom"
                         android:textSize="26sp"
                         android:textColor="@color/red"
-                        android:text="68"/>
+                        android:text=""/>
 
                 <TextView
                         android:id="@+id/price_market"
@@ -65,7 +65,7 @@
                         android:textSize="14sp"
                         android:textColor="@color/gray_999999"
                         android:layout_marginLeft="10dp"
-                        android:text="¥98"/>
+                        android:text=""/>
 
                 <View
                         android:layout_width="0dp"
@@ -91,7 +91,7 @@
                     android:layout_marginTop="13dp"
                     android:textSize="14sp"
                     android:textColor="@color/black_222222"
-                    android:text="小狗印花头套小狗心花头套小狗印花头套小狗心花头套小狗印花头套小狗心花头套"/>
+                    android:text=""/>
 
             <TextView
                     android:id="@+id/sale_title"
