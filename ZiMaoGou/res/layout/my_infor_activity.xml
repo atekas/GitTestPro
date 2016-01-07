@@ -75,7 +75,7 @@
                 android:layout_centerVertical="true"
                 app:border_width="0dp"
                 app:border_color="@color/white"
-                android:src="@drawable/product1"
+                android:src="@drawable/head_pic_default"
                 />
         <ImageView
                 android:id="@+id/img_right"

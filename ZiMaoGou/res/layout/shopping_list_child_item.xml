@@ -40,7 +40,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/account_contentLeft_distance"
-                    android:src="@drawable/product3"
+                    android:src="@drawable/home_item_top_default"
                     />
 
 

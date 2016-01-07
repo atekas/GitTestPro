@@ -109,7 +109,7 @@ public class ImageUtils {
      */
     public static void displayImage(String uri, ImageView imageView) {
         if(com.sensu.android.zimaogou.utils.TextUtils.isEmpty(uri)){
-            imageView.setImageResource(R.drawable.head_photo_02);
+            imageView.setImageResource(R.drawable.head_pic_default);
             return;
         }
         displayImage(uri, imageView, null);

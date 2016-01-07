@@ -104,7 +104,7 @@ public class HomeHorizontalLinearLayout extends LinearLayout implements AdapterV
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         switch (mType) {
             case 1:
-                PromptUtils.showToast("商品详情");
+//                PromptUtils.showToast("商品详情");
                 if (mCommendProduct == null) {
                     return;
                 }
@@ -115,7 +115,7 @@ public class HomeHorizontalLinearLayout extends LinearLayout implements AdapterV
                 getContext().startActivity(intent);
                 break;
             case 2:
-                PromptUtils.showToast("拼单详情");
+//                PromptUtils.showToast("拼单详情");
                 if (mGroupProduct == null) {
                     return;
                 }
@@ -125,7 +125,7 @@ public class HomeHorizontalLinearLayout extends LinearLayout implements AdapterV
                 getContext().startActivity(intent1);
                 break;
             case 3:
-                PromptUtils.showToast("好店铺详情");
+//                PromptUtils.showToast("好店铺详情");
 
                 getContext().startActivity(new Intent(getContext(), TourBuyDetailsActivity.class).putExtra("travel",travelResponse.data.get(i)));
                 break;

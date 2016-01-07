@@ -12,7 +12,7 @@
             android:layout_marginLeft="@dimen/dip_10"
             android:layout_marginRight="@dimen/dip_10"
             android:layout_marginTop="@dimen/dip_10"
-            android:src="@drawable/special_1"
+            android:src="@drawable/category_default"
             android:scaleType="fitXY"
             android:layout_gravity="center_horizontal"/>
 
@@ -26,6 +26,7 @@
 
         <TextView
                 android:id="@+id/price"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_size_14"
@@ -37,7 +38,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_size_14"
-                android:layout_marginLeft="15dp"
                 android:textColor="@color/black_333333"
                 android:text="日本营养特卖"/>
 

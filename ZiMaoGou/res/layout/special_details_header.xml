@@ -12,7 +12,7 @@
             android:layout_marginLeft="@dimen/dip_10"
             android:layout_marginRight="@dimen/dip_10"
             android:layout_marginTop="@dimen/dip_10"
-            android:src="@drawable/special_1"
+            android:src="@drawable/product_list_default"
             android:scaleType="fitXY"
             android:layout_gravity="center_horizontal"/>
 

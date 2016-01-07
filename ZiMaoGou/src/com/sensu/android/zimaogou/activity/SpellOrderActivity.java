@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -35,7 +36,7 @@ public class SpellOrderActivity extends BaseActivity implements View.OnClickList
     private SpellOrderAdapter mSpellOrderAdapter;
     private GroupBuyListResponse mGroupBuyListResponse;
     private UserInfo mUserInfo;
-
+    FrameLayout content_view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +57,7 @@ public class SpellOrderActivity extends BaseActivity implements View.OnClickList
         findViewById(R.id.group_buy_selection).setOnClickListener(this);
         findViewById(R.id.my_group_buy).setOnClickListener(this);
         findViewById(R.id.group_buy_selection_text).setSelected(true);
-
+        content_view = (FrameLayout) findViewById(R.id.content_view);
         mListView = (ListView) findViewById(R.id.group_buy_list);
         mSpellOrderAdapter = new SpellOrderAdapter(this);
         mListView.setAdapter(mSpellOrderAdapter);
@@ -148,6 +149,12 @@ public class SpellOrderActivity extends BaseActivity implements View.OnClickList
                 }
                 mGroupBuyListResponse = groupBuyListResponse;
                 mSpellOrderAdapter.setGroupBuyList(groupBuyListResponse);
+                if(groupBuyListResponse.data.size() == 0){
+                    exceptionLinearLayout.setException(IConstants.EXCEPTION_MY_GROUP_IS_NULL);
+                    content_view.addView(ExceptionView);
+                }else{
+                    content_view.removeView(ExceptionView);
+                }
             }
 
             @Override
@@ -173,6 +180,12 @@ public class SpellOrderActivity extends BaseActivity implements View.OnClickList
                 }
                 mGroupBuyListResponse = groupBuyListResponse;
                 mSpellOrderAdapter.setGroupBuyList(groupBuyListResponse);
+                if(groupBuyListResponse.data.size() == 0){
+                    exceptionLinearLayout.setException(IConstants.EXCEPTION_MY_GROUP_IS_NULL);
+                    content_view.addView(ExceptionView);
+                }else{
+                    content_view.removeView(ExceptionView);
+                }
             }
 
             @Override

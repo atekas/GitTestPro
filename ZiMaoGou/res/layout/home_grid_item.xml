@@ -45,7 +45,7 @@
                     android:layout_marginTop="13dp"
                     android:scaleType="centerCrop"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/discount_1"/>
+                    android:src="@drawable/home_item_top_default"/>
 
         </RelativeLayout>
 
@@ -91,7 +91,7 @@
                     android:layout_marginTop="13dp"
                     android:scaleType="centerCrop"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/discount_2"/>
+                    android:src="@drawable/home_item_top_default"/>
 
         </RelativeLayout>
 
@@ -137,7 +137,7 @@
                     android:layout_marginTop="13dp"
                     android:scaleType="centerCrop"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/discount_3"/>
+                    android:src="@drawable/home_item_top_default"/>
 
         </RelativeLayout>
 

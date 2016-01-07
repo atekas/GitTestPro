@@ -36,7 +36,7 @@
 
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/home_banner_height"
-                    android:src="@drawable/special_3"/>
+                    android:src="@drawable/category_default"/>
 
             <View
                     android:layout_width="fill_parent"

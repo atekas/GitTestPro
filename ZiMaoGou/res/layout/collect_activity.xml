@@ -51,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:scaleType="matrix"
                     android:layout_alignParentBottom="true"
-                    android:src="@drawable/tab_cursor_small" />
+                    android:src="@drawable/tab_cursor_small"/>
         </RelativeLayout>
 
         <ImageView
@@ -68,14 +68,19 @@
             android:layout_width="match_parent"
             android:layout_height="2px"
             android:background="@color/home_line"/>
-    <android.support.v4.view.ViewPager
+    <FrameLayout
+            android:id="@+id/content_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <android.support.v4.view.ViewPager
 
-            android:id="@+id/viewPage_collect"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_gravity="center"
-            android:layout_weight="1.0"
-            android:flipInterval="30"
-            android:persistentDrawingCache="animation" />
+                android:id="@+id/viewPage_collect"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1.0"
+                android:flipInterval="30"
+                android:persistentDrawingCache="animation"/>
+    </FrameLayout>
 
 </LinearLayout>

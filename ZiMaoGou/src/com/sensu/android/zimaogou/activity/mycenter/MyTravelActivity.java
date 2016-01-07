@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.*;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -50,7 +51,7 @@ public class MyTravelActivity extends BaseActivity {
     String path;
     MyTravelResponse travelModes = new MyTravelResponse();
     private Handler mHandler = new Handler();
-
+    LinearLayout ll_content;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +69,7 @@ public class MyTravelActivity extends BaseActivity {
         mTourBuyListView = (RefreshListView) findViewById(R.id.tour_list);
         mTourBuyAdapter = new TourBuyAdapter(this,true);
         mTourBuyListView.setAdapter(mTourBuyAdapter);
+        ll_content = (LinearLayout) findViewById(R.id.ll_content);
 
         mTourBuyListView.setOnRefreshListener(mOnRefreshListener);
         mTourBuyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -121,6 +123,12 @@ public class MyTravelActivity extends BaseActivity {
 
                 travelModes = JSON.parseObject(response.toString(), MyTravelResponse.class);
                 mTourBuyAdapter.flush(travelModes.data.travel);
+                if(travelModes.data.travel.size() == 0){
+                    exceptionLinearLayout.setException(IConstants.EXCEPTION_TIPS_IS_NULL);
+                    ll_content.addView(ExceptionView);
+                }else{
+                    ll_content.removeView(ExceptionView);
+                }
             }
         });
 

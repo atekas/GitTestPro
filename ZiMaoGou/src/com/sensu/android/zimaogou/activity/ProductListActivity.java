@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -43,7 +44,7 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
     private String mOrderBy;
     private String mPageNum = "";
     private String mLimit = "";
-
+    LinearLayout ll_content;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +71,7 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
         } else {
             findViewById(R.id.sort_rules_layout).setVisibility(View.VISIBLE);
         }
-
+        ll_content = (LinearLayout) findViewById(R.id.ll_content);
         findViewById(R.id.newest).setOnClickListener(this);
         findViewById(R.id.moods).setOnClickListener(this);
         findViewById(R.id.back).setOnClickListener(this);
@@ -132,6 +133,12 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
                 ProductListResponse productListResponse = JSON.parseObject(response.toString(), ProductListResponse.class);
                 mProductListResponse = productListResponse;
                 mProductsDetailsAdapter.setProductList(productListResponse);
+                if(productListResponse.data.size() == 0){
+                    exceptionLinearLayout.setException(IConstants.EXCEPTION_GOODS_IS_NULL);
+                    ll_content.addView(ExceptionView);
+                }else{
+                    ll_content.removeView(ExceptionView);
+                }
             }
 
             @Override

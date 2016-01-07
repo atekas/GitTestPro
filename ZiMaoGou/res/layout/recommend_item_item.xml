@@ -16,7 +16,7 @@
             android:layout_width="fill_parent"
             android:layout_height="140dp"
             android:scaleType="fitXY"
-            android:src="@drawable/special_1"/>
+            android:src="@drawable/category_default"/>
 
         <ImageView
                 android:id="@+id/video_player"

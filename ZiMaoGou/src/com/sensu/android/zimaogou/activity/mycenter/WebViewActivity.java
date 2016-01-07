@@ -27,7 +27,7 @@ public class WebViewActivity extends BaseActivity {
 	ImageView mBackImageView;
 	TextView mTitleTextView;
 	String title ="";
-	String URL = "http://www.sensu-sh.com/";
+	String URL = "";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -39,9 +39,7 @@ public class WebViewActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		if(getIntent().getExtras() != null){
 			title = getIntent().getExtras().getString("title");
-			if(title.indexOf("专题")>=0) {
-				URL = getIntent().getExtras().getString("url");
-			}
+
 		}
 		mTitleTextView = (TextView) findViewById(R.id.tv_title);
 		mBackImageView = (ImageView) findViewById(R.id.back);
@@ -80,15 +78,22 @@ public class WebViewActivity extends BaseActivity {
 //		 webview.getSettings().setDefaultZoom(zoomDensity);
 //		 webview.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
 		 if(title.indexOf("用户协议")>=0){
+			 URL= "http://www.sensu-sh.com/";
 			 webview.loadUrl(URL);
 		 }else if(title.indexOf("关于")>= 0){
+			 URL= "http://www.sensu-sh.com/";
+
 			 URL = "http://"+getIntent().getExtras().getString("url");
 			 webview.loadUrl(URL);
-		 }else if(title.indexOf("广告") >= 0){
-			 webview.loadUrl(URL);
 		 }else if(title.indexOf("购物须知") >= 0){
+			 URL= "http://www.sensu-sh.com/";
+
 			 webview.loadUrl(URL);
 		 }else if(title.indexOf("专题")>=0){
+			 URL = getIntent().getExtras().getString("url");
+			 webview.loadUrl(URL);
+		 }else{
+			 URL = getIntent().getExtras().getString("url");
 			 webview.loadUrl(URL);
 		 }
 		WebSettings webSettings = webview.getSettings();

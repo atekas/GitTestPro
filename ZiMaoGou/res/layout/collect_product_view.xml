@@ -3,14 +3,21 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
+    <LinearLayout
+            android:id="@+id/ll_noData"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+    </LinearLayout>
     <GridView
             android:id="@+id/product_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:numColumns="2"
             android:horizontalSpacing="2dp"
             android:verticalSpacing="2dp"
             android:layout_marginTop="2dp"
-            android:background="#e8e8e8"/>
+            />
+
 
 </LinearLayout>

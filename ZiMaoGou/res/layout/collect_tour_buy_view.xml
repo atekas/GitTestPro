@@ -3,13 +3,20 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
+    <LinearLayout
+            android:id="@+id/ll_noData"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+    </LinearLayout>
     <com.sensu.android.zimaogou.widget.RefreshListView
             android:id="@+id/tour_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:divider="@null"
             android:listSelector="@color/transparent"
             android:background="@color/white"/>
+
 
 </LinearLayout>

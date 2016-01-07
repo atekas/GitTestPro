@@ -74,7 +74,6 @@ public class HomeVerticalLinearLayout extends LinearLayout implements AdapterVie
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         switch (mType) {
             case 4:
-                PromptUtils.showToast("推荐专题");
                 if (mThemeListResponse == null) {
                     return;
                 }
@@ -90,7 +89,6 @@ public class HomeVerticalLinearLayout extends LinearLayout implements AdapterVie
                 }
                 break;
             case 5:
-                PromptUtils.showToast("推荐单品");
                 if (mCommendProduct == null) {
                     return;
                 }
@@ -114,7 +112,7 @@ public class HomeVerticalLinearLayout extends LinearLayout implements AdapterVie
                     Intent intent = new Intent(getContext(), ProductListActivity.class);
                     intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
                     intent.putExtra(ProductListActivity.PRODUCT_LIST_TAG, "5");
-                    intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, "推荐单品");
+                    intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, "甜蜜心跳");
                     getContext().startActivity(intent);
                 }
                 break;

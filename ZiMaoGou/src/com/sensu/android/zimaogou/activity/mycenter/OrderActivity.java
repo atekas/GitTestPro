@@ -52,7 +52,7 @@ public class OrderActivity extends BaseActivity {
     int REQUEST_CODE_PAYMENT = 1001;
     MyOrderResponse myOrderResponse = new MyOrderResponse();
     Button mPayButton;//用来防止重复支付点击的Button
-
+    LinearLayout ll_content;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +72,7 @@ public class OrderActivity extends BaseActivity {
         mTitleTextView = (TextView) findViewById(R.id.tv_title);
         mOrderListView.setDivider(null);
         mOrderListView.setOnRefreshListener(mOnRefreshListener);
-
+        ll_content = (LinearLayout) findViewById(R.id.ll_content);
         mBackImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,7 +131,12 @@ public class OrderActivity extends BaseActivity {
                 myOrderResponse = JSON.parseObject(response.toString(), MyOrderResponse.class);
                 adapter = new OrderListAdapter1(OrderActivity.this, myOrderResponse.data);
                 mOrderListView.setAdapter(adapter);
-
+                if(myOrderResponse.data.size() == 0){
+                    exceptionLinearLayout.setException(IConstants.EXCEPTION_ORDER_IS_NULL);
+                    ll_content.addView(ExceptionView);
+                }else{
+                    ll_content.removeView(ExceptionView);
+                }
             }
         });
 

@@ -11,8 +11,10 @@ import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.ThemeListResponse;
+import com.sensu.android.zimaogou.activity.mycenter.WebViewActivity;
 import com.sensu.android.zimaogou.adapter.SpecialAdapter;
 import com.sensu.android.zimaogou.utils.HttpUtil;
+import com.sensu.android.zimaogou.utils.TextUtils;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
@@ -51,10 +53,19 @@ public class SpecialActivity extends BaseActivity implements AdapterView.OnItemC
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
         ThemeListResponse.ThemeListData themeListData = mThemeListResponse.data.get(i - 1);
-        Intent intent = new Intent(this, SpecialDetailsActivity.class);
-        intent.putExtra(THEME_TITLE, themeListData);
-        startActivity(intent);
+
+
+        if (TextUtils.isEmpty(themeListData.url)) {
+            Intent intent = new Intent(this, SpecialDetailsActivity.class);
+            intent.putExtra(SpecialActivity.THEME_TITLE, themeListData);
+            startActivity(intent);
+        } else {
+            startActivity(new Intent(this, WebViewActivity.class)
+                    .putExtra("title", "专题详情")
+                    .putExtra("url", themeListData.url));
+        }
     }
 
     @Override

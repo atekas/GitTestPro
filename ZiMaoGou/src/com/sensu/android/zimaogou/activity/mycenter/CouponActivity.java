@@ -17,6 +17,7 @@ import com.sensu.android.zimaogou.adapter.CouponValidListAdapter;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.HttpUtil;
+import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.sensu.android.zimaogou.utils.TextUtils;
 import com.sensu.android.zimaogou.utils.UiUtils;
 import com.sensu.android.zimaogou.widget.ExceptionLinearLayout;
@@ -47,11 +48,12 @@ public class CouponActivity extends BaseActivity implements AdapterView.OnItemCl
     private CouponInvalidListAdapter mCouponInvalidListAdapter;
     private RelativeLayout mTipRelative;
     private List<CouponResponse.Coupon> mCanUseCouponList;
-
+    View ExceptionView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.coupon_activity);
+        ExceptionView = View.inflate(CouponActivity.this,R.layout.exception_layout,null);
         initView();
         if(getIntent().getExtras() != null){
             sourceType = getIntent().getExtras().getString("type","");
@@ -128,11 +130,17 @@ public class CouponActivity extends BaseActivity implements AdapterView.OnItemCl
 
         Button bt_sure = (Button) mInvokeCouponDialog.findViewById(R.id.bt_sure);
         Button bt_cancel = (Button) mInvokeCouponDialog.findViewById(R.id.bt_cancel);
-
+        final EditText et_couponCode = (EditText) mInvokeCouponDialog.findViewById(R.id.et_couponCode);
         bt_sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                String couponCode = et_couponCode.getText().toString().trim();
+                if(TextUtils.isEmpty(couponCode)){
+                    PromptUtils.showToast("请输入优惠券兑换码");
+                    return;
+                }else{
+                    invokeCoupon(couponCode);
+                }
                 mInvokeCouponDialog.dismiss();
             }
         });
@@ -168,11 +176,13 @@ public class CouponActivity extends BaseActivity implements AdapterView.OnItemCl
 
                 }
                 if(couponResponse.mNoUseCouponList.size() == 0 && couponResponse.mCannotUseCouponList.size() == 0){
-                    View view = View.inflate(CouponActivity.this,R.layout.exception_layout,null);
-                    ExceptionLinearLayout exceptionLinearLayout = (ExceptionLinearLayout) view.findViewById(R.id.ll_exception);
-                    exceptionLinearLayout.setException(IConstants.EXCEPTION_COUPON_IS_NULL);
-                    mContentLinearLayout.addView(view);
 
+                    ExceptionLinearLayout exceptionLinearLayout = (ExceptionLinearLayout) ExceptionView.findViewById(R.id.ll_exception);
+                    exceptionLinearLayout.setException(IConstants.EXCEPTION_COUPON_IS_NULL);
+                    mContentLinearLayout.addView(ExceptionView);
+
+                }else{
+                    mContentLinearLayout.removeView(ExceptionView);
                 }
             }
 
@@ -183,4 +193,22 @@ public class CouponActivity extends BaseActivity implements AdapterView.OnItemCl
         });
     }
 
+    private void invokeCoupon(String couponCode){
+        UserInfo userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("uid",userInfo.getUid());
+        requestParams.put("code",couponCode);
+        HttpUtil.postWithSign(userInfo.getToken(),IConstants.sInvokeCoupon,requestParams,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                if(response.optInt("ret")>=0){
+                    PromptUtils.showToast("激活成功！");
+                    getCoupon();
+                }else{
+                    PromptUtils.showToast(response.optString("msg"));
+                }
+            }
+        });
+    }
 }

@@ -16,7 +16,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/product3"/>
+                android:src="@drawable/product_list_default"/>
 
         <TextView
                 android:id="@+id/product_name"

@@ -27,7 +27,7 @@
                         android:layout_width="125dp"
                         android:layout_height="125dp"
                         android:layout_marginTop="12dp"
-                        android:src="@drawable/product1"/>
+                        android:src="@drawable/home_item_top_default"/>
 
                 <TextView
                         android:id="@+id/tv_productPrice"

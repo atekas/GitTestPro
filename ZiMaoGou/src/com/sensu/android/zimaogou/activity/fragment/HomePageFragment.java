@@ -9,12 +9,15 @@ import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sensu.android.zimaogou.BaseApplication;
 import com.sensu.android.zimaogou.IConstants;
+import com.sensu.android.zimaogou.Mode.BannerMode;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.AddressResponse;
-import com.sensu.android.zimaogou.activity.BuyReadingActivity;
-import com.sensu.android.zimaogou.activity.ProductListActivity;
-import com.sensu.android.zimaogou.activity.ShowImageActivity;
+import com.sensu.android.zimaogou.ReqResponse.BannerResponse;
+import com.sensu.android.zimaogou.ReqResponse.ThemeDetailResponse;
+import com.sensu.android.zimaogou.ReqResponse.ThemeListResponse;
+import com.sensu.android.zimaogou.activity.*;
 import com.sensu.android.zimaogou.activity.mycenter.WebViewActivity;
+import com.sensu.android.zimaogou.activity.tour.TourBuyDetailsActivity;
 import com.sensu.android.zimaogou.activity_home.HomeHorizontalLinearLayout;
 import com.sensu.android.zimaogou.activity_home.HomeVerticalLinearLayout;
 import com.sensu.android.zimaogou.utils.HttpUtil;
@@ -25,6 +28,8 @@ import org.apache.http.Header;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import static com.sensu.android.zimaogou.ReqResponse.ThemeListResponse.*;
 
 /**
  * Created by zhangwentao on 2015/11/10.
@@ -43,6 +48,9 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     HomeVerticalLinearLayout mLivelyLinearLayout, mRecommendItemLayout;
 
     private ImageRollView mImageRollView;
+    ArrayList<String> list = new ArrayList<String>();
+    BannerResponse bannerResponse = new BannerResponse();
+    ArrayList<BannerMode> bannerModes = new ArrayList<BannerMode>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,9 +67,9 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (hidden) {
-            PromptUtils.showToast("home隐藏");
+//            PromptUtils.showToast("home隐藏");
         } else {
-            PromptUtils.showToast("home显示");
+//            PromptUtils.showToast("home显示");
         }
     }
 
@@ -85,20 +93,31 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
 
         mImageRollView = (ImageRollView) mParentActivity.findViewById(R.id.banner);
 
-        ArrayList<String> list = new ArrayList<String>();
-        list.add("http://www.lesvin.net/Lesvin/leadings/img/1.png");
-        list.add("http://www.lesvin.net/Lesvin/leadings/img/2.png");
-        list.add("http://www.lesvin.net/Lesvin/leadings/img/3.png");
-        list.add("http://www.lesvin.net/Lesvin/leadings/img/4.png");
-        list.add("http://www.lesvin.net/Lesvin/leadings/img/5.png");
-
-        mImageRollView.initImageRollView(list, true);
 
         mImageRollView.setOnImageRollViewClickListener(new ImageRollView.OnImageRollViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                PromptUtils.showToast("你点击了第" + position + "张图片");
-                startActivity(new Intent(mParentActivity, WebViewActivity.class).putExtra("title","广告"));
+                if (bannerModes.get(position).getType().equals("1")) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("id",bannerModes.get(position).getValue());
+                    bundle.putString("image",bannerModes.get(position).getImage());
+                    bundle.putString("name",bannerModes.get(position).getName());
+                    bundle.putString("content","测试banner");
+
+                    Intent intent = new Intent(mParentActivity, SpecialDetailsActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    return;
+                } else if (bannerModes.get(position).getType().equals("2")) {
+                    Intent intent = new Intent(mParentActivity, ProductDetailsActivity.class);
+                    intent.putExtra(ProductDetailsActivity.PRODUCT_ID, bannerModes.get(position).getValue());
+                    intent.putExtra(ProductDetailsActivity.FROM_SOURCE, "0");
+                    startActivity(intent);
+                } else {
+                    startActivity(new Intent(mParentActivity, WebViewActivity.class)
+                            .putExtra("title", bannerModes.get(position).getName())
+                            .putExtra("url", bannerModes.get(position).getValue()));
+                }
             }
         });
 
@@ -107,6 +126,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         mParentActivity.findViewById(R.id.ll_latest).setOnClickListener(this);
         mParentActivity.findViewById(R.id.ll_featureVideos).setOnClickListener(this);
         getAddress();
+        getBanner();
     }
 
     @Override
@@ -114,39 +134,54 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         Intent intent;
         switch (view.getId()) {
             case R.id.ll_buyRead:
-                PromptUtils.showToast("购物须知");
-                startActivity(new Intent(mParentActivity, WebViewActivity.class).putExtra("title","购物须知"));
+                startActivity(new Intent(mParentActivity, WebViewActivity.class).putExtra("title", "诞生秘密"));
                 break;
             case R.id.ll_hotGoods:
                 intent = new Intent(mParentActivity, ProductListActivity.class);
                 intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
                 intent.putExtra(ProductListActivity.PRODUCT_LIST_TAG, "1");
-                intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, "人气商品");
+                intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, "不得不爱");
                 startActivity(intent);
                 break;
             case R.id.ll_latest:
                 intent = new Intent(mParentActivity, ProductListActivity.class);
                 intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
                 intent.putExtra(ProductListActivity.PRODUCT_LIST_TAG, "3");
-                intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, "最新上架");
+                intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, "限时优惠");
                 startActivity(intent);
                 break;
             case R.id.ll_featureVideos:
                 intent = new Intent(mParentActivity, ProductListActivity.class);
                 intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
                 intent.putExtra(ProductListActivity.PRODUCT_LIST_TAG, "2");
-                intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, "视频精选");
+                intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, "星梦奇缘");
                 startActivity(intent);
                 break;
         }
     }
-    private void getAddress(){
+
+    private void getAddress() {
         HttpUtil.get(IConstants.sGetProvinceAndCity, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 LogUtils.d("获取城市返回：", response.toString());
                 BaseApplication.setAddressResponse(JSON.parseObject(response.toString(), AddressResponse.class));
+            }
+        });
+    }
+
+    private void getBanner() {
+        HttpUtil.get(IConstants.sGetBanner, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                bannerResponse = JSON.parseObject(response.toString(), BannerResponse.class);
+                bannerModes = bannerResponse.data;
+                for (BannerMode bannerMode : bannerModes) {
+                    list.add(bannerMode.getImage());
+                }
+                mImageRollView.initImageRollView(list, true);
             }
         });
     }

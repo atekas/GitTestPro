@@ -79,7 +79,7 @@ public class BaseApplication extends Application {
         PromptUtils.init(this);
 //        TelephoneInfoUtils.init(this);
 //        WiFiInfoUtils.init(this);
-//        NetworkTypeUtils.init(this);
+        NetworkTypeUtils.init(this);
 //        LogUtils.setIsLogEnable(true);
         LogUtils.setIsWriteDisk(true);
 //        AppInfoUtils.init(this);

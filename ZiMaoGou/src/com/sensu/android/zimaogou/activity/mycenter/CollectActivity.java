@@ -12,10 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.*;
 import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -31,6 +28,7 @@ import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.DisplayUtils;
 import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.utils.LogUtils;
+import com.sensu.android.zimaogou.widget.ExceptionLinearLayout;
 import com.sensu.android.zimaogou.widget.OnRefreshListener;
 import com.sensu.android.zimaogou.widget.RefreshListView;
 import org.apache.http.Header;
@@ -57,10 +55,14 @@ public class CollectActivity extends BaseActivity {
     ProductListResponse productListResponse = new ProductListResponse();
     TravelResponse travelResponse = new TravelResponse();
     UserInfo userInfo ;
+    LinearLayout ll_NoDataShop;
+    LinearLayout ll_noDataTour;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.collect_activity);
+
         mProductTitle = (TextView) findViewById(R.id.product_title);
         mTourTitle = (TextView) findViewById(R.id.tour_title);
         mTitleRelativeLayout = (RelativeLayout) findViewById(R.id.rl_title);
@@ -113,12 +115,15 @@ public class CollectActivity extends BaseActivity {
      */
     private void InitViewPager(){
         View productView = LayoutInflater.from(this).inflate(R.layout.collect_product_view,null);
+        ll_NoDataShop = (LinearLayout) productView.findViewById(R.id.ll_noData);
         GridView mGridView = (GridView) productView.findViewById(R.id.product_list);
         ProductsDetailsAdapter mProductsDetailsAdapter = new ProductsDetailsAdapter(this);
         mGridView.setColumnWidth(DisplayUtils.getDisplayWidth() / 2);
         mGridView.setAdapter(mProductsDetailsAdapter);
         mListView.add(productView);
         View tourView = LayoutInflater.from(this).inflate(R.layout.collect_tour_buy_view,null);
+        ll_noDataTour = (LinearLayout) tourView.findViewById(R.id.ll_noData);
+
         mTourBuyListView = (RefreshListView) tourView.findViewById(R.id.tour_list);
         TourBuyAdapter mTourBuyAdapter = new TourBuyAdapter(this);
         mTourBuyListView.setAdapter(mTourBuyAdapter);
@@ -298,6 +303,15 @@ public class CollectActivity extends BaseActivity {
                 LogUtils.d("获取我的收藏（商品）:",response.toString());
                 productListResponse = JSON.parseObject(response.toString(),ProductListResponse.class);
                 productsDetailsAdapter.setProductList(productListResponse);
+                if(productListResponse.data.size() == 0){
+                    ll_NoDataShop.setVisibility(View.VISIBLE);
+                    View ExceptionView = View.inflate(CollectActivity.this, R.layout.exception_layout,null);
+                    exceptionLinearLayout = (ExceptionLinearLayout) ExceptionView.findViewById(R.id.ll_exception);
+                    exceptionLinearLayout.setException(IConstants.EXCEPTION_MY_GOODS_IS_NULL);
+                    ll_NoDataShop.addView(ExceptionView);
+                }else{
+                    ll_NoDataShop.setVisibility(View.GONE);
+                }
             }
         });
         RequestParams requestParams1 = new RequestParams();
@@ -310,6 +324,15 @@ public class CollectActivity extends BaseActivity {
                 LogUtils.d("获取我的收藏（游购）:",response.toString());
                 travelResponse = JSON.parseObject(response.toString(),TravelResponse.class);
                 tourBuyAdapter.flush(travelResponse.data);
+                if(travelResponse.data.size() == 0){
+                    ll_noDataTour.setVisibility(View.VISIBLE);
+                    View ExceptionView = View.inflate(CollectActivity.this, R.layout.exception_layout,null);
+                    exceptionLinearLayout = (ExceptionLinearLayout) ExceptionView.findViewById(R.id.ll_exception);
+                    exceptionLinearLayout.setException(IConstants.EXCEPTION_TIPS_IS_NULL);
+                    ll_noDataTour.addView(ExceptionView);
+                }else{
+                    ll_noDataTour.setVisibility(View.GONE);
+                }
             }
         });
 

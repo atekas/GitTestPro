@@ -76,6 +76,12 @@ public class SpecialDetailsActivity extends BaseActivity implements View.OnClick
             ((TextView) findViewById(R.id.special_introduce_content)).setText(mThemeListData.content);
 
             getThemeDetail(mThemeListData.id);
+        }else{
+            ImageUtils.displayImage(getIntent().getExtras().getString("image"), (ImageView) mHeadView.findViewById(R.id.special_introduce_pic));
+            ((TextView) findViewById(R.id.special_introduce_title)).setText(getIntent().getExtras().getString("name"));
+            ((TextView) findViewById(R.id.special_introduce_content)).setText(getIntent().getExtras().getString("content"));
+
+            getThemeDetail(getIntent().getExtras().getString("id"));
         }
     }
 

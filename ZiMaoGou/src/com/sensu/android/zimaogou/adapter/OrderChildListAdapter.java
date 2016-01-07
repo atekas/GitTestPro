@@ -52,7 +52,7 @@ public class OrderChildListAdapter extends SimpleBaseAdapter {
         }else{
             productsViewHolder = (ProductsViewHolder) view.getTag();
         }
-        ImageUtils.displayImage(mProducts.get(i).getImage(),productsViewHolder.img_pro);
+        ImageUtils.displayImage(mProducts.get(i).getImage(),productsViewHolder.img_pro,ImageUtils.mItemTopOptions);
 
         productsViewHolder.tv_productPrice.setText("￥" + mProducts.get(i).getPrice());
         productsViewHolder.tv_refundMoney.setText("￥" + mProducts.get(i).getPrice());

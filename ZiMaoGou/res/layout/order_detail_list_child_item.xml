@@ -28,7 +28,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:src="@drawable/product2"
+                    android:src="@drawable/home_item_top_default"
                     />
 
 

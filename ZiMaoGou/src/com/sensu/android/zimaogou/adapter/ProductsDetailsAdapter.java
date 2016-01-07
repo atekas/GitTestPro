@@ -61,7 +61,7 @@ public class ProductsDetailsAdapter extends SimpleBaseAdapter {
             viewHolder = new ViewHolder();
             viewHolder.mProductPic = (ImageView) view.findViewById(R.id.product_pic);
             viewHolder.mProductPic.setLayoutParams(new FrameLayout.LayoutParams(mPicSize, mPicSize));
-
+            viewHolder.mSellout = (ImageView) view.findViewById(R.id.sellout);
             viewHolder.mProductName = (TextView) view.findViewById(R.id.product_detail_name);
             viewHolder.mPrice = (TextView) view.findViewById(R.id.product_price);
             viewHolder.mCountryIcon = (ImageView) view.findViewById(R.id.country_icon);
@@ -84,7 +84,11 @@ public class ProductsDetailsAdapter extends SimpleBaseAdapter {
             viewHolder.mVideoIcon.setVisibility(View.GONE);
             ImageUtils.displayImage(productListData.media.image.get(0), viewHolder.mProductPic, mProductOptions);
         }
-
+        if(productListData.num>0){
+            viewHolder.mSellout.setVisibility(View.GONE);
+        }else{
+            viewHolder.mSellout.setVisibility(View.VISIBLE);
+        }
         return view;
     }
 
@@ -93,6 +97,7 @@ public class ProductsDetailsAdapter extends SimpleBaseAdapter {
         TextView mProductName;
         TextView mPrice;
         ImageView mCountryIcon;
-        ImageView mVideoIcon;
+        ImageView mVideoIcon,mSellout;
+
     }
 }

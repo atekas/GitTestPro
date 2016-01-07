@@ -27,7 +27,7 @@
                 android:layout_centerInParent="true"
                 android:textSize="18sp"
                 android:textColor="@color/black"
-                android:text="一起来拼单"/>
+                android:text="姐妹成团"/>
 
     </RelativeLayout>
 
@@ -92,6 +92,7 @@
             android:background="@color/home_line"/>
 
     <FrameLayout
+            android:id="@+id/content_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

@@ -50,7 +50,7 @@ public class SpecialAdapter extends SimpleBaseAdapter {
 
         ImageUtils.displayImage(themeListData.media.cover, viewHolder.mSpecialPic);
         viewHolder.mName.setText(themeListData.name);
-        viewHolder.mPrice.setText("¥" + StringUtils.deleteZero(themeListData.price));
+//        viewHolder.mPrice.setText("¥" + StringUtils.deleteZero(themeListData.price));
 
         return view;
     }

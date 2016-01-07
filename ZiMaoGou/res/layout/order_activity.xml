@@ -45,6 +45,11 @@
                 android:layout_alignParentBottom="true"/>
 
     </RelativeLayout>
+    <LinearLayout
+            android:id="@+id/ll_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
     <com.sensu.android.zimaogou.widget.RefreshListView
             android:id="@+id/lv_orders"
             android:layout_width="match_parent"
@@ -53,5 +58,6 @@
             >
 
     </com.sensu.android.zimaogou.widget.RefreshListView>
+    </LinearLayout>
 
 </LinearLayout>

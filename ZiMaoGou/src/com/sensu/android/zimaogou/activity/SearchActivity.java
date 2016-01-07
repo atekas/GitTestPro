@@ -44,7 +44,6 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_activity);
-
         initViews();
     }
 
@@ -73,9 +72,9 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                         searchKeyword.setKeyword(keyword);
                         GDSearchKeywordHelper.getInstance(SearchActivity.this).insertKeyword(searchKeyword);
                     }
-                    return false;
+                    return true;
                 }
-                return true;
+                return false;
             }
         }
     );

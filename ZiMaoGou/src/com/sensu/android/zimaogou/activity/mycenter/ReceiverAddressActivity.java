@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -38,7 +39,7 @@ public class ReceiverAddressActivity extends BaseActivity implements AdapterView
     private boolean mIsNoEdit;
     ReceiverAddressResponse receiverAddressResponse = new ReceiverAddressResponse();
     UserInfo userInfo;
-
+    RelativeLayout rl_content;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +62,7 @@ public class ReceiverAddressActivity extends BaseActivity implements AdapterView
         });
         mReceiverAddressListView.setDivider(null);
         mReceiverAddressListView.setOnItemClickListener(this);
+        rl_content = (RelativeLayout) findViewById(R.id.rl_content);
     }
 
     @Override
@@ -88,6 +90,12 @@ public class ReceiverAddressActivity extends BaseActivity implements AdapterView
                 receiverAddressResponse = JSON.parseObject(response.toString(), ReceiverAddressResponse.class);
                 saveAddress();
                 mReceiverAddressListView.setAdapter(new ReceiverListAdapter(ReceiverAddressActivity.this, mIsNoEdit, receiverAddressResponse.data));
+                if(receiverAddressResponse.data.size() == 0){
+                    exceptionLinearLayout.setException(IConstants.EXCEPTION_ADDRESS_IS_NULL);
+                    rl_content.addView(ExceptionView);
+                }else{
+                    rl_content.removeView(ExceptionView);
+                }
             }
         });
     }

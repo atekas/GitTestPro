@@ -18,9 +18,13 @@ public class IConstants {
 
     public static final int EXCEPTION_ADDRESS_IS_NULL = 5;//我的收货地址为空
 
-    public static final int EXCEPTION_GOODS_IS_NULL = 6;//我的收藏商品为空
+    public static final int EXCEPTION_GOODS_IS_NULL = 6;//商品为空
 
     public static final int EXCEPTION_TIPS_IS_NULL = 7;//我的收藏帖子为空
+
+    public static final int EXCEPTION_MY_GOODS_IS_NULL = 8;//我的收藏商品为空
+
+    public static final int EXCEPTION_MY_GROUP_IS_NULL = 9;//我的团购商品为空
 
     //获取时间戳
     public static final String sTimeStamp = "comm/timestamp";
@@ -82,7 +86,8 @@ public class IConstants {
     public static final String sTb_member = "tb/member";
     public static final String sTb_detail = "tb/";
     public static final String sMyTb_list = "my/tb";
-
+    //获取banner
+    public static final String sGetBanner = "comm/banner";
     //订单
     public static final String sOrder = "order";
     //运费规则
@@ -119,5 +124,6 @@ public class IConstants {
 
     //我的优惠券
     public static final String sMyCoupon = "my/coupon";
-
+    //激活优惠券
+    public static final String sInvokeCoupon = "my/coupon/activate";
 }

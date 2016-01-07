@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
@@ -18,6 +19,7 @@ import com.sensu.android.zimaogou.adapter.ShoppingBagAdapter;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.HttpUtil;
+import com.sensu.android.zimaogou.widget.ExceptionLinearLayout;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
@@ -35,7 +37,9 @@ public class ShoppingBagFragment extends BaseFragment implements View.OnClickLis
     private TextView mEditText;
 
     private CartDataResponse mCartDataResponse;
-
+    private LinearLayout ll_content;
+    public View ExceptionView;
+    public ExceptionLinearLayout exceptionLinearLayout;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.shopping_bag_fragment, container, false);
@@ -69,6 +73,10 @@ public class ShoppingBagFragment extends BaseFragment implements View.OnClickLis
         }
 
         mListView = (ListView) mParentActivity.findViewById(R.id.bag_goods_list);
+        ll_content = (LinearLayout) mParentActivity.findViewById(R.id.ll_content);
+        ExceptionView = View.inflate(mParentActivity, R.layout.exception_layout,null);
+        exceptionLinearLayout = (ExceptionLinearLayout) ExceptionView.findViewById(R.id.ll_exception);
+
         mShoppingBagAdapter = new ShoppingBagAdapter(mParentActivity, mListView);
         mListView.setAdapter(mShoppingBagAdapter);
         mEditText = (TextView) mParentActivity.findViewById(R.id.goods_edit);
@@ -104,6 +112,12 @@ public class ShoppingBagFragment extends BaseFragment implements View.OnClickLis
                 CartDataResponse cartDataResponse = JSON.parseObject(response.toString(), CartDataResponse.class);
                 mCartDataResponse = cartDataResponse;
                 mShoppingBagAdapter.setCartDataGroup(cartDataResponse);
+                if(cartDataResponse.data.size() == 0){
+                    exceptionLinearLayout.setException(IConstants.EXCEPTION_SHOP_IS_NULL);
+                    ll_content.addView(ExceptionView);
+                }else{
+                    ll_content.removeView(ExceptionView);
+                }
             }
 
             @Override

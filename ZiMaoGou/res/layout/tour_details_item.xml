@@ -10,7 +10,7 @@
             android:layout_height="45dp"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="@dimen/dip_10"
-            android:src="@drawable/head_photo_04"/>
+            android:src="@drawable/head_pic_default"/>
 
     <TextView
             android:id="@+id/review_user_name"

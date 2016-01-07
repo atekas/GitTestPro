@@ -21,6 +21,7 @@
                 android:text="兑换优惠券"
                 />
         <EditText
+                android:id="@+id/et_couponCode"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginLeft="20dp"

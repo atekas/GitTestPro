@@ -9,6 +9,6 @@
             android:layout_height="38dp"
             android:layout_marginLeft="6dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/head_photo_02"/>
+            android:src="@drawable/head_pic_default"/>
 
 </LinearLayout>

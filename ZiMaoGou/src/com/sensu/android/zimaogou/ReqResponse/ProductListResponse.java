@@ -19,6 +19,7 @@ public class ProductListResponse  {
         public String price;
         public String price_market;
         public Media media;
+        public int num;//库存
     }
 
     public static class Media {

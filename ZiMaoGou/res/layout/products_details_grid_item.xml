@@ -14,7 +14,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
-                android:src="@drawable/product3"/>
+                android:src="@drawable/home_item_top_default"/>
+        <ImageView
+                android:id="@+id/sellout"
+
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:src="@drawable/sellout"/>
 
         <ImageView
                 android:id="@+id/video_icon"

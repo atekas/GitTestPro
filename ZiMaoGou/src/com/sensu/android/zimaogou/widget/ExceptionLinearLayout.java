@@ -72,12 +72,19 @@ public class ExceptionLinearLayout extends LinearLayout {
                 exceptionImageResource = R.drawable.exception_order;
                 break;
             case IConstants.EXCEPTION_GOODS_IS_NULL:
-                exceptionMessage = "您还没有收藏的商品";
-                exceptionImageResource = R.drawable.exception_order;
+                exceptionMessage = "没有找到您要的商品";
+                exceptionImageResource = R.drawable.exception_bag;
                 break;
             case IConstants.EXCEPTION_TIPS_IS_NULL:
                 exceptionMessage = "您还没有收藏的帖子";
                 exceptionImageResource = R.drawable.exception_order;
+            case IConstants.EXCEPTION_MY_GOODS_IS_NULL:
+                exceptionMessage = "您还没有收藏的商品";
+                exceptionImageResource = R.drawable.exception_bag;
+                break;
+            case IConstants.EXCEPTION_MY_GROUP_IS_NULL:
+                exceptionMessage = "还没有团购商品";
+                exceptionImageResource = R.drawable.exception_bag;
                 break;
 
         }

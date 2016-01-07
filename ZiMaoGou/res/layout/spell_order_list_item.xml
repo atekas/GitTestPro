@@ -1,122 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white">
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <ImageView
+            android:id="@+id/group_pic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/group_list_default"/>
+
+    <TextView
+            android:id="@+id/product_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dip_10"
+            android:layout_marginRight="@dimen/dip_10"
+            android:layout_marginTop="10dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="@dimen/text_size_15"
+            android:textColor="@color/black_222222"
+            android:text="降血压健脑银杏进化120毫克"/>
+
+    <TextView
+            android:id="@+id/product_describe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dip_10"
+            android:layout_marginRight="@dimen/dip_10"
+            android:layout_marginTop="10dp"
+            android:textSize="@dimen/text_size_13"
+            android:textColor="#666666"
+            android:text="降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化"/>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white">
+        <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white">
-    <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white">
 
-        <ImageView
-                android:id="@+id/group_pic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-                android:src="@drawable/good_5"/>
-
-        <TextView
-                android:id="@+id/product_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dip_10"
-                android:layout_marginRight="@dimen/dip_10"
-                android:layout_marginTop="10dp"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:textSize="@dimen/text_size_15"
-                android:textColor="@color/black_222222"
-                android:text="降血压健脑银杏进化120毫克"/>
-
-        <TextView
-                android:id="@+id/product_describe"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dip_10"
-                android:layout_marginRight="@dimen/dip_10"
-                android:layout_marginTop="10dp"
-                android:textSize="@dimen/text_size_13"
-                android:textColor="#666666"
-                android:text="降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化"/>
-
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:layout_marginLeft="@dimen/dip_10"
-                android:layout_marginRight="@dimen/dip_10"
-                android:layout_marginTop="10dp">
-
-            <TextView
-                    android:layout_width="wrap_content"
+            <ImageView
+                    android:id="@+id/group_pic"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_22"
-                    android:textColor="@color/red"
-                    android:text="¥"/>
+                    android:scaleType="fitXY"
+                    android:src="@drawable/group_list_default"/>
 
             <TextView
-                    android:id="@+id/group_buy_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="25sp"
-                    android:textColor="@color/red"
-                    android:text="68"/>
-
-            <TextView
-                    android:id="@+id/old_price"
+                    android:id="@+id/product_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dip_10"
-                    android:textSize="@dimen/text_size_16"
-                    android:textColor="#666666"
-                    android:text="¥98"/>
+                    android:layout_marginRight="@dimen/dip_10"
+                    android:layout_marginTop="10dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textSize="@dimen/text_size_15"
+                    android:textColor="@color/black_222222"
+                    android:text="降血压健脑银杏进化120毫克"/>
 
-            <View
-                    android:layout_width="0dp"
-                    android:layout_height="1px"
-                    android:layout_weight="1"/>
-
-            <LinearLayout
-                    android:id="@+id/group"
-                    android:orientation="horizontal"
+            <TextView
+                    android:id="@+id/product_describe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:background="@drawable/drawable_group_state_back">
+                    android:layout_marginLeft="@dimen/dip_10"
+                    android:layout_marginRight="@dimen/dip_10"
+                    android:layout_marginTop="10dp"
+                    android:textSize="@dimen/text_size_13"
+                    android:textColor="#666666"
+                    android:text="降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化"/>
+
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:layout_marginLeft="@dimen/dip_10"
+                    android:layout_marginRight="@dimen/dip_10"
+                    android:layout_marginTop="10dp">
 
                 <TextView
-                        android:id="@+id/group_person_size"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:textColor="@color/color_group_text_back"
-                        android:textSize="@dimen/text_size_15"
-                        android:text="3人成团"/>
+                        android:textSize="@dimen/text_size_22"
+                        android:textColor="@color/red"
+                        android:text="¥"/>
 
                 <TextView
-                        android:layout_width="0dp"
+                        android:id="@+id/group_buy_price"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/text_size_15"
-                        android:text="去组团"/>
+                        android:textSize="25sp"
+                        android:textColor="@color/red"
+                        android:text="68"/>
+
+                <TextView
+                        android:id="@+id/old_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dip_10"
+                        android:textSize="@dimen/text_size_16"
+                        android:textColor="#666666"
+                        android:text="¥98"/>
+
+                <View
+                        android:layout_width="0dp"
+                        android:layout_height="1px"
+                        android:layout_weight="1"/>
+
+                <LinearLayout
+                        android:id="@+id/group"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/drawable_group_state_back">
+
+                    <TextView
+                            android:id="@+id/group_person_size"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textColor="@color/color_group_text_back"
+                            android:textSize="@dimen/text_size_15"
+                            android:text="3人成团"/>
+
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_size_15"
+                            android:text="去组团"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:layout_marginTop="@dimen/dip_10"
+                    android:background="@color/home_line"/>
+
         </LinearLayout>
-
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="2px"
-                android:layout_marginTop="@dimen/dip_10"
-                android:background="@color/home_line"/>
-
-    </LinearLayout>
 
         <ImageView
                 android:id="@+id/state"
@@ -128,4 +164,5 @@
                 android:paddingBottom="@dimen/dip_20"
                 android:src="@drawable/group_close"/>
 
-</RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

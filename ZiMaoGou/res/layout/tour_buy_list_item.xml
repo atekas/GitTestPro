@@ -15,7 +15,7 @@
                 android:layout_height="45dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/head_photo_02"/>
+                android:src="@drawable/head_pic_default"/>
 
         <RelativeLayout
                 android:layout_width="match_parent"
