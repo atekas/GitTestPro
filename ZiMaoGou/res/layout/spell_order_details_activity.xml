@@ -31,7 +31,7 @@
                 android:ellipsize="end"
                 android:textSize="18sp"
                 android:textColor="@color/black"
-                android:text="银杏精华120毫克"/>
+                android:text=""/>
 
     </RelativeLayout>
 
@@ -67,7 +67,7 @@
                         android:layout_marginRight="@dimen/dip_10"
                         android:layout_marginTop="10dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/good_3"/>
+                        android:src="@drawable/group_list_default"/>
 
                 <TextView
                         android:id="@+id/product_name"
@@ -80,7 +80,7 @@
                         android:ellipsize="end"
                         android:textSize="@dimen/text_size_15"
                         android:textColor="@color/black_222222"
-                        android:text="降血压健脑银杏进化120毫克"/>
+                        android:text=""/>
 
                 <TextView
                         android:id="@+id/product_describe"
@@ -92,7 +92,7 @@
                         android:layout_marginTop="10dp"
                         android:textSize="@dimen/text_size_13"
                         android:textColor="#666666"
-                        android:text="健乐多健身增肌增重粉健身教练定制款乳清蛋白750g赠男士维生素一瓶健乐多健身增肌增重粉健身教练定制款乳清蛋白750g赠男士维生素一瓶健乐多健身增肌增重粉健身教练定制款乳清蛋白750g赠男士维生素一瓶健乐多健身增肌增重粉健身教练定制款乳清蛋白750g赠男士维生素一瓶"/>
+                        android:text=""/>
             </LinearLayout>
 
             <LinearLayout
