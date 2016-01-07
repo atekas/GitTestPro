@@ -397,8 +397,8 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         mProductWebView.loadUrl(mProductDetailsResponse.data.description);
         mProductWebView.setVisibility(View.VISIBLE);
 
-//        mProductEvaluateAdapter = new ProductEvaluateAdapter(ProductDetailsActivity.this, mProductDetailsResponse.data.comment);
-//        listView.setAdapter(mProductEvaluateAdapter);
+        mProductEvaluateAdapter = new ProductEvaluateAdapter(ProductDetailsActivity.this, mProductDetailsResponse.data.comment);
+        listView.setAdapter(mProductEvaluateAdapter);
         listView.setVisibility(View.GONE);
         mProductCommentTextView.setText("评价" + mProductDetailsResponse.data.comment.size());
     }
@@ -420,6 +420,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 }
                 findViewById(R.id.cart_num).setVisibility(View.VISIBLE);
                 ((TextView) findViewById(R.id.cart_num)).setText(mCartNum + Integer.parseInt(num) + "");
+                PromptUtils.showToast("加入购物车成功");
             }
 
             @Override
@@ -475,53 +476,29 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
 
         if (!TextUtils.isEmpty(color) && !TextUtils.isEmpty(capacity)) {
             for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
-                if (!TextUtils.isEmpty(color)) {
-                    if (spec.color.equals(color)) {
-                        for (ProductDetailsResponse.Spec spec1 : mProductDetailsResponse.data.spec) {
-                            if (!TextUtils.isEmpty(capacity)) {
-                                if (spec1.capacity.equals(capacity) && spec1.color.equals(color)) {
-                                    mSpecId = spec1.id;
-                                    ((TextView) mChooseDialog.findViewById(R.id.stock)).setText("库存 " + spec1.num);
-                                    ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText("¥" + spec1.price);
-                                    break;
-                                }
-                            }
-                        }
-                    }
+                if (spec.color.equals(color) && spec.capacity.equals(capacity)) {
+                    mSpecId = spec.id;
+                    ((TextView) mChooseDialog.findViewById(R.id.stock)).setText("库存 " + spec.num);
+                    ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText("¥" + spec.price);
+                    break;
                 }
             }
         } else if (!TextUtils.isEmpty(color) && !TextUtils.isEmpty(size)) {
             for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
-                if (!TextUtils.isEmpty(color)) {
-                    if (spec.color.equals(color)) {
-                        for (ProductDetailsResponse.Spec spec1 : mProductDetailsResponse.data.spec) {
-                            if (!TextUtils.isEmpty(size)) {
-                                if (spec1.size.equals(size) && spec1.color.equals(color)) {
-                                    mSpecId = spec1.id;
-                                    ((TextView) mChooseDialog.findViewById(R.id.stock)).setText("库存 " + spec1.num);
-                                    ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText("¥" + spec1.price);
-                                    break;
-                                }
-                            }
-                        }
-                    }
+                if (spec.color.equals(color) && spec.size.equals(size)) {
+                    mSpecId = spec.id;
+                    ((TextView) mChooseDialog.findViewById(R.id.stock)).setText("库存 " + spec.num);
+                    ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText("¥" + spec.price);
+                    break;
                 }
             }
         } else if (!TextUtils.isEmpty(capacity) && !TextUtils.isEmpty(size)) {
             for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
-                if (!TextUtils.isEmpty(capacity)) {
-                    if (spec.capacity.equals(capacity)) {
-                        for (ProductDetailsResponse.Spec spec1 : mProductDetailsResponse.data.spec) {
-                            if (!TextUtils.isEmpty(size)) {
-                                if (spec1.size.equals(size) && spec1.capacity.equals(capacity)) {
-                                    mSpecId = spec1.id;
-                                    ((TextView) mChooseDialog.findViewById(R.id.stock)).setText("库存 " + spec1.num);
-                                    ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText("¥" + spec1.price);
-                                    break;
-                                }
-                            }
-                        }
-                    }
+                if (spec.capacity.equals(capacity) && spec.size.equals(size)) {
+                    mSpecId = spec.id;
+                    ((TextView) mChooseDialog.findViewById(R.id.stock)).setText("库存 " + spec.num);
+                    ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText("¥" + spec.price);
+                    break;
                 }
             }
         }

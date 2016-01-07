@@ -349,15 +349,16 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
     private void getDefaultType(ProductDetailsResponse productDetailsResponse) {
         for (ProductDetailsResponse.Spec spec : productDetailsResponse.data.spec) {
             if (Integer.parseInt(spec.num) > 0) {
-                if (!spec.capacity.equals("0")) {
-                    mCapacity = spec.capacity;
+                for (ProductDetailsResponse.SpecAttr specAttr : productDetailsResponse.data.spec_attr) {
+                    if (specAttr.en.equals("color")) {
+                        mColor = spec.color;
+                    } else if (specAttr.en.equals("size")) {
+                        mSize = spec.size;
+                    } else if (specAttr.en.equals("capacity")) {
+                        mCapacity = spec.capacity;
+                    }
                 }
-                if (!spec.size.equals("0")) {
-                    mSize = spec.size;
-                }
-                if (!spec.color.equals("0")) {
-                    mColor = spec.color;
-                }
+                break;
             }
         }
 
