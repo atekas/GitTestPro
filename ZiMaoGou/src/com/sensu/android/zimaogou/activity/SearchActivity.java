@@ -14,18 +14,16 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.HotKeywordsResponse;
-import com.sensu.android.zimaogou.adapter.SearchGirdAdapter;
 import com.sensu.android.zimaogou.adapter.SearchListAdapter;
 import com.sensu.android.zimaogou.external.greendao.helper.GDSearchKeywordHelper;
 import com.sensu.android.zimaogou.external.greendao.model.SearchKeyword;
 import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.widget.HotKeywordsListView;
-import com.sensu.android.zimaogou.widget.NoScrollGridView;
 import com.sensu.android.zimaogou.widget.NoScrollListView;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by zhangwentao on 2015/11/26.
@@ -37,7 +35,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
     private SearchListAdapter mSearchListAdapter;
 
-    private List<SearchKeyword> mSearchKeywordList;
+    private List<String> mSearchKeywordList;
 
     private EditText mSearchEdit;
     private TextView mClearHistoryText;
@@ -110,8 +108,22 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         updateLayout();
     }
 
+    private List<String> removeDuplicate(List<SearchKeyword> list) {
+        Set<String> set = new HashSet();
+        List<String> newList = new ArrayList();
+        for(Iterator iter = list.iterator(); iter.hasNext();) {
+            SearchKeyword element = (SearchKeyword) iter.next();
+            if(set.add(element.getKeyword())) {
+                newList.add(element.getKeyword());
+            }
+        }
+        return newList;
+    }
+
     private void updateLayout() {
-        mSearchKeywordList = GDSearchKeywordHelper.getInstance(this).getSearchKeyword();
+
+        List<SearchKeyword> searchKeywordList = GDSearchKeywordHelper.getInstance(this).getSearchKeyword();
+        mSearchKeywordList = removeDuplicate(searchKeywordList);
         if (mSearchKeywordList == null || mSearchKeywordList.size() == 0) {
             findViewById(R.id.search_recently).setVisibility(View.GONE);
             mClearHistoryText.setVisibility(View.GONE);
@@ -171,7 +183,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         if (mSearchKeywordList == null) {
             return;
         }
-        String keyword = mSearchKeywordList.get(i).getKeyword();
+        String keyword = mSearchKeywordList.get(i);
         Intent intent = new Intent(this, ProductListActivity.class);
         intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
         intent.putExtra(ProductListActivity.PRODUCT_LIST_KEYWORD, keyword);

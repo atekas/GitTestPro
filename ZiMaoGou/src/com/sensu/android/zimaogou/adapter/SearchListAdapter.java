@@ -15,13 +15,13 @@ import java.util.List;
  */
 public class SearchListAdapter extends SimpleBaseAdapter {
 
-    private List<SearchKeyword> mSearchKeywordList;
+    private List<String> mSearchKeywordList;
 
     public SearchListAdapter(Context context) {
         super(context);
     }
 
-    public void setSearchKeywordList(List<SearchKeyword> searchKeywordList) {
+    public void setSearchKeywordList(List<String> searchKeywordList) {
         mSearchKeywordList = searchKeywordList;
         notifyDataSetChanged();
     }
@@ -37,9 +37,9 @@ public class SearchListAdapter extends SimpleBaseAdapter {
             view = LayoutInflater.from(mContext).inflate(R.layout.search_listview_item, null);
         }
 
-        SearchKeyword searchKeyword = mSearchKeywordList.get(i);
+        String searchKeyword = mSearchKeywordList.get(i);
 
-        ((TextView) view.findViewById(R.id.search_keyword)).setText(searchKeyword.getKeyword());
+        ((TextView) view.findViewById(R.id.search_keyword)).setText(searchKeyword);
 
 
         return view;
