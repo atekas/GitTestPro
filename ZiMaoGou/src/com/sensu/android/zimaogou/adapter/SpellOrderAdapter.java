@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
@@ -60,6 +61,8 @@ public class SpellOrderAdapter extends SimpleBaseAdapter {
             viewHolder.mOldPrice = (TextView) view.findViewById(R.id.old_price);
             TextUtils.addLineCenter(viewHolder.mOldPrice);
             viewHolder.mGroupPersonSize = (TextView) view.findViewById(R.id.group_person_size);
+            viewHolder.mGroupLinear = (LinearLayout) view.findViewById(R.id.group);
+            viewHolder.mStateImage = (ImageView) view.findViewById(R.id.state);
             view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) view.getTag();
@@ -72,6 +75,21 @@ public class SpellOrderAdapter extends SimpleBaseAdapter {
         viewHolder.mOldPrice.setText("¥" + StringUtils.deleteZero(groupBuyListData.price_goods));
         viewHolder.mGroupPersonSize.setText(groupBuyListData.min_num + "人成团");
         ImageUtils.displayImage(groupBuyListData.media, viewHolder.mImageView, mGroupListOptions);
+        if (groupBuyListData.state.equals("1")) {
+            viewHolder.mGroupLinear.setSelected(false);
+            viewHolder.mGroupPersonSize.setSelected(false);
+            viewHolder.mStateImage.setVisibility(View.GONE);
+        } else {
+            //2  结束   3  抢光
+            viewHolder.mStateImage.setVisibility(View.VISIBLE);
+            if (groupBuyListData.state.equals("2")) {
+                viewHolder.mStateImage.setImageResource(R.drawable.group_close);
+            } else if (groupBuyListData.state.equals("3")) {
+                viewHolder.mStateImage.setImageResource(R.drawable.group_finish);
+            }
+            viewHolder.mGroupLinear.setSelected(true);
+            viewHolder.mGroupPersonSize.setSelected(true);
+        }
 
         return view;
     }
@@ -83,5 +101,7 @@ public class SpellOrderAdapter extends SimpleBaseAdapter {
         TextView mGroupPrice;
         TextView mOldPrice;
         TextView mGroupPersonSize;
+        LinearLayout mGroupLinear;
+        ImageView mStateImage;
     }
 }
