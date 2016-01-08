@@ -311,6 +311,9 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
+                if (response.optString("ret").equals("-1")) {
+                    PromptUtils.showToast(response.optString("msg"));
+                }
                 commandGroup();
                 onResume();
             }
@@ -332,6 +335,10 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 GroupMemberResponse groupMemberResponse = JSON.parseObject(response.toString(), GroupMemberResponse.class);
+                if (groupMemberResponse.getRet().equals("-1")) {
+                    PromptUtils.showToast(groupMemberResponse.getMsg());
+                    return;
+                }
                 addUserPhoto(groupMemberResponse.data.list);
             }
 
@@ -366,7 +373,9 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
                 String tbId = response.optJSONObject("data").optString("tb_id");
                 getGroupDetail(tbId);
 
-                mCommandInputDialog.dismiss();
+                if (mCommandInputDialog != null) {
+                    mCommandInputDialog.dismiss();
+                }
             }
 
             @Override

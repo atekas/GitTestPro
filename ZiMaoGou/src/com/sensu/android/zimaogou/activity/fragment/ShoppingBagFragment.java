@@ -19,6 +19,7 @@ import com.sensu.android.zimaogou.adapter.ShoppingBagAdapter;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.HttpUtil;
+import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.sensu.android.zimaogou.widget.ExceptionLinearLayout;
 import org.apache.http.Header;
 import org.json.JSONObject;
@@ -109,6 +110,10 @@ public class ShoppingBagFragment extends BaseFragment implements View.OnClickLis
                 super.onSuccess(statusCode, headers, response);
                 //todo 接口通,等数据
                 CartDataResponse cartDataResponse = JSON.parseObject(response.toString(), CartDataResponse.class);
+                if (cartDataResponse.getRet().equals("-1")) {
+                    PromptUtils.showToast(cartDataResponse.getMsg());
+                    return;
+                }
                 mCartDataResponse = cartDataResponse;
                 mShoppingBagAdapter.setCartDataGroup(cartDataResponse);
                 if (cartDataResponse.data.size() == 0) {

@@ -169,7 +169,7 @@ public class CartLinearLayout extends LinearLayout {
                     int productNum = Integer.parseInt(num);
                     if (productNum > 1) {
                         productNum--;
-                        changeNum(mCartDataGroup.data.get(position).spec_id, String.valueOf(productNum), position);
+                        changeNum(mCartDataGroup.data.get(position).id, String.valueOf(productNum), position);
                     }
                 }
             });
@@ -181,7 +181,7 @@ public class CartLinearLayout extends LinearLayout {
                     String num = ((EditText) childView.findViewById(R.id.et_productNum)).getText().toString();
                     int productNum = Integer.parseInt(num);
                     productNum++;
-                    changeNum(mCartDataGroup.data.get(position).spec_id, String.valueOf(productNum), position);
+                    changeNum(mCartDataGroup.data.get(position).id, String.valueOf(productNum), position);
                 }
             });
 
@@ -189,7 +189,7 @@ public class CartLinearLayout extends LinearLayout {
                 @Override
                 public void onClick(View view) {
                     PromptUtils.showToast("删除第" + position + "项");
-                    deleteProduct(mCartDataGroup.data.get(position).spec_id, position);
+                    deleteProduct(mCartDataGroup.data.get(position).id, position);
                 }
             });
 
@@ -276,6 +276,10 @@ public class CartLinearLayout extends LinearLayout {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
+                if (response.optString("ret").equals("-1")) {
+                    PromptUtils.showToast(response.optString("msg"));
+                    return;
+                }
                 mCartDataGroup.data.get(position).num = num;
                 mShoppingBagAdapter.notifyDataSetChanged();
             }
@@ -296,6 +300,10 @@ public class CartLinearLayout extends LinearLayout {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
+                if (response.optString("ret").equals("-1")) {
+                    PromptUtils.showToast(response.optString("msg"));
+                    return;
+                }
                 //删除成功
                 mCartDataGroup.data.remove(position);
                 mShoppingBagAdapter.productIsEmpty(mFlag);

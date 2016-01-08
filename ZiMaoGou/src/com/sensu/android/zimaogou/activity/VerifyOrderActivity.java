@@ -229,6 +229,12 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
+
+                if (response.optString("ret").equals("-1")) {
+                    PromptUtils.showToast(response.optString("msg"));
+                    return;
+                }
+
                 try {
                     String payInfo = response.getJSONObject("data").getJSONObject("pay_info").toString();
                     Intent intent = new Intent(VerifyOrderActivity.this, PayResultActivity.class);
@@ -308,6 +314,10 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 ExpressRuleResponse expressRuleResponse = JSON.parseObject(response.toString(), ExpressRuleResponse.class);
+                if (expressRuleResponse.getRet().equals("-1")) {
+                    PromptUtils.showToast(expressRuleResponse.getMsg());
+                    return;
+                }
                 mExpressRuleResponse = expressRuleResponse;
             }
 
@@ -331,6 +341,10 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
                 super.onSuccess(statusCode, headers, response);
                 boolean isHaveDefault = false;
                 ReceiverAddressResponse receiverAddressResponse = JSON.parseObject(response.toString(), ReceiverAddressResponse.class);
+                if (receiverAddressResponse.getRet().equals("-1")) {
+                    PromptUtils.showToast(receiverAddressResponse.getMsg());
+                    return;
+                }
                 if (receiverAddressResponse.data.size() != 0) {
                     for (ReceiverAddressMode receiverAddressMode : receiverAddressResponse.data) {
                         if (receiverAddressMode.getIs_default().equals("1")) {

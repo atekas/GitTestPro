@@ -217,6 +217,10 @@ public class SpellOrderActivity extends BaseActivity implements View.OnClickList
                     return;
                 }
 
+                if (mCommandInputDialog != null) {
+                    mCommandInputDialog.dismiss();
+                }
+                PromptUtils.showToast("组团成功");
                 String tbId = response.optJSONObject("data").optString("tb_id");
 
                 Intent intent = new Intent(SpellOrderActivity.this, SpellOrderDetailsActivity.class);

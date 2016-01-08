@@ -32,6 +32,7 @@ public class CartDataResponse extends BaseReqResponse {
     }
 
     public static class CartDataChild {
+        public String id;
         public String spec;
         public String spec_id;
         public String title;
