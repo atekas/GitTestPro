@@ -136,6 +136,7 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
 //            mLikeNumTextView.setText(travelMode.getLike_num());
 //        }
         mLikeNumTextView.setText(travelMode.getLike_num());
+        mLikeUsersLinearLayout.removeAllViews();
         for (int i = 0; i < likeUsers.size(); i++) {
             View v = LayoutInflater.from(this).inflate(R.layout.roundimage_layout, null);
             RoundImageView roundImageView = (RoundImageView) v.findViewById(R.id.head_pic);
@@ -282,7 +283,9 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 LogUtils.d("提交点赞返回：", response.toString());
+                isLike = true;
                 mLikeTextView.setSelected(true);
+                travelMode.setLike_num((Integer.parseInt(travelMode.getLike_num())+1)+"");
                 getDataForLike();
             }
         });

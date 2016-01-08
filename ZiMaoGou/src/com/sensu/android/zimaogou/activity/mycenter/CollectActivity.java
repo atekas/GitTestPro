@@ -1,5 +1,6 @@
 package com.sensu.android.zimaogou.activity.mycenter;
 
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Bundle;
@@ -17,10 +18,13 @@ import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.IConstants;
+import com.sensu.android.zimaogou.Mode.TravelMode;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.ProductListResponse;
 import com.sensu.android.zimaogou.ReqResponse.TravelResponse;
 import com.sensu.android.zimaogou.activity.BaseActivity;
+import com.sensu.android.zimaogou.activity.ProductDetailsActivity;
+import com.sensu.android.zimaogou.activity.tour.TourBuyDetailsActivity;
 import com.sensu.android.zimaogou.adapter.ProductsDetailsAdapter;
 import com.sensu.android.zimaogou.adapter.TourBuyAdapter;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
@@ -57,7 +61,8 @@ public class CollectActivity extends BaseActivity {
     UserInfo userInfo ;
     LinearLayout ll_NoDataShop;
     LinearLayout ll_noDataTour;
-
+    ArrayList<TravelMode> travelModes = new ArrayList<TravelMode>();
+    ArrayList<ProductListResponse.ProductListData> productListDatas = new ArrayList<ProductListResponse.ProductListData>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,10 +87,15 @@ public class CollectActivity extends BaseActivity {
 
         mProductTitle.setOnClickListener(new MyOnClickListener(0));
         mTourTitle.setOnClickListener(new MyOnClickListener(1));
-        InitViewPager();
+
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        InitViewPager();
+    }
 
     /**
      * 初始化cursor
@@ -114,12 +124,22 @@ public class CollectActivity extends BaseActivity {
      *
      */
     private void InitViewPager(){
+        mListView.clear();
         View productView = LayoutInflater.from(this).inflate(R.layout.collect_product_view,null);
         ll_NoDataShop = (LinearLayout) productView.findViewById(R.id.ll_noData);
         GridView mGridView = (GridView) productView.findViewById(R.id.product_list);
         ProductsDetailsAdapter mProductsDetailsAdapter = new ProductsDetailsAdapter(this);
         mGridView.setColumnWidth(DisplayUtils.getDisplayWidth() / 2);
         mGridView.setAdapter(mProductsDetailsAdapter);
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(CollectActivity.this, ProductDetailsActivity.class);
+                intent.putExtra(ProductDetailsActivity.PRODUCT_ID, productListDatas.get(i).id);
+                intent.putExtra(ProductDetailsActivity.FROM_SOURCE, "0");
+                startActivity(intent);
+            }
+        });
         mListView.add(productView);
         View tourView = LayoutInflater.from(this).inflate(R.layout.collect_tour_buy_view,null);
         ll_noDataTour = (LinearLayout) tourView.findViewById(R.id.ll_noData);
@@ -128,6 +148,14 @@ public class CollectActivity extends BaseActivity {
         TourBuyAdapter mTourBuyAdapter = new TourBuyAdapter(this);
         mTourBuyListView.setAdapter(mTourBuyAdapter);
         mTourBuyListView.setOnRefreshListener(mOnRefreshListener);
+        mTourBuyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i > 0){
+                    startActivity(new Intent(CollectActivity.this, TourBuyDetailsActivity.class).putExtra("travel", travelModes.get(i - 1)));
+                }
+            }
+        });
         mListView.add(tourView);
         mCollectViewPage.setAdapter(new MyPagerAdapter(mListView));
         mCollectViewPage.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -300,8 +328,9 @@ public class CollectActivity extends BaseActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                LogUtils.d("获取我的收藏（商品）:",response.toString());
+                LogUtils.d("获取我的收藏（商品）:", response.toString());
                 productListResponse = JSON.parseObject(response.toString(),ProductListResponse.class);
+                productListDatas = (ArrayList<ProductListResponse.ProductListData>) productListResponse.data;
                 productsDetailsAdapter.setProductList(productListResponse);
                 if(productListResponse.data.size() == 0){
                     ll_NoDataShop.setVisibility(View.VISIBLE);
@@ -321,9 +350,10 @@ public class CollectActivity extends BaseActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                LogUtils.d("获取我的收藏（游购）:",response.toString());
+                LogUtils.d("获取我的收藏（游购）:", response.toString());
                 travelResponse = JSON.parseObject(response.toString(),TravelResponse.class);
-                tourBuyAdapter.flush(travelResponse.data);
+                travelModes = travelResponse.data;
+                tourBuyAdapter.flush(travelModes);
                 if(travelResponse.data.size() == 0){
                     ll_noDataTour.setVisibility(View.VISIBLE);
                     View ExceptionView = View.inflate(CollectActivity.this, R.layout.exception_layout,null);

@@ -85,6 +85,18 @@ public class BaseActivity extends Activity {
         infoOperatingIV.clearAnimation();
         loadingDialog.dismiss();
     }
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            if(isLoading || loadingDialog != null){
+                loadingDialog.dismiss();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();

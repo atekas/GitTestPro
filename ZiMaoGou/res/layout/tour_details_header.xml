@@ -152,7 +152,7 @@
             android:scrollbars="none">
 
         <LinearLayout
-                android:id="@+id/ll_likeUser"
+
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:gravity="center_vertical"
@@ -176,7 +176,13 @@
                         android:textColor="@color/red"
                         android:text="0"/>
             </LinearLayout>
+            <LinearLayout
+                    android:id="@+id/ll_likeUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
+            </LinearLayout>
         </LinearLayout>
     </HorizontalScrollView>
 
