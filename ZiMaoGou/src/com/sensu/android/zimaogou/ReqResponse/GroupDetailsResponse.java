@@ -31,5 +31,6 @@ public class GroupDetailsResponse extends BaseReqResponse {
         public String rate;
         public String spec_id;
         public String spec;
+        public String goods_image;
     }
 }

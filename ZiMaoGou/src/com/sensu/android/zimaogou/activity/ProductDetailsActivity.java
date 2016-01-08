@@ -417,6 +417,10 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
+                if (response.optString("ret").equals("-1")) {
+                    PromptUtils.showToast(response.optString("msg"));
+                    return;
+                }
                 if (mChooseDialog != null) {
                     mChooseDialog.dismiss();
                 }

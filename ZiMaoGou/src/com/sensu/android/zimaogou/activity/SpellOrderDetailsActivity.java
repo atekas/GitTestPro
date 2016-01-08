@@ -211,7 +211,7 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
                     goodsInfo.setSource("2");
                     goodsInfo.setName(mGroupDetailsResponse.data.name);
                     goodsInfo.setSpec(mGroupDetailsResponse.data.spec);
-                    goodsInfo.setImage(mGroupDetailsResponse.data.media);
+                    goodsInfo.setImage(mGroupDetailsResponse.data.goods_image);
                     goodsInfo.setRate(mGroupDetailsResponse.data.rate);
                     goodsInfoList.add(goodsInfo);
 

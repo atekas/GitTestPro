@@ -85,9 +85,8 @@
                         android:layout_toRightOf="@+id/name"
                         android:layout_marginLeft="@dimen/dip_8"
                         android:textSize="15sp"
-                        android:visibility="invisible"
                         android:textColor="@color/black_222222"
-                        android:text="1388888888"/>
+                        android:text=""/>
 
                 <TextView
                         android:id="@+id/address"
@@ -97,9 +96,8 @@
                         android:layout_alignLeft="@+id/name"
                         android:layout_marginTop="7dp"
                         android:textSize="@dimen/text_size_14"
-                        android:visibility="invisible"
                         android:textColor="#666666"
-                        android:text="扬州市桂花林路9幢13楼1304室"/>
+                        android:text=""/>
 
 
                 <ImageView
