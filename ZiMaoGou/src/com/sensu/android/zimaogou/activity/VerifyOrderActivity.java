@@ -18,11 +18,8 @@ import com.sensu.android.zimaogou.ReqResponse.ExpressRuleResponse;
 import com.sensu.android.zimaogou.ReqResponse.ReceiverAddressResponse;
 import com.sensu.android.zimaogou.activity.mycenter.CouponActivity;
 import com.sensu.android.zimaogou.activity.mycenter.ReceiverAddressActivity;
-import com.sensu.android.zimaogou.adapter.ReceiverListAdapter;
 import com.sensu.android.zimaogou.adapter.VerifyOrderAdapter;
-import com.sensu.android.zimaogou.external.greendao.helper.GDAddressDefaultHelper;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
-import com.sensu.android.zimaogou.external.greendao.model.AddressDefault;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.*;
 import org.apache.http.Header;
@@ -51,7 +48,6 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
 
     private SelectProductModel mSelectProductModel;
     private ReceiverAddressMode mAddressDefault;
-    private ExpressRuleResponse mExpressRuleResponse;
 
     private double mAmountMoney;
     private double mRateMoney;
@@ -98,9 +94,6 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
         getReceiverAddress();
 
         if (mSelectProductModel != null) {
-
-            getExpressMoney();
-
             mVerifyOrderAdapter.setSelectProductModel(mSelectProductModel);
             ((TextView) findViewById(R.id.amount_money)).setText("¥ " + StringUtils.getDoubleWithTwo(mSelectProductModel.getTotalMoney()));
             mRateMoney = getAmountRate();
@@ -122,13 +115,17 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
-    private void getExpressMoney() {
+    private void getExpressMoney(ExpressRuleResponse mExpressRuleResponse) {
         if (mExpressRuleResponse != null) {
             for (ExpressRuleResponse.ExpressRuleData expressRuleData : mExpressRuleResponse.data) {
                 if (expressRuleData.deliver_address.equals(mSelectProductModel.getDeliverAddress())) {
                     if (mSelectProductModel.getTotalMoney() > Double.parseDouble(expressRuleData.start_amount)
                             && mSelectProductModel.getTotalMoney() < Double.parseDouble(expressRuleData.end_amount)) {
                         mExpressMoney = Double.parseDouble(expressRuleData.express_amount);
+                        ((TextView) findViewById(R.id.express_money)).setText("¥ " + StringUtils.getDoubleWithTwo(mExpressMoney));
+                        mAmountMoney += mExpressMoney;
+                        mAmountMoneyView.setText("¥ " + StringUtils.getDoubleWithTwo(mAmountMoney));
+                        break;
                     }
                 }
             }
@@ -197,15 +194,15 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
                 ((TextView) findViewById(R.id.coupon_name)).setText(couponName);
                 ((TextView) findViewById(R.id.coupon_money)).setText("-¥ " + mCouponMoney);
 
-                mRateMoney = getAmountRateWithCoupon(getAmountRate(), Double.parseDouble(mCouponMoney));
+                mRateMoney = getAmountRateWithCoupon(mSelectProductModel.getTotalMoney(), Double.parseDouble(mCouponMoney));
                 ((TextView) findViewById(R.id.rate)).setText("¥ " + StringUtils.getDoubleWithTwo(mRateMoney));
                 if (mRateMoney > 50.00) {
                     findViewById(R.id.rate_toast).setVisibility(View.VISIBLE);
-                    mAmountMoney = mSelectProductModel.getTotalMoney() + mRateMoney - Double.parseDouble(mCouponMoney);
+                    mAmountMoney = mSelectProductModel.getTotalMoney() + mRateMoney - Double.parseDouble(mCouponMoney) + mExpressMoney;
                 } else {
                     findViewById(R.id.rate_toast).setVisibility(View.GONE);
                     com.sensu.android.zimaogou.utils.TextUtils.addLineCenter(((TextView) findViewById(R.id.rate)));
-                    mAmountMoney = mSelectProductModel.getTotalMoney() - Double.parseDouble(mCouponMoney);
+                    mAmountMoney = mSelectProductModel.getTotalMoney() - Double.parseDouble(mCouponMoney) + mExpressMoney;
                 }
                 mAmountMoneyView.setText("¥ " + StringUtils.getDoubleWithTwo(mAmountMoney));
                 break;
@@ -318,7 +315,7 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
                     PromptUtils.showToast(expressRuleResponse.getMsg());
                     return;
                 }
-                mExpressRuleResponse = expressRuleResponse;
+                getExpressMoney(expressRuleResponse);
             }
 
             @Override
