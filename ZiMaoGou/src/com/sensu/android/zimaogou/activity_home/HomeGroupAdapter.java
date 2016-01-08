@@ -74,7 +74,7 @@ public class HomeGroupAdapter extends BaseAdapter {
         gsHolder.mTitle.setText(pros.get(position).content);
         gsHolder.mPersons.setText(pros.get(position).max_num+"人成团");
         gsHolder.mSalePrice.setText(StringUtils.deleteZero(pros.get(position).price));
-        gsHolder.mOrigPrice.setText("￥"+ StringUtils.deleteZero(pros.get(position).price_market));
+        gsHolder.mOrigPrice.setText("￥"+ StringUtils.deleteZero(pros.get(position).price_goods));
         gsHolder.mTitle.setText(pros.get(position).name);
 
 
