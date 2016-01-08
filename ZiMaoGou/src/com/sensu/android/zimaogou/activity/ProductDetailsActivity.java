@@ -328,6 +328,13 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         mChooseDialog = new Dialog(this, R.style.dialog);
         mChooseDialog.setCancelable(true);
         mChooseDialog.setContentView(R.layout.product_details_choose_dialog);
+        LinearLayout ll_top = (LinearLayout) mChooseDialog.findViewById(R.id.ll_top);
+        ll_top.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mChooseDialog.dismiss();
+            }
+        });
         WindowManager m = getWindowManager();
         Window dialogWindow = mChooseDialog.getWindow();
 

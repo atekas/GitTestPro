@@ -268,7 +268,20 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
         mCommandGroupDialog = new Dialog(this, R.style.dialog);
         mCommandGroupDialog.setCancelable(true);
         mCommandGroupDialog.setContentView(R.layout.command_group_dialog);
-
+        LinearLayout ll_top = (LinearLayout) mCommandGroupDialog.findViewById(R.id.ll_top);
+        LinearLayout ll_bottom = (LinearLayout) mCommandGroupDialog.findViewById(R.id.ll_bottom);
+        ll_top.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCommandGroupDialog.dismiss();
+            }
+        });
+        ll_bottom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCommandGroupDialog.dismiss();
+            }
+        });
         WindowManager m = getWindowManager();
 
         Window dialogWindow = mCommandGroupDialog.getWindow();

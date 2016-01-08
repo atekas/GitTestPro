@@ -5,10 +5,20 @@
               android:layout_height="fill_parent"
 
         >
-    <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="vertical">
+    <RelativeLayout android:layout_width="fill_parent"
+                  android:layout_height="fill_parent" android:orientation="vertical">
         <LinearLayout
+                android:id="@+id/ll_top"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+        </LinearLayout>
+        <LinearLayout
+                android:id="@+id/ll_content"
                 android:layout_width="fill_parent"
                 android:layout_height="350dp"
+                android:layout_below="@+id/ll_top"
                 android:layout_marginTop="60dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
@@ -107,6 +117,13 @@
 
             </LinearLayout>
         </LinearLayout>
+        <LinearLayout
+                android:id="@+id/ll_bottom"
+                android:orientation="vertical"
+                android:layout_below="@+id/ll_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>
