@@ -15,6 +15,33 @@ public class BannerMode implements Serializable {
     private String state;
     private String created_at;
     private String updated_at;
+    private String themename;
+    private String themeimage;
+    private String themecontent;
+
+    public String getThemename() {
+        return themename;
+    }
+
+    public void setThemename(String themename) {
+        this.themename = themename;
+    }
+
+    public String getThemeimage() {
+        return themeimage;
+    }
+
+    public void setThemeimage(String themeimage) {
+        this.themeimage = themeimage;
+    }
+
+    public String getThemecontent() {
+        return themecontent;
+    }
+
+    public void setThemecontent(String themecontent) {
+        this.themecontent = themecontent;
+    }
 
     public String getId() {
         return id;

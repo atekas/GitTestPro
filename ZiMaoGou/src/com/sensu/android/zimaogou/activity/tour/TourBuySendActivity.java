@@ -174,6 +174,7 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
                 }
                 mServiceImages.clear();
                 mSendSuccess = 0;
+                showLoading();
                 if (mIsVideo) {
                     uploadImage(coverUrl);
                 }else {
@@ -499,6 +500,7 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 LogUtils.d("上传视频返回：", response.toString());
+                cancelLoading();
                 try {
                     mServiceVideoPath = response.getJSONObject("data").getString("url");
                 } catch (JSONException e) {
@@ -511,6 +513,7 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
                 LogUtils.d("上传视频失败",responseString.toString());
+                cancelLoading();
             }
         });
     }
@@ -524,6 +527,7 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 LogUtils.d("发布游购返回：", response.toString());
+                cancelLoading();
                 try {
                     if (response.getString("ret").equals("0")) {
                         PromptUtils.showToast(response.getString("msg"));
@@ -538,6 +542,7 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
                 PromptUtils.showToast("发布游购失败");
+                cancelLoading();
                 LogUtils.d("发布游购返回：", "ErrorCode:" + statusCode + "Html:" + responseString);
             }
         });

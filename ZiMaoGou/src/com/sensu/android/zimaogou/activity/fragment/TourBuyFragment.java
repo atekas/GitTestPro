@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.*;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -62,6 +63,7 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     protected void initView() {
+        showLoading();
         mParentActivity.findViewById(R.id.tour_buy_send).setOnClickListener(this);
         mTourBuyListView = (RefreshListView) mParentActivity.findViewById(R.id.tour_list);
         mTourBuyAdapter = new TourBuyAdapter(mParentActivity);
@@ -106,6 +108,7 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 Log.d("游购列表返回：",response.toString());
+                cancelLoading();
                 if(travelModes.data != null && travelModes.data.size()>0) {
                     travelModes.data.clear();
                 }
@@ -184,6 +187,13 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
         mTourBuyChooseDialog.setCancelable(true);
         mTourBuyChooseDialog.setContentView(R.layout.tour_buy_choose_dialog);
         TextView tv_cancel = (TextView) mTourBuyChooseDialog.findViewById(R.id.tv_cancel);
+        LinearLayout ll_top = (LinearLayout) mTourBuyChooseDialog.findViewById(R.id.ll_top);
+        ll_top.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mTourBuyChooseDialog.dismiss();
+            }
+        });
         tv_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

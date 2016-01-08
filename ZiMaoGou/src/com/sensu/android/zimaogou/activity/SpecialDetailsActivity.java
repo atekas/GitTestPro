@@ -71,13 +71,13 @@ public class SpecialDetailsActivity extends BaseActivity implements View.OnClick
 
     private void layoutTitle() {
         if (mThemeListData != null) {
-            ImageUtils.displayImage(mThemeListData.media.cover, (ImageView) mHeadView.findViewById(R.id.special_introduce_pic));
+            ImageUtils.displayImage(mThemeListData.media.cover, (ImageView) mHeadView.findViewById(R.id.special_introduce_pic),ImageUtils.mGroupListOptions);
             ((TextView) findViewById(R.id.special_introduce_title)).setText(mThemeListData.name);
             ((TextView) findViewById(R.id.special_introduce_content)).setText(mThemeListData.content);
 
             getThemeDetail(mThemeListData.id);
         }else{
-            ImageUtils.displayImage(getIntent().getExtras().getString("image"), (ImageView) mHeadView.findViewById(R.id.special_introduce_pic));
+            ImageUtils.displayImage(getIntent().getExtras().getString("image"), (ImageView) mHeadView.findViewById(R.id.special_introduce_pic),ImageUtils.mGroupListOptions);
             ((TextView) findViewById(R.id.special_introduce_title)).setText(getIntent().getExtras().getString("name"));
             ((TextView) findViewById(R.id.special_introduce_content)).setText(getIntent().getExtras().getString("content"));
 

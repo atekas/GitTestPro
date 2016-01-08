@@ -122,6 +122,7 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
         initHeader();
         getDataForLike();
         getDataForComment();
+        showLoading();
     }
 
     /**
@@ -189,6 +190,7 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
                 super.onSuccess(statusCode, headers, response);
                 LogUtils.d("游购评论返回：", response.toString());
                 commentModes.clear();
+                cancelLoading();
                 JSONArray data = response.optJSONArray("data");
                 if (data == null || data.length() == 0) {
 
@@ -206,6 +208,7 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
                         e.printStackTrace();
                     }
                 }
+
                 mCommentNum.setText(commentModes.size() + "");
             }
         });

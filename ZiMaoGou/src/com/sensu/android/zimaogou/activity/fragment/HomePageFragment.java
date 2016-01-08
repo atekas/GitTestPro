@@ -100,9 +100,9 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
                 if (bannerModes.get(position).getType().equals("1")) {
                     Bundle bundle = new Bundle();
                     bundle.putString("id",bannerModes.get(position).getValue());
-                    bundle.putString("image",bannerModes.get(position).getImage());
-                    bundle.putString("name",bannerModes.get(position).getName());
-                    bundle.putString("content","测试banner");
+                    bundle.putString("image",bannerModes.get(position).getThemeimage());
+                    bundle.putString("name",bannerModes.get(position).getThemename());
+                    bundle.putString("content",bannerModes.get(position).getThemecontent());
 
                     Intent intent = new Intent(mParentActivity, SpecialDetailsActivity.class);
                     intent.putExtras(bundle);

@@ -4,19 +4,23 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
+import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
 import android.media.MediaRecorder.AudioEncoder;
 import android.media.MediaRecorder.AudioSource;
 import android.media.MediaRecorder.OnErrorListener;
+import android.opengl.GLSurfaceView;
 import android.os.Environment;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.utils.DisplayUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,6 +39,7 @@ public class MovieRecorderView extends LinearLayout implements OnErrorListener {
     private SurfaceView mSurfaceView;
     private SurfaceHolder mSurfaceHolder;
     private ProgressBar mProgressBar;
+    private GLSurfaceView glSurfaceView;
 
     private MediaRecorder mMediaRecorder;
     private Camera mCamera;
@@ -68,8 +73,14 @@ public class MovieRecorderView extends LinearLayout implements OnErrorListener {
 
         LayoutInflater.from(context).inflate(R.layout.movie_recorder_view, this);
         mSurfaceView = (SurfaceView) findViewById(R.id.surfaceview);
+        ViewGroup.LayoutParams params = mSurfaceView.getLayoutParams();
+        int width = DisplayUtils.getDisplayWidth();
+        params.width = width;
+        params.height = width;
+        mSurfaceView.setLayoutParams(params);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         mProgressBar.setMax(mRecordMaxTime);// 设置进度条最大量
+
 
         mSurfaceHolder = mSurfaceView.getHolder();
         mSurfaceHolder.addCallback(new CustomCallBack());
@@ -182,10 +193,13 @@ public class MovieRecorderView extends LinearLayout implements OnErrorListener {
         mMediaRecorder = new MediaRecorder();
         mMediaRecorder.reset();
         if (mCamera != null) {
+//            mCamera.setDisplayOrientation(90);//摄像图旋转90度
+//            mCamera.unlock();
             mMediaRecorder.setCamera(mCamera);
-        }
 
-        mMediaRecorder.setAudioSource(AudioSource.CAMCORDER);// 音频源
+        }
+        CamcorderProfile profile = CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH);
+        mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);// 音频源
         // 设置录制视频源为Camera(相机)
         mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
 
@@ -197,11 +211,11 @@ public class MovieRecorderView extends LinearLayout implements OnErrorListener {
         mMediaRecorder.setVideoEncodingBitRate(1 * 1024 * 512);// 设置帧频率，然后就清晰了
         mMediaRecorder.setOrientationHint(90);
         // 设置录制的视频编码h263 h264
-        mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
+        mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.DEFAULT);
         // 设置视频录制的分辨率。必须放在设置编码和格式的后面，否则报错
         mMediaRecorder.setVideoSize(320, 240);
         // 设置录制的视频帧率。必须放在设置编码和格式的后面，否则报错
-        mMediaRecorder.setVideoFrameRate(20);
+        mMediaRecorder.setVideoFrameRate(30);
         mMediaRecorder.setPreviewDisplay(mSurfaceHolder.getSurface());
         // 设置视频文件输出的路径
         mMediaRecorder.setOutputFile(mVecordFile.getAbsolutePath());

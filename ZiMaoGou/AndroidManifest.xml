@@ -210,7 +210,7 @@
 
         <activity android:name=".activity.SpellOrderActivity" android:screenOrientation="portrait" />
 
-        <activity android:name=".activity.video.CameraActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.video.CameraActivity" android:screenOrientation="portrait"  />
 
         <activity android:name=".activity.SpellOrderDetailsActivity" android:screenOrientation="portrait" />
 

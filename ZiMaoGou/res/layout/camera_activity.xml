@@ -15,17 +15,14 @@
             android:textColor="#ffcc00"
             android:text="取消"/>
 
-    <com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+
 
         <com.sensu.android.zimaogou.activity.video.MovieRecorderView
                 android:id="@+id/movieRecorderView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="3dp"/>
 
-    </com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout>
 
     <View
             android:layout_width="1dp"
