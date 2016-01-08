@@ -104,6 +104,15 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
             //todo 正常
         } else if (mGroupDetailsResponse.data.state.equals("2")) {
             //todo 已结束
+            findViewById(R.id.show_time_count).setVisibility(View.GONE);
+            mHaveCodeView.setText("去别的团逛逛");
+            mJoinGroupView.setVisibility(View.GONE);
+
+            mNoCodeView.setText("已结束");
+            mWantGroupView.setVisibility(View.GONE);
+
+            mIsGroupFinish = true;
+            mButtonStatue = "3";
         } else if (mGroupDetailsResponse.data.state.equals("3")) {
             //todo 已卖光
         }
@@ -174,7 +183,9 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
                     startActivity(new Intent(this, LoginActivity.class));
                     return;
                 }
-                createGroup();
+                if (!mIsGroupFinish) {
+                    createGroup();
+                }
                 break;
             case R.id.command_input:
                 if (mUserInfo == null) {
@@ -210,6 +221,10 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
                     startActivity(intent1);
                 } else if (mButtonStatue.equals("2")) {
                     commandInput();
+                } else if (mButtonStatue.equals("3")) {
+                    Intent intent1 = new Intent(this, SpellOrderActivity.class);
+                    intent1.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent1);
                 }
                 break;
             case R.id.submit:
@@ -423,6 +438,7 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
             mNoCodeView.setText("已结束");
             mWantGroupView.setVisibility(View.GONE);
 
+            mButtonStatue = "3";
             mIsGroupFinish = true;
         }
     }

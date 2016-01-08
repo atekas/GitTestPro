@@ -63,6 +63,7 @@ public class SpellOrderAdapter extends SimpleBaseAdapter {
             viewHolder.mGroupPersonSize = (TextView) view.findViewById(R.id.group_person_size);
             viewHolder.mGroupLinear = (LinearLayout) view.findViewById(R.id.group);
             viewHolder.mStateImage = (ImageView) view.findViewById(R.id.state);
+            viewHolder.mGoGroup = (TextView) view.findViewById(R.id.go_group);
             view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) view.getTag();
@@ -91,6 +92,12 @@ public class SpellOrderAdapter extends SimpleBaseAdapter {
             viewHolder.mGroupPersonSize.setSelected(true);
         }
 
+        if (groupBuyListData.is_join.equals("1")) {
+            viewHolder.mGoGroup.setText("去购买");
+        } else if (groupBuyListData.is_join.equals("0")) {
+            viewHolder.mGoGroup.setText("去组团");
+        }
+
         return view;
     }
 
@@ -103,5 +110,6 @@ public class SpellOrderAdapter extends SimpleBaseAdapter {
         TextView mGroupPersonSize;
         LinearLayout mGroupLinear;
         ImageView mStateImage;
+        TextView mGoGroup;
     }
 }
