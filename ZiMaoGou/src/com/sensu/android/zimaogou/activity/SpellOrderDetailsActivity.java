@@ -14,6 +14,7 @@ import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.IConstants;
+import com.sensu.android.zimaogou.Mode.SelectProductModel;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.GroupDetailsResponse;
 import com.sensu.android.zimaogou.ReqResponse.GroupMemberResponse;
@@ -26,6 +27,7 @@ import com.sensu.android.zimaogou.widget.RoundImageView;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -163,8 +165,8 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
                 break;
             case R.id.buy_directly:
                 Intent intent = new Intent(this, ProductDetailsActivity.class);
-                intent.putExtra(ProductDetailsActivity.PRODUCT_ID, mGroupDetailsResponse.data.id);
-                intent.putExtra(ProductDetailsActivity.FROM_SOURCE, "2");
+                intent.putExtra(ProductDetailsActivity.PRODUCT_ID, mGroupDetailsResponse.data.goods_id);
+                intent.putExtra(ProductDetailsActivity.FROM_SOURCE, "0");
                 startActivity(intent);
                 break;
             case R.id.create_group:
@@ -185,6 +187,27 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
                 } else if (mButtonStatue.equals("1")) {
                     //todo 去付款
                     PromptUtils.showToast("去付款");
+                    SelectProductModel selectProductModel = new SelectProductModel();
+                    selectProductModel.setDeliverAddress(mGroupDetailsResponse.data.deliver_address);
+                    selectProductModel.setTotalMoney(Double.parseDouble(mGroupDetailsResponse.data.price));
+
+                    List<SelectProductModel.GoodsInfo> goodsInfoList = new ArrayList<SelectProductModel.GoodsInfo>();
+                    SelectProductModel.GoodsInfo goodsInfo = new SelectProductModel.GoodsInfo();
+                    goodsInfo.setGoodsId(mGroupDetailsResponse.data.goods_id);
+                    goodsInfo.setSpecId(mGroupDetailsResponse.data.spec_id);
+                    goodsInfo.setNum("1");
+                    goodsInfo.setPrice(mGroupDetailsResponse.data.price);
+                    goodsInfo.setSource("2");
+                    goodsInfo.setName(mGroupDetailsResponse.data.name);
+                    goodsInfo.setSpec(mGroupDetailsResponse.data.spec);
+                    goodsInfo.setImage(mGroupDetailsResponse.data.media);
+                    goodsInfo.setRate(mGroupDetailsResponse.data.rate);
+                    goodsInfoList.add(goodsInfo);
+
+                    selectProductModel.setGoodsInfo(goodsInfoList);
+                    Intent intent1 = new Intent(this, VerifyOrderActivity.class);
+                    intent1.putExtra(VerifyOrderActivity.PRODUCT_FOR_PAY, selectProductModel);
+                    startActivity(intent1);
                 } else if (mButtonStatue.equals("2")) {
                     commandInput();
                 }

@@ -38,9 +38,9 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
 
     public static final String PRODUCT_FOR_PAY = "product_for_pay";
 
-    //默认0 为支付宝付款 1 为微信支付
-    public static final int ZFB_PAY = 0;
-    public static final int WE_CHAT_PAY = 1;
+    //默认1 为支付宝付款 2 为微信支付
+    public static final int ZFB_PAY = 1;
+    public static final int WE_CHAT_PAY = 2;
     //确认订单中选择地址
     public static final int CHOOSE_ADDRESS_CODE = 100;
     public static final int CHOOSE_COUPON_CODE = 101;
@@ -250,7 +250,7 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
         requestParams.put("coupon_id", mCouponId);
         requestParams.put("amount_tax", mRateMoney);
         requestParams.put("weight", "0");
-        requestParams.put("pay_type", "1");
+        requestParams.put("pay_type", mPayWay);
         requestParams.put("receiver_info", getAddressJson());
         requestParams.put("goods", getGoodsJson());
         HttpUtil.postWithSign(userInfo.getToken(), IConstants.sOrder, requestParams, new JsonHttpResponseHandler() {

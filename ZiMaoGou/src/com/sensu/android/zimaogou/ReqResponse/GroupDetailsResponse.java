@@ -27,5 +27,9 @@ public class GroupDetailsResponse extends BaseReqResponse {
         public String end_time;
         public String goods_id;
         public String state;
+        public String deliver_address;
+        public String rate;
+        public String spec_id;
+        public String spec;
     }
 }

@@ -49,9 +49,11 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
 
     public static final String PRODUCT_ID = "product_id";
     public static final String FROM_SOURCE = "from_source";
+    public static final String THEME_ID = "theme_id";
 
     private String mProductId;
     private String mSource;
+    private String mThemeId;
 
     private ScrollViewContainer mScrollViewContainer;
     private int mProductCount = 1;
