@@ -113,7 +113,6 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.head_pic:
                 //TODO 登陆或者更换头像  判断是否登陆  登陆进入用户信息页面，未登陆进入登陆页面
-                PromptUtils.showToast("登陆或者更换头像");
 //                GDUserInfoHelper.getInstance(mParentActivity).insertUserInfo(userInfo);
                 startActivity(new Intent(mParentActivity, MyInformationActivity.class));
                 break;
@@ -198,17 +197,14 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.recommend_friends:
                 //TODO 推荐给好友
-                PromptUtils.showToast("推荐给好友");
                 ShareDialog() ;
                 break;
             case R.id.online_service:
                 //TODO 在线客服
-                PromptUtils.showToast("在线客服");
                 startActivity(new Intent(mParentActivity, OnlineServiceActivity.class));
                 break;
             case R.id.service_phone:
                 //TODO 客服电话
-                PromptUtils.showToast("客服电话");
                 String tel = ((TextView) mParentActivity.findViewById(R.id.service_phone_num)).getText().toString().trim();
                 Uri uri = Uri.parse("tel:" + tel);
                 //跳入到拨号界面  ACTION_DIAL     直接拨号 ACTION_CALL
@@ -218,7 +214,6 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.setting:
                 //TODO 设置
-                PromptUtils.showToast("设置");
                 startActivity(new Intent(mParentActivity, SettingActivity.class));
                 break;
         }

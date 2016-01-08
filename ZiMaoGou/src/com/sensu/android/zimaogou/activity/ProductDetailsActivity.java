@@ -353,9 +353,11 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
     }
 
     private void getProductById(String productId, String source) {
+        showLoading();
         final RequestParams requestParams = new RequestParams();
         requestParams.put("id", productId);
         requestParams.put("source", source);
+
         HttpUtil.get(IConstants.sProduct_detail + productId, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -364,13 +366,14 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 ProductDetailsResponse productDetailsResponse = JSON.parseObject(response.toString(), ProductDetailsResponse.class);
                 mProductDetailsResponse = productDetailsResponse;
                 layoutUi();
-
+                cancelLoading();
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
                 PromptUtils.showToast("获取物品详情失败");
+                cancelLoading();
             }
         });
     }

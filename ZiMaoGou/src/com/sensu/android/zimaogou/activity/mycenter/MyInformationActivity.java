@@ -3,6 +3,7 @@ package com.sensu.android.zimaogou.activity.mycenter;
 import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -195,7 +196,14 @@ public class MyInformationActivity extends BaseActivity {
                         path = uri.getPath(); // from File Manager
                     }
                     avatar = path;
-                    mHeadImageView.setImageBitmap(BitmapUtils.getSampleBitmap(path, 800, 800).getBitmap());
+                    int degree = ImageUtils.readPictureDegree(path);
+                    Bitmap bmpOk = ImageUtils.rotateToDegrees(BitmapUtils.getSampleBitmap(path, 800, 800).getBitmap(), degree);
+                    mHeadImageView.setImageBitmap(bmpOk);
+                    try {
+                        avatar = BitmapUtils.saveImg(bmpOk,"head");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
 //                case CAMERA_REQUEST_CODE:
 //                    if (state.equals(Environment.MEDIA_MOUNTED)) {
@@ -242,6 +250,7 @@ public class MyInformationActivity extends BaseActivity {
         if(TextUtils.isEmpty(avatar)) {
             postInfo();
         }else{
+            showLoading();
             HttpUtil.postImage(userInfo.getUid(),userInfo.getToken(),avatar,new JsonHttpResponseHandler(){
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -274,7 +283,9 @@ public class MyInformationActivity extends BaseActivity {
 
                 Log.d("返回值：", responseString.toString());
                 if (responseString.optString("ret").equals("0")) {
+                    cancelLoading();
                     PromptUtils.showToast("保存成功");
+
                     userInfo.setSex(mSexTextView.getText().toString());
                     userInfo.setName(mNicknameEditText.getText().toString());
                     if(!TextUtils.isEmpty(avatar)){

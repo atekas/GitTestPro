@@ -2,6 +2,7 @@ package com.sensu.android.zimaogou.activity;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -49,8 +50,23 @@ public class BaseActivity extends Activity {
     ImageView infoOperatingIV;
     boolean isLoading = false;
     public void showLoading(){
+        isLoading = true;
         loadingDialog = new Dialog(this,R.style.dialog);
         loadingDialog.setCancelable(false);
+        loadingDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if(keyCode==KeyEvent.KEYCODE_BACK){
+                    if(isLoading){
+                        isLoading=false;
+                        loadingDialog.dismiss();
+                    }
+                }
+                return false;
+            }
+
+        });
         loadingDialog.setContentView(R.layout.show_progress_lay_more);
         infoOperatingIV = (ImageView) loadingDialog
                 .findViewById(R.id.img_progress);
@@ -74,7 +90,7 @@ public class BaseActivity extends Activity {
                         return true;
                     }
                 });
-        isLoading = true;
+
         loadingDialog.show();
     }
     public void cancelLoading(){
@@ -85,17 +101,20 @@ public class BaseActivity extends Activity {
         infoOperatingIV.clearAnimation();
         loadingDialog.dismiss();
     }
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        if (keyCode == KeyEvent.KEYCODE_BACK
-                && event.getRepeatCount() == 0) {
-            if(isLoading || loadingDialog != null){
-                loadingDialog.dismiss();
-            }
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//
+//        if (keyCode == KeyEvent.KEYCODE_BACK
+//                && event.getRepeatCount() == 0) {
+//            if(isLoading || loadingDialog != null){
+//                loadingDialog.dismiss();
+//                return true;
+//            }else{
+//                return super.onKeyDown(keyCode, event);
+//            }
+//
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 
     @Override
     protected void onResume() {
