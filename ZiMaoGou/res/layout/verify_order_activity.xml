@@ -76,7 +76,7 @@
                         android:layout_marginLeft="@dimen/dip_22"
                         android:textSize="15sp"
                         android:textColor="@color/black_222222"
-                        android:text="朱琳"/>
+                        android:text="请选择收货地址"/>
 
                 <TextView
                         android:id="@+id/phone_num"
@@ -85,6 +85,7 @@
                         android:layout_toRightOf="@+id/name"
                         android:layout_marginLeft="@dimen/dip_8"
                         android:textSize="15sp"
+                        android:visibility="invisible"
                         android:textColor="@color/black_222222"
                         android:text="1388888888"/>
 
@@ -96,6 +97,7 @@
                         android:layout_alignLeft="@+id/name"
                         android:layout_marginTop="7dp"
                         android:textSize="@dimen/text_size_14"
+                        android:visibility="invisible"
                         android:textColor="#666666"
                         android:text="扬州市桂花林路9幢13楼1304室"/>
 

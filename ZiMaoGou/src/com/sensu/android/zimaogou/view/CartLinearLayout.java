@@ -85,6 +85,7 @@ public class CartLinearLayout extends LinearLayout {
                 childView.findViewById(R.id.product_info).setVisibility(VISIBLE);
                 ((TextView) childView.findViewById(R.id.product_info)).setText("宝贝已下架");
                 childView.findViewById(R.id.img_choose).setEnabled(false);
+                childView.findViewById(R.id.tv_productName).setSelected(true);
                 childView.findViewById(R.id.tv_productPrice).setVisibility(GONE);
                 childView.findViewById(R.id.tv_productNum).setVisibility(GONE);
                 childView.findViewById(R.id.ll_editNum).setVisibility(GONE);
@@ -93,10 +94,12 @@ public class CartLinearLayout extends LinearLayout {
                     childView.findViewById(R.id.product_info).setVisibility(VISIBLE);
                     ((TextView) childView.findViewById(R.id.product_info)).setText("宝贝库存不足");
                     childView.findViewById(R.id.img_choose).setEnabled(false);
+                    childView.findViewById(R.id.tv_productName).setSelected(true);
                     childView.findViewById(R.id.tv_productPrice).setVisibility(GONE);
                     childView.findViewById(R.id.tv_productNum).setVisibility(GONE);
                     childView.findViewById(R.id.ll_editNum).setVisibility(GONE);
                 } else {
+                    childView.findViewById(R.id.tv_productName).setSelected(false);
                     childView.findViewById(R.id.product_info).setVisibility(GONE);
                     childView.findViewById(R.id.img_choose).setEnabled(true);
                     if (mIsEdit) {

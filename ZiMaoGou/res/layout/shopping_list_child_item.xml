@@ -159,7 +159,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="20dp"
                     android:textColor="@color/white"
-                    android:background="#000000"
+                    android:background="@drawable/product_disable"
                     android:text="宝贝已失效"/>
         </RelativeLayout>
     </LinearLayout>

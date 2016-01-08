@@ -15,17 +15,16 @@ import com.sensu.android.zimaogou.Mode.ReceiverAddressMode;
 import com.sensu.android.zimaogou.Mode.SelectProductModel;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.ExpressRuleResponse;
+import com.sensu.android.zimaogou.ReqResponse.ReceiverAddressResponse;
 import com.sensu.android.zimaogou.activity.mycenter.CouponActivity;
 import com.sensu.android.zimaogou.activity.mycenter.ReceiverAddressActivity;
+import com.sensu.android.zimaogou.adapter.ReceiverListAdapter;
 import com.sensu.android.zimaogou.adapter.VerifyOrderAdapter;
 import com.sensu.android.zimaogou.external.greendao.helper.GDAddressDefaultHelper;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.AddressDefault;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
-import com.sensu.android.zimaogou.utils.HttpUtil;
-import com.sensu.android.zimaogou.utils.PromptUtils;
-import com.sensu.android.zimaogou.utils.RateUtil;
-import com.sensu.android.zimaogou.utils.StringUtils;
+import com.sensu.android.zimaogou.utils.*;
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,7 +50,7 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
     private VerifyOrderAdapter mVerifyOrderAdapter;
 
     private SelectProductModel mSelectProductModel;
-    private AddressDefault mAddressDefault;
+    private ReceiverAddressMode mAddressDefault;
     private ExpressRuleResponse mExpressRuleResponse;
 
     private double mAmountMoney;
@@ -96,7 +95,7 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
         mCouponId = "0";
         mCouponMoney = "0.00";
 
-        getAddressDefault();
+        getReceiverAddress();
 
         if (mSelectProductModel != null) {
 
@@ -120,19 +119,6 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
             mAmountMoneyView.setText("¥ " + StringUtils.getDoubleWithTwo(mAmountMoney));
 
             ((TextView) findViewById(R.id.express_money)).setText("¥ " + StringUtils.getDoubleWithTwo(mExpressMoney));
-        }
-    }
-
-    private void getAddressDefault() {
-        mAddressDefault = GDAddressDefaultHelper.getInstance(this).getAddressDefault();
-        if (mAddressDefault != null) {
-            ((TextView) findViewById(R.id.name)).setText(mAddressDefault.getName());
-            ((TextView) findViewById(R.id.phone_num)).setText(mAddressDefault.getMobile());
-            ((TextView) findViewById(R.id.address)).setText(mAddressDefault.getAddress());
-        } else {
-            ((TextView) findViewById(R.id.name)).setText("请选择收货地址");
-            findViewById(R.id.phone_num).setVisibility(View.INVISIBLE);
-            findViewById(R.id.address).setVisibility(View.INVISIBLE);
         }
     }
 
@@ -197,21 +183,7 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
         }
         switch (requestCode) {
             case CHOOSE_ADDRESS_CODE:
-                ReceiverAddressMode receiverAddressMode = (ReceiverAddressMode) data.getSerializableExtra("address");
-                if (mAddressDefault == null) {
-                    mAddressDefault = new AddressDefault();
-                }
-                mAddressDefault.setId(receiverAddressMode.getId());
-                mAddressDefault.setName(receiverAddressMode.getName());
-                mAddressDefault.setAddress(receiverAddressMode.getAddress());
-                mAddressDefault.setCity(receiverAddressMode.getCity());
-                mAddressDefault.setCity_id(receiverAddressMode.getCity_id());
-                mAddressDefault.setDistrict(receiverAddressMode.getDistrict());
-                mAddressDefault.setDistrict_id(receiverAddressMode.getDistrict_id());
-                mAddressDefault.setId_card(receiverAddressMode.getId_card());
-                mAddressDefault.setMobile(receiverAddressMode.getMobile());
-                mAddressDefault.setProvince(receiverAddressMode.getProvince());
-                mAddressDefault.setProvince_id(receiverAddressMode.getProvince_id());
+                mAddressDefault = (ReceiverAddressMode) data.getSerializableExtra("address");
 
                 ((TextView) findViewById(R.id.name)).setText(mAddressDefault.getName());
                 ((TextView) findViewById(R.id.phone_num)).setText(mAddressDefault.getMobile());
@@ -342,6 +314,55 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
+    }
+
+    /**
+     * 获取收货地址
+     */
+    private void getReceiverAddress() {
+        UserInfo userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("uid", userInfo.getUid());
+        HttpUtil.getWithSign(userInfo.getToken(), IConstants.sGetReceiverAddress, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                boolean isHaveDefault = false;
+                ReceiverAddressResponse receiverAddressResponse = JSON.parseObject(response.toString(), ReceiverAddressResponse.class);
+                if (receiverAddressResponse.data.size() != 0) {
+                    for (ReceiverAddressMode receiverAddressMode : receiverAddressResponse.data) {
+                        if (receiverAddressMode.getIs_default().equals("1")) {
+                            isHaveDefault = true;
+                            mAddressDefault = receiverAddressMode;
+                            break;
+                        }
+                    }
+
+                    if (!isHaveDefault) {
+                        mAddressDefault = receiverAddressResponse.data.get(0);
+                    }
+                }
+
+                if (mAddressDefault != null) {
+                    ((TextView) findViewById(R.id.name)).setText(mAddressDefault.getName());
+                    ((TextView) findViewById(R.id.phone_num)).setText(mAddressDefault.getMobile());
+                    ((TextView) findViewById(R.id.address)).setText(mAddressDefault.getAddress());
+                } else {
+                    ((TextView) findViewById(R.id.name)).setText("请选择收货地址");
+                    findViewById(R.id.phone_num).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.address).setVisibility(View.INVISIBLE);
+                }
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                ((TextView) findViewById(R.id.name)).setText("请选择收货地址");
+                findViewById(R.id.phone_num).setVisibility(View.INVISIBLE);
+                findViewById(R.id.address).setVisibility(View.INVISIBLE);
             }
         });
     }

@@ -40,6 +40,7 @@ public class ShoppingBagFragment extends BaseFragment implements View.OnClickLis
     private LinearLayout ll_content;
     public View ExceptionView;
     public ExceptionLinearLayout exceptionLinearLayout;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.shopping_bag_fragment, container, false);
@@ -56,9 +57,7 @@ public class ShoppingBagFragment extends BaseFragment implements View.OnClickLis
         if (hidden) {
 
         } else {
-            if (mCartDataResponse == null) {
-                getCart();
-            }
+            getCart();
         }
     }
 
@@ -74,7 +73,7 @@ public class ShoppingBagFragment extends BaseFragment implements View.OnClickLis
 
         mListView = (ListView) mParentActivity.findViewById(R.id.bag_goods_list);
         ll_content = (LinearLayout) mParentActivity.findViewById(R.id.ll_content);
-        ExceptionView = View.inflate(mParentActivity, R.layout.exception_layout,null);
+        ExceptionView = View.inflate(mParentActivity, R.layout.exception_layout, null);
         exceptionLinearLayout = (ExceptionLinearLayout) ExceptionView.findViewById(R.id.ll_exception);
 
         mShoppingBagAdapter = new ShoppingBagAdapter(mParentActivity, mListView);
@@ -112,10 +111,10 @@ public class ShoppingBagFragment extends BaseFragment implements View.OnClickLis
                 CartDataResponse cartDataResponse = JSON.parseObject(response.toString(), CartDataResponse.class);
                 mCartDataResponse = cartDataResponse;
                 mShoppingBagAdapter.setCartDataGroup(cartDataResponse);
-                if(cartDataResponse.data.size() == 0){
+                if (cartDataResponse.data.size() == 0) {
                     exceptionLinearLayout.setException(IConstants.EXCEPTION_SHOP_IS_NULL);
                     ll_content.addView(ExceptionView);
-                }else{
+                } else {
                     ll_content.removeView(ExceptionView);
                 }
             }
