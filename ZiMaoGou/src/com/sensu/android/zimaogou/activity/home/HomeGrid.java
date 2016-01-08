@@ -15,6 +15,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.HomeGridResponse;
+import com.sensu.android.zimaogou.activity.ProductDetailsActivity;
 import com.sensu.android.zimaogou.activity.ProductListActivity;
 import com.sensu.android.zimaogou.adapter.SimpleBaseAdapter;
 import com.sensu.android.zimaogou.utils.HttpUtil;
@@ -73,6 +74,7 @@ public class HomeGrid extends LinearLayout {
                     Intent intent = new Intent(getContext(), ProductListActivity.class);
                     intent.putExtra(ProductListActivity.PRODUCT_LIST_TAG, homeGridDataLeft.id);
                     intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, homeGridDataLeft.name);
+                    intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
                     getContext().startActivity(intent);
                 }
             });
@@ -89,6 +91,7 @@ public class HomeGrid extends LinearLayout {
                     Intent intent = new Intent(getContext(), ProductListActivity.class);
                     intent.putExtra(ProductListActivity.PRODUCT_LIST_TAG, homeGridDataCenter.id);
                     intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, homeGridDataCenter.name);
+                    intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
                     getContext().startActivity(intent);
                 }
             });
@@ -105,6 +108,7 @@ public class HomeGrid extends LinearLayout {
                     Intent intent = new Intent(getContext(), ProductListActivity.class);
                     intent.putExtra(ProductListActivity.PRODUCT_LIST_TAG, homeGridDataRight.id);
                     intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, homeGridDataRight.name);
+                    intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
                     getContext().startActivity(intent);
                 }
             });

@@ -87,7 +87,7 @@ public class CartLinearLayout extends LinearLayout {
                 childView.findViewById(R.id.img_choose).setEnabled(false);
                 childView.findViewById(R.id.tv_productPrice).setVisibility(GONE);
                 childView.findViewById(R.id.tv_productNum).setVisibility(GONE);
-                childView.findViewById(R.id.ll_editNum).setVisibility(VISIBLE);
+                childView.findViewById(R.id.ll_editNum).setVisibility(GONE);
             } else {
                 if (Integer.parseInt(cartDataGroup.data.get(i).num) > Integer.parseInt(cartDataGroup.data.get(i).real_num)) {
                     childView.findViewById(R.id.product_info).setVisibility(VISIBLE);
@@ -95,7 +95,7 @@ public class CartLinearLayout extends LinearLayout {
                     childView.findViewById(R.id.img_choose).setEnabled(false);
                     childView.findViewById(R.id.tv_productPrice).setVisibility(GONE);
                     childView.findViewById(R.id.tv_productNum).setVisibility(GONE);
-                    childView.findViewById(R.id.ll_editNum).setVisibility(VISIBLE);
+                    childView.findViewById(R.id.ll_editNum).setVisibility(GONE);
                 } else {
                     childView.findViewById(R.id.product_info).setVisibility(GONE);
                     childView.findViewById(R.id.img_choose).setEnabled(true);

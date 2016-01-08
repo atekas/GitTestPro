@@ -14,7 +14,6 @@ import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.Mode.ProvinceMode;
 import com.sensu.android.zimaogou.Mode.ReceiverAddressMode;
 import com.sensu.android.zimaogou.R;
-import com.sensu.android.zimaogou.ReqResponse.AddressResponse;
 import com.sensu.android.zimaogou.ReqResponse.ReceiverAddressResponse;
 import com.sensu.android.zimaogou.activity.BaseActivity;
 import com.sensu.android.zimaogou.adapter.ReceiverListAdapter;
@@ -144,9 +143,12 @@ public class ReceiverAddressActivity extends BaseActivity implements AdapterView
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        ReceiverAddressMode receiverAddressMode = receiverAddressResponse.data.get(i);
-        Intent intent = new Intent();
-        intent.putExtra("address", receiverAddressMode);
-        setResult(RESULT_OK, intent);
+        if (mIsNoEdit) {
+            ReceiverAddressMode receiverAddressMode = receiverAddressResponse.data.get(i);
+            Intent intent = new Intent();
+            intent.putExtra("address", receiverAddressMode);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
     }
 }
