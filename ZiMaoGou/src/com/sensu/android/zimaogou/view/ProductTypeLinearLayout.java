@@ -229,7 +229,7 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
                             productTypeModel1.setEnable(false);
                         }
                     } else {
-                        productTypeModel1.setEnable(false);
+                        productTypeModel1.setEnable(true);
                     }
 
                     productTypeModel1.setType("capacity");

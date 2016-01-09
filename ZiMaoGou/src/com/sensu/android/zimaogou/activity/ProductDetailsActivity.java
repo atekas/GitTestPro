@@ -39,6 +39,7 @@ import com.sensu.android.zimaogou.widget.ScrollViewContainer;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -311,12 +312,57 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 }
                 break;
             case R.id.pay:
-                SelectProductModel selectProductModel = new SelectProductModel();
-                Intent intent1 = new Intent(this, VerifyOrderActivity.class);
-                intent1.putExtra(VerifyOrderActivity.PRODUCT_FOR_PAY, selectProductModel);
-                startActivity(intent1);
+//                Intent intent1 = new Intent(this, VerifyOrderActivity.class);
+//                intent1.putExtra(VerifyOrderActivity.PRODUCT_FOR_PAY, getSelectProduct("1"));
+//                startActivity(intent1);
                 break;
         }
+    }
+
+    private SelectProductModel getSelectProduct(String num) {
+        String source = "";
+        String price = "";
+        String spec1 = "";
+        if (mSpecId != null) {
+            for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
+                if (mSpecId.equals(spec.id)) {
+                    source = spec.source;
+                    price = spec.price;
+                    if (!spec.color.equals("0")) {
+                        spec1 = spec1 + spec.color;
+                    }
+
+                    if (!spec.capacity.equals("0")) {
+                        spec1 = spec1 + spec.capacity;
+                    }
+
+                    if (!spec.size.equals("0")) {
+                        spec1 = spec1 + spec.size;
+                    }
+                }
+            }
+        }
+        SelectProductModel selectProductModel = new SelectProductModel();
+        List<SelectProductModel.GoodsInfo> goodsInfoList = new ArrayList<SelectProductModel.GoodsInfo>();
+        SelectProductModel.GoodsInfo goodsInfo = new SelectProductModel.GoodsInfo();
+
+        goodsInfo.setGoodsId(mProductDetailsResponse.data.id);
+        goodsInfo.setSpecId(mSpecId);
+        goodsInfo.setNum(num);
+        goodsInfo.setPrice(price);
+        goodsInfo.setSource(source);
+        goodsInfo.setName(mProductDetailsResponse.data.name);
+        goodsInfo.setSpec(spec1);
+        goodsInfo.setImage(mProductDetailsResponse.data.media.image.get(0));
+        goodsInfo.setRate(mProductDetailsResponse.data.rate);
+        goodsInfoList.add(goodsInfo);
+
+        selectProductModel.setGoodsInfo(goodsInfoList);
+        selectProductModel.setDeliverAddress(mProductDetailsResponse.data.deliver_address);
+        selectProductModel.setIsUseCoupon(true);
+        selectProductModel.setTotalMoney(110.0);
+
+        return selectProductModel;
     }
 
     /**
@@ -378,13 +424,14 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         });
     }
 
+    int mSaveNum = 0;
+
     private void layoutUi() {
-        int num = 0;
         for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
-            num += Integer.parseInt(spec.num);
+            mSaveNum += Integer.parseInt(spec.num);
         }
 
-        if (num < 1) {
+        if (mSaveNum < 1) {
             findViewById(R.id.toast_num).setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.toast_num).setVisibility(View.GONE);
@@ -544,6 +591,16 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                         ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText("¥" + spec.price);
                     }
                 }
+            }
+        }
+
+        if (mSpecId == null) {
+            ((TextView) mChooseDialog.findViewById(R.id.stock)).setText("库存 " + mSaveNum);
+            if (mProductDetailsResponse.data.price_interval.min_price.equals(mProductDetailsResponse.data.price_interval.max_price)) {
+                ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText("¥" + StringUtils.deleteZero(mProductDetailsResponse.data.price_interval.min_price));
+            } else {
+                ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText("¥" + StringUtils.deleteZero(mProductDetailsResponse.data.price_interval.min_price) + "-" +
+                        StringUtils.deleteZero(mProductDetailsResponse.data.price_interval.max_price));
             }
         }
 
