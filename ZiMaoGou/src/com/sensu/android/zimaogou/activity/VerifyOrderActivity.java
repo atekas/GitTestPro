@@ -112,6 +112,13 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
             mAmountMoneyView.setText("¥ " + StringUtils.getDoubleWithTwo(mAmountMoney));
 
             ((TextView) findViewById(R.id.express_money)).setText("¥ " + StringUtils.getDoubleWithTwo(mExpressMoney));
+
+            if (!mSelectProductModel.getIsUseCoupon()) {
+                findViewById(R.id.coupon).setEnabled(false);
+                findViewById(R.id.coupon).setBackgroundColor(getResources().getColor(R.color.invalid_color));
+            } else {
+                findViewById(R.id.coupon).setEnabled(true);
+            }
         }
     }
 
@@ -184,7 +191,7 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
 
                 ((TextView) findViewById(R.id.name)).setText(mAddressDefault.getName());
                 ((TextView) findViewById(R.id.phone_num)).setText(mAddressDefault.getMobile());
-                ((TextView) findViewById(R.id.address)).setText(mAddressDefault.getAddress());
+                ((TextView) findViewById(R.id.address)).setText(mAddressDefault.getProvince() + mAddressDefault.getCity() + mAddressDefault.getAddress());
                 break;
             case CHOOSE_COUPON_CODE:
                 mCouponId = data.getStringExtra(CouponActivity.COUPON_ID);
@@ -359,7 +366,7 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
                 if (mAddressDefault != null) {
                     ((TextView) findViewById(R.id.name)).setText(mAddressDefault.getName());
                     ((TextView) findViewById(R.id.phone_num)).setText(mAddressDefault.getMobile());
-                    ((TextView) findViewById(R.id.address)).setText(mAddressDefault.getAddress());
+                    ((TextView) findViewById(R.id.address)).setText(mAddressDefault.getProvince() + mAddressDefault.getCity() + mAddressDefault.getAddress());
                 } else {
                     ((TextView) findViewById(R.id.name)).setText("请选择收货地址");
                     findViewById(R.id.phone_num).setVisibility(View.INVISIBLE);

@@ -251,6 +251,7 @@ public class CartLinearLayout extends LinearLayout {
                 selectProductModel.setGoodsInfo(goodsInfoList);
                 selectProductModel.setTotalMoney(getAllMoney());
                 selectProductModel.setDeliverAddress(cartDataGroup.deliver_address);
+                selectProductModel.setIsUseCoupon(true);
                 if (selectProductModel.getGoodsInfo().size() == 0) {
                     PromptUtils.showToast("请选择要付款的商品");
                     return;

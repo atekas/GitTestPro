@@ -35,6 +35,15 @@ public class SelectProductModel implements Serializable {
         return mTotalMoney;
     }
 
+    private boolean mIsUseCoupon;
+    public void setIsUseCoupon(boolean isUseCoupon) {
+        mIsUseCoupon = isUseCoupon;
+    }
+
+    public boolean getIsUseCoupon() {
+        return mIsUseCoupon;
+    }
+
     public static class GoodsInfo implements Serializable {
         private String mGoodsId;
 

@@ -95,6 +95,7 @@
                         android:layout_below="@+id/name"
                         android:layout_alignLeft="@+id/name"
                         android:layout_marginTop="7dp"
+                        android:layout_toLeftOf="@+id/more"
                         android:textSize="@dimen/text_size_14"
                         android:textColor="#666666"
                         android:text=""/>

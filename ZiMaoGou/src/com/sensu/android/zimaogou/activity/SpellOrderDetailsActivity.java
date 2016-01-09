@@ -129,7 +129,7 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
             if (memberNum >= minNum) {
                 mButtonStatue = "1";
                 mHaveCodeView.setText("立即购买");
-                mJoinGroupView.setVisibility(View.GONE);
+                mJoinGroupView.setText("组团成功");
             } else {
                 mButtonStatue = "2";
                 mHaveCodeView.setText("换个口令");
@@ -183,8 +183,11 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
                     startActivity(new Intent(this, LoginActivity.class));
                     return;
                 }
-                if (!mIsGroupFinish) {
+
+                if (mGroupDetailsResponse.data.is_join.equals("1")) {
                     createGroup();
+                } else {
+                    commandGroup();
                 }
                 break;
             case R.id.command_input:
@@ -201,6 +204,7 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
                     SelectProductModel selectProductModel = new SelectProductModel();
                     selectProductModel.setDeliverAddress(mGroupDetailsResponse.data.deliver_address);
                     selectProductModel.setTotalMoney(Double.parseDouble(mGroupDetailsResponse.data.price));
+                    selectProductModel.setIsUseCoupon(false);
 
                     List<SelectProductModel.GoodsInfo> goodsInfoList = new ArrayList<SelectProductModel.GoodsInfo>();
                     SelectProductModel.GoodsInfo goodsInfo = new SelectProductModel.GoodsInfo();
@@ -292,6 +296,7 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
         p.width = d.getWidth(); // 宽度设置为屏幕
         dialogWindow.setAttributes(p);
         mCommandGroupDialog.show();
+        ((TextView) mCommandGroupDialog.findViewById(R.id.group_code)).setText(mGroupDetailsResponse.data.code);
     }
 
     private void getGroupDetail(String id) {
@@ -326,8 +331,12 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
                 super.onSuccess(statusCode, headers, response);
                 if (response.optString("ret").equals("-1")) {
                     PromptUtils.showToast(response.optString("msg"));
+                    return;
                 }
                 commandGroup();
+                if (mCommandGroupDialog != null) {
+                    ((TextView) mCommandGroupDialog.findViewById(R.id.group_code)).setText(response.optJSONObject("data").optString("code"));
+                }
                 onResume();
             }
 
