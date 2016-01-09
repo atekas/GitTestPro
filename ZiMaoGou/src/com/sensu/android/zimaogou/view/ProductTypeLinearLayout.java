@@ -39,27 +39,43 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
     }
 
     public void setProductDetailsResponse(ProductDetailsResponse productDetailsResponse, OnProductChangedListener onProductChangedListener) {
-        getDefaultType(productDetailsResponse);
         mOnProductChangedListener = onProductChangedListener;
         mProductDetailsResponse = productDetailsResponse;
         int size = productDetailsResponse.data.spec_attr.size();
-        for (int i = 0; i < size; i++) {
-            View view = View.inflate(getContext(), R.layout.product_type_item, null);
-            ((TextView) view.findViewById(R.id.type_name)).setText(productDetailsResponse.data.spec_attr.get(i).cn);
-            view.setId(i);
-            if (productDetailsResponse.data.spec_attr.get(i).en.equals("color")) {
-                setColor(view);
-            } else if (productDetailsResponse.data.spec_attr.get(i).en.equals("size")) {
-                setSize(view);
-            } else if (productDetailsResponse.data.spec_attr.get(i).en.equals("capacity")) {
-                setCapacity(view);
+        if (size == 1) {
+            for (int i = 0; i < size; i++) {
+                View view = View.inflate(getContext(), R.layout.product_type_item, null);
+                ((TextView) view.findViewById(R.id.type_name)).setText(productDetailsResponse.data.spec_attr.get(i).cn);
+                view.setId(i);
+                if (productDetailsResponse.data.spec_attr.get(i).en.equals("color")) {
+                    setColor(view, size);
+                } else if (productDetailsResponse.data.spec_attr.get(i).en.equals("size")) {
+                    setSize(view, size);
+                } else if (productDetailsResponse.data.spec_attr.get(i).en.equals("capacity")) {
+                    setCapacity(view, size);
+                }
+                addView(view);
             }
-            addView(view);
+        } else {
+            for (int i = 0; i < size; i++) {
+                View view = View.inflate(getContext(), R.layout.product_type_item, null);
+                ((TextView) view.findViewById(R.id.type_name)).setText(productDetailsResponse.data.spec_attr.get(i).cn);
+                view.setId(i);
+                if (productDetailsResponse.data.spec_attr.get(i).en.equals("color")) {
+                    setColor(view, size);
+                } else if (productDetailsResponse.data.spec_attr.get(i).en.equals("size")) {
+                    setSize(view, size);
+                } else if (productDetailsResponse.data.spec_attr.get(i).en.equals("capacity")) {
+                    setCapacity(view, size);
+                }
+                addView(view);
+            }
         }
+
         mOnProductChangedListener.getProductColor();
     }
 
-    private void setColor(View view) {
+    private void setColor(View view, int size) {
         List<ProductTypeModel> colorProductTypeList = new ArrayList<ProductTypeModel>();
         boolean canAdd = false;
         for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
@@ -68,17 +84,18 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
                 ProductTypeModel productTypeModel1 = new ProductTypeModel();
                 productTypeModel1.setIsSelect(false);
 
-                if (Integer.parseInt(spec.num) > 1) {
+                if (size == 1) {
+                    if (Integer.parseInt(spec.num) > 0) {
+                        productTypeModel1.setEnable(true);
+                    } else {
+                        productTypeModel1.setEnable(false);
+                    }
+                } else {
                     productTypeModel1.setEnable(true);
                 }
 
                 productTypeModel1.setType("color");
                 productTypeModel1.setTypeName(spec.color);
-                if (mColor != null) {
-                    if (mColor.equals(spec.color)) {
-                        productTypeModel1.setIsSelect(true);
-                    }
-                }
                 colorProductTypeList.add(productTypeModel1);
             } else {
                 for (ProductTypeModel productTypeModel : colorProductTypeList) {
@@ -94,18 +111,18 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
                     ProductTypeModel productTypeModel1 = new ProductTypeModel();
                     productTypeModel1.setIsSelect(false);
 
-                    if (Integer.parseInt(spec.num) > 1) {
+                    if (size == 1) {
+                        if (Integer.parseInt(spec.num) > 0) {
+                            productTypeModel1.setEnable(true);
+                        } else {
+                            productTypeModel1.setEnable(false);
+                        }
+                    } else {
                         productTypeModel1.setEnable(true);
                     }
 
                     productTypeModel1.setType("color");
                     productTypeModel1.setTypeName(spec.color);
-
-                    if (mColor != null) {
-                        if (mColor.equals(spec.color)) {
-                            productTypeModel1.setIsSelect(true);
-                        }
-                    }
                     colorProductTypeList.add(productTypeModel1);
                 }
             }
@@ -114,7 +131,7 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
         ((ProductTypeListView) view.findViewById(R.id.product_type_list)).setTypeData(colorProductTypeList, this);
     }
 
-    private void setSize(View view) {
+    private void setSize(View view, int size) {
         List<ProductTypeModel> sizeProductTypeList = new ArrayList<ProductTypeModel>();
         boolean canAdd = false;
         for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
@@ -122,17 +139,18 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
                 ProductTypeModel productTypeModel1 = new ProductTypeModel();
                 productTypeModel1.setIsSelect(false);
 
-                if (Integer.parseInt(spec.num) > 1) {
+                if (size == 1) {
+                    if (Integer.parseInt(spec.num) > 0) {
+                        productTypeModel1.setEnable(true);
+                    } else {
+                        productTypeModel1.setEnable(false);
+                    }
+                } else {
                     productTypeModel1.setEnable(true);
                 }
 
                 productTypeModel1.setType("size");
                 productTypeModel1.setTypeName(spec.size);
-                if (mSize != null) {
-                    if (mSize.equals(spec.size)) {
-                        productTypeModel1.setIsSelect(true);
-                    }
-                }
                 sizeProductTypeList.add(productTypeModel1);
             } else {
                 for (ProductTypeModel productTypeModel : sizeProductTypeList) {
@@ -148,17 +166,18 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
                     ProductTypeModel productTypeModel1 = new ProductTypeModel();
                     productTypeModel1.setIsSelect(false);
 
-                    if (Integer.parseInt(spec.num) > 1) {
+                    if (size == 1) {
+                        if (Integer.parseInt(spec.num) > 0) {
+                            productTypeModel1.setEnable(true);
+                        } else {
+                            productTypeModel1.setEnable(false);
+                        }
+                    } else {
                         productTypeModel1.setEnable(true);
                     }
 
                     productTypeModel1.setType("size");
                     productTypeModel1.setTypeName(spec.size);
-                    if (mSize != null) {
-                        if (mSize.equals(spec.size)) {
-                            productTypeModel1.setIsSelect(true);
-                        }
-                    }
                     sizeProductTypeList.add(productTypeModel1);
                 }
             }
@@ -167,7 +186,7 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
         ((ProductTypeListView) view.findViewById(R.id.product_type_list)).setTypeData(sizeProductTypeList, this);
     }
 
-    private void setCapacity(View view) {
+    private void setCapacity(View view, int size) {
         List<ProductTypeModel> capacityProductTypeList = new ArrayList<ProductTypeModel>();
         boolean canAdd = false;
         for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
@@ -176,17 +195,18 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
                 ProductTypeModel productTypeModel1 = new ProductTypeModel();
                 productTypeModel1.setIsSelect(false);
 
-                if (Integer.parseInt(spec.num) > 1) {
-                    productTypeModel1.setEnable(true);
+                if (size == 1) {
+                    if (Integer.parseInt(spec.num) > 0) {
+                        productTypeModel1.setEnable(true);
+                    } else {
+                        productTypeModel1.setEnable(false);
+                    }
+                } else {
+                    productTypeModel1.setEnable(false);
                 }
 
                 productTypeModel1.setType("capacity");
                 productTypeModel1.setTypeName(spec.capacity);
-                if (mCapacity != null) {
-                    if (mCapacity.equals(spec.capacity)) {
-                        productTypeModel1.setIsSelect(true);
-                    }
-                }
                 capacityProductTypeList.add(productTypeModel1);
             } else {
                 for (ProductTypeModel productTypeModel : capacityProductTypeList) {
@@ -202,17 +222,18 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
                     ProductTypeModel productTypeModel1 = new ProductTypeModel();
                     productTypeModel1.setIsSelect(false);
 
-                    if (Integer.parseInt(spec.num) > 1) {
-                        productTypeModel1.setEnable(true);
+                    if (size == 1) {
+                        if (Integer.parseInt(spec.num) > 0) {
+                            productTypeModel1.setEnable(true);
+                        } else {
+                            productTypeModel1.setEnable(false);
+                        }
+                    } else {
+                        productTypeModel1.setEnable(false);
                     }
 
                     productTypeModel1.setType("capacity");
                     productTypeModel1.setTypeName(spec.capacity);
-                    if (mCapacity != null) {
-                        if (mCapacity.equals(spec.capacity)) {
-                            productTypeModel1.setIsSelect(true);
-                        }
-                    }
                     capacityProductTypeList.add(productTypeModel1);
                 }
             }
@@ -222,7 +243,7 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
     }
 
     @Override
-    public void onTypeClick(String type, String value) {
+    public void onTypeClick(String type, String value, boolean isCancel) {
         removeAllViews();
         int size = mProductDetailsResponse.data.spec_attr.size();
         for (int i = 0; i < size; i++) {
@@ -233,11 +254,11 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
             String rule = mProductDetailsResponse.data.spec_attr.get(i).en;
 
             if (type.equals("color")) {
-                setColorAgain(type, value);
+                setColorAgain(type, value, isCancel);
             } else if (type.equals("size")) {
-                setSizeAgain(type, value);
+                setSizeAgain(type, value, isCancel);
             } else if (type.equals("capacity")) {
-                setCapacityAgain(type, value);
+                setCapacityAgain(type, value, isCancel);
             }
 
             if (rule.equals("color")) {
@@ -255,110 +276,161 @@ public class ProductTypeLinearLayout extends LinearLayout implements ProductType
         }
     }
 
-    private void setColorAgain(String type, String value) {
-        if (mColorProductTypeList == null) {
-            return;
-        }
-        for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
-            if (type.equals("size")) {
-                if (spec.size.equals(value)) {
-                    for (ProductTypeModel productTypeModel : mColorProductTypeList) {
-                        if (Integer.parseInt(spec.num) > 0) {
-                            productTypeModel.setEnable(true);
-                        } else {
-                            productTypeModel.setEnable(false);
+    private void setColorAgain(String type, String value, boolean isCancel) {
+        if (isCancel) {
+            if (mCapacityProductTypeList != null) {
+                for (ProductTypeModel productTypeModel : mCapacityProductTypeList) {
+                    productTypeModel.setEnable(false);
+                }
+                for (ProductTypeModel productTypeModel : mCapacityProductTypeList) {
+                    for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
+                        if (spec.color.equals(value)) {
+                            if (spec.capacity.equals(productTypeModel.getTypeName()) && Integer.parseInt(spec.num) > 0) {
+                                productTypeModel.setEnable(true);
+                            }
                         }
                     }
                 }
-            } else if (type.equals("capacity")) {
-                if (spec.capacity.equals(value)) {
-                    for (ProductTypeModel productTypeModel : mColorProductTypeList) {
-                        if (Integer.parseInt(spec.num) > 0) {
-                            productTypeModel.setEnable(true);
-                        } else {
-                            productTypeModel.setEnable(false);
+            }
+
+            if (mSizeProductTypeList != null) {
+                for (ProductTypeModel productTypeModel : mSizeProductTypeList) {
+                    productTypeModel.setEnable(false);
+                }
+
+                for (ProductTypeModel productTypeModel : mSizeProductTypeList) {
+                    for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
+                        if (spec.color.equals(value)) {
+                            if (spec.size.equals(productTypeModel.getTypeName()) && Integer.parseInt(spec.num) > 0) {
+                                productTypeModel.setEnable(true);
+                            }
                         }
                     }
+                }
+            }
+        } else {
+            if (mColorProductTypeList != null) {
+                for (ProductTypeModel productTypeModel : mColorProductTypeList) {
+                    productTypeModel.setIsSelect(false);
+                }
+            }
+
+            if (mSizeProductTypeList != null) {
+                for (ProductTypeModel productTypeModel : mSizeProductTypeList) {
+                    productTypeModel.setEnable(true);
+                }
+            }
+
+            if (mCapacityProductTypeList != null) {
+                for (ProductTypeModel productTypeModel : mCapacityProductTypeList) {
+                    productTypeModel.setEnable(true);
                 }
             }
         }
     }
 
-    private void setSizeAgain(String type, String value) {
-        if (mSizeProductTypeList == null) {
-            return;
-        }
-        for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
-            if (type.equals("color")) {
-                if (spec.color.equals(value)) {
-                    for (ProductTypeModel productTypeModel : mSizeProductTypeList) {
-                        if (Integer.parseInt(spec.num) > 0) {
-                            productTypeModel.setEnable(true);
-                        } else {
-                            productTypeModel.setEnable(false);
+    private void setSizeAgain(String type, String value, boolean isCancel) {
+        if (isCancel) {
+            if (mCapacityProductTypeList != null) {
+                for (ProductTypeModel productTypeModel : mCapacityProductTypeList) {
+                    productTypeModel.setEnable(false);
+                }
+                for (ProductTypeModel productTypeModel : mCapacityProductTypeList) {
+                    for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
+                        if (spec.size.equals(value)) {
+                            if (spec.capacity.equals(productTypeModel.getTypeName()) && Integer.parseInt(spec.num) > 0) {
+                                productTypeModel.setEnable(true);
+                            }
                         }
                     }
                 }
-            } else if (type.equals("capacity")) {
-                if (spec.capacity.equals(value)) {
-                    for (ProductTypeModel productTypeModel : mSizeProductTypeList) {
-                        if (Integer.parseInt(spec.num) > 0) {
-                            productTypeModel.setEnable(true);
-                        } else {
-                            productTypeModel.setEnable(false);
+            }
+
+            if (mColorProductTypeList != null) {
+                for (ProductTypeModel productTypeModel : mColorProductTypeList) {
+                    productTypeModel.setEnable(false);
+                }
+
+                for (ProductTypeModel productTypeModel : mColorProductTypeList) {
+                    for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
+                        if (spec.size.equals(value)) {
+                            if (spec.color.equals(productTypeModel.getTypeName()) && Integer.parseInt(spec.num) > 0) {
+                                productTypeModel.setEnable(true);
+                            }
                         }
                     }
+                }
+            }
+        } else {
+            if (mSizeProductTypeList != null) {
+                for (ProductTypeModel productTypeModel : mSizeProductTypeList) {
+                    productTypeModel.setIsSelect(false);
+                }
+            }
+
+            if (mColorProductTypeList != null) {
+                for (ProductTypeModel productTypeModel : mColorProductTypeList) {
+                    productTypeModel.setEnable(true);
+                }
+            }
+
+            if (mCapacityProductTypeList != null) {
+                for (ProductTypeModel productTypeModel : mCapacityProductTypeList) {
+                    productTypeModel.setEnable(true);
                 }
             }
         }
     }
 
-    private void setCapacityAgain(String type, String value) {
-        if (mCapacityProductTypeList == null) {
-            return;
-        }
-        for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
-            if (type.equals("color")) {
-                if (spec.color.equals(value)) {
-                    for (ProductTypeModel productTypeModel : mCapacityProductTypeList) {
-                        if (Integer.parseInt(spec.num) > 0) {
-                            productTypeModel.setEnable(true);
-                        } else {
-                            productTypeModel.setEnable(false);
-                        }
-                    }
+    private void setCapacityAgain(String type, String value, boolean isCancel) {
+        if (isCancel) {
+            if (mColorProductTypeList != null) {
+                for (ProductTypeModel productTypeModel : mColorProductTypeList) {
+                    productTypeModel.setEnable(false);
                 }
-            } else if (type.equals("size")) {
-                if (spec.size.equals(value)) {
-                    for (ProductTypeModel productTypeModel : mCapacityProductTypeList) {
-                        if (Integer.parseInt(spec.num) > 0) {
-                            productTypeModel.setEnable(true);
-                        } else {
-                            productTypeModel.setEnable(false);
+                for (ProductTypeModel productTypeModel : mColorProductTypeList) {
+                    for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
+                        if (spec.size.equals(value)) {
+                            if (spec.color.equals(productTypeModel.getTypeName()) && Integer.parseInt(spec.num) > 0) {
+                                productTypeModel.setEnable(true);
+                            }
                         }
                     }
                 }
             }
-        }
-    }
 
-    private String mColor;
-    private String mSize;
-    private String mCapacity;
+            if (mSizeProductTypeList != null) {
+                for (ProductTypeModel productTypeModel : mSizeProductTypeList ){
+                    productTypeModel.setEnable(false);
+                }
 
-    private void getDefaultType(ProductDetailsResponse productDetailsResponse) {
-        for (ProductDetailsResponse.Spec spec : productDetailsResponse.data.spec) {
-            if (Integer.parseInt(spec.num) > 0) {
-                for (ProductDetailsResponse.SpecAttr specAttr : productDetailsResponse.data.spec_attr) {
-                    if (specAttr.en.equals("color")) {
-                        mColor = spec.color;
-                    } else if (specAttr.en.equals("size")) {
-                        mSize = spec.size;
-                    } else if (specAttr.en.equals("capacity")) {
-                        mCapacity = spec.capacity;
+                for (ProductTypeModel productTypeModel : mSizeProductTypeList) {
+                    for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
+                        if (spec.color.equals(value)) {
+                            if (spec.size.equals(productTypeModel.getTypeName()) && Integer.parseInt(spec.num) > 0) {
+                                productTypeModel.setEnable(true);
+                            }
+                        }
                     }
                 }
-                break;
+            }
+        } else {
+            if (mCapacityProductTypeList != null) {
+                for (ProductTypeModel productTypeModel : mCapacityProductTypeList) {
+                    productTypeModel.setIsSelect(false);
+                }
+            }
+
+            if (mSizeProductTypeList != null) {
+                for (ProductTypeModel productTypeModel : mSizeProductTypeList) {
+                    productTypeModel.setEnable(true);
+                }
+            }
+
+            if (mColorProductTypeList != null) {
+                for (ProductTypeModel productTypeModel : mColorProductTypeList) {
+                    productTypeModel.setEnable(true);
+                }
             }
         }
 

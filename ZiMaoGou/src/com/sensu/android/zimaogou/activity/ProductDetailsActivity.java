@@ -384,7 +384,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
             num += Integer.parseInt(spec.num);
         }
 
-        if (num == 0) {
+        if (num < 1) {
             findViewById(R.id.toast_num).setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.toast_num).setVisibility(View.GONE);
