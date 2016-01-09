@@ -12,10 +12,10 @@
 
         <ImageView
                 android:id="@+id/img_choose"
-                android:layout_width="@dimen/account_chose_width"
-                android:layout_height="@dimen/account_chose_width"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/account_left_distance"
+                android:padding="@dimen/dip_10"
                 android:src="@drawable/drawable_pay_way_select" />
 
         <ImageView
