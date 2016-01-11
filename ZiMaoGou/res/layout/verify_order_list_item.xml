@@ -76,6 +76,7 @@
     </RelativeLayout>
 
     <View
+            android:id="@+id/bottom_line"
             android:layout_width="match_parent"
             android:layout_height="2px"
             android:background="@color/home_line" />

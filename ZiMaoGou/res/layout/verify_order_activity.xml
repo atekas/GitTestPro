@@ -112,11 +112,20 @@
 
             </RelativeLayout>
 
-            <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2px"
-                    android:layout_marginLeft="@dimen/dip_10"
-                    android:background="@color/home_line"/>
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2px"
+                        android:background="@color/home_line"/>
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:background="#eff3f5"/>
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2px"
+                        android:background="@color/home_line"/>
 
             <TextView
                     android:layout_width="match_parent"
