@@ -96,6 +96,10 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
         ((TextView) findViewById(R.id.save_money)).setText("立省¥" + StringUtils.getDoubleWithTwo(saveMoney));
         ((WebView) findViewById(R.id.web_view)).loadUrl(mGroupDetailsResponse.data.description);
 
+        if (mCommandGroupDialog != null) {
+            ((TextView) mCommandGroupDialog.findViewById(R.id.group_code)).setText(mGroupDetailsResponse.data.code);
+        }
+
         isJoinGroup();
     }
 
