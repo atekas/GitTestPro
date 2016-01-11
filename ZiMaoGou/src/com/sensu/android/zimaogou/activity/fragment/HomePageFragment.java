@@ -2,6 +2,8 @@ package com.sensu.android.zimaogou.activity.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import com.sensu.android.zimaogou.activity.mycenter.WebViewActivity;
 import com.sensu.android.zimaogou.activity.tour.TourBuyDetailsActivity;
 import com.sensu.android.zimaogou.activity_home.HomeHorizontalLinearLayout;
 import com.sensu.android.zimaogou.activity_home.HomeVerticalLinearLayout;
+import com.sensu.android.zimaogou.pullrefresh.PullToRefreshLayout;
 import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.utils.LogUtils;
 import com.sensu.android.zimaogou.utils.PromptUtils;
@@ -52,6 +55,8 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     BannerResponse bannerResponse = new BannerResponse();
     ArrayList<BannerMode> bannerModes = new ArrayList<BannerMode>();
 
+    private PullToRefreshLayout mPullToRefreshLayout;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.home_page_fragment, container, false);
@@ -80,6 +85,29 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void initView() {
+        mPullToRefreshLayout = (PullToRefreshLayout) mParentActivity.findViewById(R.id.refresh_view);
+        mPullToRefreshLayout.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh(final PullToRefreshLayout pullToRefreshLayout) {
+                new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+                    }
+                }.sendEmptyMessageDelayed(0, 2000);
+            }
+
+            @Override
+            public void onLoadMore(final PullToRefreshLayout pullToRefreshLayout) {
+                new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+                    }
+                }.sendEmptyMessageDelayed(0, 2000);
+            }
+        });
+
         mDailyLinearLayout = (HomeHorizontalLinearLayout) mParentActivity.findViewById(R.id.ll_dailyRecommend);
         mGroupLinearLayout = (HomeHorizontalLinearLayout) mParentActivity.findViewById(R.id.ll_groupSpecial);
         mFindStoreLinearLayout = (HomeHorizontalLinearLayout) mParentActivity.findViewById(R.id.ll_findStore);

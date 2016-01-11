@@ -21,213 +21,224 @@
 
     </RelativeLayout>
 
-    <ScrollView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:scrollbars="none">
+    <com.sensu.android.zimaogou.pullrefresh.PullToRefreshLayout
+            android:id="@+id/refresh_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <LinearLayout
+        <include layout="@layout/refresh_head"/>
+
+        <com.sensu.android.zimaogou.view.PullToRefreshScrollView
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-            <com.sensu.android.zimaogou.widget.ImageRollView
-                    android:id="@+id/banner"
-
-                    android:layout_width="fill_parent"
-                    android:layout_height="@dimen/home_banner_height"
-                    android:src="@drawable/category_default"/>
-
-            <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1px"
-                    android:background="@color/home_line"/>
+                android:layout_height="fill_parent"
+                android:scrollbars="none">
 
             <LinearLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="90dp"
-                    android:background="@color/white"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                <com.sensu.android.zimaogou.widget.ImageRollView
+                        android:id="@+id/banner"
+
+                        android:layout_width="fill_parent"
+                        android:layout_height="@dimen/home_banner_height"
+                        android:src="@drawable/category_default"/>
+
+                <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1px"
+                        android:background="@color/home_line"/>
 
                 <LinearLayout
-                        android:id="@+id/ll_buyRead"
-                        android:orientation="vertical"
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="1"
-                        android:gravity="center">
+                        android:layout_height="90dp"
+                        android:background="@color/white"
+                        android:orientation="horizontal">
 
-                    <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/a_03"/>
+                    <LinearLayout
+                            android:id="@+id/ll_buyRead"
+                            android:orientation="vertical"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1"
+                            android:gravity="center">
 
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="12sp"
-                            android:text="@string/buyRead"
-                            android:textColor="@color/light_black"/>
+                        <ImageView
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/a_03"/>
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"
+                                android:text="@string/buyRead"
+                                android:textColor="@color/light_black"/>
+
+                    </LinearLayout>
+
+                    <View
+                            android:layout_width="1px"
+                            android:layout_height="fill_parent"
+                            android:background="@color/home_line"/>
+
+                    <LinearLayout
+                            android:id="@+id/ll_hotGoods"
+                            android:orientation="vertical"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                        <ImageView
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/a_05"/>
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"
+                                android:text="@string/hotGoods"
+                                android:textColor="@color/light_black"/>
+
+                    </LinearLayout>
+
+                    <View
+                            android:layout_width="1px"
+                            android:layout_height="fill_parent"
+                            android:background="@color/home_line"/>
+
+                    <LinearLayout
+                            android:id="@+id/ll_latest"
+                            android:orientation="vertical"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                        <ImageView
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/a_07"/>
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"
+                                android:text="@string/Latest"
+                                android:textColor="@color/light_black"/>
+
+                    </LinearLayout>
+
+                    <View
+                            android:layout_width="1px"
+                            android:layout_height="fill_parent"
+                            android:background="@color/home_line"/>
+
+                    <LinearLayout
+                            android:id="@+id/ll_featureVideos"
+                            android:orientation="vertical"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                        <ImageView
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/a_09"/>
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"
+                                android:text="@string/featureVideos"
+                                android:textColor="@color/light_black"/>
+
+                    </LinearLayout>
+
+                    <View
+                            android:layout_width="1px"
+                            android:layout_height="fill_parent"
+                            android:background="@color/home_line"/>
 
                 </LinearLayout>
 
                 <View
-                        android:layout_width="1px"
-                        android:layout_height="fill_parent"
-                        android:background="@color/home_line"/>
-
-                <LinearLayout
-                        android:id="@+id/ll_hotGoods"
-                        android:orientation="vertical"
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="1"
-                        android:gravity="center">
-
-                    <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/a_05"/>
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="12sp"
-                            android:text="@string/hotGoods"
-                            android:textColor="@color/light_black"/>
-
-                </LinearLayout>
+                        android:layout_height="1px"
+                        android:background="@color/home_line"/>
 
                 <View
-                        android:layout_width="1px"
-                        android:layout_height="fill_parent"
-                        android:background="@color/home_line"/>
-
-                <LinearLayout
-                        android:id="@+id/ll_latest"
-                        android:orientation="vertical"
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="1"
-                        android:gravity="center">
+                        android:layout_height="1px"
+                        android:background="@color/home_line"
+                        android:layout_marginTop="10dp"/>
 
-                    <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/a_07"/>
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="12sp"
-                            android:text="@string/Latest"
-                            android:textColor="@color/light_black"/>
-
-                </LinearLayout>
+                <include
+                        layout="@layout/home_item1_layout"
+                        android:id="@+id/ll_dailyRecommend"/>
 
                 <View
-                        android:layout_width="1px"
-                        android:layout_height="fill_parent"
-                        android:background="@color/home_line"/>
-
-                <LinearLayout
-                        android:id="@+id/ll_featureVideos"
-                        android:orientation="vertical"
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="1"
-                        android:gravity="center">
+                        android:layout_height="1px"
+                        android:background="@color/home_line"
+                        android:layout_marginTop="10dp"/>
 
-                    <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/a_09"/>
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="12sp"
-                            android:text="@string/featureVideos"
-                            android:textColor="@color/light_black"/>
-
-                </LinearLayout>
+                <include
+                        layout="@layout/home_grid"/>
 
                 <View
-                        android:layout_width="1px"
-                        android:layout_height="fill_parent"
-                        android:background="@color/home_line"/>
+                        android:layout_width="fill_parent"
+                        android:layout_height="1px"
+                        android:background="@color/home_line"
+                        android:layout_marginTop="10dp"/>
+
+                <include
+                        layout="@layout/home_item1_layout"
+                        android:id="@+id/ll_groupSpecial"/>
+
+                <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1px"
+                        android:background="@color/home_line"
+                        android:layout_marginTop="10dp"/>
+
+                <include
+                        layout="@layout/home_item1_layout"
+                        android:id="@+id/ll_findStore"/>
+
+                <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1px"
+                        android:background="@color/home_line"
+                        android:layout_marginTop="10dp"/>
+
+                <include
+                        layout="@layout/home_item2_layout"
+                        android:id="@+id/ll_lively"/>
+
+                <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1px"
+                        android:background="@color/home_line"
+                        android:layout_marginTop="10dp"/>
+
+                <include
+                        layout="@layout/home_item2_layout"
+                        android:id="@+id/recommend_item"/>
 
             </LinearLayout>
 
-            <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1px"
-                    android:background="@color/home_line"/>
+        </com.sensu.android.zimaogou.view.PullToRefreshScrollView>
 
-            <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1px"
-                    android:background="@color/home_line"
-                    android:layout_marginTop="10dp"/>
+        <include layout="@layout/load_more"/>
 
-            <include
-                    layout="@layout/home_item1_layout"
-                    android:id="@+id/ll_dailyRecommend"/>
-
-            <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1px"
-                    android:background="@color/home_line"
-                    android:layout_marginTop="10dp"/>
-
-            <include
-                    layout="@layout/home_grid"/>
-
-            <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1px"
-                    android:background="@color/home_line"
-                    android:layout_marginTop="10dp"/>
-
-            <include
-                    layout="@layout/home_item1_layout"
-                    android:id="@+id/ll_groupSpecial"/>
-
-            <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1px"
-                    android:background="@color/home_line"
-                    android:layout_marginTop="10dp"/>
-
-            <include
-                    layout="@layout/home_item1_layout"
-                    android:id="@+id/ll_findStore"/>
-
-            <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1px"
-                    android:background="@color/home_line"
-                    android:layout_marginTop="10dp"/>
-
-            <include
-                    layout="@layout/home_item2_layout"
-                    android:id="@+id/ll_lively"/>
-
-            <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1px"
-                    android:background="@color/home_line"
-                    android:layout_marginTop="10dp"/>
-
-            <include
-                    layout="@layout/home_item2_layout"
-                    android:id="@+id/recommend_item"/>
-
-        </LinearLayout>
-
-    </ScrollView>
+    </com.sensu.android.zimaogou.pullrefresh.PullToRefreshLayout>
 </LinearLayout>
