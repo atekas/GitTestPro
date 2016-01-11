@@ -255,6 +255,8 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         }
     }
 
+    private String mIsBuyDirectly = "0";
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -287,7 +289,14 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                     startActivity(new Intent(this, LoginActivity.class));
                 } else {
                     String num = ((EditText) mChooseDialog.findViewById(R.id.product_num)).getText().toString();
-                    addToCart(mSpecId, num);
+                    if (mIsBuyDirectly.equals("0")) {
+                        addToCart(mSpecId, num);
+                    } else if (mIsBuyDirectly.equals("1")) {
+                        SelectProductModel selectProductModel = getSelectProduct(num);
+                        Intent intent1 = new Intent(this, VerifyOrderActivity.class);
+                        intent1.putExtra(VerifyOrderActivity.PRODUCT_FOR_PAY, selectProductModel);
+                        startActivity(intent1);
+                    }
                 }
                 break;
             case R.id.bt_subtract:
@@ -301,7 +310,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 ((EditText) mChooseDialog.findViewById(R.id.product_num)).setText(mProductCount + "");
                 break;
             case R.id.add_to_buy_bag:
-                if (mProductDetailsResponse.data.spec.size() ==1) {
+                if (mProductDetailsResponse.data.spec.size() == 1) {
                     if (mUserInfo == null) {
                         startActivity(new Intent(this, LoginActivity.class));
                     } else {
@@ -312,9 +321,27 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 }
                 break;
             case R.id.pay:
-//                Intent intent1 = new Intent(this, VerifyOrderActivity.class);
-//                intent1.putExtra(VerifyOrderActivity.PRODUCT_FOR_PAY, getSelectProduct("1"));
-//                startActivity(intent1);
+                if (mUserInfo == null) {
+                    startActivity(new Intent(this, LoginActivity.class));
+                } else {
+                    if (mSpecId == null) {
+                        if (mProductDetailsResponse.data.spec.size() == 1) {
+                            mSpecId = mProductDetailsResponse.data.spec.get(0).id;
+                            SelectProductModel selectProductModel = getSelectProduct("1");
+                            Intent intent1 = new Intent(this, VerifyOrderActivity.class);
+                            intent1.putExtra(VerifyOrderActivity.PRODUCT_FOR_PAY, selectProductModel);
+                            startActivity(intent1);
+                        } else {
+                            ChooseTypeAndColorClick(findViewById(R.id.add_to_buy_bag));
+                            mIsBuyDirectly = "1";
+                        }
+                    } else {
+                        SelectProductModel selectProductModel = getSelectProduct("1");
+                        Intent intent1 = new Intent(this, VerifyOrderActivity.class);
+                        intent1.putExtra(VerifyOrderActivity.PRODUCT_FOR_PAY, selectProductModel);
+                        startActivity(intent1);
+                    }
+                }
                 break;
         }
     }
@@ -360,7 +387,8 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         selectProductModel.setGoodsInfo(goodsInfoList);
         selectProductModel.setDeliverAddress(mProductDetailsResponse.data.deliver_address);
         selectProductModel.setIsUseCoupon(true);
-        selectProductModel.setTotalMoney(110.0);
+        double totalMoney = Double.parseDouble(price) * Double.parseDouble(num);
+        selectProductModel.setTotalMoney(totalMoney);
 
         return selectProductModel;
     }
