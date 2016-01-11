@@ -2,11 +2,204 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:background="@color/white">
 
-    <TextView
-            android:layout_width="wrap_content"
+    <RelativeLayout
+            android:id="@+id/title_layout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#f8f8f8">
+
+        <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dip_10"
+                android:src="@drawable/back"/>
+
+        <TextView
+                android:id="@+id/pay_result_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black_222222"
+                android:layout_centerInParent="true"
+                android:textSize="18sp"/>
+
+    </RelativeLayout>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/home_line"/>
+
+    <LinearLayout
+            android:id="@+id/pay_success_layout"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/pay_success"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:textSize="15sp"
+                android:textColor="#74b75a"
+                android:text="恭喜,支付成功"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:textSize="14sp"
+                android:textColor="@color/gray_999999"
+                android:text="我们会尽快为您发货,请耐心等待"/>
+
+        <TextView
+                android:id="@+id/check_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="22dp"
+                android:text="查看订单"
+                android:textColor="@color/black_444444"
+                android:textSize="16sp"
+                android:paddingTop="@dimen/dip_10"
+                android:paddingBottom="@dimen/dip_10"
+                android:paddingLeft="@dimen/dip_20"
+                android:paddingRight="@dimen/dip_20"
+                android:background="@drawable/cart_botton_enable"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/pay_failed_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="支付结果页面"/>
+            android:orientation="vertical">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/pay_faile_image"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:layout_gravity="center_horizontal"
+                android:textSize="15sp"
+                android:textColor="@color/red"
+                android:text="抱歉,支付失败"/>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:gravity="center_horizontal">
+
+            <TextView
+                    android:id="@+id/cancel_order"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/black_444444"
+                    android:textSize="16sp"
+                    android:paddingTop="@dimen/dip_10"
+                    android:paddingBottom="@dimen/dip_10"
+                    android:paddingLeft="@dimen/dip_20"
+                    android:paddingRight="@dimen/dip_20"
+                    android:background="@drawable/cart_botton_enable"
+                    android:text="查看订单"/>
+
+            <TextView
+                    android:id="@+id/pay_again"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/black_444444"
+                    android:textSize="16sp"
+                    android:paddingTop="@dimen/dip_10"
+                    android:paddingBottom="@dimen/dip_10"
+                    android:paddingLeft="@dimen/dip_20"
+                    android:paddingRight="@dimen/dip_20"
+                    android:layout_marginLeft="14dp"
+                    android:background="@drawable/cart_botton_enable"
+                    android:text="重新支付"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="@dimen/dip_20"
+                android:layout_marginRight="@dimen/dip_20"
+                android:layout_marginTop="25dp"
+                android:paddingBottom="24dp"
+                android:background="#eff3f5">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="19dp"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginRight="18dp"
+                    android:textSize="12sp"
+                    android:textColor="@color/black_444444"
+                    android:text="可能是以下原因导致你支付失败,你可以对照进行问题排查:"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="19dp"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginRight="18dp"
+                    android:drawableLeft="@drawable/pay_info_round_dian"
+                    android:drawablePadding="7dp"
+                    android:textSize="12sp"
+                    android:textColor="@color/gray_999999"
+                    android:text="您取消了支付,导致支付为能成功"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="19dp"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginRight="18dp"
+                    android:drawableLeft="@drawable/pay_info_round_dian"
+                    android:drawablePadding="7dp"
+                    android:textSize="12sp"
+                    android:textColor="@color/gray_999999"
+                    android:text="交易会有支付上限,建议您登陆网上银行提高最高上限额度,即能轻松支付"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="19dp"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginRight="18dp"
+                    android:drawableLeft="@drawable/pay_info_round_dian"
+                    android:drawablePadding="7dp"
+                    android:textSize="12sp"
+                    android:textColor="@color/gray_999999"
+                    android:text="提示“过期、超时、错误”等问题时,您可以选择重新支付"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

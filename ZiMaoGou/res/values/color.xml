@@ -65,4 +65,7 @@
 
     <drawable name="c2c5c5">#c2c5c5</drawable>
     <color name="search_text_tip_color">#8b8b90</color>
+
+    <color name="gray">#aaaaaa</color>
+    <color name="light_blue">#6593cb</color>
 </resources>
