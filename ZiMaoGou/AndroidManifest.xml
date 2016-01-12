@@ -179,6 +179,8 @@
         <!--######################################### 我的 #########################################################-->
         <activity android:name=".activity.mycenter.OrderActivity" android:screenOrientation="portrait" />
 
+        <activity android:name=".activity.mycenter.RefundOrderActivity" android:screenOrientation="portrait" />
+
         <activity android:name=".activity.mycenter.CouponActivity" android:screenOrientation="portrait" />
 
         <activity android:name=".activity.mycenter.ReceiverAddressActivity" android:screenOrientation="portrait" />

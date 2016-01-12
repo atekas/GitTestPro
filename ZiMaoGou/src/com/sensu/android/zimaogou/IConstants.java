@@ -116,7 +116,8 @@ public class IConstants {
     public static final String sGetBanner = "comm/banner";
     //订单
     public static final String sOrder = "order";
-
+    //退款订单
+    public static final String sRefundOrder = "order/return";
     //运费规则
     public static final String sExpressRule = "conf/express_rule";
 

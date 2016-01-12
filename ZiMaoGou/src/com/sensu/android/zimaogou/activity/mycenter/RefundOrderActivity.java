@@ -58,13 +58,13 @@ public class RefundOrderActivity extends BaseActivity {
     String CANCEL_ORDER = "1";//取消订单
     String SURE_ORDER = "2";//确认收货
 
+    int agreeRefundGoods = 1;//同意退货
+    int agreeRefundMoney = 12;//同意退款
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_activity);
-
-
-
         initView();
         getOrder();
     }
@@ -121,7 +121,7 @@ public class RefundOrderActivity extends BaseActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                LogUtils.d("获取我的订单返回：", response.toString());
+                LogUtils.d("获取我的退货单返回：", response.toString());
                 myOrderResponse = JSON.parseObject(response.toString(), MyOrderResponse.class);
                 mOrders = myOrderResponse.data;
                 adapter = new OrderListAdapter1(RefundOrderActivity.this, mOrders);
@@ -162,7 +162,7 @@ public class RefundOrderActivity extends BaseActivity {
             ViewHolder viewHolder;
             if (view == null) {
                 viewHolder = new ViewHolder();
-                view = LayoutInflater.from(mContext).inflate(R.layout.order_list_item, null);
+                view = LayoutInflater.from(mContext).inflate(R.layout.order_refund_list_item, null);
                 viewHolder.tv_amount = (TextView) view.findViewById(R.id.tv_amount);
                 viewHolder.tv_freight = (TextView) view.findViewById(R.id.tv_freight);
                 viewHolder.tv_orderNo = (TextView) view.findViewById(R.id.tv_orderNo);
@@ -200,39 +200,19 @@ public class RefundOrderActivity extends BaseActivity {
                             .putExtra("state", orderState));
                 }
             });
-            if (state == IConstants.sUnpaid) {
+            if (state == agreeRefundGoods) {
                 viewHolder.bt_cancel.setVisibility(View.VISIBLE);
-                viewHolder.bt_cancel.setText("取消订单");
-                viewHolder.bt_submit.setText("待付款");
-                viewHolder.bt_cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        updateOrderDialog(orderState,myOrderMode);
-                    }
-                });
-                viewHolder.bt_submit.setOnClickListener(new PayClickListener());
-            } else if (state == IConstants.sUnreceived) {
-                viewHolder.bt_cancel.setVisibility(View.GONE);
-                viewHolder.bt_cancel.setText("查看物流");
-                viewHolder.bt_submit.setText("确认收货");
-                viewHolder.bt_cancel.setOnClickListener(null);
-                viewHolder.bt_submit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        updateOrderDialog(orderState,myOrderMode);
-                    }
-                });
+
             } else {
                 viewHolder.bt_cancel.setVisibility(View.GONE);
-                viewHolder.bt_submit.setText("评价");
             }
-//                    viewHolder.bt_comment.setOnClickListener(new View.OnClickListener() {
-//
-//                        @Override
-//                        public void onClick(View view) {
-//                            mContext.startActivity(new Intent(mContext, RefundOrCommentActivity.class).putExtra("type", 1));
-//                        }
-//                    });
+            viewHolder.bt_submit.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    updateOrderDialog(myOrderMode);
+                }
+            });
 
 
             viewHolder.tv_orderType.setText(mOrders.get(i).getState_cn());
@@ -259,108 +239,53 @@ public class RefundOrderActivity extends BaseActivity {
 //        public Button bt_comment;
     }
 
-    /**
-     * 去付款接口
-     */
-    private void goPay() {
 
-        RequestParams requestParams = new RequestParams();
-        requestParams.put("uid", userInfo.getUid());
-        HttpUtil.postWithSign(GDUserInfoHelper.getInstance(this).getUserInfo().getToken(), IConstants.sGetPayCharge, requestParams, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                LogUtils.d("获取支付charge：", response.toString());
-                try {
-                    String charge = response.getJSONObject("data").getJSONObject("pay_info").toString();
-                    Intent intent = new Intent();
-                    String packageName = getPackageName();
-                    ComponentName componentName = new ComponentName(packageName, packageName + ".wxapi.WXPayEntryActivity");
-                    intent.setComponent(componentName);
-                    intent.putExtra(EXTRA_CHARGE, charge);
-                    startActivityForResult(intent, REQUEST_CODE_PAYMENT);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    private void updateOrder(String update, final MyOrderMode orderMode) {
-        final String state = update;
+    private void updateOrder(final MyOrderMode orderMode) {
         String id = orderMode.getId();
         RequestParams requestParams = new RequestParams();
         requestParams.put("uid", userInfo.getUid());
         requestParams.put("id", id);
-        requestParams.put("state", update);
-        HttpUtil.postWithSign(userInfo.getToken(), IConstants.sOrder + "/" + id, requestParams, new JsonHttpResponseHandler() {
+        requestParams.put("state", "1");
+        HttpUtil.postWithSign(userInfo.getToken(), IConstants.sRefundOrder + "/" + id, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                LogUtils.d("修改订单状态返回：",response.toString());
+                LogUtils.d("撤销退款订单状态返回：", response.toString());
                 if (response.optInt("ret") >= 0) {
-                    if (state.equals(CANCEL_ORDER)) {
-                        PromptUtils.showToast("取消订单成功");
-                        if (type == 0) {
-                            orderMode.setState(5);
-                        } else {
-                            mOrders.remove(orderMode);
-                        }
-                        adapter.notifyDataSetChanged();
-                    } else if (state.equals(SURE_ORDER)) {
-                        PromptUtils.showToast("确认收货成功");
-                        if (type == 0) {
-                            orderMode.setState(12);
-                        } else {
-                            mOrders.remove(orderMode);
-                        }
-                        adapter.notifyDataSetChanged();
-
-                    }
-
+                    PromptUtils.showToast("撤销退款成功");
+                    mOrders.remove(orderMode);
+                    adapter.notifyDataSetChanged();
 
                 } else {
-                    if (state.equals(CANCEL_ORDER)) {
-                        PromptUtils.showToast("取消订单失败");
-                    } else if (state.equals(SURE_ORDER)) {
-                        PromptUtils.showToast("确认收货失败");
-                    }
+
+                    PromptUtils.showToast("撤销退款失败");
+
                 }
             }
         });
 
     }
 
-    private class PayClickListener implements View.OnClickListener {
 
-
-        @Override
-        public void onClick(View view) {
-            mPayButton = (Button) view;
-            mPayButton.setOnClickListener(null);//防止重复点击
-            goPay();
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_PAYMENT) {
-            if (resultCode == Activity.RESULT_OK) {
-                String result = data.getExtras().getString("pay_result");
-                /* 处理返回值
-                 * "success" - payment succeed
-                 * "fail"    - payment failed
-                 * "cancel"  - user canceld
-                 * "invalid" - payment plugin not installed
-                 */
-                String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
-                String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
-                PromptUtils.showToast("支付返回：" + result + "  " + errorMsg + "  " + extraMsg);
-                mPayButton.setOnClickListener(new PayClickListener());
-            }
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == REQUEST_CODE_PAYMENT) {
+//            if (resultCode == Activity.RESULT_OK) {
+//                String result = data.getExtras().getString("pay_result");
+//                /* 处理返回值
+//                 * "success" - payment succeed
+//                 * "fail"    - payment failed
+//                 * "cancel"  - user canceld
+//                 * "invalid" - payment plugin not installed
+//                 */
+//                String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
+//                String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
+//                PromptUtils.showToast("支付返回：" + result + "  " + errorMsg + "  " + extraMsg);
+//                mPayButton.setOnClickListener(new PayClickListener());
+//            }
+//        }
+//    }
 
     /**
      * 根据后台返回stateCode区分状态
@@ -381,22 +306,24 @@ public class RefundOrderActivity extends BaseActivity {
 
     /**
      * 计算一个订单的商品数量
+     *
      * @param myOrderMode
      * @return
      */
-    private int getProductsNum(MyOrderMode myOrderMode){
+    private int getProductsNum(MyOrderMode myOrderMode) {
         int num = 0;
-        for(MyOrderGoodsMode myOrderGoodsMode: myOrderMode.getGoods()){
+        for (MyOrderGoodsMode myOrderGoodsMode : myOrderMode.getGoods()) {
             num += Integer.parseInt(myOrderGoodsMode.getNum());
         }
         return num;
     }
+
     /**
      * 修改订单状态dialog
      */
     Dialog mUpdateOrderDialog;
 
-    private void updateOrderDialog(int state, final MyOrderMode myOrderMode) {
+    private void updateOrderDialog(final MyOrderMode myOrderMode) {
         mUpdateOrderDialog = new Dialog(this, R.style.dialog);
         mUpdateOrderDialog.setCancelable(true);
         mUpdateOrderDialog.setContentView(R.layout.delete_address_dialog);
@@ -404,20 +331,14 @@ public class RefundOrderActivity extends BaseActivity {
         TextView tv_tip = (TextView) mUpdateOrderDialog.findViewById(R.id.tv_tip);
         Button bt_sure = (Button) mUpdateOrderDialog.findViewById(R.id.bt_sure);
         Button bt_cancel = (Button) mUpdateOrderDialog.findViewById(R.id.bt_cancel);
-        String stateString = "";
-        if(state == IConstants.sUnpaid){
-            tv_tip.setText("确认取消订单");
-            stateString = CANCEL_ORDER;
-        }else if(state == IConstants.sUnreceived){
-            tv_tip.setText("确认收货");
-            stateString = SURE_ORDER;
-        }
-        final String finalStateString = stateString;
+
+        tv_tip.setText("确认撤销退款");
+
         bt_sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                updateOrder(finalStateString,myOrderMode);
+                updateOrder(myOrderMode);
                 mUpdateOrderDialog.dismiss();
             }
         });

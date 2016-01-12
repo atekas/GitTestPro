@@ -148,7 +148,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             case R.id.sales_return:
                 //TODO 退货单
                 if(checkLogin()) {
-                    startActivity(new Intent(mParentActivity, OrderActivity.class).putExtra("type",3));
+                    startActivity(new Intent(mParentActivity, RefundOrderActivity.class));
                 }else{
                     startActivity(new Intent(mParentActivity,LoginActivity.class));
                 }

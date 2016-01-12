@@ -1,5 +1,6 @@
 package com.sensu.android.zimaogou.activity.tour;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -7,6 +8,8 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethod;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -193,6 +196,7 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
                 commentModes.clear();
                 cancelLoading();
                 JSONArray data = response.optJSONArray("data");
+
                 if (data == null || data.length() == 0) {
 
                     return;
@@ -225,6 +229,7 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
         if (userInfo == null) {
             PromptUtils.showToast("请先登录");
             startActivity(new Intent(this, LoginActivity.class));
+            return;
         }
         mBottomRelativeLayout.setVisibility(View.VISIBLE);
     }
@@ -246,6 +251,10 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 mBottomRelativeLayout.setVisibility(View.GONE);
+                PromptUtils.showToast("评论成功");
+                InputMethodManager imm;
+                imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(mCommentEditText.getWindowToken(),0);
                 getDataForComment();//刷新评论
             }
         });
