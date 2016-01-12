@@ -300,7 +300,7 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
         p.width = d.getWidth(); // 宽度设置为屏幕
         dialogWindow.setAttributes(p);
         mCommandGroupDialog.show();
-        ((TextView) mCommandGroupDialog.findViewById(R.id.group_code)).setText(mGroupDetailsResponse.data.code);
+//        ((TextView) mCommandGroupDialog.findViewById(R.id.group_code)).setText(mGroupDetailsResponse.data.code);
     }
 
     private void getGroupDetail(String id) {

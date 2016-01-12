@@ -53,7 +53,7 @@
                         android:textSize="45dp"
                         android:textStyle="bold"
                         android:textColor="@color/command_group_red_color"
-                        android:text="GN17"/>
+                        android:text=""/>
 
             </LinearLayout>
             <View android:layout_width="match_parent" android:layout_height="1px"

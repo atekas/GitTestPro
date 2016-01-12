@@ -28,6 +28,7 @@ public class ProductDetailsResponse extends BaseReqResponse {
         public String name;
         public String capacity;
         public String category_sub;
+        public String num;
 
         public PriceInterval price_interval;
         public MediaData media;

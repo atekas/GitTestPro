@@ -455,15 +455,24 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
     int mSaveNum = 0;
 
     private void layoutUi() {
-        for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
-            mSaveNum += Integer.parseInt(spec.num);
+        mSaveNum = Integer.parseInt(mProductDetailsResponse.data.num);
+        if (mProductDetailsResponse.data.state.equals("1")) {
+            if (mSaveNum < 1) {
+                findViewById(R.id.toast_num).setVisibility(View.VISIBLE);
+                findViewById(R.id.add_to_buy_bag).setEnabled(false);
+                findViewById(R.id.pay).setEnabled(false);
+            } else {
+                findViewById(R.id.toast_num).setVisibility(View.GONE);
+                findViewById(R.id.add_to_buy_bag).setEnabled(true);
+                findViewById(R.id.pay).setEnabled(true);
+            }
+        } else {
+            findViewById(R.id.toast_num).setVisibility(View.VISIBLE);
+            ((TextView) findViewById(R.id.toast_num)).setText("商品已下架，请看看其他商品吧");
+            findViewById(R.id.add_to_buy_bag).setEnabled(false);
+            findViewById(R.id.pay).setEnabled(false);
         }
 
-        if (mSaveNum < 1) {
-            findViewById(R.id.toast_num).setVisibility(View.VISIBLE);
-        } else {
-            findViewById(R.id.toast_num).setVisibility(View.GONE);
-        }
 
         ((PullPushScrollView) findViewById(R.id.product_detail_top)).setProductDetailsResponse(mProductDetailsResponse);
         mProductSpecificationAdapter.setProductDetailData(mProductDetailsResponse.data);
@@ -506,12 +515,14 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                     PromptUtils.showToast(response.optString("msg"));
                     return;
                 }
+                PromptUtils.showToast("商品已加入购物车");
+                findViewById(R.id.cart_num).setVisibility(View.VISIBLE);
+                mCartNum += Integer.parseInt(num);
+                ((TextView) findViewById(R.id.cart_num)).setText(mCartNum + "");
+
                 if (mChooseDialog != null) {
                     mChooseDialog.dismiss();
                 }
-                findViewById(R.id.cart_num).setVisibility(View.VISIBLE);
-                ((TextView) findViewById(R.id.cart_num)).setText(mCartNum + Integer.parseInt(num) + "");
-                PromptUtils.showToast("加入购物车成功");
             }
 
             @Override
