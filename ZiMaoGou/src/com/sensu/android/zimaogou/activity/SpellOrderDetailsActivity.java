@@ -40,11 +40,11 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
     private String mUid;
     private String mToken;
     private String mButtonStatue;
+    private String mRightButtonStatue;
 
     private LinearLayout mUserHeadContainer;
     private UserInfo mUserInfo;
     private TimeCount mTimeCount;
-    private boolean mIsGroupFinish;
 
     private TextView mOldPriceText;
 
@@ -82,8 +82,6 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
     }
 
     private void initDetailData() {
-        mTimeCount = new TimeCount(getTimeDifference(mGroupDetailsResponse.data.end_time), 1000);
-        mTimeCount.start();
         ((TextView) findViewById(R.id.spell_order_name)).setText(mGroupDetailsResponse.data.name);
         ImageUtils.displayImage(mGroupDetailsResponse.data.media, ((ImageView) findViewById(R.id.group_pic)));
         ((TextView) findViewById(R.id.product_name)).setText(mGroupDetailsResponse.data.name);
@@ -105,7 +103,34 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
 
     private void isJoinGroup() {
         if (mGroupDetailsResponse.data.state.equals("1")) {
+            mTimeCount = new TimeCount(getTimeDifference(mGroupDetailsResponse.data.end_time), 1000);
+            mTimeCount.start();
             //todo 正常
+            if (mGroupDetailsResponse.data.is_join.equals("0")) {
+                ((TextView) findViewById(R.id.group_info)).setText("已有" + mGroupDetailsResponse.data.member_num + "人参团");
+                mButtonStatue = "0";
+                mRightButtonStatue = "1";
+            } else if (mGroupDetailsResponse.data.is_join.equals("1")) {
+                getMember(mGroupDetailsResponse.data.code);
+                ((TextView) findViewById(R.id.group_info)).setText("已有" + mGroupDetailsResponse.data.member_num + "人参团 上限" + mGroupDetailsResponse.data.max_num + "人");
+
+                int minNum = Integer.parseInt(mGroupDetailsResponse.data.min_num);
+                int memberNum = Integer.parseInt(mGroupDetailsResponse.data.member_num);
+                if (memberNum >= minNum) {
+                    mButtonStatue = "1";
+                    mHaveCodeView.setText("立即购买");
+                    mJoinGroupView.setText("组团成功");
+                } else {
+                    mButtonStatue = "2";
+                    mHaveCodeView.setText("换个口令");
+                    mJoinGroupView.setText("退出此团");
+                }
+
+                mRightButtonStatue = "2";
+                mNoCodeView.setText("本团口令:" + mGroupDetailsResponse.data.code);
+                mWantGroupView.setText("邀请更多人");
+            }
+
         } else if (mGroupDetailsResponse.data.state.equals("2")) {
             //todo 已结束
             findViewById(R.id.show_time_count).setVisibility(View.GONE);
@@ -115,33 +140,19 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
             mNoCodeView.setText("已结束");
             mWantGroupView.setVisibility(View.GONE);
 
-            mIsGroupFinish = true;
             mButtonStatue = "3";
+            mRightButtonStatue = "3";
         } else if (mGroupDetailsResponse.data.state.equals("3")) {
             //todo 已卖光
-        }
+            findViewById(R.id.show_time_count).setVisibility(View.GONE);
+            mHaveCodeView.setText("去别的团逛逛");
+            mJoinGroupView.setVisibility(View.GONE);
 
-        if (mGroupDetailsResponse.data.is_join.equals("0")) {
-            ((TextView) findViewById(R.id.group_info)).setText("已有" + mGroupDetailsResponse.data.member_num + "人参团");
-            mButtonStatue = "0";
-        } else if (mGroupDetailsResponse.data.is_join.equals("1")) {
-            getMember(mGroupDetailsResponse.data.code);
-            ((TextView) findViewById(R.id.group_info)).setText("已有" + mGroupDetailsResponse.data.member_num + "人参团 上限" + mGroupDetailsResponse.data.max_num + "人");
+            mNoCodeView.setText("已卖光");
+            mWantGroupView.setVisibility(View.GONE);
 
-            int minNum = Integer.parseInt(mGroupDetailsResponse.data.min_num);
-            int memberNum = Integer.parseInt(mGroupDetailsResponse.data.member_num);
-            if (memberNum >= minNum) {
-                mButtonStatue = "1";
-                mHaveCodeView.setText("立即购买");
-                mJoinGroupView.setText("组团成功");
-            } else {
-                mButtonStatue = "2";
-                mHaveCodeView.setText("换个口令");
-                mJoinGroupView.setText("退出此团");
-            }
-
-            mNoCodeView.setText("本团口令:" + mGroupDetailsResponse.data.code);
-            mWantGroupView.setText("邀请更多人");
+            mButtonStatue = "3";
+            mRightButtonStatue = "3";
         }
     }
 
@@ -188,10 +199,12 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
                     return;
                 }
 
-                if (mGroupDetailsResponse.data.is_join.equals("1")) {
+                if (mRightButtonStatue.equals("1")) {
                     createGroup();
-                } else {
+                } else if (mRightButtonStatue.equals("2")) {
                     commandGroup();
+                } else if (mRightButtonStatue.equals("3")) {
+
                 }
                 break;
             case R.id.command_input:
@@ -300,7 +313,9 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
         p.width = d.getWidth(); // 宽度设置为屏幕
         dialogWindow.setAttributes(p);
         mCommandGroupDialog.show();
-//        ((TextView) mCommandGroupDialog.findViewById(R.id.group_code)).setText(mGroupDetailsResponse.data.code);
+        if (!android.text.TextUtils.isEmpty(mGroupDetailsResponse.data.code)) {
+            ((TextView) mCommandGroupDialog.findViewById(R.id.group_code)).setText(mGroupDetailsResponse.data.code);
+        }
     }
 
     private void getGroupDetail(String id) {
@@ -474,7 +489,7 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
             mWantGroupView.setVisibility(View.GONE);
 
             mButtonStatue = "3";
-            mIsGroupFinish = true;
+            mRightButtonStatue = "3";
         }
     }
 }
