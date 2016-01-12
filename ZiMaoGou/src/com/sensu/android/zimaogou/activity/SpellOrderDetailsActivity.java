@@ -106,6 +106,9 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
             mTimeCount = new TimeCount(getTimeDifference(mGroupDetailsResponse.data.end_time), 1000);
             mTimeCount.start();
             //todo 正常
+
+            mJoinGroupView.setVisibility(View.VISIBLE);
+            mWantGroupView.setVisibility(View.VISIBLE);
             if (mGroupDetailsResponse.data.is_join.equals("0")) {
                 ((TextView) findViewById(R.id.group_info)).setText("已有" + mGroupDetailsResponse.data.member_num + "人参团");
                 mButtonStatue = "0";
@@ -134,7 +137,7 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
         } else if (mGroupDetailsResponse.data.state.equals("2")) {
             //todo 已结束
             findViewById(R.id.show_time_count).setVisibility(View.GONE);
-            mHaveCodeView.setText("去别的团逛逛");
+            mHaveCodeView.setText("逛逛其他团");
             mJoinGroupView.setVisibility(View.GONE);
 
             mNoCodeView.setText("已结束");
@@ -143,12 +146,23 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
             mButtonStatue = "3";
             mRightButtonStatue = "3";
         } else if (mGroupDetailsResponse.data.state.equals("3")) {
-            //todo 已卖光
+            //todo 已抢光
             findViewById(R.id.show_time_count).setVisibility(View.GONE);
-            mHaveCodeView.setText("去别的团逛逛");
+            mHaveCodeView.setText("逛逛其他团");
             mJoinGroupView.setVisibility(View.GONE);
 
-            mNoCodeView.setText("已卖光");
+            mNoCodeView.setText("已抢光");
+            mWantGroupView.setVisibility(View.GONE);
+
+            mButtonStatue = "3";
+            mRightButtonStatue = "3";
+        } else if (mGroupDetailsResponse.data.state.equals("4")) {
+            // 已经购买
+            findViewById(R.id.show_time_count).setVisibility(View.GONE);
+            mHaveCodeView.setText("逛逛其他团");
+            mJoinGroupView.setVisibility(View.GONE);
+
+            mNoCodeView.setText("已购买");
             mWantGroupView.setVisibility(View.GONE);
 
             mButtonStatue = "3";
@@ -482,7 +496,7 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
                 mTimeCount.cancel();
             }
             findViewById(R.id.show_time_count).setVisibility(View.GONE);
-            mHaveCodeView.setText("去别的团逛逛");
+            mHaveCodeView.setText("逛逛其他团");
             mJoinGroupView.setVisibility(View.GONE);
 
             mNoCodeView.setText("已结束");
