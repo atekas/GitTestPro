@@ -1,9 +1,32 @@
 package com.sensu.android.zimaogou;
 
+import com.sensu.android.zimaogou.utils.FileUtils;
+
 /**
  * Created by zhangwentao on 2015/12/7.
  */
 public class IConstants {
+
+    /**
+     * 默认时长
+     */
+    public static  int DEFAULT_DURATION_LIMIT = 15;
+    /**
+     * 默认码率
+     */
+    public static  int DEFAULT_BITRATE =2000 * 1000;
+    /**
+     * 默认Video保存路径，请开发者自行指定
+     */
+    public static  String VIDEOPATH = FileUtils.newOutgoingFilePath();
+    /**
+     * 默认缩略图保存路径，请开发者自行指定
+     */
+    public static  String THUMBPATH =  VIDEOPATH + ".jpg";
+    /**
+     * 水印本地路径，文件必须为rgba格式的PNG图片
+     */
+    public static  String WATER_MARK_PATH ="res://drawable-xhdpi/head_pic_default.png";
 
     //ping++支付页面
     public static final String EXTRA_CHARGE = "com.pingplusplus.android.PaymentActivity.CHARGE";
@@ -26,6 +49,9 @@ public class IConstants {
 
     public static final int EXCEPTION_MY_GROUP_IS_NULL = 9;//我的团购商品为空
 
+    public static final int sUnpaid = 1;//待付款
+    public static final int sUnreceived = 2;//待收货
+    public static final int sReceived = 3;//已收货
     //获取时间戳
     public static final String sTimeStamp = "comm/timestamp";
     //验证短信验证码
@@ -43,7 +69,7 @@ public class IConstants {
     //退出登录
     public static final String sLoginOut = "user/loginout";
     //忘记密码
-    public static final String sForgetPass = "user/password_modify";
+    public static final String sForgetPass = "user/password_forget";
     //修改用户信息
     public static final String sUpdateUserInfo = "user";
     //关于我们
@@ -90,6 +116,7 @@ public class IConstants {
     public static final String sGetBanner = "comm/banner";
     //订单
     public static final String sOrder = "order";
+
     //运费规则
     public static final String sExpressRule = "conf/express_rule";
 

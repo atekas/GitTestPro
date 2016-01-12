@@ -89,9 +89,11 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:maxLines="3"
+            android:ellipsize="end"
             android:textColor="@color/black_333333"
             android:textSize="15sp"
-            android:text="产品大升级啦！ 明明白白消费！按国家旅游法规定：一价全包！拥抱大海，岛海相映，海天相依，度假首选！—来韩国最美海岛—济州岛旅游吧！"/>
+            android:text=""/>
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -112,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/red"
                 android:layout_marginLeft="5dp"
-                android:text="美国 美食"/>
+                android:text=""/>
 
     </LinearLayout>
 

@@ -169,6 +169,7 @@ public class CouponActivity extends BaseActivity implements AdapterView.OnItemCl
                 mCouponInvalidListAdapter.setCouponData(couponResponse.mCannotUseCouponList);
                 mCanUseCouponList = couponResponse.mNoUseCouponList;
                 UiUtils.setListViewHeightBasedOnChilds(mValidListView);
+                UiUtils.setListViewHeightBasedOnChilds(mInvalidListView);
                 if(couponResponse.mCannotUseCouponList.size() == 0){
                     mTipRelative.setVisibility(View.GONE);
                 }else{

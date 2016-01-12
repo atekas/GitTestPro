@@ -14,6 +14,15 @@ public class MyOrderGoodsMode implements Serializable{
     private String price;
     private String num;
     private String spec;
+    private String source;
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
 
     public String getSpec() {
         return spec;

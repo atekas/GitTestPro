@@ -114,7 +114,8 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            ImageUtils.displayImage("file://" + coverUrl, (ImageView) findViewById(R.id.video_cover));
+//            coverUrl = getIntent().getExtras().getString("cover");
+            ImageUtils.displayImage( coverUrl, (ImageView) findViewById(R.id.video_cover));
         } else {
             //图片
             mGridView.setVisibility(View.VISIBLE);

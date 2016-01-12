@@ -1,6 +1,7 @@
 package com.sensu.android.zimaogou.utils;
 
 import android.graphics.Bitmap;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.util.LruCache;
 import com.sensu.android.zimaogou.encrypt.MD5Utils;
@@ -8,8 +9,10 @@ import com.sensu.android.zimaogou.encrypt.MD5Utils;
 import java.io.*;
 import java.security.NoSuchAlgorithmException;
 import java.text.Collator;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -19,6 +22,52 @@ import java.util.Locale;
  * @author winter
  */
 public class FileUtils {
+    //趣拍视频工具方法
+    /**
+     * 保存路径的文件夹名称
+     */
+    public static  String DIR_NAME = "qupai_video_test";
+
+    /**
+     * 给指定的文件名按照时间命名
+     */
+    private static SimpleDateFormat OUTGOING_DATE_FORMAT =
+            new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS");
+
+    /**
+     * 得到指定的Video保存路径
+     * @return
+     */
+    public static File getDoneVideoPath() {
+        File dir = new File(Environment.getExternalStorageDirectory()
+                + File.separator + DIR_NAME);
+
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+
+        return dir;
+    }
+
+    /**
+     * 得到输出的Video保存路径
+     * @return
+     */
+    public static String newOutgoingFilePath() {
+        String str = OUTGOING_DATE_FORMAT.format(new Date());
+        String fileName = getDoneVideoPath() + File.separator
+                + "video_" + str + ".mp4";
+        return fileName;
+    }
+
+
+
+
+
+
+
+
+
 
     /**
      * 对文件排序，文件夹在前，文件在后，同类型按照名称排序

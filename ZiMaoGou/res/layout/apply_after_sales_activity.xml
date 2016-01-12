@@ -136,11 +136,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="18dp"
                 android:gravity="top|left"
-                android:singleLine="true"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:inputType="numberDecimal"
-                android:textColorHint="@color/hint_color"
                 android:textColor="@color/black_222222"
                 android:background="@null"/>
     </RelativeLayout>

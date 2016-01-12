@@ -3,6 +3,7 @@ package com.sensu.android.zimaogou;
 import android.app.Application;
 import android.app.Notification;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
@@ -10,6 +11,7 @@ import android.widget.RemoteViews;
 import android.widget.Toast;
 import com.sensu.android.zimaogou.Mode.ProvinceMode;
 import com.sensu.android.zimaogou.ReqResponse.AddressResponse;
+import com.sensu.android.zimaogou.activity.BaseActivity;
 import com.sensu.android.zimaogou.external.greendao.dao.DaoMaster;
 import com.sensu.android.zimaogou.external.greendao.dao.DaoSession;
 import com.sensu.android.zimaogou.handler.CustomNotificationHandler;
@@ -28,7 +30,7 @@ import java.io.File;
  *
  * @author winter
  */
-public class BaseApplication extends Application {
+public class BaseApplication extends Application{
 
     public static String DB_NAME = "zimaogou_db";
 
@@ -48,6 +50,9 @@ public class BaseApplication extends Application {
     public static ProvinceMode mChooseAddress ;
 
     public static AddressResponse addressResponse;
+
+
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -165,6 +170,52 @@ public class BaseApplication extends Application {
 		};*/
         CustomNotificationHandler notificationClickHandler = new CustomNotificationHandler();
         mPushAgent.setNotificationClickHandler(notificationClickHandler);
+
+
+//        //趣拍初始化
+//        /**
+//         * 集成必须要做的初始化
+//         */
+//        AlibabaSDK.turnOnDebug();
+//        AlibabaSDK.asyncInit(this, new InitResultCallback() {
+//            @Override
+//            public void onSuccess() {
+//                Toast.makeText(BaseApplication.this, "初始化成功 ", Toast.LENGTH_SHORT)
+//                        .show();
+//                QupaiService qupaiService = AlibabaSDK
+//                        .getService(QupaiService.class);
+//
+////                Intent moreMusic = new Intent();
+//                //是否需要更多音乐页面--如果不需要填空
+////                moreMusic.setClass(BaseApplication.this, MoreMusicActivity.class);
+//
+//                VideoSessionCreateInfo info = new VideoSessionCreateInfo.Builder()
+//                        .setOutputDurationLimit(IConstants.DEFAULT_DURATION_LIMIT)
+//                        .setOutputVideoBitrate(IConstants.DEFAULT_BITRATE)
+//                        .setHasImporter(true)
+//                        .setWaterMarkPath(IConstants.WATER_MARK_PATH)
+//                        .setWaterMarkPosition(1)
+//                        .setHasEditorPage(true)
+//                        .build();
+//
+////                qupaiService.hasMroeMusic(moreMusic);
+//
+////                if (qupaiService != null) {
+////                    qupaiService.addMusic(0, "Athena", "assets://Qupai/music/Athena");
+////                    qupaiService.addMusic(1, "Box Clever", "assets://Qupai/music/Box Clever");
+////                    qupaiService.addMusic(2, "Byebye love", "assets://Qupai/music/Byebye love");
+////                    qupaiService.addMusic(3, "chuangfeng", "assets://Qupai/music/chuangfeng");
+////                    qupaiService.addMusic(4, "Early days", "assets://Qupai/music/Early days");
+////                    qupaiService.addMusic(5, "Faraway", "assets://Qupai/music/Faraway");
+////                }
+//            }
+//
+//            @Override
+//            public void onFailure(int i, String s) {
+//                Toast.makeText(BaseApplication.this, "初始化失败 " + s, Toast.LENGTH_SHORT)
+//                        .show();
+//            }
+//        });
 
     }
     public static void setChooseProvince(ProvinceMode provinceMode){

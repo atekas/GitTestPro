@@ -71,6 +71,7 @@
                         android:textColor="@color/black_222222"
                         android:text="订单编号"/>
                 <TextView
+                        android:id="@+id/tv_orderNo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
@@ -92,6 +93,7 @@
                         android:textColor="@color/black_222222"
                         android:text="交易状态"/>
                 <TextView
+                        android:id="@+id/tv_orderState"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
@@ -170,6 +172,7 @@
                         android:textColor="@color/black_222222"
                         android:text="配送地址"/>
                 <TextView
+                        android:id="@+id/tv_nameAndMobile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
@@ -192,6 +195,7 @@
                         android:textColor="@color/black_222222"
                         android:text="交易状态"/>
                 <TextView
+                        android:id="@+id/tv_receiverAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"

@@ -13,11 +13,57 @@ public class MyOrderMode implements Serializable {
     private String amount_express;
     private String amount_coupon;
     private String amount_tax;
+    private String amount_real;
+    private String amount_goods;
     private String deliver_address;
     private String created_at;
     private MyOrderReceiverInfo receiver_info;
     private ArrayList<MyOrderGoodsMode> goods;
     private String order_no;
+    private String state_cn;
+    private String receiver_address;
+
+    private String pay_type;
+
+    public String getAmount_goods() {
+        return amount_goods;
+    }
+
+    public void setAmount_goods(String amount_goods) {
+        this.amount_goods = amount_goods;
+    }
+
+    public String getPay_type() {
+        return pay_type;
+    }
+
+    public void setPay_type(String pay_type) {
+        this.pay_type = pay_type;
+    }
+
+    public String getAmount_real() {
+        return amount_real;
+    }
+
+    public void setAmount_real(String amount_real) {
+        this.amount_real = amount_real;
+    }
+
+    public String getReceiver_address() {
+        return receiver_address;
+    }
+
+    public void setReceiver_address(String receiver_address) {
+        this.receiver_address = receiver_address;
+    }
+
+    public String getState_cn() {
+        return state_cn;
+    }
+
+    public void setState_cn(String state_cn) {
+        this.state_cn = state_cn;
+    }
 
     public String getOrder_no() {
         return order_no;

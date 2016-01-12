@@ -37,16 +37,16 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 /**
- * 订单页面
+ * 退货单页面
  * Created by qi.yang on 2015/11/18.
  */
-public class OrderActivity extends BaseActivity {
+public class RefundOrderActivity extends BaseActivity {
     ImageView mBackImageView;
     RefreshListView mOrderListView;
 
     public int sAllOrder = 0;//全部订单
     TextView mTitleTextView;
-    int type = 0;
+    int type = 3;
     OrderListAdapter1 adapter;
     UserInfo userInfo;
     ArrayList<MyOrderMode> mOrders = new ArrayList<MyOrderMode>();
@@ -64,9 +64,7 @@ public class OrderActivity extends BaseActivity {
         setContentView(R.layout.order_activity);
 
 
-        if (getIntent().getExtras() != null) {
-            type = getIntent().getExtras().getInt("type");
-        }
+
         initView();
         getOrder();
     }
@@ -85,18 +83,8 @@ public class OrderActivity extends BaseActivity {
                 onBackPressed();
             }
         });
-        switch (type) {
-            case 1:
-                mTitleTextView.setText("待付款");
-                break;
-            case 2:
-                mTitleTextView.setText("待收货");
-                break;
-            case 3:
-                mTitleTextView.setText("退货单");
-                break;
 
-        }
+        mTitleTextView.setText("退货单");
     }
 
     private Handler mHandler = new Handler();
@@ -136,7 +124,7 @@ public class OrderActivity extends BaseActivity {
                 LogUtils.d("获取我的订单返回：", response.toString());
                 myOrderResponse = JSON.parseObject(response.toString(), MyOrderResponse.class);
                 mOrders = myOrderResponse.data;
-                adapter = new OrderListAdapter1(OrderActivity.this, mOrders);
+                adapter = new OrderListAdapter1(RefundOrderActivity.this, mOrders);
                 mOrderListView.setAdapter(adapter);
                 if (myOrderResponse.data.size() == 0) {
                     exceptionLinearLayout.setException(IConstants.EXCEPTION_ORDER_IS_NULL);
