@@ -100,7 +100,6 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
             mNoNetView.setVisibility(View.VISIBLE);
             ((ImageView) mNoNetView.findViewById(R.id.img_exception)).setImageResource(R.drawable.exception_internet);
             ((TextView) mNoNetView.findViewById(R.id.tv_exception)).setText("您的网络开了小差哦");
-            return;
         }
 
         mPullToRefreshLayout.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
