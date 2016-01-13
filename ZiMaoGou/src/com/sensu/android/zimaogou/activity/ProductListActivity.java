@@ -14,7 +14,9 @@ import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.ProductListResponse;
 import com.sensu.android.zimaogou.adapter.ProductsDetailsAdapter;
+import com.sensu.android.zimaogou.pullrefresh.PullToRefreshLayout;
 import com.sensu.android.zimaogou.utils.HttpUtil;
+import com.sensu.android.zimaogou.widget.ExceptionLinearLayout;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
@@ -22,7 +24,8 @@ import org.json.JSONObject;
 /**
  * Created by zhangwentao on 2015/11/17.
  */
-public class ProductListActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class ProductListActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener
+        , PullToRefreshLayout.OnRefreshListener {
 
     public static final String IS_NO_TITLE = "is_no_title";
     public static final String PRODUCT_LIST_KEYWORD = "product_list_keyword";
@@ -36,15 +39,18 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
     private boolean mIsNoTitle;
     private ProductListResponse mProductListResponse;
 
+    private PullToRefreshLayout mPullToRefreshLayout;
+    private LinearLayout mNoProductView;
+
     private String mTitle;
 
     private String mKeyword;
     private String mTag;
     private String mCategory;
     private String mOrderBy;
-    private String mPageNum = "";
-    private String mLimit = "";
-    LinearLayout ll_content;
+    private int mPageNum = 0;
+    private String mLimit = "20";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +77,10 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
         } else {
             findViewById(R.id.sort_rules_layout).setVisibility(View.VISIBLE);
         }
-        ll_content = (LinearLayout) findViewById(R.id.ll_content);
+
+        mNoProductView = (LinearLayout) findViewById(R.id.no_product);
+        mPullToRefreshLayout = (PullToRefreshLayout) findViewById(R.id.refresh_view);
+        mPullToRefreshLayout.setOnRefreshListener(this);
         findViewById(R.id.newest).setOnClickListener(this);
         findViewById(R.id.moods).setOnClickListener(this);
         findViewById(R.id.back).setOnClickListener(this);
@@ -124,21 +133,34 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
         requestParams.put("category", mCategory);
         requestParams.put("q", mKeyword);
         requestParams.put("order_by", mOrderBy);
-//        requestParams.put("page_num", mPageNum);
-//        requestParams.put("limit", mLimit);
+        requestParams.put("page_num", mPageNum);
+        requestParams.put("limit", mLimit);
         HttpUtil.get(IConstants.sGoodList, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 ProductListResponse productListResponse = JSON.parseObject(response.toString(), ProductListResponse.class);
                 mProductListResponse = productListResponse;
-                mProductsDetailsAdapter.setProductList(productListResponse);
-                if(productListResponse.data.size() == 0){
-                    exceptionLinearLayout.setException(IConstants.EXCEPTION_GOODS_IS_NULL);
-                    ll_content.addView(ExceptionView);
-                }else{
-                    ll_content.removeView(ExceptionView);
+                if (mPageNum == 0) {
+                    mProductsDetailsAdapter.clearData();
+                    mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+                } else {
+                    mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                 }
+
+                mProductsDetailsAdapter.setProductList(productListResponse);
+                if (mPageNum == 0) {
+                    if (productListResponse.data.size() == 0) {
+                        ((ExceptionLinearLayout)mNoProductView.findViewById(R.id.ll_exception)).setException(IConstants.EXCEPTION_GOODS_IS_NULL);
+                        mNoProductView.setVisibility(View.VISIBLE);
+                        mPullToRefreshLayout.setVisibility(View.GONE);
+                    } else {
+                        mNoProductView.setVisibility(View.GONE);
+                        mPullToRefreshLayout.setVisibility(View.VISIBLE);
+                    }
+                }
+
+                mPageNum++;
             }
 
             @Override
@@ -146,5 +168,16 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
                 super.onFailure(statusCode, headers, responseString, throwable);
             }
         });
+    }
+
+    @Override
+    public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
+        mPageNum = 0;
+        getProductList();
+    }
+
+    @Override
+    public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
+        getProductList();
     }
 }

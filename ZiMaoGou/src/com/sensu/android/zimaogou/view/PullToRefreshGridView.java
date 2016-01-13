@@ -37,8 +37,8 @@ public class PullToRefreshGridView extends GridView implements Pullable {
 
     @Override
     public boolean canPullUp() {
-        if (getCount() == 0) {
-            // 没有item的时候也可以上拉加载
+        if (getCount() < 4) {
+            // 没有item的时候不可以上拉加载
             return false;
         } else if (getLastVisiblePosition() == (getCount() - 1)) {
             // 滑到底部了

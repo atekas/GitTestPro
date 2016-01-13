@@ -34,6 +34,7 @@ public class ProductsDetailsAdapter extends SimpleBaseAdapter {
             .showImageOnFail(R.drawable.category_default)
             .showImageForEmptyUri(R.drawable.category_default)
             .resetViewBeforeLoading(true)
+            .cacheInMemory(true)
             .build();
 
     public ProductsDetailsAdapter(Context context) {
@@ -42,10 +43,21 @@ public class ProductsDetailsAdapter extends SimpleBaseAdapter {
     }
 
     public void setProductList(ProductListResponse productListResponse) {
-        if (productListResponse != mProductListResponse) {
+        if (mProductListResponse == null) {
             mProductListResponse = productListResponse;
+        } else {
+            if (productListResponse != null) {
+                mProductListResponse.data.addAll(productListResponse.data);
+            }
         }
+
         notifyDataSetChanged();
+    }
+
+    public void clearData() {
+        if (mProductListResponse != null) {
+            mProductListResponse.data.clear();
+        }
     }
 
     @Override
