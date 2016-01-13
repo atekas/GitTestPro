@@ -87,7 +87,7 @@ public class BaseApplication extends Application{
         NetworkTypeUtils.init(this);
 //        LogUtils.setIsLogEnable(true);
         LogUtils.setIsWriteDisk(true);
-//        AppInfoUtils.init(this);
+        AppInfoUtils.init(this);
         ImageUtils.init(this);
 
 

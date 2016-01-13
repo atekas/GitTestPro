@@ -154,4 +154,6 @@ public class IConstants {
     public static final String sMyCoupon = "my/coupon";
     //激活优惠券
     public static final String sInvokeCoupon = "my/coupon/activate";
+
+    public static final String sVersion = "android/version";
 }
