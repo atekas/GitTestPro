@@ -36,11 +36,12 @@
               android:background="@color/title_line"/>
 
     </RelativeLayout>
-    <LinearLayout
-            android:id="@+id/ll_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+
+    <include
+            android:id="@+id/no_order"
+            android:visibility="gone"
+            layout="@layout/exception_layout"/>
+
     <ListView
             android:id="@+id/bag_goods_list"
             android:layout_above="@+id/rl_bottom"
@@ -51,6 +52,5 @@
             android:listSelector="@color/transparent"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
-    </LinearLayout>
 
 </LinearLayout>

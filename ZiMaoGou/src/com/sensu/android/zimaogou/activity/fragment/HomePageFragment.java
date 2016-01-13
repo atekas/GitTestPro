@@ -106,6 +106,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         mPullToRefreshLayout.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh(final PullToRefreshLayout pullToRefreshLayout) {
+                initView();
                 new Handler() {
                     @Override
                     public void handleMessage(Message msg) {

@@ -42,6 +42,8 @@ public class ShoppingBagFragment extends BaseFragment implements View.OnClickLis
     public View ExceptionView;
     public ExceptionLinearLayout exceptionLinearLayout;
 
+    private LinearLayout mNoOrderView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.shopping_bag_fragment, container, false);
@@ -72,6 +74,7 @@ public class ShoppingBagFragment extends BaseFragment implements View.OnClickLis
             getCart();
         }
 
+        mNoOrderView = (LinearLayout) mParentActivity.findViewById(R.id.no_order);
         mListView = (ListView) mParentActivity.findViewById(R.id.bag_goods_list);
         ll_content = (LinearLayout) mParentActivity.findViewById(R.id.ll_content);
         ExceptionView = View.inflate(mParentActivity, R.layout.exception_layout, null);
@@ -117,10 +120,10 @@ public class ShoppingBagFragment extends BaseFragment implements View.OnClickLis
                 mCartDataResponse = cartDataResponse;
                 mShoppingBagAdapter.setCartDataGroup(cartDataResponse);
                 if (cartDataResponse.data.size() == 0) {
-                    exceptionLinearLayout.setException(IConstants.EXCEPTION_SHOP_IS_NULL);
-                    ll_content.addView(ExceptionView);
+                    ((ExceptionLinearLayout) mNoOrderView.findViewById(R.id.ll_exception)).setException(IConstants.EXCEPTION_SHOP_IS_NULL);
+                    mNoOrderView.setVisibility(View.VISIBLE);
                 } else {
-                    ll_content.removeView(ExceptionView);
+                    mNoOrderView.setVisibility(View.GONE);
                 }
             }
 
