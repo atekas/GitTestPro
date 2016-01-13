@@ -36,9 +36,16 @@ public class TourBuyAdapter extends SimpleBaseAdapter {
     }
 
     public void flush(ArrayList<TravelMode> travelModes){
-        this.travelModes = travelModes;
+        if (travelModes != null) {
+            this.travelModes.addAll(travelModes);
+        }
         notifyDataSetChanged();
     }
+
+    public void clearData() {
+        this.travelModes.clear();
+    }
+
     @Override
     public int getCount() {
         return travelModes.size();

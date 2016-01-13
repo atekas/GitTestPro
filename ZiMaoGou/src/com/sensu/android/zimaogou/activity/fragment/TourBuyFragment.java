@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.*;
 import com.sensu.android.zimaogou.Mode.TravelMode;
 import com.sensu.android.zimaogou.ReqResponse.TravelResponse;
@@ -56,6 +57,8 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
     private Handler mHandler = new Handler();
 
     private View mNoNetView;
+
+    private String mPostId = "0";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -95,23 +98,26 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
         @Override
         public void onDownPullRefresh() {
             //下拉刷新接口
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mTourBuyListView.hideHeaderView();
-                }
-            }, 2000);
+//            mHandler.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    mTourBuyListView.hideHeaderView();
+//                }
+//            }, 2000);
+            mPostId = "0";
+            getTravelData();
         }
 
         @Override
         public void onLoadingMore() {
             //上拉加载接口
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mTourBuyListView.hideFooterView();
-                }
-            }, 2000);
+//            mHandler.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    mTourBuyListView.hideFooterView();
+//                }
+//            }, 2000);
+            getTravelData();
         }
     };
 
@@ -121,7 +127,10 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
      */
     private void getTravelData(){
         showLoading();
-        HttpUtil.get(IConstants.sGetTravelList,new JsonHttpResponseHandler(){
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("post_id", mPostId);
+        requestParams.put("limit", "10");
+        HttpUtil.get(IConstants.sGetTravelList, requestParams, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -131,6 +140,14 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
                     travelModes.data.clear();
                 }
                 travelModes = JSON.parseObject(response.toString(),TravelResponse.class);
+                if (mPostId.equals("0")) {
+                    mTourBuyAdapter.clearData();
+                }
+                if (travelModes.data.size() > 0) {
+                    mPostId = travelModes.data.get(travelModes.data.size() - 1).getId();
+                }
+                mTourBuyListView.hideHeaderView();
+                mTourBuyListView.hideFooterView();
                 mTourBuyAdapter.flush(travelModes.data);
             }
         });
