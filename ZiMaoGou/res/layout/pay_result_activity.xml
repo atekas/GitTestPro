@@ -123,7 +123,7 @@
                     android:paddingLeft="@dimen/dip_20"
                     android:paddingRight="@dimen/dip_20"
                     android:background="@drawable/cart_botton_enable"
-                    android:text="查看订单"/>
+                    android:text="取消支付"/>
 
             <TextView
                     android:id="@+id/pay_again"
