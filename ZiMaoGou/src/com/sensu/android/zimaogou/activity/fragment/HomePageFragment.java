@@ -7,6 +7,8 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sensu.android.zimaogou.BaseApplication;
@@ -25,6 +27,7 @@ import com.sensu.android.zimaogou.activity_home.HomeVerticalLinearLayout;
 import com.sensu.android.zimaogou.pullrefresh.PullToRefreshLayout;
 import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.utils.LogUtils;
+import com.sensu.android.zimaogou.utils.NetworkTypeUtils;
 import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.sensu.android.zimaogou.widget.ImageRollView;
 import org.apache.http.Header;
@@ -56,6 +59,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     ArrayList<BannerMode> bannerModes = new ArrayList<BannerMode>();
 
     private PullToRefreshLayout mPullToRefreshLayout;
+    private View mNoNetView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -85,7 +89,20 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void initView() {
+        mNoNetView = mParentActivity.findViewById(R.id.no_net);
         mPullToRefreshLayout = (PullToRefreshLayout) mParentActivity.findViewById(R.id.refresh_view);
+
+        if (NetworkTypeUtils.isNetWorkAvailable()) {
+            mPullToRefreshLayout.setVisibility(View.VISIBLE);
+            mNoNetView.setVisibility(View.GONE);
+        } else {
+            mPullToRefreshLayout.setVisibility(View.GONE);
+            mNoNetView.setVisibility(View.VISIBLE);
+            ((ImageView) mNoNetView.findViewById(R.id.img_exception)).setImageResource(R.drawable.exception_internet);
+            ((TextView) mNoNetView.findViewById(R.id.tv_exception)).setText("您的网络开了小差哦");
+            return;
+        }
+
         mPullToRefreshLayout.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh(final PullToRefreshLayout pullToRefreshLayout) {
@@ -153,6 +170,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         mParentActivity.findViewById(R.id.ll_hotGoods).setOnClickListener(this);
         mParentActivity.findViewById(R.id.ll_latest).setOnClickListener(this);
         mParentActivity.findViewById(R.id.ll_featureVideos).setOnClickListener(this);
+        mNoNetView.findViewById(R.id.bt_reload).setOnClickListener(this);
         getAddress();
         getBanner();
     }
@@ -184,6 +202,9 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
                 intent.putExtra(ProductListActivity.PRODUCT_LIST_TAG, "2");
                 intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, "星梦奇缘");
                 startActivity(intent);
+                break;
+            case R.id.bt_reload:
+                initView();
                 break;
         }
     }

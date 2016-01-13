@@ -21,6 +21,11 @@
 
     </RelativeLayout>
 
+    <include
+            android:id="@+id/no_net"
+            android:visibility="gone"
+            layout="@layout/exception_layout"/>
+
     <com.sensu.android.zimaogou.pullrefresh.PullToRefreshLayout
             android:id="@+id/refresh_view"
             android:layout_width="match_parent"

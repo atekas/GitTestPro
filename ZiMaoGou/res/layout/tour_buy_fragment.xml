@@ -35,6 +35,11 @@
             android:layout_height="2px"
             android:background="#e5e5e5" />
 
+    <include
+            android:id="@+id/tour_no_net"
+            android:visibility="gone"
+            layout="@layout/exception_layout"/>
+
     <com.sensu.android.zimaogou.widget.RefreshListView
             android:id="@+id/tour_list"
             android:layout_width="match_parent"

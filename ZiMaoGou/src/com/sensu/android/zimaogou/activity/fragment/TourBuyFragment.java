@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.*;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ import com.sensu.android.zimaogou.adapter.TourBuyAdapter;
 import com.sensu.android.zimaogou.photoalbum.PhotoInfo;
 import com.sensu.android.zimaogou.utils.AppConfig;
 import com.sensu.android.zimaogou.utils.HttpUtil;
+import com.sensu.android.zimaogou.utils.NetworkTypeUtils;
 import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.sensu.android.zimaogou.widget.OnRefreshListener;
 import com.sensu.android.zimaogou.widget.RefreshListView;
@@ -53,6 +55,8 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
     TravelResponse travelModes = new TravelResponse();
     private Handler mHandler = new Handler();
 
+    private View mNoNetView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.tour_buy_fragment, container, false);
@@ -66,7 +70,7 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     protected void initView() {
-        showLoading();
+        mNoNetView = mParentActivity.findViewById(R.id.tour_no_net);
         mParentActivity.findViewById(R.id.tour_buy_send).setOnClickListener(this);
         mTourBuyListView = (RefreshListView) mParentActivity.findViewById(R.id.tour_list);
         mTourBuyAdapter = new TourBuyAdapter(mParentActivity);
@@ -74,6 +78,17 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
 
         mTourBuyListView.setOnRefreshListener(mOnRefreshListener);
         mTourBuyListView.setOnItemClickListener(this);
+        mNoNetView.findViewById(R.id.bt_reload).setOnClickListener(this);
+
+        if (NetworkTypeUtils.isNetWorkAvailable()) {
+            mTourBuyListView.setVisibility(View.VISIBLE);
+            mNoNetView.setVisibility(View.GONE);
+        } else {
+            mTourBuyListView.setVisibility(View.GONE);
+            mNoNetView.setVisibility(View.VISIBLE);
+            ((ImageView) mNoNetView.findViewById(R.id.img_exception)).setImageResource(R.drawable.exception_internet);
+            ((TextView) mNoNetView.findViewById(R.id.tv_exception)).setText("您的网络开了小差哦");
+        }
     }
 
     private OnRefreshListener mOnRefreshListener = new OnRefreshListener() {
@@ -105,7 +120,7 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
      * 获取游购数据
      */
     private void getTravelData(){
-
+        showLoading();
         HttpUtil.get(IConstants.sGetTravelList,new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -139,7 +154,9 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onResume() {
         super.onResume();
-        getTravelData();
+        if (NetworkTypeUtils.isNetWorkAvailable()) {
+            getTravelData();
+        }
     }
 
     @Override
@@ -170,6 +187,18 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
                 Intent intent = new Intent(mParentActivity, LocalPhotoActivity.class);
                 TourBuyFragment.this.startActivityForResult(intent, CHOOSE_PHOTO_CODE);
                 mTourBuyChooseDialog.dismiss();
+                break;
+            case R.id.bt_reload:
+                if (NetworkTypeUtils.isNetWorkAvailable()) {
+                    mTourBuyListView.setVisibility(View.VISIBLE);
+                    mNoNetView.setVisibility(View.GONE);
+                    getTravelData();
+                } else {
+                    mTourBuyListView.setVisibility(View.GONE);
+                    mNoNetView.setVisibility(View.VISIBLE);
+                    ((ImageView) mNoNetView.findViewById(R.id.img_exception)).setImageResource(R.drawable.exception_internet);
+                    ((TextView) mNoNetView.findViewById(R.id.tv_exception)).setText("您的网络开了小差哦");
+                }
                 break;
         }
     }
