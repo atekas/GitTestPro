@@ -78,15 +78,15 @@ public class WebViewActivity extends BaseActivity {
 //		 webview.getSettings().setDefaultZoom(zoomDensity);
 //		 webview.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
 		 if(title.indexOf("用户协议")>=0){
-			 URL= "http://www.sensu-sh.com/";
+			 URL= "http://139.196.108.137:80/v1/user/register_agreement";
 			 webview.loadUrl(URL);
 		 }else if(title.indexOf("关于")>= 0){
 			 URL= "http://www.sensu-sh.com/";
 
 			 URL = "http://"+getIntent().getExtras().getString("url");
 			 webview.loadUrl(URL);
-		 }else if(title.indexOf("购物须知") >= 0){
-			 URL= "http://www.sensu-sh.com/";
+		 }else if(title.indexOf("诞生秘密") >= 0){
+			 URL= "http://139.196.108.137:80/v1/user/shop_notice";
 
 			 webview.loadUrl(URL);
 		 }else if(title.indexOf("专题")>=0){
