@@ -1,5 +1,6 @@
 package com.sensu.android.zimaogou.activity;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -9,13 +10,21 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.fragment.*;
+import com.sensu.android.zimaogou.utils.AppInfoUtils;
 import com.sensu.android.zimaogou.utils.DisplayUtils;
+import com.sensu.android.zimaogou.utils.HttpUtil;
+import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.umeng.common.message.UmengMessageDeviceConfig;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.MsgConstant;
 import com.umeng.message.PushAgent;
+import org.apache.http.Header;
+import org.json.JSONObject;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -48,6 +57,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        updateApp();
         mPushAgent = PushAgent.getInstance(this);
 		mPushAgent.setPushCheck(true);    //默认不检查集成配置文件
 //		mPushAgent.setLocalNotificationIntervalLimit(false);  //默认本地通知间隔最少是10分钟
@@ -259,5 +269,46 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if (hasFocus) {
             DisplayUtils.setActivity(this);
         }
+    }
+
+    private void updateApp() {
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("uid", "0");
+        requestParams.put("version", AppInfoUtils.getVersionName());
+
+        HttpUtil.get(IConstants.sVersion, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                if (response.optString("ret").equals("-1")) {
+                    return;
+                }
+                String version = response.optJSONObject("data").optString("version_number");
+                if (AppInfoUtils.getVersionName().equals(version)) {
+                    //版本号一致
+                } else {
+                    PromptUtils.showToast("有新版本");
+                    if (response.optJSONObject("data").optString("is_force_update").equals("1")) {
+                        //需要强制升级
+                        showUpdateAppInfo();
+                    } else {
+                        //用户选择升级
+                        showUpdateAppInfo();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
+    }
+
+    private void showUpdateAppInfo() {
+        Dialog dialog = new Dialog(this, R.style.dialog);
+        dialog.setContentView(R.layout.update_app_version);
+        dialog.setCancelable(true);
+        dialog.show();
     }
 }

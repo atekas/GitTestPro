@@ -227,6 +227,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
                 super.onSuccess(statusCode, headers, response);
                 bannerResponse = JSON.parseObject(response.toString(), BannerResponse.class);
                 bannerModes = bannerResponse.data;
+                list.clear();
                 for (BannerMode bannerMode : bannerModes) {
                     list.add(bannerMode.getImage());
                 }

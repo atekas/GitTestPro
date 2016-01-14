@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.WindowManager;
 import com.sensu.android.zimaogou.R;
-import com.sensu.android.zimaogou.service.UpdateAppService;
 
 /**
  * Created by zhangwentao on 2016/1/11.
@@ -26,8 +25,6 @@ public class LaunchActivity extends BaseActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.launch_activity);
-
-        startService(new Intent(this, UpdateAppService.class));
 
         if (isFirst()) {
             mHandler.sendEmptyMessageDelayed(GO_GUIDE, 2000);
