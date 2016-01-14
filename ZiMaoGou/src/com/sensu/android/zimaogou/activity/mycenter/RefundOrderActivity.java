@@ -294,12 +294,10 @@ public class RefundOrderActivity extends BaseActivity {
      */
     private int divisiveState(int state) {
         int code = 0;
-        if (state == 0) {
-            code = IConstants.sUnpaid;
-        } else if (state >= 1 && state <= 3) {
-            code = IConstants.sUnreceived;
+        if (state == 1) {
+            code = agreeRefundGoods;
         } else {
-            code = IConstants.sReceived;
+            code = agreeRefundMoney;
         }
         return code;
     }

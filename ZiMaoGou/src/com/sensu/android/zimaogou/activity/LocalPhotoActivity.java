@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.sensu.android.zimaogou.BaseApplication;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.activity.mycenter.ApplySalesAfterActivity;
 import com.sensu.android.zimaogou.activity.tour.TourBuySendActivity;
 import com.sensu.android.zimaogou.activity.tour.TourSendData;
 import com.sensu.android.zimaogou.adapter.LocalPhotoAdapter;
@@ -33,17 +34,28 @@ public class LocalPhotoActivity extends BaseActivity implements LocationPhotoLis
 
     public static final String SELECT_PHOTOS = "select_photos";
     public static final int TAKE_PHOTO_CODE = 1;
+    public static final int REFUND_CODE = 1001;
+    public static final int COMMENT_CODE = 1002;
+
 
     private LocalPhotoAdapter mLocalPhotoAdapter;
     private List<PhotoInfo> mPhotoInfoList = new ArrayList<PhotoInfo>();
     private List<PhotoInfo> mSelectPhotoList = new ArrayList<PhotoInfo>();
     private View mHeadView;
-
+    int code = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.local_photo_activity);
-
+        if(getIntent().getExtras() != null ){
+            code = getIntent().getExtras().getInt("code");
+        }
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         initViews();
     }
 
@@ -155,7 +167,11 @@ public class LocalPhotoActivity extends BaseActivity implements LocationPhotoLis
                 for (PhotoInfo photoInfo : mSelectPhotoList) {
                     TourSendData.picDataList.add(photoInfo);
                 }
-
+                if(code == REFUND_CODE){
+                    Intent refundIntent = new Intent(this, ApplySalesAfterActivity.class);
+                    setResult(RESULT_OK,refundIntent);
+                    finish();
+                }
                 Intent intent = new Intent(this, TourBuySendActivity.class);
                 intent.putExtra(TourBuySendActivity.IS_VIDEO, false);
 //                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);

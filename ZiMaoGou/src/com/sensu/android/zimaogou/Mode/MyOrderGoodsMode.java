@@ -15,6 +15,24 @@ public class MyOrderGoodsMode implements Serializable{
     private String num;
     private String spec;
     private String source;
+    private String gid;
+    private String spec_id;
+
+    public String getSpec_id() {
+        return spec_id;
+    }
+
+    public void setSpec_id(String spec_id) {
+        this.spec_id = spec_id;
+    }
+
+    public String getGid() {
+        return gid;
+    }
+
+    public void setGid(String gid) {
+        this.gid = gid;
+    }
 
     public String getSource() {
         return source;

@@ -59,14 +59,15 @@ public class OrderChildListAdapter extends SimpleBaseAdapter {
         productsViewHolder.tv_productName.setText(mProducts.get(i).getName());
         productsViewHolder.tv_productNum.setText("x"+mProducts.get(i).getNum());
         productsViewHolder.tv_spc.setText(mProducts.get(i).getSpec());
-
-        if(type == 3){
-            productsViewHolder.ll_refund.setVisibility(View.VISIBLE);
-            productsViewHolder.tv_productPrice.setVisibility(View.GONE);
-        }else{
-            productsViewHolder.ll_refund.setVisibility(View.GONE);
-            productsViewHolder.tv_productPrice.setVisibility(View.VISIBLE);
-        }
+        productsViewHolder.ll_refund.setVisibility(View.GONE);
+        productsViewHolder.tv_productPrice.setVisibility(View.VISIBLE);
+//        if(type == 3){
+//            productsViewHolder.ll_refund.setVisibility(View.VISIBLE);
+//            productsViewHolder.tv_productPrice.setVisibility(View.GONE);
+//        }else{
+//            productsViewHolder.ll_refund.setVisibility(View.GONE);
+//            productsViewHolder.tv_productPrice.setVisibility(View.VISIBLE);
+//        }
 
         return view;
     }

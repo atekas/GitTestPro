@@ -237,6 +237,13 @@ public class OrderActivity extends BaseActivity {
             } else {
                 viewHolder.bt_cancel.setVisibility(View.GONE);
                 viewHolder.bt_submit.setText("评价");
+                viewHolder.bt_submit.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View view) {
+                            mContext.startActivity(new Intent(mContext, RefundOrCommentActivity.class).putExtra("type", 1));
+                        }
+                    });
             }
 //                    viewHolder.bt_comment.setOnClickListener(new View.OnClickListener() {
 //
@@ -254,7 +261,7 @@ public class OrderActivity extends BaseActivity {
             viewHolder.tv_orderNo.setText(mOrders.get(i).getOrder_no());
             viewHolder.tv_freight.setText("(含运费：￥" + mOrders.get(i).getAmount_express() + ")");
 
-            OrderChildListAdapter adapter = new OrderChildListAdapter(mContext, mOrders.get(i).getGoods(), mOrders.get(i).getState());
+            OrderChildListAdapter adapter = new OrderChildListAdapter(mContext, mOrders.get(i).getGoods(), state);
             viewHolder.lv_products.setDivider(null);
             viewHolder.lv_products.setAdapter(adapter);
             adapter.flush(mOrders.get(i).getGoods());
