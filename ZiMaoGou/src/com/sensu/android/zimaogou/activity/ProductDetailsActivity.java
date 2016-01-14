@@ -188,8 +188,10 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
     }
 
     private void initViews() {
+        mUserInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
         mProductId = getIntent().getStringExtra(PRODUCT_ID);
         mSource = getIntent().getStringExtra(FROM_SOURCE);
+        mThemeId = getIntent().getStringExtra(THEME_ID);
         if (mProductId != null) {
             getProductById(mProductId, mSource);
         }
@@ -431,6 +433,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         final RequestParams requestParams = new RequestParams();
         requestParams.put("id", productId);
         requestParams.put("source", source);
+        requestParams.put("uid", mUserInfo == null ? 0 : mUserInfo.getUid());
 
         HttpUtil.get(IConstants.sProduct_detail + productId, requestParams, new JsonHttpResponseHandler() {
             @Override

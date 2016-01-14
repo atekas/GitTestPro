@@ -10,6 +10,7 @@ public class ThemeDetailResponse {
     public List<ThemeDetailData> data;
 
     public class ThemeDetailData {
+        public String theme_id;
         public String id;
         public String source;
         public String name;
