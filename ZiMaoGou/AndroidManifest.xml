@@ -135,6 +135,7 @@
     <application android:label="@string/app_name"
                  android:allowBackup="false"
                  android:hardwareAccelerated="true"
+                 android:icon="@drawable/zimaogou_icon"
                  android:theme="@android:style/Theme.NoTitleBar"
                  android:name="com.sensu.android.zimaogou.BaseApplication">
 
