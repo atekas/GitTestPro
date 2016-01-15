@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ListView;
 import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -21,6 +20,8 @@ import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.utils.PromptUtils;
+import com.sensu.android.zimaogou.widget.OnRefreshListener;
+import com.sensu.android.zimaogou.widget.RefreshListView;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
@@ -32,7 +33,10 @@ public class SpellOrderActivity extends BaseActivity implements View.OnClickList
 
     public String mIsMyTbList = "0";
 
-    private ListView mListView;
+    private int mTbLListPageCount = 0;
+    private int mMyListPageCount = 0;
+
+    private RefreshListView mListView;
     private SpellOrderAdapter mSpellOrderAdapter;
     private GroupBuyListResponse mGroupBuyListResponse;
     private UserInfo mUserInfo;
@@ -59,7 +63,28 @@ public class SpellOrderActivity extends BaseActivity implements View.OnClickList
         findViewById(R.id.my_group_buy).setOnClickListener(this);
         findViewById(R.id.group_buy_selection_text).setSelected(true);
         content_view = (FrameLayout) findViewById(R.id.content_view);
-        mListView = (ListView) findViewById(R.id.group_buy_list);
+        mListView = (RefreshListView) findViewById(R.id.group_buy_list);
+        mListView.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onDownPullRefresh() {
+                if (mIsMyTbList.equals("0")) {
+                    mTbLListPageCount = 0;
+                    getTbList();
+                } else {
+                    mMyListPageCount = 0;
+                    getMyTbList();
+                }
+            }
+
+            @Override
+            public void onLoadingMore() {
+                if (mIsMyTbList.equals("0")) {
+                    getTbList();
+                } else {
+                    getMyTbList();
+                }
+            }
+        });
         mSpellOrderAdapter = new SpellOrderAdapter(this);
         mListView.setAdapter(mSpellOrderAdapter);
         mListView.setOnItemClickListener(this);
@@ -82,7 +107,6 @@ public class SpellOrderActivity extends BaseActivity implements View.OnClickList
                 if (mIsMyTbList.equals("1")) {
                     getTbList();
                 }
-                mIsMyTbList = "0";
                 break;
             case R.id.my_group_buy:
                 findViewById(R.id.group_buy_selection_text).setSelected(false);
@@ -128,7 +152,7 @@ public class SpellOrderActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        GroupBuyListResponse.GroupBuyListData groupBuyListData = mGroupBuyListResponse.data.get(i);
+        GroupBuyListResponse.GroupBuyListData groupBuyListData = mGroupBuyListResponse.data.get(i - 1);
         Intent intent = new Intent(this, SpellOrderDetailsActivity.class);
         intent.putExtra(TB_ID, groupBuyListData.id);
         startActivity(intent);
@@ -144,6 +168,8 @@ public class SpellOrderActivity extends BaseActivity implements View.OnClickList
         }
         RequestParams requestParams = new RequestParams();
         requestParams.put("uid", uid);
+        requestParams.put("page_num", mTbLListPageCount);
+        requestParams.put("limit", "10");
         HttpUtil.get(IConstants.sTb_list, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -154,13 +180,19 @@ public class SpellOrderActivity extends BaseActivity implements View.OnClickList
                     return;
                 }
                 mGroupBuyListResponse = groupBuyListResponse;
+                if (mIsMyTbList.equals("1") || mTbLListPageCount == 0) {
+                    mSpellOrderAdapter.clearData();
+                }
                 mSpellOrderAdapter.setGroupBuyList(groupBuyListResponse);
+                mListView.hideFooterView();
+                mListView.hideHeaderView();
                 if(groupBuyListResponse.data.size() == 0){
                     exceptionLinearLayout.setException(IConstants.EXCEPTION_MY_GROUP_IS_NULL);
                     content_view.addView(ExceptionView);
                 }else{
                     content_view.removeView(ExceptionView);
                 }
+                mIsMyTbList = "0";
             }
 
             @Override
@@ -173,25 +205,32 @@ public class SpellOrderActivity extends BaseActivity implements View.OnClickList
     private void getMyTbList() {
         RequestParams requestParams = new RequestParams();
         requestParams.put("uid", mUserInfo.getUid());
-
+        requestParams.put("page_num", mMyListPageCount);
+        requestParams.put("limit", "10");
         HttpUtil.getWithSign(mUserInfo.getToken(), IConstants.sMyTb_list, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-
                 GroupBuyListResponse groupBuyListResponse = JSON.parseObject(response.toString(), GroupBuyListResponse.class);
                 if (groupBuyListResponse.getRet().equals("-1")) {
                     PromptUtils.showToast(groupBuyListResponse.getMsg());
                     return;
                 }
                 mGroupBuyListResponse = groupBuyListResponse;
+                if (mIsMyTbList.equals("0") || mTbLListPageCount == 0) {
+                    mSpellOrderAdapter.clearData();
+                }
+
                 mSpellOrderAdapter.setGroupBuyList(groupBuyListResponse);
+                mListView.hideFooterView();
+                mListView.hideHeaderView();
                 if(groupBuyListResponse.data.size() == 0){
                     exceptionLinearLayout.setException(IConstants.EXCEPTION_MY_GROUP_IS_NULL);
                     content_view.addView(ExceptionView);
                 }else{
                     content_view.removeView(ExceptionView);
                 }
+                mIsMyTbList = "1";
             }
 
             @Override

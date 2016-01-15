@@ -39,8 +39,18 @@ public class SpellOrderAdapter extends SimpleBaseAdapter {
     }
 
     public void setGroupBuyList(GroupBuyListResponse groupBuyListResponse) {
-        mGroupBuyListResponse = groupBuyListResponse;
+        if (mGroupBuyListResponse == null) {
+            mGroupBuyListResponse = groupBuyListResponse;
+        } else {
+            mGroupBuyListResponse.data.addAll(groupBuyListResponse.data);
+        }
         notifyDataSetChanged();
+    }
+
+    public void clearData() {
+        if (mGroupBuyListResponse != null) {
+            mGroupBuyListResponse.data.clear();
+        }
     }
 
     @Override
