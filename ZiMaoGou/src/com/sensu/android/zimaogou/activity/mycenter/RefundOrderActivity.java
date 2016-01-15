@@ -66,6 +66,11 @@ public class RefundOrderActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_activity);
         initView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getOrder();
     }
 
@@ -187,7 +192,7 @@ public class RefundOrderActivity extends BaseActivity {
             viewHolder.rl_top.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mContext.startActivity(new Intent(mContext, OrderDetailActivity.class)
+                    mContext.startActivity(new Intent(mContext, RefundOrderDetailActivity.class)
                             .putExtra("id", myOrderMode.getId())
                             .putExtra("state", orderState));
                 }
@@ -195,7 +200,7 @@ public class RefundOrderActivity extends BaseActivity {
             viewHolder.rl_amount.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mContext.startActivity(new Intent(mContext, OrderDetailActivity.class)
+                    mContext.startActivity(new Intent(mContext, RefundOrderDetailActivity.class)
                             .putExtra("id", myOrderMode.getId())
                             .putExtra("state", orderState));
                 }
@@ -213,7 +218,12 @@ public class RefundOrderActivity extends BaseActivity {
                     updateOrderDialog(myOrderMode);
                 }
             });
-
+            viewHolder.bt_cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(RefundOrderActivity.this,EditLogisticsActivity.class).putExtra("data",myOrderMode));
+                }
+            });
 
             viewHolder.tv_orderType.setText(mOrders.get(i).getState_cn());
 

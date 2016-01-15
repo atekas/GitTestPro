@@ -52,6 +52,7 @@ public class IConstants {
     public static final int sUnpaid = 1;//待付款
     public static final int sUnreceived = 2;//待收货
     public static final int sReceived = 3;//已收货
+    public static final int sCancel = 4;//取消订单
     //获取时间戳
     public static final String sTimeStamp = "comm/timestamp";
     //验证短信验证码

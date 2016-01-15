@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.Mode.MyOrderGoodsMode;
 import com.sensu.android.zimaogou.Mode.MyOrderMode;
 import com.sensu.android.zimaogou.Mode.ProductMode;
@@ -24,20 +25,22 @@ import java.util.ArrayList;
 public class OrderDetailChildListAdapter extends SimpleBaseAdapter {
     ArrayList<MyOrderGoodsMode> mProducts = new ArrayList<MyOrderGoodsMode>();
     MyOrderMode myOrderMode;
-
-    public void flush(MyOrderMode myOrderMode) {
+    int state ;
+    public void flush(MyOrderMode myOrderMode,int state) {
         this.myOrderMode = myOrderMode;
         if (myOrderMode.getGoods() != null) {
             this.mProducts = myOrderMode.getGoods();
         }
+        this.state = state;
         this.notifyDataSetChanged();
     }
 
-    public OrderDetailChildListAdapter(Context context, MyOrderMode myOrderMode) {
+    public OrderDetailChildListAdapter(Context context, MyOrderMode myOrderMode,int state) {
         super(context);
         this.myOrderMode = myOrderMode;
         if (myOrderMode.getGoods() != null) {
             this.mProducts = myOrderMode.getGoods();
+            this.state = state;
         }
     }
 
@@ -68,6 +71,15 @@ public class OrderDetailChildListAdapter extends SimpleBaseAdapter {
         productsViewHolder.tv_productNum.setText("x" + mProducts.get(i).getNum());
         productsViewHolder.tv_productPrice.setText(mProducts.get(i).getPrice());
         productsViewHolder.tv_spc.setText(mProducts.get(i).getSpec());
+        if(state == IConstants.sReceived){
+            productsViewHolder.tv_refundMoney.setVisibility(View.VISIBLE);
+            productsViewHolder.tv_refundMoney.setText("退货退款");
+        }else if(state == IConstants.sUnreceived){
+            productsViewHolder.tv_refundMoney.setVisibility(View.VISIBLE);
+            productsViewHolder.tv_refundMoney.setText("退款");
+        }else{
+            productsViewHolder.tv_refundMoney.setVisibility(View.GONE);
+        }
         productsViewHolder.tv_refundMoney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

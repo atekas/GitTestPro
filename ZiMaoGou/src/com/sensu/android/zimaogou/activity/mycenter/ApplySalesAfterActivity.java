@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -54,13 +56,14 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
     private List<Object> mObjectList = new ArrayList<Object>();
 
     UserInfo userInfo;
+    LinearLayout mImagesLinearLayout;
     ArrayList<RefundReasonMode> mRefundMoneyReasons = new ArrayList<RefundReasonMode>();
     ArrayList<RefundReasonMode> mRefundGoodsReasons = new ArrayList<RefundReasonMode>();
     boolean isJustRefundMoney = true;
     ImageView mRefundMoneyImageView, mRefundGoodsImageView;
     EditText mRefundMoneyEditText, mRefundInstructionsEditText;
-    TextView mRefundReasonTextView,mSubmitTextView;
-    RefundReasonMode mChooseRefundReason;//被选择退款原因
+    TextView mRefundReasonTextView, mSubmitTextView;
+    RefundReasonMode mChooseRefundReason = new RefundReasonMode();//被选择退款原因
     private ArrayList<String> mServiceImages = new ArrayList<String>();
 
     TourPicAdapter mTourPicAdapter;
@@ -72,7 +75,7 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.apply_after_sales_activity);
         userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
-        if(getIntent().getExtras() != null){
+        if (getIntent().getExtras() != null) {
             orderMode = (MyOrderMode) getIntent().getExtras().get("order");
             goodsMode = (MyOrderGoodsMode) getIntent().getExtras().get("goods");
         }
@@ -88,9 +91,6 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
     }
 
     private void initView() {
-        mPhotoList = TourSendData.picDataList;
-
-
 
         mGridView = (GridView) findViewById(R.id.grid_view);
         mTourPicAdapter = new TourPicAdapter();
@@ -101,23 +101,71 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
         mRefundMoneyEditText = (EditText) findViewById(R.id.input_refundMoney);
         mRefundInstructionsEditText = (EditText) findViewById(R.id.input_instructions);
         mRefundReasonTextView = (TextView) findViewById(R.id.tv_refundReason);
+        mImagesLinearLayout = (LinearLayout) findViewById(R.id.ll_img);
+
         mRefundMoneyImageView.setSelected(isJustRefundMoney);
         mRefundGoodsImageView.setSelected(!isJustRefundMoney);
         mSubmitTextView = (TextView) findViewById(R.id.submit);
         mSubmitTextView.setOnClickListener(this);
+
+        flushImages();
     }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mTourPicAdapter.notifyDataSetChanged();
+
+    private void flushImages() {
+        mImagesLinearLayout.removeAllViews();
+
+        mObjectList.clear();
+        for (PhotoInfo photoInfo : mPhotoList) {
+
+            mObjectList.add(photoInfo);
+
+        }
+        if (mPhotoList.size() < 3 ) {
+            mObjectList.add(mAdd);
+        }
+        for (int i = 0; i < mObjectList.size(); i++) {
+            View view = LayoutInflater.from(ApplySalesAfterActivity.this).inflate(R.layout.image_grid_item, null);
+            view.setPadding(0,0,DisplayUtils.dp2px(6),0);
+            ImageView mImageView = (ImageView) view.findViewById(R.id.image);
+            int mPicSize = (DisplayUtils.getDisplayWidth() - DisplayUtils.dp2px(55)) / 4;
+            mImageView.setLayoutParams(new LinearLayout.LayoutParams(mPicSize, mPicSize));
+
+            final Object object = mObjectList.get(i);
+
+            if (object == mAdd) {
+                mImageView.setImageResource(R.drawable.add_photos);
+            } else {
+                ImageUtils.displayImage(((PhotoInfo) object).getPicPath(), mImageView);
+            }
+
+            mImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (object == mAdd) {
+                        chooseDialog();
+                    }
+                }
+            });
+            mImagesLinearLayout.addView(view);
+        }
 
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        TourSendData.picDataList.clear();
+    /**
+     * 从相册选择
+     */
+    public String IMAGE_UNSPECIFIED = "image/*";
+    private int IMAGE_REQUEST_CODE = 6;
+
+    private void getPhotoFromAlum() {
+        Intent intent2 = new Intent(Intent.ACTION_PICK, null);
+        intent2.setDataAndType(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                IMAGE_UNSPECIFIED);
+        startActivityForResult(intent2, IMAGE_REQUEST_CODE);
     }
+
+    private Uri uri = null;
 
     /**
      * 我要退款
@@ -142,8 +190,14 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
 
     }
 
+    /**
+     * 选择退款原因
+     *
+     * @param v
+     */
     public void RefundReasonClick(View v) {
-        showPopupWindow();
+        startActivityForResult(new Intent(this, OnlyListActivity.class).putExtra("list", isJustRefundMoney ? mRefundMoneyReasons : mRefundGoodsReasons)
+                .putExtra("data", mChooseRefundReason), 1001);
     }
 
     PopupWindow mRefundReasonPopupWindow;
@@ -227,12 +281,12 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
                 String reason = mRefundReasonTextView.getText().toString().trim();
                 String content = mRefundInstructionsEditText.getText().toString().trim();
                 String money = mRefundMoneyEditText.getText().toString().trim();
-                if(TextUtils.isEmpty(reason)){
+                if (TextUtils.isEmpty(reason)) {
                     PromptUtils.showToast("请选择退货原因");
                     return;
                 }
 
-                if(TextUtils.isEmpty(money)){
+                if (TextUtils.isEmpty(money)) {
                     PromptUtils.showToast("请输入退款金额");
                     return;
                 }
@@ -246,7 +300,6 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
                 break;
 
             case R.id.take_photo:
-                mObjectList.clear();
                 Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 path = Environment.getExternalStorageDirectory() + File.separator + "im/" + System.currentTimeMillis() + ".jpg";
                 File mTempCapturePicFile = new File(path);
@@ -255,14 +308,18 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
                 mTourBuyChooseDialog.dismiss();
                 break;
             case R.id.choose_from_photo_album:
-                mObjectList.clear();
-                Intent intent = new Intent(this, LocalPhotoActivity.class);
-                startActivityForResult(intent, TourBuyFragment.CHOOSE_PHOTO_CODE);
+                getPhotoFromAlum();
                 mTourBuyChooseDialog.dismiss();
                 break;
 
         }
     }
+
+    /**
+     * 上传图片
+     *
+     * @param url
+     */
     private void uploadImage(String url) {
         HttpUtil.postImage(userInfo.getUid(), userInfo.getToken(), url, new JsonHttpResponseHandler() {
             @Override
@@ -278,7 +335,7 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
                 }
                 mServiceImages.add(photoUrl);
                 if (mSendSuccess != mPhotoList.size()) {
-                        return;
+                    return;
                 }
                 createReturnOrder();
 
@@ -291,39 +348,40 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
             }
         });
     }
-    private void createReturnOrder(){
+
+    private void createReturnOrder() {
         String reason = mRefundReasonTextView.getText().toString().trim();
         String content = mRefundInstructionsEditText.getText().toString().trim();
         String money = mRefundMoneyEditText.getText().toString().trim();
-        if(TextUtils.isEmpty(reason)){
+        if (TextUtils.isEmpty(reason)) {
             PromptUtils.showToast("请选择退货原因");
             return;
         }
 
-        if(TextUtils.isEmpty(money)){
+        if (TextUtils.isEmpty(money)) {
             PromptUtils.showToast("请输入退款金额");
             return;
         }
         RequestParams requestParams = new RequestParams();
-        requestParams.put("uid",userInfo.getUid());
-        requestParams.put("gid",goodsMode.getGid());
-        requestParams.put("spec_id",goodsMode.getSpec_id());
-        requestParams.put("order_no",orderMode.getOrder_no());
-        requestParams.put("return_type",isJustRefundMoney?"1":"2");
-        requestParams.put("return_reason",mChooseRefundReason.getReason());
-        requestParams.put("return_content",TextUtils.isEmpty(content)?"":content);
-        requestParams.put("amount",money);
-        requestParams.put("images",mServiceImages.size() == 0?"":changeTOStringOfImages());
-        HttpUtil.postWithSign(userInfo.getToken(), IConstants.sOrder+"/return",requestParams,new JsonHttpResponseHandler(){
+        requestParams.put("uid", userInfo.getUid());
+        requestParams.put("gid", goodsMode.getGid());
+        requestParams.put("spec_id", goodsMode.getSpec_id());
+        requestParams.put("order_no", orderMode.getOrder_no());
+        requestParams.put("return_type", isJustRefundMoney ? "1" : "2");
+        requestParams.put("return_reason", mChooseRefundReason.getReason());
+        requestParams.put("return_content", TextUtils.isEmpty(content) ? "" : content);
+        requestParams.put("amount", money);
+        requestParams.put("images", mServiceImages.size() == 0 ? "" : changeTOStringOfImages());
+        HttpUtil.postWithSign(userInfo.getToken(), IConstants.sOrder + "/return", requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                LogUtils.d("生成退单返回：",response.toString());
-                if(response.optInt("ret")>=0){
+                LogUtils.d("生成退单返回：", response.toString());
+                if (response.optInt("ret") >= 0) {
                     PromptUtils.showToast("提交申请成功");
                     cancelLoading();
                     finish();
-                }else{
+                } else {
                     PromptUtils.showToast(response.optString("msg"));
                     cancelLoading();
                 }
@@ -332,19 +390,20 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
-                LogUtils.d("生成退单失败返回：",responseString);
+                LogUtils.d("生成退单失败返回：", responseString);
             }
         });
 
     }
 
-    private JSONArray changeTOStringOfImages(){
+    private JSONArray changeTOStringOfImages() {
         JSONArray jsonArray1 = new JSONArray();
         for (int j = 0; j < mServiceImages.size(); j++) {
             jsonArray1.put(mServiceImages.get(j));
         }
         return jsonArray1;
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -353,13 +412,61 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
                 PhotoInfo photoInfo = new PhotoInfo();
                 photoInfo.setPathPath("file://" + path);
                 photoInfo.setmUploadPath(path);
-                TourSendData.picDataList.add(photoInfo);
+                mPhotoList.add(photoInfo);
+//                mTourPicAdapter.flush();
+                flushImages();
 
-            } else if (requestCode == TourBuyFragment.CHOOSE_PHOTO_CODE) {
+            } else if (requestCode == 6) {
 //                mTourPicAdapter.notifyDataSetChanged();
+
+                if (data == null) {
+                    return;
+                }
+                uri = data.getData();
+//                    getBitmap(uri, IMAGE_REQUEST_CODE);
+                String path = "";
+                path = getRealPathFromURI(uri); // from Gallery
+                if (path == null) {
+                    path = uri.getPath(); // from File Manager
+                }
+                String avatar = path;
+                int degree = ImageUtils.readPictureDegree(path);
+                Bitmap bmpOk = ImageUtils.rotateToDegrees(BitmapUtils.getSampleBitmap(path, 800, 800).getBitmap(), degree);
+//                        mHeadImageView.setImageBitmap(bmpOk);
+                try {
+                    avatar = BitmapUtils.saveImg(bmpOk, "head");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                PhotoInfo photoInfo = new PhotoInfo();
+                photoInfo.setmPathPath("file://" + avatar);
+                photoInfo.setmUploadPath(avatar);
+                mPhotoList.add(photoInfo);
+//                        mTourPicAdapter.flush();
+                flushImages();
+            }
+        } else if (resultCode == 1001) {
+            mChooseRefundReason = (RefundReasonMode) data.getExtras().get("data");
+            if (!TextUtils.isEmpty(mChooseRefundReason.getReason())) {
+                mRefundReasonTextView.setText(mChooseRefundReason.getReason());
             }
         }
     }
+
+    public String getRealPathFromURI(Uri contentUri) {
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = managedQuery(contentUri, proj, null, null, null);
+
+        if (cursor == null)
+            return null;
+
+        int column_index = cursor
+                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
+
     class RefundReasonAdapter extends BaseAdapter {
         ArrayList<RefundReasonMode> refundReasonModes = new ArrayList<RefundReasonMode>();
 
@@ -407,27 +514,31 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
             TextView tv_reason;
         }
     }
+
     class TourPicAdapter extends SimpleBaseAdapter {
         private int size = 0;
 
-        @Override
-        public void notifyDataSetChanged() {
-            if (size == mPhotoList.size()&& size!= 0) {
+        public void flush() {
+            if (size == mPhotoList.size()) {
                 return;
             }
+            mObjectList.clear();
             for (PhotoInfo photoInfo : mPhotoList) {
+
                 mObjectList.add(photoInfo);
+
             }
-            if (mPhotoList.size() < 3) {
+            if (mPhotoList.size() < 3 || mObjectList.size() == 0) {
                 mObjectList.add(mAdd);
             }
             size = mPhotoList.size();
-            super.notifyDataSetChanged();
+            this.notifyDataSetChanged();
         }
+
 
         @Override
         public int getCount() {
-            return mObjectList == null ? 0 : mObjectList.size();
+            return mObjectList.size();
         }
 
         @Override
@@ -467,6 +578,7 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
     private class ViewHolder {
         ImageView mImageView;
     }
+
     /**
      * 本地填充退货原因数据
      */
@@ -485,7 +597,7 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
         refundReasonMode3.setReason("重复下单");
         RefundReasonMode refundReasonMode4 = new RefundReasonMode();
         refundReasonMode4.setId("4");
-        refundReasonMode4.setReason("重复下单");
+        refundReasonMode4.setReason("收货人信息错误");
         RefundReasonMode refundReasonMode5 = new RefundReasonMode();
         refundReasonMode5.setId("5");
         refundReasonMode5.setReason("其他原因");

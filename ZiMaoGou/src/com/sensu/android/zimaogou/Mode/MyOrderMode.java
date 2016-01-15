@@ -24,6 +24,60 @@ public class MyOrderMode implements Serializable {
     private String receiver_address;
 
     private String pay_type;
+    private String return_reason;
+    private String return_content;
+    private String returned_at;
+    private String return_no;
+    private String amount_apply;
+    private String return_type;
+
+    public String getReturn_reason() {
+        return return_reason;
+    }
+
+    public void setReturn_reason(String return_reason) {
+        this.return_reason = return_reason;
+    }
+
+    public String getReturn_content() {
+        return return_content;
+    }
+
+    public void setReturn_content(String return_content) {
+        this.return_content = return_content;
+    }
+
+    public String getReturned_at() {
+        return returned_at;
+    }
+
+    public void setReturned_at(String returned_at) {
+        this.returned_at = returned_at;
+    }
+
+    public String getReturn_no() {
+        return return_no;
+    }
+
+    public void setReturn_no(String return_no) {
+        this.return_no = return_no;
+    }
+
+    public String getAmount_apply() {
+        return amount_apply;
+    }
+
+    public void setAmount_apply(String amount_apply) {
+        this.amount_apply = amount_apply;
+    }
+
+    public String getReturn_type() {
+        return return_type;
+    }
+
+    public void setReturn_type(String return_type) {
+        this.return_type = return_type;
+    }
 
     public String getAmount_goods() {
         return amount_goods;

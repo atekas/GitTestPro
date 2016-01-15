@@ -93,13 +93,46 @@
                         android:paddingLeft="15dp"
                         android:background="@drawable/drawable_me_click">
                         <TextView
+                                android:id="@+id/tv_refundtip"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_size_medial"
+                                android:layout_centerVertical="true"
+                                android:textColor="@color/black_222222"
+                                android:text="申请金额"/>
+
+                        <TextView
+                                android:id="@+id/tv_applyMoney"
+                                android:layout_width="match_parent"
+                                android:layout_toRightOf="@+id/tv_refundtip"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical|left"
+                                android:layout_centerVertical="true"
+                                android:singleLine="true"
+                                android:textSize="@dimen/text_size_medial"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginRight="15dp"
+                                android:textColor="@color/black_222222"
+                                android:background="@null"/>
+                        <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1px"
+                                android:background="@color/home_line"
+                                android:layout_alignParentBottom="true"/>
+                </RelativeLayout>
+                <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:paddingLeft="15dp"
+                        android:background="@drawable/drawable_me_click">
+                        <TextView
                                 android:id="@+id/tv_refundtip2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="@dimen/text_size_medial"
                                 android:layout_centerVertical="true"
                                 android:textColor="@color/black_222222"
-                                android:text="退款金额"/>
+                                android:text="实退金额"/>
 
                         <TextView
                                 android:id="@+id/tv_refundMoney"

@@ -212,10 +212,17 @@ public class OrderActivity extends BaseActivity {
                             .putExtra("state", orderState));
                 }
             });
+            if(state == IConstants.sCancel){
+                viewHolder.rl_button.setVisibility(View.GONE);
+            }else{
+                viewHolder.rl_button.setVisibility(View.VISIBLE);
+            }
+
+
             if (state == IConstants.sUnpaid) {
                 viewHolder.bt_cancel.setVisibility(View.VISIBLE);
                 viewHolder.bt_cancel.setText("取消订单");
-                viewHolder.bt_submit.setText("待付款");
+                viewHolder.bt_submit.setText("去支付");
                 viewHolder.bt_cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -231,10 +238,10 @@ public class OrderActivity extends BaseActivity {
                 viewHolder.bt_submit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        updateOrderDialog(orderState,myOrderMode);
+                        updateOrderDialog(orderState, myOrderMode);
                     }
                 });
-            } else {
+            } else if(state == IConstants.sReceived){
                 viewHolder.bt_cancel.setVisibility(View.GONE);
                 viewHolder.bt_submit.setText("评价");
                 viewHolder.bt_submit.setOnClickListener(new View.OnClickListener() {
@@ -321,7 +328,7 @@ public class OrderActivity extends BaseActivity {
                     if (state.equals(CANCEL_ORDER)) {
                         PromptUtils.showToast("取消订单成功");
                         if (type == 0) {
-                            orderMode.setState(5);
+                            orderMode.setState(12);
                         } else {
                             mOrders.remove(orderMode);
                         }
@@ -329,7 +336,7 @@ public class OrderActivity extends BaseActivity {
                     } else if (state.equals(SURE_ORDER)) {
                         PromptUtils.showToast("确认收货成功");
                         if (type == 0) {
-                            orderMode.setState(12);
+                            orderMode.setState(5);
                         } else {
                             mOrders.remove(orderMode);
                         }
@@ -392,8 +399,10 @@ public class OrderActivity extends BaseActivity {
             code = IConstants.sUnpaid;
         } else if (state >= 1 && state <= 3) {
             code = IConstants.sUnreceived;
-        } else {
+        } else if(state ==5||state == 6){
             code = IConstants.sReceived;
+        }else{
+            code = IConstants.sCancel;
         }
         return code;
     }

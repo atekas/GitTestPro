@@ -21,13 +21,16 @@ import java.util.ArrayList;
  */
 public class OrderDetailListAdapter extends SimpleBaseAdapter {
     ArrayList<MyOrderMode> mOrders;
-    public void flush(ArrayList<MyOrderMode> orders){
+    int state;
+    public void flush(ArrayList<MyOrderMode> orders,int state){
         this.mOrders = orders;
         this.notifyDataSetChanged();
+        this.state = state;
     }
-    public OrderDetailListAdapter(Context context, ArrayList<MyOrderMode> mOrders) {
+    public OrderDetailListAdapter(Context context, ArrayList<MyOrderMode> mOrders,int state) {
         super(context);
         this.mOrders = mOrders;
+        this.state = state;
     }
 
     @Override
@@ -59,7 +62,7 @@ public class OrderDetailListAdapter extends SimpleBaseAdapter {
         viewHolder.tv_amount_express.setText("￥"+mOrders.get(i).getAmount_express());
         viewHolder.tv_amount.setText("￥"+mOrders.get(i).getAmount_real());
         viewHolder.tv_orderTime.setText("下单时间："+mOrders.get(i).getCreated_at());
-        OrderDetailChildListAdapter adapter = new OrderDetailChildListAdapter(mContext,mOrders.get(i));
+        OrderDetailChildListAdapter adapter = new OrderDetailChildListAdapter(mContext,mOrders.get(i),state);
         viewHolder.lv_products.setDivider(null);
         viewHolder.lv_products.setAdapter(adapter);
         UiUtils.setListViewHeightBasedOnChilds(viewHolder.lv_products);

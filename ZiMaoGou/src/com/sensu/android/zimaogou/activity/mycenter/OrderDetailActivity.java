@@ -57,6 +57,8 @@ public class OrderDetailActivity extends BaseActivity {
     UserInfo userInfo;
     int state = 0;
     OrderDetailListAdapter adapter ;
+
+    RelativeLayout rl_button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,9 +85,16 @@ public class OrderDetailActivity extends BaseActivity {
         tv_receiverAddress = (TextView) findViewById(R.id.tv_receiverAddress);
         bt_cancel = (Button) findViewById(R.id.bt_cancel);
         bt_submit = (Button) findViewById(R.id.bt_submit);
+        rl_button = (RelativeLayout) findViewById(R.id.rl_button);
+        if(state == IConstants.sCancel){
+            rl_button.setVisibility(View.GONE);
+        }else{
+            rl_button.setVisibility(View.VISIBLE);
+        }
+
 
         mOrderListView.setDivider(null);
-        adapter = new OrderDetailListAdapter(this,mOrders);
+        adapter = new OrderDetailListAdapter(this,mOrders,state);
         mOrderListView.setAdapter(adapter);
 
         mBackImageView.setOnClickListener(new View.OnClickListener() {
@@ -133,7 +142,7 @@ public class OrderDetailActivity extends BaseActivity {
                 if (state == IConstants.sUnpaid) {
                     bt_cancel.setVisibility(View.VISIBLE);
                     bt_cancel.setText("取消订单");
-                    bt_submit.setText("待付款");
+                    bt_submit.setText("去支付");
                     bt_cancel.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -167,7 +176,7 @@ public class OrderDetailActivity extends BaseActivity {
                 tv_nameAndMobile.setText(myOrderMode.getReceiver_info().getName()+" "+myOrderMode.getReceiver_info().getMobile());
                 tv_receiverAddress.setText(myOrderMode.getReceiver_info().getAddress());
                 mOrders.add(myOrderMode);
-                adapter.flush(mOrders);
+                adapter.flush(mOrders,state);
                 UiUtils.setListViewHeightBasedOnChilds(mOrderListView);
                 mOrderDetailScrollView.smoothScrollTo(0,0);
 
@@ -285,8 +294,10 @@ public class OrderDetailActivity extends BaseActivity {
             code = IConstants.sUnpaid;
         } else if (state >= 1 && state <= 3) {
             code = IConstants.sUnreceived;
-        } else {
+        } else if(state == 5||state == 6){
             code = IConstants.sReceived;
+        }else{
+            code = IConstants.sCancel;
         }
         return code;
     }

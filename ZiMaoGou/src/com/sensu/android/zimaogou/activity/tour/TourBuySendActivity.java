@@ -249,7 +249,9 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
                 return;
             }
             for (PhotoInfo photoInfo : mPhotoList) {
+
                 mObjectList.add(photoInfo);
+
             }
             if (mPhotoList.size() < 5) {
                 mObjectList.add(mAdd);

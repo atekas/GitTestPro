@@ -167,12 +167,12 @@
                             android:text=""/>
                 <ImageView
                         android:id="@+id/img_right"
-                        android:layout_width="8dp"
-                        android:layout_height="8dp"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="15dp"
-                        android:src="@drawable/arrow_06"/>
+                        android:src="@drawable/arrow_right"/>
                 <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
@@ -246,6 +246,7 @@
 
             <com.sensu.android.zimaogou.widget.NoScrollGridView
                     android:id="@+id/grid_view"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
@@ -257,6 +258,18 @@
                     android:background="@color/white"
                     android:scrollbars="none"
                     android:numColumns="4"/>
+                <LinearLayout
+                        android:id="@+id/ll_img"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="@dimen/dip_20"
+                        android:paddingRight="@dimen/dip_20"
+                        android:paddingTop="@dimen/dip_20"
+                        android:paddingBottom="20dp"
+                        android:orientation="horizontal"
+                        android:background="@color/white"
+                        ></LinearLayout>
             <TextView
                     android:id="@+id/submit"
                     android:layout_width="match_parent"

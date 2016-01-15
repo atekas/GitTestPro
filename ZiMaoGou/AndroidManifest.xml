@@ -183,6 +183,12 @@
 
         <activity android:name=".activity.mycenter.RefundOrderActivity" android:screenOrientation="portrait" />
 
+        <activity android:name=".activity.mycenter.RefundOrderDetailActivity" android:screenOrientation="portrait" />
+
+        <activity android:name=".activity.mycenter.OnlyListActivity" android:screenOrientation="portrait" />
+
+        <activity android:name=".activity.mycenter.EditLogisticsActivity" android:screenOrientation="portrait" />
+
         <activity android:name=".activity.mycenter.CouponActivity" android:screenOrientation="portrait" />
 
         <activity android:name=".activity.mycenter.ReceiverAddressActivity" android:screenOrientation="portrait" />
