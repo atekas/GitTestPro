@@ -49,6 +49,7 @@ public class SpellOrderActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void onResume() {
         super.onResume();
+        mUserInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
     }
 
     private void initViews() {
@@ -87,6 +88,11 @@ public class SpellOrderActivity extends BaseActivity implements View.OnClickList
                 findViewById(R.id.group_buy_selection_text).setSelected(false);
                 findViewById(R.id.my_group_buy_text).setSelected(true);
                 findViewById(R.id.bottom_layout).setVisibility(View.GONE);
+
+                if (mUserInfo == null) {
+                    startActivity(new Intent(this, LoginActivity.class));
+                    return;
+                }
 
                 if (mIsMyTbList.equals("0")) {
                     getMyTbList();

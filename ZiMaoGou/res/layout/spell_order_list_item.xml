@@ -42,6 +42,8 @@
                     android:layout_marginLeft="@dimen/dip_10"
                     android:layout_marginRight="@dimen/dip_10"
                     android:layout_marginTop="10dp"
+                    android:maxLines="2"
+                    android:ellipsize="end"
                     android:textSize="@dimen/text_size_13"
                     android:textColor="#666666"
                     android:text="降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化降血压健脑银杏进化"/>
