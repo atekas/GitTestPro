@@ -53,6 +53,12 @@ public class EditLogisticsActivity extends BaseActivity {
         mSubmit = (TextView) findViewById(R.id.submit);
 
         mReceiverAddress.setText(myOrderMode.getReceiver_address());
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         mSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

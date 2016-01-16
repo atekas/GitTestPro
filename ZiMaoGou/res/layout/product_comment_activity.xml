@@ -143,6 +143,7 @@
 
             <com.sensu.android.zimaogou.widget.NoScrollGridView
                     android:id="@+id/grid_view"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/dip_20"
@@ -150,6 +151,18 @@
                     android:layout_marginTop="@dimen/dip_20"
                     android:scrollbars="none"
                     android:numColumns="4"/>
+            <LinearLayout
+                    android:id="@+id/ll_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="@dimen/dip_20"
+                    android:paddingRight="@dimen/dip_20"
+                    android:paddingTop="@dimen/dip_20"
+                    android:paddingBottom="20dp"
+                    android:orientation="horizontal"
+                    android:background="@color/white"
+                    ></LinearLayout>
 
             <View
                     android:layout_width="match_parent"
@@ -185,10 +198,21 @@
 
     </LinearLayout>
 
-    <View android:layout_width="1dp" android:layout_height="0dp" android:layout_weight="1" />
-
+    <!--<View android:layout_width="1dp" android:layout_height="0dp" android:layout_weight="1" />-->
+        <TextView
+                android:id="@+id/submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/drawable_login_pressed"
+                android:layout_marginLeft="@dimen/dip_17"
+                android:layout_marginRight="@dimen/dip_17"
+                android:layout_marginTop="@dimen/dip_20"
+                android:textSize="@dimen/text_size_18"
+                android:gravity="center"
+                android:textColor="@color/color_login_press"
+                android:text="提交"/>
     <TextView
-            android:id="@+id/submit"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_20"

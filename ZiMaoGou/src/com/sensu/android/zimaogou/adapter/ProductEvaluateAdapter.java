@@ -17,13 +17,14 @@ import java.util.ArrayList;
 
 /**
  * Created by zhangwentao on 2015/11/26.
- *
+ * <p/>
  * 商品评论的adapter
  */
 public class ProductEvaluateAdapter extends SimpleBaseAdapter {
 
     ArrayList<ProductCommentMode> commentModes = new ArrayList<ProductCommentMode>();
-    public ProductEvaluateAdapter(Context context,ArrayList<ProductCommentMode> commentModes) {
+
+    public ProductEvaluateAdapter(Context context, ArrayList<ProductCommentMode> commentModes) {
 
         super(context);
         this.commentModes = commentModes;
@@ -73,11 +74,6 @@ public class ProductEvaluateAdapter extends SimpleBaseAdapter {
             viewHolder.mScoreImage3 = (ImageView) view.findViewById(R.id.img_score3);
             viewHolder.mScoreImage4 = (ImageView) view.findViewById(R.id.img_score4);
             viewHolder.mScoreImage5 = (ImageView) view.findViewById(R.id.img_score5);
-            viewHolder.mScoreImage1.setVisibility(View.GONE);
-            viewHolder.mScoreImage2.setVisibility(View.GONE);
-            viewHolder.mScoreImage3.setVisibility(View.GONE);
-            viewHolder.mScoreImage4.setVisibility(View.GONE);
-            viewHolder.mScoreImage5.setVisibility(View.GONE);
             viewHolder.scoreImages.add(viewHolder.mScoreImage1);
             viewHolder.scoreImages.add(viewHolder.mScoreImage2);
             viewHolder.scoreImages.add(viewHolder.mScoreImage3);
@@ -94,24 +90,29 @@ public class ProductEvaluateAdapter extends SimpleBaseAdapter {
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
-        ImageUtils.displayImage(commentModes.get(i).getUser_avatar(),viewHolder.mUserPhoto, ImageUtils.mHeadDefaultOptions);
-        viewHolder.mUserName.setText(commentModes.get(i).getUser_name());
+        if (commentModes.get(i).getIs_anonymous().equals("0")) {
+            ImageUtils.displayImage(commentModes.get(i).getUser_avatar(), viewHolder.mUserPhoto, ImageUtils.mHeadDefaultOptions);
+            viewHolder.mUserName.setText(commentModes.get(i).getUser_name());
+        } else {
+            viewHolder.mUserPhoto.setImageResource(R.drawable.head_pic_default);
+            viewHolder.mUserName.setText("匿名");
+        }
         viewHolder.mEvaluateContent.setText(commentModes.get(i).getContent());
-        if(commentModes.get(i).getImage().size() == 0){
+        if (commentModes.get(i).getImage().size() == 0) {
             viewHolder.mLinearLayout.setVisibility(View.GONE);
-        }else{
+        } else {
             viewHolder.mLinearLayout.setVisibility(View.VISIBLE);
-            for(int j = 0; j < commentModes.get(i).getImage().size(); j++){
+            for (int j = 0; j < commentModes.get(i).getImage().size(); j++) {
                 viewHolder.mFrameLayouts.get(j).setVisibility(View.VISIBLE);
                 viewHolder.commentImages.get(j).setVisibility(View.VISIBLE);
 
-                ImageUtils.displayImage(commentModes.get(i).getImage().get(j), viewHolder.commentImages.get(j));
+                ImageUtils.displayImage(commentModes.get(i).getImage().get(j), viewHolder.commentImages.get(j), ImageUtils.mItemTopOptions);
             }
 
         }
-        int score = 3;//测试分数，因目前返回分数都为0
-        for(int k = 0; k < score; k++){
-            viewHolder.scoreImages.get(k).setVisibility(View.VISIBLE);
+        int score = Integer.parseInt(commentModes.get(i).getScore());
+        for (int k = 0; k < score; k++) {
+            viewHolder.scoreImages.get(k).setSelected(true);
         }
 
         return view;
@@ -132,7 +133,7 @@ public class ProductEvaluateAdapter extends SimpleBaseAdapter {
         ImageView mScoreImage3;
         ImageView mScoreImage4;
         ImageView mScoreImage5;
-        ArrayList<ImageView> commentImages  = new ArrayList<ImageView>();
+        ArrayList<ImageView> commentImages = new ArrayList<ImageView>();
         ArrayList<ImageView> scoreImages = new ArrayList<ImageView>();
         ArrayList<FrameLayout> mFrameLayouts = new ArrayList<FrameLayout>();
         LinearLayout mLinearLayout;

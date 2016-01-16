@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingTop="15dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="15dp"
+            android:background="@color/white">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_medial"
+                android:textColor="@color/black_222222"
+                android:text="【苏州市】投递并签收"/>
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_small"
+                  android:layout_marginTop="6dp"
+                android:textColor="@color/gray_888888"
+                android:text="2016-01-16 18:06:56"/>
+    </LinearLayout>
+    <View android:layout_width="match_parent"
+          android:layout_height="1px"
+          android:background="@color/home_line"/>
+</LinearLayout>

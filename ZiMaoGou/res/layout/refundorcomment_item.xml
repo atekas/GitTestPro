@@ -48,6 +48,7 @@
 
 
             <TextView
+                    android:id="@+id/tv_spc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/img_pro"

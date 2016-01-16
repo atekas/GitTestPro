@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.sensu.android.zimaogou.Mode.MyOrderMode;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.BaseActivity;
 import com.sensu.android.zimaogou.adapter.RefundOrCommentAdapter;
@@ -19,12 +20,14 @@ public class RefundOrCommentActivity extends BaseActivity {
     TextView mTitleTextView;
     private int type = 0;
     private ImageView mBackImageView;
+    MyOrderMode myOrderMode = new MyOrderMode();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.refundorcomment_activity);
         if(getIntent().getExtras() != null){
             type = getIntent().getExtras().getInt("type");
+            myOrderMode = (MyOrderMode) getIntent().getExtras().get("data");
         }
 
         initView();
@@ -41,7 +44,7 @@ public class RefundOrCommentActivity extends BaseActivity {
             }
         });
         mGoodsListView.setDivider(null);
-        mGoodsListView.setAdapter(new RefundOrCommentAdapter(this,type));
+        mGoodsListView.setAdapter(new RefundOrCommentAdapter(this,type,myOrderMode));
 
         switch (type){
             case 0:

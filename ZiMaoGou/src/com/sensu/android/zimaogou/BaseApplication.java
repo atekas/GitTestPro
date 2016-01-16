@@ -59,10 +59,10 @@ public class BaseApplication extends Application{
         mChooseAddress = new ProvinceMode();
         addressResponse = new AddressResponse();
         mBaseApplication = this;
-        PlatformConfig.setWeixin("wx967daebe835fbeac", "5bb696d9ccd75a38c8a0bfe0675559b3");
+        PlatformConfig.setWeixin("wx0be44fb6b98c0f4e", "26968b70834b3df57b71a4fbfdd5ff9b");
         //新浪微博
         PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad");
-        PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
+        PlatformConfig.setQQZone("1105039353", "OVvpjONsxyA6aVna");
 
         // /storage/emulated/0/general/
         mUserDir = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "zimaogou" + File.separator;

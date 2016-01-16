@@ -7,36 +7,36 @@
 
     <ImageView
             android:id="@+id/img_score1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/commend_star_yellow"/>
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:src="@drawable/drawable_star_select"/>
 
     <ImageView
             android:id="@+id/img_score2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
             android:layout_marginLeft="1dp"
-            android:src="@drawable/commend_star_yellow"/>
+            android:src="@drawable/drawable_star_select"/>
 
     <ImageView
             android:id="@+id/img_score3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
             android:layout_marginLeft="1dp"
-            android:src="@drawable/commend_star_yellow"/>
+            android:src="@drawable/drawable_star_select"/>
 
     <ImageView
             android:id="@+id/img_score4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
             android:layout_marginLeft="1dp"
-            android:src="@drawable/commend_star_yellow"/>
+            android:src="@drawable/drawable_star_select"/>
 
     <ImageView
             android:id="@+id/img_score5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
             android:layout_marginLeft="1dp"
-            android:src="@drawable/commend_star_yellow"/>
+            android:src="@drawable/drawable_star_select"/>
 
 </LinearLayout>

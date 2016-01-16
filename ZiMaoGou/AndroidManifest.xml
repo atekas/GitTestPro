@@ -185,6 +185,8 @@
 
         <activity android:name=".activity.mycenter.RefundOrderDetailActivity" android:screenOrientation="portrait" />
 
+        <activity android:name=".activity.mycenter.LogisticsMessageActivity" android:screenOrientation="portrait" />
+
         <activity android:name=".activity.mycenter.OnlyListActivity" android:screenOrientation="portrait" />
 
         <activity android:name=".activity.mycenter.EditLogisticsActivity" android:screenOrientation="portrait" />
@@ -263,7 +265,7 @@
         <!--###################################### 友盟分享 ############################################-->
         <meta-data
                 android:name="UMENG_APPKEY"
-                android:value="561cae6ae0f55abd990035bf" >
+                android:value="565e9162e0f55ace710020a1" >
         </meta-data>
         <!--测试  -->
         <!--  <meta-data
@@ -336,7 +338,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="tencent100424468" />
+                <data android:scheme="tencent1105039353" />
             </intent-filter>
         </activity>
         <activity

@@ -65,7 +65,7 @@
                     android:id="@+id/photo_1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="fitCenter"
+                    android:scaleType="fitXY"
                     android:src="@drawable/home_item_top_default"/>
 
             <View
@@ -102,7 +102,7 @@
                     android:id="@+id/photo_2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="fitCenter"
+                    android:scaleType="fitXY"
                     android:src="@drawable/home_item_top_default"/>
 
             <View
@@ -139,7 +139,7 @@
                     android:id="@+id/photo_3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="fitCenter"
+                    android:scaleType="fitXY"
                     android:src="@drawable/home_item_top_default"/>
 
             <View
@@ -176,7 +176,7 @@
                     android:id="@+id/photo_4"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="fitCenter"
+                    android:scaleType="fitXY"
                     android:src="@drawable/home_item_top_default"/>
 
             <View

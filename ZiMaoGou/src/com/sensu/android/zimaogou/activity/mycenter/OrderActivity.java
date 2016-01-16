@@ -248,7 +248,8 @@ public class OrderActivity extends BaseActivity {
 
                         @Override
                         public void onClick(View view) {
-                            mContext.startActivity(new Intent(mContext, RefundOrCommentActivity.class).putExtra("type", 1));
+                            mContext.startActivity(new Intent(mContext, RefundOrCommentActivity.class).putExtra("type", 1)
+                            .putExtra("data",myOrderMode));
                         }
                     });
             }
@@ -329,6 +330,7 @@ public class OrderActivity extends BaseActivity {
                         PromptUtils.showToast("取消订单成功");
                         if (type == 0) {
                             orderMode.setState(12);
+                            orderMode.setState_cn("已取消");
                         } else {
                             mOrders.remove(orderMode);
                         }
@@ -337,6 +339,7 @@ public class OrderActivity extends BaseActivity {
                         PromptUtils.showToast("确认收货成功");
                         if (type == 0) {
                             orderMode.setState(5);
+                            orderMode.setState_cn("交易完成");
                         } else {
                             mOrders.remove(orderMode);
                         }

@@ -84,11 +84,11 @@ public class StoreHorizontalListViewAdapter extends BaseAdapter {
 
             holder.mTitle.setText(stors.get(position).getContent());
             if(stors.get(position).getCategory().equals("1")){
-                ImageUtils.displayImage(stors.get(position).getMedia().image.get(0),holder.mImage);
+                ImageUtils.displayImage(stors.get(position).getMedia().image.get(0),holder.mImage,ImageUtils.mItemTopOptions);
                 holder.mPlayImage.setVisibility(View.GONE);
             }else{
                 holder.mPlayImage.setVisibility(View.VISIBLE);
-                ImageUtils.displayImage(stors.get(position).getMedia().cover,holder.mImage);
+                ImageUtils.displayImage(stors.get(position).getMedia().cover,holder.mImage,ImageUtils.mItemTopOptions);
             }
             holder.mCountryName.setText(stors.get(position).getCountry());
 

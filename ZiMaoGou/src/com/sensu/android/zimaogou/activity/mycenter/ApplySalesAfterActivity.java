@@ -50,13 +50,10 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
 
     private GridView mGridView;
 
-    private List<PhotoInfo> mPhotoList = new ArrayList<PhotoInfo>();
-    int mSendSuccess = 0;
-    private Object mAdd;
-    private List<Object> mObjectList = new ArrayList<Object>();
+
 
     UserInfo userInfo;
-    LinearLayout mImagesLinearLayout;
+
     ArrayList<RefundReasonMode> mRefundMoneyReasons = new ArrayList<RefundReasonMode>();
     ArrayList<RefundReasonMode> mRefundGoodsReasons = new ArrayList<RefundReasonMode>();
     boolean isJustRefundMoney = true;
@@ -64,7 +61,13 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
     EditText mRefundMoneyEditText, mRefundInstructionsEditText;
     TextView mRefundReasonTextView, mSubmitTextView;
     RefundReasonMode mChooseRefundReason = new RefundReasonMode();//被选择退款原因
+
     private ArrayList<String> mServiceImages = new ArrayList<String>();
+    LinearLayout mImagesLinearLayout;
+    private List<PhotoInfo> mPhotoList = new ArrayList<PhotoInfo>();
+    int mSendSuccess = 0;
+    private Object mAdd;
+    private List<Object> mObjectList = new ArrayList<Object>();
 
     TourPicAdapter mTourPicAdapter;
     MyOrderMode orderMode = new MyOrderMode();
@@ -276,8 +279,7 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.submit:
-                mServiceImages.clear();
-                mSendSuccess = 0;
+
                 String reason = mRefundReasonTextView.getText().toString().trim();
                 String content = mRefundInstructionsEditText.getText().toString().trim();
                 String money = mRefundMoneyEditText.getText().toString().trim();
@@ -290,6 +292,8 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
                     PromptUtils.showToast("请输入退款金额");
                     return;
                 }
+                mServiceImages.clear();
+                mSendSuccess = 0;
                 showLoading();
                 if (mPhotoList.size() == 0) {
                     createReturnOrder();

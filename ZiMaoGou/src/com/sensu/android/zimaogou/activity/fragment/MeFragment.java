@@ -281,6 +281,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data);
         /** attention to this below ,must add this**/
         UMShareAPI.get(mParentActivity).onActivityResult(requestCode, resultCode, data);
+        /**使用SSO授权必须添加如下代码 */
 
     }
 

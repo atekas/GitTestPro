@@ -105,6 +105,13 @@ public class OrderDetailActivity extends BaseActivity {
         });
     }
 
+    /**
+     * 跳转物流信息
+     * @param v
+     */
+    public void LogisticsClick(View v){
+        startActivity(new Intent(this,LogisticsMessageActivity.class));
+    }
 
     @Override
     protected void onResume() {

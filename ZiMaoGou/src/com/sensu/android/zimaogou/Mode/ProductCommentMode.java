@@ -13,6 +13,15 @@ public class ProductCommentMode implements Serializable {
     private String score;
     private String user_name;
     private String user_avatar;
+    private String is_anonymous;//是否匿名
+
+    public String getIs_anonymous() {
+        return is_anonymous;
+    }
+
+    public void setIs_anonymous(String is_anonymous) {
+        this.is_anonymous = is_anonymous;
+    }
 
     public String getId() {
         return id;

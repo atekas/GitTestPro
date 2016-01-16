@@ -103,7 +103,9 @@
             </LinearLayout>
             <View android:layout_width="match_parent" android:layout_height="1px"
                   android:background="@color/home_line"/>
-            <RelativeLayout android:layout_width="match_parent"
+            <RelativeLayout
+                        android:onClick="LogisticsClick"
+                    android:layout_width="match_parent"
                             android:layout_height="100dp"
                             android:background="#f8fafb">
 
