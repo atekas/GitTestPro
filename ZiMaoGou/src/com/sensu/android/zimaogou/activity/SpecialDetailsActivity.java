@@ -105,7 +105,7 @@ public class SpecialDetailsActivity extends BaseActivity implements View.OnClick
             Intent intent = new Intent(this, ProductDetailsActivity.class);
             intent.putExtra(ProductDetailsActivity.PRODUCT_ID, themeDetailData.id);
             intent.putExtra(ProductDetailsActivity.FROM_SOURCE, themeDetailData.source);
-            intent.putExtra(ProductDetailsActivity.THEME_ID, themeDetailData.id);
+            intent.putExtra(ProductDetailsActivity.THEME_ID, themeDetailData.theme_id);
             startActivity(intent);
         }
     }

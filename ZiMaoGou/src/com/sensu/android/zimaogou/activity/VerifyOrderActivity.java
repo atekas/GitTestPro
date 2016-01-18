@@ -241,8 +241,10 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
 
                 try {
                     String payInfo = response.getJSONObject("data").getJSONObject("pay_info").toString();
+                    String orderId = response.getJSONObject("data").optString("id");
                     Intent intent = new Intent(VerifyOrderActivity.this, PayResultActivity.class);
                     intent.putExtra(PayResultActivity.ORDER_DATA, payInfo);
+                    intent.putExtra(PayResultActivity.ORDER_ID, orderId);
                     startActivity(intent);
                     finish();
                 } catch (JSONException e) {

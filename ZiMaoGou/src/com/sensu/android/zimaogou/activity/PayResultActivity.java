@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.activity.mycenter.OrderDetailActivity;
 import com.sensu.android.zimaogou.utils.PromptUtils;
 
 /**
@@ -15,9 +16,11 @@ import com.sensu.android.zimaogou.utils.PromptUtils;
 public class PayResultActivity extends BaseActivity implements View.OnClickListener {
 
     public static final String ORDER_DATA = "order_data";
+    public static final String ORDER_ID = "order_id";
     public static final int PAYMENT_REQUEST_CODE = 1000;
 
     private String mPayInfo;
+    private String mOrderId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,7 @@ public class PayResultActivity extends BaseActivity implements View.OnClickListe
         findViewById(R.id.pay_again).setOnClickListener(this);
 
         mPayInfo = getIntent().getStringExtra(ORDER_DATA);
+        mOrderId = getIntent().getStringExtra(ORDER_ID);
         if (mPayInfo != null) {
             Intent intent = new Intent();
             String packageName = getPackageName();
@@ -92,6 +96,13 @@ public class PayResultActivity extends BaseActivity implements View.OnClickListe
                 finish();
                 break;
             case R.id.check_order:
+                if (mOrderId == null) {
+                    return;
+                }
+                Intent intent1 = new Intent(this, OrderDetailActivity.class);
+                intent1.putExtra("id", mOrderId);
+                intent1.putExtra("state", 1);
+                startActivity(intent1);
                 break;
             case R.id.cancel_order:
                 finish();
