@@ -22,6 +22,7 @@ import com.sensu.android.zimaogou.utils.*;
 import com.sensu.android.zimaogou.utils.TextUtils;
 import com.sensu.android.zimaogou.widget.RoundImageView;
 import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import org.apache.http.Header;
@@ -98,6 +99,12 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
         }
 
         isJoinGroup();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
     }
 
     private void isJoinGroup() {

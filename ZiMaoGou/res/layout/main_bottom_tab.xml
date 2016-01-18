@@ -41,17 +41,13 @@
                 android:textSize="@dimen/bottom_text_size"
                 android:text="分类"/>
 
-        <TextView
+        <ImageView
                 android:id="@+id/bottom_tour_buy"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableTop="@drawable/drawable_tour_buy_select"
-                android:drawablePadding="1dp"
-                android:textColor="@color/color_bottom_text_select"
-                android:gravity="center"
-                android:textSize="@dimen/bottom_text_size"
-                android:text="足迹"/>
+                android:padding="5dp"
+                android:src="@drawable/drawable_bottom_pic"/>
 
         <TextView
                 android:id="@+id/bottom_shopping_bag"

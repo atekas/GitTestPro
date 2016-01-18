@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -50,7 +51,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     //底层按钮
     private TextView mHomePageBottomView;
     private TextView mClassificationBottomView;
-    private TextView mTourBuyBottomView;
+    private ImageView mTourBuyBottomView;
     private TextView mShoppingBagBottomView;
     private TextView mMeBottomView;
     private PushAgent mPushAgent;
@@ -117,7 +118,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private void initViews() {
         mHomePageBottomView = (TextView) findViewById(R.id.bottom_home_page);
         mClassificationBottomView = (TextView) findViewById(R.id.bottom_classification);
-        mTourBuyBottomView = (TextView) findViewById(R.id.bottom_tour_buy);
+        mTourBuyBottomView = (ImageView) findViewById(R.id.bottom_tour_buy);
         mShoppingBagBottomView = (TextView) findViewById(R.id.bottom_shopping_bag);
         mMeBottomView = (TextView) findViewById(R.id.bottom_me);
 
