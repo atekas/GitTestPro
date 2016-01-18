@@ -159,8 +159,7 @@ public class ImageUtils {
                                     ImageLoadingListener imageLoadingListener,
                                     ImageLoadingProgressListener imageLoadingProgressListener) {
         if (TextUtils.isEmpty(uri) || imageView == null) {
-            LogUtils.d("ImageUtil", "info");
-            PromptUtils.showToast("参数为空");
+            LogUtils.d("ImageUtil", "参数为空");
             return;
         }
         ImageLoader.getInstance().displayImage(uri, imageView, displayImageOptions, imageLoadingListener, imageLoadingProgressListener);

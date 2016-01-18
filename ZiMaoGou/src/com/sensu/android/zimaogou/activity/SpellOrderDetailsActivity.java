@@ -6,10 +6,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.*;
 import android.webkit.WebView;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.*;
 import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -24,6 +21,9 @@ import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.*;
 import com.sensu.android.zimaogou.utils.TextUtils;
 import com.sensu.android.zimaogou.widget.RoundImageView;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
@@ -263,8 +263,37 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
             case R.id.submit:
                 joinGroup();
                 break;
+            case R.id.share_friend_circle:
+                new ShareAction(this).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).setCallback(umShareListener)
+                        .withTitle("自贸购分享码")
+                        .withText(mGroupDetailsResponse.data.code)
+                        .share();
+                break;
+            case R.id.share_friends:
+                new ShareAction(this).setPlatform(SHARE_MEDIA.WEIXIN).setCallback(umShareListener)
+                        .withTitle("自贸购分享码")
+                        .withText(mGroupDetailsResponse.data.code)
+                        .share();
+                break;
         }
     }
+
+    private UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            Toast.makeText(SpellOrderDetailsActivity.this, platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            Toast.makeText(SpellOrderDetailsActivity.this,platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            Toast.makeText(SpellOrderDetailsActivity.this,platform + " 分享取消了", Toast.LENGTH_SHORT).show();
+        }
+    };
 
     private void addUserPhoto(List<GroupMemberResponse.MemberInfo> memberInfoList) {
         mUserHeadContainer.removeAllViews();
@@ -325,6 +354,8 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
         p.width = d.getWidth(); // 宽度设置为屏幕
         dialogWindow.setAttributes(p);
         mCommandGroupDialog.show();
+        mCommandGroupDialog.findViewById(R.id.share_friend_circle).setOnClickListener(this);
+        mCommandGroupDialog.findViewById(R.id.share_friends).setOnClickListener(this);
         if (!android.text.TextUtils.isEmpty(mGroupDetailsResponse.data.code)) {
             ((TextView) mCommandGroupDialog.findViewById(R.id.group_code)).setText(mGroupDetailsResponse.data.code);
         }
