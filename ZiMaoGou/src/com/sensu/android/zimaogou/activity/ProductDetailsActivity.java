@@ -36,6 +36,10 @@ import com.sensu.android.zimaogou.utils.*;
 import com.sensu.android.zimaogou.view.ProductTypeLinearLayout;
 import com.sensu.android.zimaogou.widget.PullPushScrollView;
 import com.sensu.android.zimaogou.widget.ScrollViewContainer;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
@@ -276,6 +280,9 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.product_share:
                 PromptUtils.showToast("分享");
+                if (mProductDetailsResponse != null) {
+                    shareDialog();
+                }
                 break;
             case R.id.cancel:
                 mChooseDialog.dismiss();
@@ -701,4 +708,77 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
             }
         });
     }
+
+    /**
+     * 分享
+     */
+    Dialog mShareDialog;
+
+    private void shareDialog() {
+        mShareDialog = new Dialog(this, R.style.dialog);
+        mShareDialog.setCancelable(true);
+        mShareDialog.setContentView(R.layout.share_dialog);
+        LinearLayout ll_wx = (LinearLayout) mShareDialog.findViewById(R.id.ll_wx);
+        LinearLayout ll_friends = (LinearLayout) mShareDialog.findViewById(R.id.ll_friends);
+        LinearLayout ll_sina = (LinearLayout) mShareDialog.findViewById(R.id.ll_sina);
+        ll_sina.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UMImage image = new UMImage(ProductDetailsActivity.this, "http://www.umeng.com/images/pic/social/integrated_3.png");
+                new ShareAction(ProductDetailsActivity.this).setPlatform(SHARE_MEDIA.SINA).setCallback(umShareListener)
+                        .withText("自贸购新品")
+                        .withTargetUrl("http://139.196.108.137:80/v1/share/goods/" + mProductDetailsResponse.data.id)
+                        .share();
+                mShareDialog.dismiss();
+            }
+        });
+        ll_wx.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ShareAction(ProductDetailsActivity.this).setPlatform(SHARE_MEDIA.WEIXIN).setCallback(umShareListener)
+                        .withText("自贸购新品")
+                        .withTargetUrl("http://139.196.108.137:80/v1/share/goods/" + mProductDetailsResponse.data.id)
+                        .share();
+                mShareDialog.dismiss();
+            }
+        });
+        ll_friends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ShareAction(ProductDetailsActivity.this).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).setCallback(umShareListener)
+                        .withText("自贸购新品")
+                        .withTargetUrl("http://139.196.108.137:80/v1/share/goods/" + mProductDetailsResponse.data.id)
+                        .share();
+                mShareDialog.dismiss();
+            }
+        });
+
+        mShareDialog.show();
+    }
+
+    private UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            Toast.makeText(ProductDetailsActivity.this, platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
+            if (mShareDialog != null) {
+                mShareDialog.dismiss();
+            }
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            Toast.makeText(ProductDetailsActivity.this,platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
+            if (mShareDialog != null) {
+                mShareDialog.dismiss();
+            }
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            Toast.makeText(ProductDetailsActivity.this,platform + " 分享取消了", Toast.LENGTH_SHORT).show();
+            if (mShareDialog != null) {
+                mShareDialog.dismiss();
+            }
+        }
+    };
 }
