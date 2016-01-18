@@ -61,7 +61,7 @@ public class BaseApplication extends Application{
         mBaseApplication = this;
         PlatformConfig.setWeixin("wx0be44fb6b98c0f4e", "26968b70834b3df57b71a4fbfdd5ff9b");
         //新浪微博
-        PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad");
+        PlatformConfig.setSinaWeibo("1707956992", "b50b9c4d87f71b48c893fd771599433e");
         PlatformConfig.setQQZone("1105039353", "OVvpjONsxyA6aVna");
 
         // /storage/emulated/0/general/

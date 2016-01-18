@@ -17,6 +17,15 @@ public class MyOrderGoodsMode implements Serializable{
     private String source;
     private String gid;
     private String spec_id;
+    private String is_returned;
+
+    public String getIs_returned() {
+        return is_returned;
+    }
+
+    public void setIs_returned(String is_returned) {
+        this.is_returned = is_returned;
+    }
 
     public String getSpec_id() {
         return spec_id;

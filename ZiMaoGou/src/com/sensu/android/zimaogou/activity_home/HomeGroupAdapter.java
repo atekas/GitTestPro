@@ -3,6 +3,7 @@ package com.sensu.android.zimaogou.activity_home;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
+import android.media.Image;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,7 +71,7 @@ public class HomeGroupAdapter extends BaseAdapter {
         } else {
             gsHolder = (GroupSpeViewHolder) convertView.getTag();
         }
-        ImageUtils.displayImage(pros.get(position).goods_image,gsHolder.mImage);
+        ImageUtils.displayImage(pros.get(position).goods_image,gsHolder.mImage, ImageUtils.mItemTopOptions);
         gsHolder.mTitle.setText(pros.get(position).content);
         gsHolder.mPersons.setText(pros.get(position).max_num+"人成团");
         gsHolder.mSalePrice.setText(StringUtils.deleteZero(pros.get(position).price));

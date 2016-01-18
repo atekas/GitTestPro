@@ -120,6 +120,7 @@ public class OrderDetailActivity extends BaseActivity {
     }
 
     private void getOrderDetail(){
+        mOrders.clear();
         showLoading();
         RequestParams requestParams = new RequestParams();
         requestParams.put("uid",userInfo.getUid());

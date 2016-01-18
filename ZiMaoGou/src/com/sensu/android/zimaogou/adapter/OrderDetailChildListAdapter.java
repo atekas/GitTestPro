@@ -25,8 +25,9 @@ import java.util.ArrayList;
 public class OrderDetailChildListAdapter extends SimpleBaseAdapter {
     ArrayList<MyOrderGoodsMode> mProducts = new ArrayList<MyOrderGoodsMode>();
     MyOrderMode myOrderMode;
-    int state ;
-    public void flush(MyOrderMode myOrderMode,int state) {
+    int state;
+
+    public void flush(MyOrderMode myOrderMode, int state) {
         this.myOrderMode = myOrderMode;
         if (myOrderMode.getGoods() != null) {
             this.mProducts = myOrderMode.getGoods();
@@ -35,7 +36,7 @@ public class OrderDetailChildListAdapter extends SimpleBaseAdapter {
         this.notifyDataSetChanged();
     }
 
-    public OrderDetailChildListAdapter(Context context, MyOrderMode myOrderMode,int state) {
+    public OrderDetailChildListAdapter(Context context, MyOrderMode myOrderMode, int state) {
         super(context);
         this.myOrderMode = myOrderMode;
         if (myOrderMode.getGoods() != null) {
@@ -71,12 +72,17 @@ public class OrderDetailChildListAdapter extends SimpleBaseAdapter {
         productsViewHolder.tv_productNum.setText("x" + mProducts.get(i).getNum());
         productsViewHolder.tv_productPrice.setText(mProducts.get(i).getPrice());
         productsViewHolder.tv_spc.setText(mProducts.get(i).getSpec());
-        if(state == IConstants.sReceived){
-            productsViewHolder.tv_refundMoney.setVisibility(View.VISIBLE);
-            productsViewHolder.tv_refundMoney.setText("退货退款");
-        }else if(state == IConstants.sUnreceived){
-            productsViewHolder.tv_refundMoney.setVisibility(View.VISIBLE);
-            productsViewHolder.tv_refundMoney.setText("退款");
+
+        if (mProducts.get(position).getIs_returned().equals("0")) {
+            if (state == IConstants.sReceived) {
+                productsViewHolder.tv_refundMoney.setVisibility(View.VISIBLE);
+                productsViewHolder.tv_refundMoney.setText("退货退款");
+            } else if (state == IConstants.sUnreceived) {
+                productsViewHolder.tv_refundMoney.setVisibility(View.VISIBLE);
+                productsViewHolder.tv_refundMoney.setText("退款");
+            } else {
+                productsViewHolder.tv_refundMoney.setVisibility(View.GONE);
+            }
         }else{
             productsViewHolder.tv_refundMoney.setVisibility(View.GONE);
         }

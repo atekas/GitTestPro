@@ -20,6 +20,7 @@ import com.sensu.android.zimaogou.Mode.MyOrderMode;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.MyOrderResponse;
 import com.sensu.android.zimaogou.activity.BaseActivity;
+import com.sensu.android.zimaogou.activity.ProductCommentActivity;
 import com.sensu.android.zimaogou.adapter.OrderChildListAdapter;
 import com.sensu.android.zimaogou.adapter.SimpleBaseAdapter;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
@@ -248,8 +249,13 @@ public class OrderActivity extends BaseActivity {
 
                         @Override
                         public void onClick(View view) {
-                            mContext.startActivity(new Intent(mContext, RefundOrCommentActivity.class).putExtra("type", 1)
-                            .putExtra("data",myOrderMode));
+                            if(myOrderMode.getGoods().size() > 1) {
+                                mContext.startActivity(new Intent(mContext, RefundOrCommentActivity.class).putExtra("type", 1)
+                                        .putExtra("data", myOrderMode));
+                            }else{
+                                mContext.startActivity(new Intent(mContext, ProductCommentActivity.class).putExtra("order",myOrderMode)
+                                        .putExtra("goods",myOrderMode.getGoods().get(0)));
+                            }
                         }
                     });
             }

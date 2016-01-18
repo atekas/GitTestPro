@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.CouponResponse;
@@ -40,7 +41,12 @@ public class CouponInvalidListAdapter extends SimpleBaseAdapter {
         }
 
         CouponResponse.Coupon coupon = mCouponList.get(i);
-
+        ImageView img_coupon = (ImageView)view.findViewById(R.id.img_coupon);
+        if(coupon.state.equals("2")){
+            img_coupon.setImageResource(R.drawable.y_06);
+        }else{
+            img_coupon.setImageResource(R.drawable.used_coupon);
+        }
         ((TextView) view.findViewById(R.id.tv_money)).setText(StringUtils.deleteZero(coupon.amount));
 
         ((TextView) view.findViewById(R.id.tv_moneyUsed)).setText(coupon.condition);

@@ -199,7 +199,7 @@
     </LinearLayout>
 
     <!--<View android:layout_width="1dp" android:layout_height="0dp" android:layout_weight="1" />-->
-        <TextView
+        <Button
                 android:id="@+id/submit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -211,14 +211,5 @@
                 android:gravity="center"
                 android:textColor="@color/color_login_press"
                 android:text="提交"/>
-    <TextView
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_20"
-            android:padding="@dimen/dip_10"
-            android:textColor="@color/white"
-            android:gravity="center"
-            android:background="@drawable/drawable_submit_back"
-            android:text="提交"/>
+
 </LinearLayout>

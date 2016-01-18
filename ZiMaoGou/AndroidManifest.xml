@@ -205,7 +205,7 @@
         <!--###################################### 友盟分享 ############################################-->
         <meta-data
                 android:name="UMENG_APPKEY"
-                android:value="565e9162e0f55ace710020a1" >
+                android:value="569a0ac967e58ebe12002438" >
         </meta-data>
         <!--测试  -->
         <!--  <meta-data

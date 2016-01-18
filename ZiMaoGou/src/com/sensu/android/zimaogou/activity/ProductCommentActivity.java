@@ -42,7 +42,7 @@ import java.util.List;
  */
 public class ProductCommentActivity extends BaseActivity implements View.OnClickListener {
 
-    private TextView mSubmit;
+    private Button mSubmit;
     private GridView mGridView;
     private TourBuySendAdapter mTourBuySendAdapter;
 
@@ -86,9 +86,8 @@ public class ProductCommentActivity extends BaseActivity implements View.OnClick
     }
 
     private void initViews() {
-        mSubmit = (TextView) findViewById(R.id.submit);
+        mSubmit = (Button) findViewById(R.id.submit);
         mGridView = (GridView) findViewById(R.id.grid_view);
-        mSubmit.setEnabled(false);
         mSubmit.setOnClickListener(this);
         mImageStar1 = (ImageView) findViewById(R.id.star_1);
         mImageStar2 = (ImageView) findViewById(R.id.star_2);
