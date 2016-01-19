@@ -442,6 +442,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         requestParams.put("id", productId);
         requestParams.put("source", source);
         requestParams.put("uid", mUserInfo == null ? 0 : mUserInfo.getUid());
+        requestParams.put("theme_id", mThemeId);
 
         HttpUtil.get(IConstants.sProduct_detail + productId, requestParams, new JsonHttpResponseHandler() {
             @Override

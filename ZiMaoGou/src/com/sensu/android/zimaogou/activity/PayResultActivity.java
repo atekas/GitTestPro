@@ -1,14 +1,22 @@
 package com.sensu.android.zimaogou.activity;
 
+import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.mycenter.OrderDetailActivity;
+import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
+import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
+import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.utils.PromptUtils;
+import org.apache.http.Header;
+import org.json.JSONObject;
 
 /**
  * Created by zhangwentao on 2016/1/4.
@@ -21,6 +29,7 @@ public class PayResultActivity extends BaseActivity implements View.OnClickListe
 
     private String mPayInfo;
     private String mOrderId;
+    private UserInfo mUserInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +40,7 @@ public class PayResultActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void initViews() {
-
+        mUserInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
         findViewById(R.id.back).setOnClickListener(this);
         findViewById(R.id.check_order).setOnClickListener(this);
         findViewById(R.id.cancel_order).setOnClickListener(this);
@@ -105,7 +114,8 @@ public class PayResultActivity extends BaseActivity implements View.OnClickListe
                 startActivity(intent1);
                 break;
             case R.id.cancel_order:
-                finish();
+//                finish();
+                showDialog();
                 break;
             case R.id.pay_again:
                 if (mPayInfo != null) {
@@ -122,5 +132,47 @@ public class PayResultActivity extends BaseActivity implements View.OnClickListe
                 }
                 break;
         }
+    }
+
+    private Dialog mDialog;
+
+    private void showDialog() {
+        mDialog = new Dialog(this, R.style.dialog);
+        mDialog.setCancelable(true);
+        mDialog.setContentView(R.layout.delete_address_dialog);
+
+        ((TextView) mDialog.findViewById(R.id.tv_tip)).setText("确认取消订单");
+        mDialog.findViewById(R.id.bt_sure).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cancelOrder();
+            }
+        });
+        mDialog.show();
+    }
+
+    private void cancelOrder() {
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("uid", mUserInfo.getUid());
+        requestParams.put("id", mOrderId);
+        requestParams.put("state", "1");
+        HttpUtil.postWithSign(mUserInfo.getToken(), IConstants.sOrder + "/" + mOrderId, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                if (response.optString("ret").equals("0")){
+                     PromptUtils.showToast("取消订单成功");
+                    if (mDialog != null) {
+                        mDialog.dismiss();
+                    }
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
     }
 }

@@ -103,6 +103,7 @@ public class CartLinearLayout extends LinearLayout {
                 } else {
                     if (Integer.parseInt(cartDataGroup.data.get(i).num) > Integer.parseInt(cartDataGroup.data.get(i).real_num)) {
                         ((TextView) childView.findViewById(R.id.product_type)).setText("库存" + cartDataGroup.data.get(i).real_num);
+                        ((TextView) childView.findViewById(R.id.product_type)).setTextColor(getContext().getResources().getColor(R.color.red));
                     }
                     childView.findViewById(R.id.tv_productName).setSelected(false);
                     childView.findViewById(R.id.product_info).setVisibility(GONE);
@@ -232,7 +233,15 @@ public class CartLinearLayout extends LinearLayout {
         mSubmitBtm.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                PromptUtils.showToast("点击了第" + mFlag + "的结算按钮");
+
+                for (CartDataResponse.CartDataChild cartDataChild : mCartDataGroup.data) {
+                    if (cartDataChild.getIsSelect()) {
+                        if (Integer.parseInt(cartDataChild.num) > Integer.parseInt(cartDataChild.real_num)) {
+                            PromptUtils.showToast(cartDataChild.title + "库存不足");
+                            return;
+                        }
+                    }
+                }
 
                 SelectProductModel selectProductModel = new SelectProductModel();
                 List<SelectProductModel.GoodsInfo> goodsInfoList = new ArrayList<SelectProductModel.GoodsInfo>();
