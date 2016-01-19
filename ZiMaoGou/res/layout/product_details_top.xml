@@ -23,6 +23,16 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"/>
 
+                <ImageView
+                        android:id="@+id/video_icon"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/video"
+                        android:visibility="gone"
+                        android:paddingLeft="@dimen/dip_5"
+                        android:paddingBottom="@dimen/dip_5"
+                        android:layout_alignParentBottom="true"/>
+
         </com.sensu.android.zimaogou.widget.FixedAspectRatioRelativeLayout>
 
 

@@ -157,4 +157,7 @@ public class IConstants {
     public static final String sInvokeCoupon = "my/coupon/activate";
 
     public static final String sVersion = "android/version";
+
+    //我的消息
+    public static final String sMyMessage = "my/message";
 }

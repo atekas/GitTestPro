@@ -1,15 +1,20 @@
 package com.sensu.android.zimaogou.widget;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.ProductDetailsResponse;
@@ -17,6 +22,7 @@ import com.sensu.android.zimaogou.adapter.ViewPagerAdapter;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.HttpUtil;
+import com.sensu.android.zimaogou.utils.ImageUtils;
 import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.sensu.android.zimaogou.utils.StringUtils;
 import com.sensu.android.zimaogou.view.PhotoView;
@@ -42,11 +48,15 @@ public class PullPushScrollView extends ScrollView implements View.OnClickListen
         super(context, attrs);
     }
 
+    private LayoutInflater mLayoutInflater;
+
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
         findViewById(R.id.is_collect).setOnClickListener(this);
+        findViewById(R.id.video_icon).setOnClickListener(this);
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        mLayoutInflater = LayoutInflater.from(getContext());
     }
 
     public void setProductDetailsResponse(ProductDetailsResponse productDetailsResponse) {
@@ -83,18 +93,20 @@ public class PullPushScrollView extends ScrollView implements View.OnClickListen
 
         int count = productDetailData.media.image.size();
         for (int i = 0; i < count; i++) {
-            PhotoView photoView = (PhotoView) LayoutInflater.from(getContext()).inflate(R.layout.photo_view_pager_item, null);
+            PhotoView photoView = (PhotoView) mLayoutInflater.inflate(R.layout.photo_view_pager_item, null);
             photoView.setPhotoData(productDetailData.media.image.get(i), false, "");
             mPhotoViewList.add(photoView);
         }
 
         //type为2时表示有视频, viewPager中数据位image.size +１
         if (productDetailData.media.type.equals("12")) {
+            findViewById(R.id.video_icon).setVisibility(VISIBLE);
             mViews = new View[count + 1];
-            PhotoView photoView = (PhotoView) LayoutInflater.from(getContext()).inflate(R.layout.photo_view_pager_item, null);
-            photoView.setPhotoData(productDetailData.media.cover, true, productDetailData.media.video);
+            PhotoView photoView = (PhotoView) mLayoutInflater.inflate(R.layout.photo_view_pager_item, null);
+            photoView.setPhotoData(productDetailData.media.image.get(0), true, productDetailData.media.video);
             mPhotoViewList.add(photoView);
         } else if (productDetailData.media.type.equals("1")) {
+            findViewById(R.id.video_icon).setVisibility(GONE);
             mViews = new View[count];
         }
 
@@ -113,6 +125,9 @@ public class PullPushScrollView extends ScrollView implements View.OnClickListen
                 } else {
                     deleteGoodsCollect();
                 }
+                break;
+            case R.id.video_icon:
+                mViewPager.setCurrentItem(mPhotoViewList.size());
                 break;
         }
     }
