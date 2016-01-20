@@ -149,7 +149,7 @@ public class SettingActivity extends BaseActivity {
         RequestParams requestParams1 = new RequestParams();
         requestParams1.put("uid", userInfo.getUid());
 
-        HttpUtil.getWithSign(userInfo.getToken(), IConstants.sLoginOut, requestParams1, new JsonHttpResponseHandler() {
+        HttpUtil.postWithSign(userInfo.getToken(), IConstants.sLoginOut, requestParams1, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);

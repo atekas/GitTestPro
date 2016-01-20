@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.utils.NetworkTypeUtils;
 import com.sensu.android.zimaogou.widget.ExceptionLinearLayout;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by winter on 2015/9/23.
@@ -119,11 +120,13 @@ public class BaseActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     @Override

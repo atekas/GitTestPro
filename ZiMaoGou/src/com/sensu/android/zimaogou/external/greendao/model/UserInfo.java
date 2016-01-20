@@ -4,6 +4,9 @@ package com.sensu.android.zimaogou.external.greendao.model;
 
 // KEEP INCLUDES - put your custom includes here
 // KEEP INCLUDES END
+
+import com.sensu.android.zimaogou.utils.TextUtils;
+
 /**
  * Entity mapped to table USER_INFO.
  */
@@ -53,7 +56,9 @@ public class UserInfo {
 
     public String getMobile() {
         String hintMobile = "";
-        hintMobile = mobile.substring(0,3)+"****"+mobile.substring(7,mobile.length());
+        if(!TextUtils.isEmpty(mobile)) {
+            hintMobile = mobile.substring(0, 3) + "****" + mobile.substring(7, mobile.length());
+        }
         return hintMobile;
     }
     public String getRealMobile(){

@@ -66,6 +66,7 @@
                            android:src="@drawable/img_message"/>
                 <ImageView
                         android:id="@+id/tv_numOfMessage"
+                        android:visibility="gone"
                         android:layout_width="10dp"
                         android:layout_height="10dp"
                         android:textSize="12sp"
@@ -100,6 +101,7 @@
                         android:text="@string/wait_pay"/>
                 <TextView
                         android:id="@+id/tv_numOfOrder1"
+                        android:visibility="gone"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:textSize="10sp"
@@ -133,6 +135,7 @@
                         android:text="@string/wait_receive_goods"/>
                 <TextView
                         android:id="@+id/tv_numOfOrder2"
+                        android:visibility="gone"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:textSize="10sp"
@@ -142,7 +145,7 @@
                         android:layout_marginTop="9dp"
                         android:layout_marginRight="27dp"
                         android:background="@drawable/message_num"
-                        android:text="13"/>
+                        android:text=""/>
             </RelativeLayout>
 
             <View
@@ -166,6 +169,7 @@
                         android:text="@string/sales_reture"/>
                 <TextView
                         android:id="@+id/tv_numOfOrder3"
+                        android:visibility="gone"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:textSize="10sp"
@@ -175,7 +179,7 @@
                         android:layout_marginTop="9dp"
                         android:layout_marginRight="27dp"
                         android:background="@drawable/message_num"
-                        android:text="1"/>
+                        android:text=""/>
             </RelativeLayout>
 
             <View

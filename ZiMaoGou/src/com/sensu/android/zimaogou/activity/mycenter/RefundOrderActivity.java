@@ -58,6 +58,7 @@ public class RefundOrderActivity extends BaseActivity {
     String CANCEL_ORDER = "1";//取消订单
     String SURE_ORDER = "2";//确认收货
 
+    int waitAgree = 0;
     int agreeRefundGoods = 1;//同意退货
     int agreeRefundMoney = 12;//同意退款
 
@@ -187,7 +188,6 @@ public class RefundOrderActivity extends BaseActivity {
 
             final MyOrderMode myOrderMode = mOrders.get(i);
             int state = myOrderMode.getState();
-            state = divisiveState(state);
             final int orderState = state;
             viewHolder.rl_top.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -205,11 +205,16 @@ public class RefundOrderActivity extends BaseActivity {
                             .putExtra("state", orderState));
                 }
             });
-            if (state == agreeRefundGoods) {
-                viewHolder.bt_cancel.setVisibility(View.VISIBLE);
+            if(state == waitAgree || state == agreeRefundGoods) {
+                viewHolder.rl_button.setVisibility(View.VISIBLE);
+                if (state == agreeRefundGoods) {
+                    viewHolder.bt_cancel.setVisibility(View.VISIBLE);
 
-            } else {
-                viewHolder.bt_cancel.setVisibility(View.GONE);
+                } else {
+                    viewHolder.bt_cancel.setVisibility(View.GONE);
+                }
+            }else{
+                viewHolder.rl_button.setVisibility(View.GONE);
             }
             viewHolder.bt_submit.setOnClickListener(new View.OnClickListener() {
 
@@ -297,20 +302,7 @@ public class RefundOrderActivity extends BaseActivity {
 //        }
 //    }
 
-    /**
-     * 根据后台返回stateCode区分状态
-     *
-     * @param state
-     */
-    private int divisiveState(int state) {
-        int code = 0;
-        if (state == 1) {
-            code = agreeRefundGoods;
-        } else {
-            code = agreeRefundMoney;
-        }
-        return code;
-    }
+
 
     /**
      * 计算一个订单的商品数量

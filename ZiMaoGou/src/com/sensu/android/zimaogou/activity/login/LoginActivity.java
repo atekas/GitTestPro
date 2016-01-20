@@ -17,6 +17,7 @@ import com.sensu.android.zimaogou.activity.BaseActivity;
 import com.sensu.android.zimaogou.encrypt.MD5Utils;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.utils.HttpUtil;
+import com.sensu.android.zimaogou.utils.LogUtils;
 import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.sensu.android.zimaogou.utils.TextUtils;
 import com.umeng.socialize.UMAuthListener;
@@ -38,6 +39,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     String mobile;
     private UMShareAPI mShareAPI = null;
     SHARE_MEDIA platform = null;
+    String loginType = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,13 +88,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.bt_wx:
                 platform = SHARE_MEDIA.WEIXIN;
+                loginType = "wx";
                 mShareAPI.doOauthVerify(this, platform, umAuthListener);
                 break;
             case R.id.bt_qq:
+                loginType = "qq";
                 platform = SHARE_MEDIA.QQ;
                 mShareAPI.doOauthVerify(this, platform, umAuthListener);
                 break;
             case R.id.bt_wb:
+                loginType = "wb";
                 platform = SHARE_MEDIA.SINA;
                 mShareAPI.doOauthVerify(this, platform, umAuthListener);
                 break;
@@ -110,7 +115,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             PromptUtils.showToast("密码不能为空");
             return;
         }
-        RequestParams requestParams = new RequestParams();
+        final RequestParams requestParams = new RequestParams();
 
         try {
             requestParams.put("mobile", mobile);
@@ -120,6 +125,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
+                    LogUtils.d("登录返回：",response.toString());
                     if (response.optString("ret").equals("-1")) {
                         PromptUtils.showToast(response.optString("msg"));
                         return;
@@ -147,6 +153,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         @Override
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
             mShareAPI.getPlatformInfo(LoginActivity.this, platform, umLoginListener);//获取用户授权登录后的信息
+
         }
 
         @Override
@@ -163,7 +170,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         @Override
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
             if (data!=null){
-                Toast.makeText(getApplicationContext(), data.toString(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), data.toString(), Toast.LENGTH_LONG).show();
+                thirdLogin(data);
             }
 
         }
@@ -182,5 +190,44 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mShareAPI.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void thirdLogin(Map<String, String> data){
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("platform",loginType);
+
+        if(loginType.equals("qq")){
+            requestParams.put("sex",data.get("gender").equals("男")?"1":"2");
+            requestParams.put("openid",data.get("openid"));
+            requestParams.put("nickname",data.get("screen_name"));
+            requestParams.put("avatar",data.get("profile_image_url"));
+            requestParams.put("userdata",data.toString());
+
+        }
+        if(loginType.equals("wb")){
+            requestParams.put("sex",data.get("gender").equals("1")?"1":"2");
+            requestParams.put("openid",data.get("uid"));
+            requestParams.put("nickname",data.get("screen_name"));
+            requestParams.put("avatar",data.get("profile_image_url"));
+            requestParams.put("userdata",data.toString());
+        }
+        HttpUtil.post(IConstants.sThirdLogin,requestParams,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                LogUtils.d("第三方登录返回：",response.toString());
+                PromptUtils.showToast("第三方登录返回:"+response.toString());
+                if (response.optInt("ret")<0) {
+                    PromptUtils.showToast(response.optString("msg"));
+                    return;
+                }
+
+                UserInfoResponse userInfoResponse = JSON.parseObject(response.toString(), UserInfoResponse.class);
+                userInfoResponse.data.setIsLogin("true");
+                GDUserInfoHelper.getInstance(LoginActivity.this).insertUserInfo(userInfoResponse.data);
+                PromptUtils.showToast("登录成功");
+                finish();
+            }
+        });
     }
 }

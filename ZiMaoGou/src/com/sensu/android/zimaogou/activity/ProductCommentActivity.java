@@ -60,7 +60,7 @@ public class ProductCommentActivity extends BaseActivity implements View.OnClick
     private ImageView mImageStar5;
 
     private ImageView mImageShowName;
-
+    private ImageView mImageProduct;
     private EditText mCommentEdit;
     MyOrderMode myOrderMode = new MyOrderMode();
     MyOrderGoodsMode myOrderGoodsMode = new MyOrderGoodsMode();
@@ -94,6 +94,8 @@ public class ProductCommentActivity extends BaseActivity implements View.OnClick
         mImageStar3 = (ImageView) findViewById(R.id.star_3);
         mImageStar4 = (ImageView) findViewById(R.id.star_4);
         mImageStar5 = (ImageView) findViewById(R.id.star_5);
+        mImageProduct = (ImageView) findViewById(R.id.product_pic);
+        ImageUtils.displayImage(myOrderGoodsMode.getImage(),mImageProduct,ImageUtils.mItemTopOptions);
         mImageStar1.setSelected(true);
         mImageStar2.setSelected(true);
         mImageStar3.setSelected(true);

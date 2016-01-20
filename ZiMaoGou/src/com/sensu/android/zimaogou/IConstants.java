@@ -63,12 +63,14 @@ public class IConstants {
     public static final String sGetForgetPassCode = "comm/recode/password_forget";
     //登录
     public static final String sLogin = "user/login";
+    //第三方登录
+    public static final String sThirdLogin = "user/third_party_login";
     //获取时间戳
     public static final String sGetTimestamp = "comm/timestamp";
     //获签名
     public static final String sGetSign = "comm/generate/sign";
     //退出登录
-    public static final String sLoginOut = "user/loginout";
+    public static final String sLoginOut = "user/logout";
     //忘记密码
     public static final String sForgetPass = "user/password_forget";
     //修改用户信息
@@ -117,6 +119,8 @@ public class IConstants {
     public static final String sGetBanner = "comm/banner";
     //订单
     public static final String sOrder = "order";
+    //订单数量
+    public static final String sOrderNum = "my/order/num";
     //退款订单
     public static final String sRefundOrder = "order/return";
     //运费规则

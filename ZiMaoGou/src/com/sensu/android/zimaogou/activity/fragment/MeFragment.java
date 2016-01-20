@@ -12,20 +12,24 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.OnlineServiceActivity;
 import com.sensu.android.zimaogou.activity.login.LoginActivity;
 import com.sensu.android.zimaogou.activity.mycenter.*;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
-import com.sensu.android.zimaogou.utils.ImageUtils;
-import com.sensu.android.zimaogou.utils.PromptUtils;
-import com.sensu.android.zimaogou.utils.TextUtils;
+import com.sensu.android.zimaogou.utils.*;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by zhangwentao on 2015/11/10.
@@ -96,6 +100,52 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         super.onResume();
         userInfo = GDUserInfoHelper.getInstance(mParentActivity).getUserInfo();
         flushUi();
+        if(userInfo!= null) {
+            getOrderNum();
+        }
+    }
+    private void getOrderNum(){
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("uid",userInfo.getUid());
+        HttpUtil.getWithSign(userInfo.getToken(), IConstants.sOrderNum,requestParams,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                LogUtils.d("订单数量返回：",response.toString());
+                try {
+                    JSONObject data = response.getJSONObject("data");
+                    if(data.optInt("due_pay")>0){
+                        mNumOfOrder1.setVisibility(View.VISIBLE);
+                        mNumOfOrder1.setText(""+data.optInt("due_pay"));
+                    }else{
+                        mNumOfOrder1.setVisibility(View.GONE);
+                    }
+                    if(data.optInt("due_receive")>0){
+                        mNumOfOrder2.setVisibility(View.VISIBLE);
+                        mNumOfOrder2.setText(""+data.optInt("due_receive"));
+                    }else{
+                        mNumOfOrder2.setVisibility(View.GONE);
+                    }
+                    if(data.optInt("return_order")>0){
+                        mNumOfOrder3.setVisibility(View.VISIBLE);
+                        mNumOfOrder3.setText(""+data.optInt("return_order"));
+                    }else{
+                        mNumOfOrder3.setVisibility(View.GONE);
+                    }
+                    if(data.optInt("due_read_message")>0){
+                        mNumOfMessage.setVisibility(View.VISIBLE);
+                    }else{
+                        mNumOfMessage.setVisibility(View.GONE);
+                    }
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
     }
 
     @Override
@@ -258,10 +308,13 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
             mNicknameTextView.setVisibility(View.VISIBLE);
             mLoginTextView.setVisibility(View.GONE);
-            if(TextUtils.isEmpty(userInfo.getName())){
+            if(!TextUtils.isEmpty(userInfo.getName())){
+                mNicknameTextView.setText(userInfo.getName());
+
+            }else if(!TextUtils.isEmpty(userInfo.getMobile())){
                 mNicknameTextView.setText(userInfo.getMobile());
             }else{
-                mNicknameTextView.setText(userInfo.getName());
+                mNicknameTextView.setText("");
             }
             ImageUtils.displayImage(userInfo.getAvatar(), mHeadPicImageView,ImageUtils.mHeadDefaultOptions);
         }
