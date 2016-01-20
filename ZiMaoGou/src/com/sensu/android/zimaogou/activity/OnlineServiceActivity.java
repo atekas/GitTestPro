@@ -1,6 +1,7 @@
 package com.sensu.android.zimaogou.activity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -9,7 +10,7 @@ import com.sensu.android.zimaogou.R;
 /**
  * Created by zhangwentao on 2015/12/2.
  */
-public class OnlineServiceActivity extends BaseActivity {
+public class OnlineServiceActivity extends BaseActivity implements View.OnClickListener {
     private WebView mWebView;
     private String mUrl = "http://chat16.live800.com/live800/chatClient/chatbox.jsp?companyID=569294&configID=113486&jid=8998592194";
 
@@ -22,6 +23,7 @@ public class OnlineServiceActivity extends BaseActivity {
     }
 
     private void initViews() {
+        findViewById(R.id.back).setOnClickListener(this);
         mWebView = (WebView) findViewById(R.id.web_view);
         mWebView.loadUrl(mUrl);
         WebSettings webSettings = mWebView.getSettings();
@@ -36,5 +38,14 @@ public class OnlineServiceActivity extends BaseActivity {
                 return true;
             }
         });
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.back:
+                finish();
+                break;
+        }
     }
 }

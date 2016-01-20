@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$USER_HOME$/Desktop/视频录制/QuPai_sdk&amp;demo_Android_1.0.1_9.22/OneSDK/OneSDK.iml" filepath="$USER_HOME$/Desktop/视频录制/QuPai_sdk&amp;demo_Android_1.0.1_9.22/OneSDK/OneSDK.iml" />
-      <module fileurl="file://$USER_HOME$/Desktop/视频录制/QuPai_sdk&amp;demo_Android_1.0.1_9.22/Recyclerview/Recyclerview.iml" filepath="$USER_HOME$/Desktop/视频录制/QuPai_sdk&amp;demo_Android_1.0.1_9.22/Recyclerview/Recyclerview.iml" />
       <module fileurl="file://$PROJECT_DIR$/ZiMaoGou.iml" filepath="$PROJECT_DIR$/ZiMaoGou.iml" />
-      <module fileurl="file://$USER_HOME$/Desktop/视频录制/QuPai_sdk&amp;demo_Android_1.0.1_9.22/appcompat_v7/appcompat_v7.iml" filepath="$USER_HOME$/Desktop/视频录制/QuPai_sdk&amp;demo_Android_1.0.1_9.22/appcompat_v7/appcompat_v7.iml" />
     </modules>
   </component>
 </project>

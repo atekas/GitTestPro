@@ -235,6 +235,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         findViewById(R.id.product_share).setOnClickListener(this);
         findViewById(R.id.add_to_buy_bag).setOnClickListener(this);
         findViewById(R.id.pay).setOnClickListener(this);
+        findViewById(R.id.online_service).setOnClickListener(this);
 
         listView = (ListView) findViewById(R.id.product_evaluate_list);
 
@@ -352,6 +353,9 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                         startActivity(intent1);
                     }
                 }
+                break;
+            case R.id.online_service:
+                startActivity(new Intent(this, OnlineServiceActivity.class));
                 break;
         }
     }
