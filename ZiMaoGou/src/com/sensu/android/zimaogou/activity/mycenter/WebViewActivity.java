@@ -1,5 +1,6 @@
 package com.sensu.android.zimaogou.activity.mycenter;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -8,10 +9,16 @@ import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.BaseActivity;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,7 +27,7 @@ import org.json.JSONObject;
  * @author yangqi
  *
  */
-public class WebViewActivity extends BaseActivity {
+public class WebViewActivity extends BaseActivity implements View.OnClickListener {
 
 
 	WebView webview;
@@ -49,7 +56,7 @@ public class WebViewActivity extends BaseActivity {
 				onBackPressed();
 			}
 		});
-
+		findViewById(R.id.share).setOnClickListener(this);
 
 		mTitleTextView.setText(title);
 		webview = (WebView) findViewById(R.id.webView);
@@ -92,9 +99,11 @@ public class WebViewActivity extends BaseActivity {
 		 }else if(title.indexOf("专题")>=0){
 			 URL = getIntent().getExtras().getString("url");
 			 webview.loadUrl(URL);
+			 findViewById(R.id.share).setVisibility(View.VISIBLE);
 		 }else{
 			 URL = getIntent().getExtras().getString("url");
 			 webview.loadUrl(URL);
+			 findViewById(R.id.share).setVisibility(View.VISIBLE);
 		 }
 		WebSettings webSettings = webview.getSettings();
 		webSettings.setJavaScriptEnabled(true);
@@ -110,4 +119,75 @@ public class WebViewActivity extends BaseActivity {
 		});
 	}
 
+	@Override
+	public void onClick(View view) {
+		switch (view.getId()) {
+			case R.id.share:
+				shareDialog();
+				break;
+		}
+	}
+
+	/**
+	 * 分享
+	 */
+	Dialog mShareDialog;
+
+	private void shareDialog() {
+		mShareDialog = new Dialog(this, R.style.dialog);
+		mShareDialog.setCancelable(true);
+		mShareDialog.setContentView(R.layout.share_dialog);
+		LinearLayout ll_wx = (LinearLayout) mShareDialog.findViewById(R.id.ll_wx);
+		LinearLayout ll_friends = (LinearLayout) mShareDialog.findViewById(R.id.ll_friends);
+		LinearLayout ll_sina = (LinearLayout) mShareDialog.findViewById(R.id.ll_sina);
+		ll_sina.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				UMImage image = new UMImage(WebViewActivity.this, "http://www.umeng.com/images/pic/social/integrated_3.png");
+				new ShareAction(WebViewActivity.this).setPlatform(SHARE_MEDIA.SINA).setCallback(umShareListener)
+						.withText("hello umeng video")
+						.withTargetUrl(URL)
+						.withMedia(image)
+						.share();
+				mShareDialog.dismiss();
+			}
+		});
+		ll_wx.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				new ShareAction(WebViewActivity.this).setPlatform(SHARE_MEDIA.WEIXIN).setCallback(umShareListener)
+						.withText("hello wx" + URL)
+						.share();
+				mShareDialog.dismiss();
+			}
+		});
+		ll_friends.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				new ShareAction(WebViewActivity.this).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).setCallback(umShareListener)
+						.withText("hello umeng" + URL)
+						.share();
+				mShareDialog.dismiss();
+			}
+		});
+
+		mShareDialog.show();
+	}
+
+	private UMShareListener umShareListener = new UMShareListener() {
+		@Override
+		public void onResult(SHARE_MEDIA platform) {
+			Toast.makeText(WebViewActivity.this, platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
+		}
+
+		@Override
+		public void onError(SHARE_MEDIA platform, Throwable t) {
+			Toast.makeText(WebViewActivity.this,platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
+		}
+
+		@Override
+		public void onCancel(SHARE_MEDIA platform) {
+			Toast.makeText(WebViewActivity.this,platform + " 分享取消了", Toast.LENGTH_SHORT).show();
+		}
+	};
 }

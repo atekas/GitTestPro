@@ -748,8 +748,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
             @Override
             public void onClick(View view) {
                 new ShareAction(ProductDetailsActivity.this).setPlatform(SHARE_MEDIA.WEIXIN).setCallback(umShareListener)
-                        .withText("自贸购新品")
-                        .withTargetUrl("http://139.196.108.137:80/v1/share/goods/" + mProductDetailsResponse.data.id)
+                        .withText("自贸购新品" + "http://139.196.108.137:80/v1/share/goods/" + mProductDetailsResponse.data.id)
                         .share();
                 mShareDialog.dismiss();
             }
@@ -758,8 +757,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
             @Override
             public void onClick(View view) {
                 new ShareAction(ProductDetailsActivity.this).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).setCallback(umShareListener)
-                        .withText("自贸购新品")
-                        .withTargetUrl("http://139.196.108.137:80/v1/share/goods/" + mProductDetailsResponse.data.id)
+                        .withText("自贸购新品" + "http://139.196.108.137:80/v1/share/goods/" + mProductDetailsResponse.data.id)
                         .share();
                 mShareDialog.dismiss();
             }

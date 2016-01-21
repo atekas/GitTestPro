@@ -272,14 +272,12 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
                 break;
             case R.id.share_friend_circle:
                 new ShareAction(this).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).setCallback(umShareListener)
-                        .withTitle("自贸购分享码")
-                        .withText(mGroupDetailsResponse.data.code)
+                        .withText("自贸购分享码" + mGroupDetailsResponse.data.code)
                         .share();
                 break;
             case R.id.share_friends:
                 new ShareAction(this).setPlatform(SHARE_MEDIA.WEIXIN).setCallback(umShareListener)
-                        .withTitle("自贸购分享码")
-                        .withText(mGroupDetailsResponse.data.code)
+                        .withText("自贸购分享码" + mGroupDetailsResponse.data.code)
                         .share();
                 break;
         }
