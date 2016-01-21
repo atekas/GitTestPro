@@ -1,20 +1,15 @@
 package com.sensu.android.zimaogou.widget;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.ProductDetailsResponse;
@@ -22,7 +17,6 @@ import com.sensu.android.zimaogou.adapter.ViewPagerAdapter;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.HttpUtil;
-import com.sensu.android.zimaogou.utils.ImageUtils;
 import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.sensu.android.zimaogou.utils.StringUtils;
 import com.sensu.android.zimaogou.view.PhotoView;
@@ -139,7 +133,13 @@ public class PullPushScrollView extends ScrollView implements View.OnClickListen
 
     @Override
     public void onPageSelected(int i) {
-
+        if (mProductDetailData.media.type.equals("12")) {
+            if (i == mPhotoViewList.size() - 1) {
+                findViewById(R.id.video_icon).setVisibility(GONE);
+            } else {
+                findViewById(R.id.video_icon).setVisibility(VISIBLE);
+            }
+        }
     }
 
     @Override

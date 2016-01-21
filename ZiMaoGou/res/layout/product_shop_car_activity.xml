@@ -33,6 +33,7 @@
                 android:textColor="@color/black_444444"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="18dp"
+                android:visibility="gone"
                 android:layout_alignBottom="@+id/tv_title"
                 android:textSize="@dimen/text_size_x_large"
                 android:text="编辑" />

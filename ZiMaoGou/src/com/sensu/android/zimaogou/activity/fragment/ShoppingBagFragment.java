@@ -122,8 +122,10 @@ public class ShoppingBagFragment extends BaseFragment implements View.OnClickLis
                 if (cartDataResponse.data.size() == 0) {
                     ((ExceptionLinearLayout) mNoOrderView.findViewById(R.id.ll_exception)).setException(IConstants.EXCEPTION_SHOP_IS_NULL);
                     mNoOrderView.setVisibility(View.VISIBLE);
+                    mEditText.setVisibility(View.GONE);
                 } else {
                     mNoOrderView.setVisibility(View.GONE);
+                    mEditText.setVisibility(View.VISIBLE);
                 }
             }
 

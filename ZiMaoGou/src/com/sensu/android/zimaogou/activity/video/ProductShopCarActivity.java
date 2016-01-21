@@ -21,6 +21,7 @@ import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.utils.PromptUtils;
+import com.sensu.android.zimaogou.widget.ExceptionLinearLayout;
 import com.sensu.android.zimaogou.widget.OnRefreshListener;
 import com.sensu.android.zimaogou.widget.RefreshListView;
 import org.apache.http.Header;
@@ -56,11 +57,15 @@ public class ProductShopCarActivity extends BaseActivity implements View.OnClick
         mListView.setAdapter(mShoppingBagAdapter);
         mEditText = (TextView) findViewById(R.id.goods_edit);
         mEditText.setOnClickListener(this);
-        getCart();
 
         findViewById(R.id.back).setOnClickListener(this);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getCart();
+    }
 
     @Override
     public void onClick(View view) {
@@ -99,6 +104,11 @@ public class ProductShopCarActivity extends BaseActivity implements View.OnClick
                 }
                 mCartDataResponse = cartDataResponse;
                 mShoppingBagAdapter.setCartDataGroup(cartDataResponse);
+                if (cartDataResponse.data.size() == 0) {
+                    mEditText.setVisibility(View.GONE);
+                } else {
+                    mEditText.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
