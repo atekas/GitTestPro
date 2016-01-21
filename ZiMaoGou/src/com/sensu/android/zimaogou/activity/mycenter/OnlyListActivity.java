@@ -9,7 +9,6 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import com.sensu.android.zimaogou.Mode.ProvinceMode;
 import com.sensu.android.zimaogou.Mode.RefundReasonMode;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.BaseActivity;
@@ -55,7 +54,7 @@ public class OnlyListActivity extends BaseActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                refundReasonMode.setReason(listData.get(i).getReason());
+                refundReasonMode.setName(listData.get(i).getName());
                 refundReasonMode.setId(listData.get(i).getId());
                 Intent intent = new Intent(OnlyListActivity.this,RefundOrderActivity.class);
                 intent.putExtra("data",refundReasonMode);
@@ -94,7 +93,7 @@ public class OnlyListActivity extends BaseActivity {
             }else{
                 holder = (ViewHolder) view.getTag();
             }
-            holder.tv_address.setText(listData.get(i).getReason());
+            holder.tv_address.setText(listData.get(i).getName());
             return view;
         }
     }

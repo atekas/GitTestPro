@@ -3,7 +3,6 @@ package com.sensu.android.zimaogou.activity.mycenter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -23,15 +22,11 @@ import com.sensu.android.zimaogou.Mode.MyOrderMode;
 import com.sensu.android.zimaogou.Mode.RefundReasonMode;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.BaseActivity;
-import com.sensu.android.zimaogou.activity.LocalPhotoActivity;
 import com.sensu.android.zimaogou.activity.fragment.TourBuyFragment;
-import com.sensu.android.zimaogou.activity.tour.TourBuySendAdapter;
-import com.sensu.android.zimaogou.activity.tour.TourSendData;
 import com.sensu.android.zimaogou.adapter.SimpleBaseAdapter;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.photoalbum.PhotoInfo;
-import com.sensu.android.zimaogou.popup.SelectCountryPopup;
 import com.sensu.android.zimaogou.utils.*;
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -179,6 +174,7 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
         isJustRefundMoney = true;
         mRefundMoneyImageView.setSelected(isJustRefundMoney);
         mRefundGoodsImageView.setSelected(!isJustRefundMoney);
+        mRefundReasonTextView.setText("");
     }
 
     /**
@@ -190,6 +186,7 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
         isJustRefundMoney = false;
         mRefundMoneyImageView.setSelected(isJustRefundMoney);
         mRefundGoodsImageView.setSelected(!isJustRefundMoney);
+        mRefundReasonTextView.setText("");
 
     }
 
@@ -222,7 +219,7 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 mChooseRefundReason = isJustRefundMoney ? mRefundMoneyReasons.get(i) : mRefundGoodsReasons.get(i);
-                mRefundReasonTextView.setText(mChooseRefundReason.getReason());
+                mRefundReasonTextView.setText(mChooseRefundReason.getName());
                 mRefundReasonPopupWindow.dismiss();
             }
         });
@@ -372,7 +369,7 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
         requestParams.put("spec_id", goodsMode.getSpec_id());
         requestParams.put("order_no", orderMode.getOrder_no());
         requestParams.put("return_type", isJustRefundMoney ? "1" : "2");
-        requestParams.put("return_reason", mChooseRefundReason.getReason());
+        requestParams.put("return_reason", mChooseRefundReason.getName());
         requestParams.put("return_content", TextUtils.isEmpty(content) ? "" : content);
         requestParams.put("amount", money);
         requestParams.put("images", mServiceImages.size() == 0 ? "" : changeTOStringOfImages());
@@ -451,8 +448,8 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
             }
         } else if (resultCode == 1001) {
             mChooseRefundReason = (RefundReasonMode) data.getExtras().get("data");
-            if (!TextUtils.isEmpty(mChooseRefundReason.getReason())) {
-                mRefundReasonTextView.setText(mChooseRefundReason.getReason());
+            if (!TextUtils.isEmpty(mChooseRefundReason.getName())) {
+                mRefundReasonTextView.setText(mChooseRefundReason.getName());
             }
         }
     }
@@ -510,7 +507,7 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
             } else {
                 viewHolder = (ViewHolder) view.getTag();
             }
-            viewHolder.tv_reason.setText(refundReasonModes.get(i).getReason());
+            viewHolder.tv_reason.setText(refundReasonModes.get(i).getName());
             return view;
         }
 
@@ -589,37 +586,37 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
     private void setReason() {
         RefundReasonMode refundReasonMode = new RefundReasonMode();
         refundReasonMode.setId("1");
-        refundReasonMode.setReason("未收到货");
+        refundReasonMode.setName("未收到货");
         RefundReasonMode refundReasonMode1 = new RefundReasonMode();
         refundReasonMode1.setId("2");
-        refundReasonMode1.setReason("商品缺货");
+        refundReasonMode1.setName("商品缺货");
         RefundReasonMode refundReasonMode2 = new RefundReasonMode();
         refundReasonMode2.setId("3");
-        refundReasonMode2.setReason("协商一致退款");
+        refundReasonMode2.setName("协商一致退款");
         RefundReasonMode refundReasonMode3 = new RefundReasonMode();
         refundReasonMode3.setId("4");
-        refundReasonMode3.setReason("重复下单");
+        refundReasonMode3.setName("重复下单");
         RefundReasonMode refundReasonMode4 = new RefundReasonMode();
         refundReasonMode4.setId("4");
-        refundReasonMode4.setReason("收货人信息错误");
+        refundReasonMode4.setName("收货人信息错误");
         RefundReasonMode refundReasonMode5 = new RefundReasonMode();
         refundReasonMode5.setId("5");
-        refundReasonMode5.setReason("其他原因");
+        refundReasonMode5.setName("其他原因");
         RefundReasonMode refundReasonMode6 = new RefundReasonMode();
         refundReasonMode6.setId("11");
-        refundReasonMode6.setReason("七天无理由退货");
+        refundReasonMode6.setName("七天无理由退货");
         RefundReasonMode refundReasonMode7 = new RefundReasonMode();
         refundReasonMode7.setId("12");
-        refundReasonMode7.setReason("收到商品破损");
+        refundReasonMode7.setName("收到商品破损");
         RefundReasonMode refundReasonMode8 = new RefundReasonMode();
         refundReasonMode8.setId("13");
-        refundReasonMode8.setReason("商品错发/漏发");
+        refundReasonMode8.setName("商品错发/漏发");
         RefundReasonMode refundReasonMode9 = new RefundReasonMode();
         refundReasonMode9.setId("14");
-        refundReasonMode9.setReason("收到商品与描述不符");
+        refundReasonMode9.setName("收到商品与描述不符");
         RefundReasonMode refundReasonMode10 = new RefundReasonMode();
         refundReasonMode10.setId("15");
-        refundReasonMode10.setReason("商品质量问题");
+        refundReasonMode10.setName("商品质量问题");
 
         mRefundMoneyReasons.add(refundReasonMode);
         mRefundMoneyReasons.add(refundReasonMode1);

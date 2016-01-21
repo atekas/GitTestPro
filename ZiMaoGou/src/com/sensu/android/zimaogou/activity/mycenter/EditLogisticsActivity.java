@@ -1,17 +1,18 @@
 package com.sensu.android.zimaogou.activity.mycenter;
 
-import android.app.Instrumentation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.Mode.MyOrderMode;
 import com.sensu.android.zimaogou.Mode.RefundReasonMode;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.ReqResponse.LogisticsCompanyResponse;
 import com.sensu.android.zimaogou.activity.BaseActivity;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
@@ -79,7 +80,7 @@ public class EditLogisticsActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == 1001){
             mChooseCompany = (RefundReasonMode) data.getExtras().get("data");
-            mCompany.setText(mChooseCompany.getReason());
+            mCompany.setText(mChooseCompany.getName());
         }
     }
 
@@ -114,36 +115,17 @@ public class EditLogisticsActivity extends BaseActivity {
         });
     }
     /**
-     * 本地填充 物流公司数据
+     * 填充 物流公司数据
      */
     private void setReason() {
-        RefundReasonMode refundReasonMode = new RefundReasonMode();
-        refundReasonMode.setId("1");
-        refundReasonMode.setReason("圆通快递");
-        RefundReasonMode refundReasonMode1 = new RefundReasonMode();
-        refundReasonMode1.setId("2");
-        refundReasonMode1.setReason("申通快递");
-        RefundReasonMode refundReasonMode2 = new RefundReasonMode();
-        refundReasonMode2.setId("3");
-        refundReasonMode2.setReason("韵达快递");
-        RefundReasonMode refundReasonMode3 = new RefundReasonMode();
-        refundReasonMode3.setId("4");
-        refundReasonMode3.setReason("德邦快递");
-        RefundReasonMode refundReasonMode4 = new RefundReasonMode();
-        refundReasonMode4.setId("4");
-        refundReasonMode4.setReason("EMS");
-        RefundReasonMode refundReasonMode5 = new RefundReasonMode();
-        refundReasonMode5.setId("5");
-        refundReasonMode5.setReason("凡宇速递");
-        RefundReasonMode refundReasonMode6 = new RefundReasonMode();
-
-
-        mCompanies.add(refundReasonMode);
-        mCompanies.add(refundReasonMode1);
-        mCompanies.add(refundReasonMode2);
-        mCompanies.add(refundReasonMode3);
-        mCompanies.add(refundReasonMode4);
-        mCompanies.add(refundReasonMode5);
+        HttpUtil.get(IConstants.sGetLogisticsCompany,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                LogisticsCompanyResponse logisticsCompanyResponse = JSON.parseObject(response.toString(),LogisticsCompanyResponse.class);
+                mCompanies = logisticsCompanyResponse.data;
+            }
+        });
 
     }
 

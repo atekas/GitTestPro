@@ -84,6 +84,7 @@
                     android:layout_marginRight="@dimen/dip_20"
                     android:textSize="@dimen/text_size_15"
                     android:padding="@dimen/dip_10"
+                    android:singleLine="true"
                     android:layout_marginLeft="10dp"
                     android:inputType="phone"
                     android:hint="@string/please_input_phone"
@@ -121,6 +122,7 @@
                     android:layout_weight="1"
                     android:textSize="@dimen/text_size_15"
                     android:padding="@dimen/dip_10"
+                    android:singleLine="true"
                     android:layout_marginLeft="10dp"
                     android:hint="@string/please_input_auth_code"
                     android:textColorHint="@color/hint_color"
@@ -191,7 +193,8 @@
                                 android:textSize="@dimen/text_size_15"
                                 android:padding="@dimen/dip_10"
                                 android:layout_marginLeft="10dp"
-                                android:inputType="phone"
+                                android:inputType="textPassword"
+                                android:singleLine="true"
                                 android:hint="请输入登录密码"
                                 android:textColorHint="@color/hint_color"
                                 android:textColor="@color/black_222222"
@@ -202,7 +205,7 @@
 
         </LinearLayout>
     <TextView
-            android:id="@+id/next"
+            android:id="@+id/submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/drawable_login_pressed"

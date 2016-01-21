@@ -31,6 +31,8 @@ public class MyOrderMode implements Serializable {
     private String amount_apply;
     private String return_type;
 
+
+
     public String getReturn_reason() {
         return return_reason;
     }

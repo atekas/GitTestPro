@@ -64,8 +64,8 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                AuthCodeResponse authCodeResponse = JSON.parseObject(response.toString(), AuthCodeResponse.class);
-                PromptUtils.showToast(authCodeResponse.data.recode);
+//                AuthCodeResponse authCodeResponse = JSON.parseObject(response.toString(), AuthCodeResponse.class);
+//                PromptUtils.showToast(authCodeResponse.data.recode);
                 startActivity(new Intent(ForgetPasswordActivity.this, ForgetPasswordSureActivity.class).putExtra("phone", phoneNum));
                 finish();
             }

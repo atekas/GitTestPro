@@ -61,6 +61,8 @@ public class IConstants {
     public static final String sGetRegisterCode = "comm/recode/register";
     //获取忘记密码验证码
     public static final String sGetForgetPassCode = "comm/recode/password_forget";
+    //获取物流公司
+    public static final String sGetLogisticsCompany = "conf/express_company";
     //登录
     public static final String sLogin = "user/login";
     //第三方登录

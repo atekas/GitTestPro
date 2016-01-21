@@ -130,6 +130,7 @@ public class RefundOrderActivity extends BaseActivity {
                 LogUtils.d("获取我的退货单返回：", response.toString());
                 myOrderResponse = JSON.parseObject(response.toString(), MyOrderResponse.class);
                 mOrders = myOrderResponse.data;
+                updateState_cn(mOrders);//根据state修改订单状态显示
                 adapter = new OrderListAdapter1(RefundOrderActivity.this, mOrders);
                 mOrderListView.setAdapter(adapter);
                 if (myOrderResponse.data.size() == 0) {
@@ -351,4 +352,35 @@ public class RefundOrderActivity extends BaseActivity {
         mUpdateOrderDialog.show();
     }
 
+    /**
+     * 根据state修改订单状态显示
+     * @param myOrderModes
+     */
+    private void updateState_cn(ArrayList<MyOrderMode> myOrderModes){
+        for(MyOrderMode myOrderMode:myOrderModes){
+            switch (myOrderMode.getState()){
+                case 0:
+                case 2:
+                    myOrderMode.setState_cn("等待审核");
+                    break;
+                case 11:
+                    myOrderMode.setState_cn("审核不通过");
+                    break;
+                case 1:
+                    myOrderMode.setState_cn("填写物流");
+                    break;
+
+                case 12:
+                    myOrderMode.setState_cn("用户撤销退款");
+                    break;
+                case 13:
+                    myOrderMode.setState_cn("不同意退款");
+                    break;
+                case 3:
+                case 6:
+                    myOrderMode.setState_cn("退款完成");
+                    break;
+            }
+        }
+    }
 }

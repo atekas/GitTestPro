@@ -69,6 +69,12 @@ public class OrderActivity extends BaseActivity {
             type = getIntent().getExtras().getInt("type");
         }
         initView();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getOrder();
     }
 
@@ -126,6 +132,7 @@ public class OrderActivity extends BaseActivity {
     };
 
     private void getOrder() {
+        mOrders.clear();
         UserInfo userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
         RequestParams requestParams = new RequestParams();
         requestParams.put("uid", userInfo.getUid());
@@ -244,6 +251,11 @@ public class OrderActivity extends BaseActivity {
                 });
             } else if(state == IConstants.sReceived){
                 viewHolder.bt_cancel.setVisibility(View.GONE);
+                if(checkCommentState(myOrderMode)){
+                    viewHolder.rl_button.setVisibility(View.VISIBLE);
+                }else{
+                    viewHolder.rl_button.setVisibility(View.GONE);
+                }
                 viewHolder.bt_submit.setText("评价");
                 viewHolder.bt_submit.setOnClickListener(new View.OnClickListener() {
 
@@ -416,6 +428,7 @@ public class OrderActivity extends BaseActivity {
         return code;
     }
 
+
     /**
      * 计算一个订单的商品数量
      * @param myOrderMode
@@ -427,6 +440,22 @@ public class OrderActivity extends BaseActivity {
             num += Integer.parseInt(myOrderGoodsMode.getNum());
         }
         return num;
+    }
+
+    /**
+     * 该订单下的商品是否可以评论
+     * @param myOrderMode
+     * @return
+     */
+    private boolean checkCommentState(MyOrderMode myOrderMode){
+        boolean canComment = false;
+        for(MyOrderGoodsMode myOrderGoodsMode:myOrderMode.getGoods()){
+            if(myOrderGoodsMode.getIs_commented().equals("0")){
+                canComment = true;
+                break;
+            }
+        }
+        return canComment;
     }
     /**
      * 修改订单状态dialog
@@ -466,5 +495,6 @@ public class OrderActivity extends BaseActivity {
         });
         mUpdateOrderDialog.show();
     }
+
 
 }

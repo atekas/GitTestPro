@@ -18,14 +18,17 @@ import com.sensu.android.zimaogou.utils.PromptUtils;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 /**
  * Created by qi.yang on 2016/1/14.
  */
 public class RefundOrderDetailActivity extends BaseActivity {
-    TextView mRefundState,mRefundMoney,mRefundTime,mRefundReason,mRefundInstruction,mRefundNo,mApplyTime,mApplyMoney;
+    TextView mRefundState, mRefundMoney, mRefundTime, mRefundReason, mRefundInstruction, mRefundNo, mApplyTime, mApplyMoney;
     UserInfo userInfo;
     String id = "";
     MyOrderMode myOrderMode = new MyOrderMode();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,16 +41,17 @@ public class RefundOrderDetailActivity extends BaseActivity {
             }
         });
 
-        if(getIntent().getExtras() != null){
+        if (getIntent().getExtras() != null) {
             id = getIntent().getExtras().getString("id");
         }
         initView();
         getRefundDetail();
     }
-    private void initView(){
+
+    private void initView() {
         mRefundState = (TextView) findViewById(R.id.tv_refundState);
         mRefundMoney = (TextView) findViewById(R.id.tv_refundMoney);
-        mRefundTime  = (TextView) findViewById(R.id.tv_refundTime);
+        mRefundTime = (TextView) findViewById(R.id.tv_refundTime);
         mRefundReason = (TextView) findViewById(R.id.tv_refundReason);
         mRefundInstruction = (TextView) findViewById(R.id.tv_instructions);
         mRefundNo = (TextView) findViewById(R.id.tv_refundNo);
@@ -55,17 +59,18 @@ public class RefundOrderDetailActivity extends BaseActivity {
         mApplyMoney = (TextView) findViewById(R.id.tv_applyMoney);
     }
 
-    private void getRefundDetail(){
+    private void getRefundDetail() {
         RequestParams requestParams = new RequestParams();
-        requestParams.put("uid",userInfo.getUid());
-        requestParams.put("id",id);
-        requestParams.put("state","3");
-        HttpUtil.getWithSign(userInfo.getToken(), IConstants.sOrder+"/"+id,requestParams,new JsonHttpResponseHandler(){
+        requestParams.put("uid", userInfo.getUid());
+        requestParams.put("id", id);
+        requestParams.put("state", "3");
+        HttpUtil.getWithSign(userInfo.getToken(), IConstants.sOrder + "/" + id, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 LogUtils.d("订单详情返回：", response.toString());
-                myOrderMode = JSON.parseObject(response.optJSONObject("data").toString(),MyOrderMode.class);
+                myOrderMode = JSON.parseObject(response.optJSONObject("data").toString(), MyOrderMode.class);
+                updateState_cn(myOrderMode);
                 mRefundState.setText(myOrderMode.getState_cn());
                 mApplyMoney.setText(myOrderMode.getAmount_apply());
                 mRefundMoney.setText(myOrderMode.getAmount_real());
@@ -77,5 +82,37 @@ public class RefundOrderDetailActivity extends BaseActivity {
 
             }
         });
+    }
+
+    /**
+     * 根据state修改订单状态显示
+     *
+     * @param myOrderMode
+     */
+    private void updateState_cn(MyOrderMode myOrderMode) {
+
+        switch (myOrderMode.getState()) {
+            case 0:
+            case 2:
+                myOrderMode.setState_cn("等待审核");
+                break;
+            case 11:
+                myOrderMode.setState_cn("审核不通过");
+                break;
+            case 1:
+                myOrderMode.setState_cn("填写物流");
+                break;
+
+            case 12:
+                myOrderMode.setState_cn("用户撤销退款");
+                break;
+            case 13:
+                myOrderMode.setState_cn("不同意退款");
+                break;
+            case 3:
+            case 6:
+                myOrderMode.setState_cn("退款完成");
+                break;
+        }
     }
 }

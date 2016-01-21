@@ -19,6 +19,7 @@ import com.sensu.android.zimaogou.Mode.ProductMode;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.MyOrderResponse;
 import com.sensu.android.zimaogou.activity.BaseActivity;
+import com.sensu.android.zimaogou.activity.ProductCommentActivity;
 import com.sensu.android.zimaogou.adapter.OrderDetailListAdapter;
 import com.sensu.android.zimaogou.adapter.OrderListAdapter;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
@@ -51,21 +52,22 @@ public class OrderDetailActivity extends BaseActivity {
     String SURE_ORDER = "2";//确认收货
 
 
-    TextView mTitleTextView,tv_orderNo,tv_orderState,tv_nameAndMobile,tv_receiverAddress;
-    Button bt_cancel,bt_submit;
+    TextView mTitleTextView, tv_orderNo, tv_orderState, tv_nameAndMobile, tv_receiverAddress;
+    Button bt_cancel, bt_submit;
     String id = "";
     UserInfo userInfo;
     int state = 0;
-    OrderDetailListAdapter adapter ;
+    OrderDetailListAdapter adapter;
 
     RelativeLayout rl_button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_detail_activity);
 
 
-        if(getIntent().getExtras() != null){
+        if (getIntent().getExtras() != null) {
             id = getIntent().getExtras().getString("id");
             state = getIntent().getExtras().getInt("state");
         }
@@ -73,7 +75,7 @@ public class OrderDetailActivity extends BaseActivity {
 
     }
 
-    private void initView(){
+    private void initView() {
         userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
         mBackImageView = (ImageView) findViewById(R.id.back);
         mOrderListView = (ListView) findViewById(R.id.lv_orders);
@@ -86,15 +88,15 @@ public class OrderDetailActivity extends BaseActivity {
         bt_cancel = (Button) findViewById(R.id.bt_cancel);
         bt_submit = (Button) findViewById(R.id.bt_submit);
         rl_button = (RelativeLayout) findViewById(R.id.rl_button);
-        if(state == IConstants.sCancel){
+        if (state == IConstants.sCancel) {
             rl_button.setVisibility(View.GONE);
-        }else{
+        } else {
             rl_button.setVisibility(View.VISIBLE);
         }
 
 
         mOrderListView.setDivider(null);
-        adapter = new OrderDetailListAdapter(this,mOrders,state);
+        adapter = new OrderDetailListAdapter(this, mOrders, state);
         mOrderListView.setAdapter(adapter);
 
         mBackImageView.setOnClickListener(new View.OnClickListener() {
@@ -107,10 +109,11 @@ public class OrderDetailActivity extends BaseActivity {
 
     /**
      * 跳转物流信息
+     *
      * @param v
      */
-    public void LogisticsClick(View v){
-        startActivity(new Intent(this,LogisticsMessageActivity.class));
+    public void LogisticsClick(View v) {
+        startActivity(new Intent(this, LogisticsMessageActivity.class));
     }
 
     @Override
@@ -119,24 +122,24 @@ public class OrderDetailActivity extends BaseActivity {
         getOrderDetail();
     }
 
-    private void getOrderDetail(){
+    private void getOrderDetail() {
         mOrders.clear();
         showLoading();
         RequestParams requestParams = new RequestParams();
-        requestParams.put("uid",userInfo.getUid());
-        requestParams.put("id",id);
-        HttpUtil.getWithSign(userInfo.getToken(), IConstants.sOrder+"/"+id,requestParams,new JsonHttpResponseHandler(){
+        requestParams.put("uid", userInfo.getUid());
+        requestParams.put("id", id);
+        HttpUtil.getWithSign(userInfo.getToken(), IConstants.sOrder + "/" + id, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                LogUtils.d("订单详情返回：",response.toString());
+                LogUtils.d("订单详情返回：", response.toString());
                 cancelLoading();
                 final MyOrderMode myOrderMode = JSON.parseObject(response.optJSONObject("data").toString(), MyOrderMode.class);
                 tv_orderNo.setText(myOrderMode.getOrder_no());
                 state = myOrderMode.getState();
                 state = divisiveState(state);
                 final int orderState = state;
-                switch (state){
+                switch (state) {
                     case IConstants.sUnpaid:
                         tv_orderState.setText("待付款");
                         break;
@@ -154,7 +157,7 @@ public class OrderDetailActivity extends BaseActivity {
                     bt_cancel.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            updateOrderDialog(orderState,myOrderMode);
+                            updateOrderDialog(orderState, myOrderMode);
                         }
                     });
                     bt_submit.setOnClickListener(new PayClickListener());
@@ -166,27 +169,38 @@ public class OrderDetailActivity extends BaseActivity {
                     bt_submit.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            updateOrderDialog(orderState,myOrderMode);
+                            updateOrderDialog(orderState, myOrderMode);
                         }
                     });
                 } else {
                     bt_cancel.setVisibility(View.GONE);
-                    bt_submit.setText("评价");
+                    if (checkCommentState(myOrderMode)) {
+                        rl_button.setVisibility(View.VISIBLE);
+                        bt_submit.setText("评价");
+                    } else {
+                        rl_button.setVisibility(View.GONE);
+                    }
                     bt_submit.setOnClickListener(new View.OnClickListener() {
 
                         @Override
                         public void onClick(View view) {
-                           startActivity(new Intent(OrderDetailActivity.this, RefundOrCommentActivity.class).putExtra("type", 1));
+                            if (myOrderMode.getGoods().size() > 1) {
+                                startActivity(new Intent(OrderDetailActivity.this, RefundOrCommentActivity.class).putExtra("type", 1)
+                                        .putExtra("data", myOrderMode));
+                            } else {
+                                startActivity(new Intent(OrderDetailActivity.this, ProductCommentActivity.class).putExtra("order", myOrderMode)
+                                        .putExtra("goods", myOrderMode.getGoods().get(0)));
+                            }
                         }
                     });
                 }
 
-                tv_nameAndMobile.setText(myOrderMode.getReceiver_info().getName()+" "+myOrderMode.getReceiver_info().getMobile());
+                tv_nameAndMobile.setText(myOrderMode.getReceiver_info().getName() + " " + myOrderMode.getReceiver_info().getMobile());
                 tv_receiverAddress.setText(myOrderMode.getReceiver_info().getAddress());
                 mOrders.add(myOrderMode);
-                adapter.flush(mOrders,state);
+                adapter.flush(mOrders, state);
                 UiUtils.setListViewHeightBasedOnChilds(mOrderListView);
-                mOrderDetailScrollView.smoothScrollTo(0,0);
+                mOrderDetailScrollView.smoothScrollTo(0, 0);
 
             }
 
@@ -227,7 +241,7 @@ public class OrderDetailActivity extends BaseActivity {
         });
     }
 
-    private void updateOrder( String update) {
+    private void updateOrder(String update) {
         final String state = update;
         RequestParams requestParams = new RequestParams();
         requestParams.put("uid", userInfo.getUid());
@@ -237,7 +251,7 @@ public class OrderDetailActivity extends BaseActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                LogUtils.d("修改订单状态返回：",response.toString());
+                LogUtils.d("修改订单状态返回：", response.toString());
                 if (response.optInt("ret") >= 0) {
                     if (state.equals(CANCEL_ORDER)) {
                         PromptUtils.showToast("取消订单成功");
@@ -302,9 +316,9 @@ public class OrderDetailActivity extends BaseActivity {
             code = IConstants.sUnpaid;
         } else if (state >= 1 && state <= 3) {
             code = IConstants.sUnreceived;
-        } else if(state == 5||state == 6){
+        } else if (state == 5 || state == 6) {
             code = IConstants.sReceived;
-        }else{
+        } else {
             code = IConstants.sCancel;
         }
         return code;
@@ -312,16 +326,35 @@ public class OrderDetailActivity extends BaseActivity {
 
     /**
      * 计算一个订单的商品数量
+     *
      * @param myOrderMode
      * @return
      */
-    private int getProductsNum(MyOrderMode myOrderMode){
+    private int getProductsNum(MyOrderMode myOrderMode) {
         int num = 0;
-        for(MyOrderGoodsMode myOrderGoodsMode: myOrderMode.getGoods()){
+        for (MyOrderGoodsMode myOrderGoodsMode : myOrderMode.getGoods()) {
             num += Integer.parseInt(myOrderGoodsMode.getNum());
         }
         return num;
     }
+
+    /**
+     * 该订单下的商品是否可以评论
+     *
+     * @param myOrderMode
+     * @return
+     */
+    private boolean checkCommentState(MyOrderMode myOrderMode) {
+        boolean canComment = false;
+        for (MyOrderGoodsMode myOrderGoodsMode : myOrderMode.getGoods()) {
+            if (myOrderGoodsMode.getIs_commented().equals("0")) {
+                canComment = true;
+                break;
+            }
+        }
+        return canComment;
+    }
+
     /**
      * 修改订单状态dialog
      */
@@ -336,10 +369,10 @@ public class OrderDetailActivity extends BaseActivity {
         Button bt_sure = (Button) mUpdateOrderDialog.findViewById(R.id.bt_sure);
         Button bt_cancel = (Button) mUpdateOrderDialog.findViewById(R.id.bt_cancel);
         String stateString = "";
-        if(state == IConstants.sUnpaid){
+        if (state == IConstants.sUnpaid) {
             tv_tip.setText("确认取消订单");
             stateString = CANCEL_ORDER;
-        }else if(state == IConstants.sUnreceived){
+        } else if (state == IConstants.sUnreceived) {
             tv_tip.setText("确认收货");
             stateString = SURE_ORDER;
         }

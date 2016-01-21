@@ -18,6 +18,15 @@ public class MyOrderGoodsMode implements Serializable{
     private String gid;
     private String spec_id;
     private String is_returned;
+    private String is_commented;
+
+    public String getIs_commented() {
+        return is_commented;
+    }
+
+    public void setIs_commented(String is_commented) {
+        this.is_commented = is_commented;
+    }
 
     public String getIs_returned() {
         return is_returned;
