@@ -291,19 +291,13 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
     private void flushUi(){
         if(userInfo == null){
-            mNumOfMessage.setVisibility(View.INVISIBLE);
-            mNumOfOrder1.setVisibility(View.INVISIBLE);
-            mNumOfOrder2.setVisibility(View.INVISIBLE);
-            mNumOfOrder3.setVisibility(View.INVISIBLE);
+
             mNicknameTextView.setVisibility(View.GONE);
             mLoginTextView.setVisibility(View.VISIBLE);
             mHeadPicImageView.setImageResource(R.drawable.head_pic_default);
 
         }else{
-            mNumOfMessage.setVisibility(View.VISIBLE);
-            mNumOfOrder1.setVisibility(View.VISIBLE);
-            mNumOfOrder2.setVisibility(View.VISIBLE);
-            mNumOfOrder3.setVisibility(View.VISIBLE);
+
 
 
             mNicknameTextView.setVisibility(View.VISIBLE);

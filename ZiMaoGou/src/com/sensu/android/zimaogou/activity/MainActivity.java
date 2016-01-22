@@ -14,9 +14,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.sensu.android.zimaogou.BaseApplication;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.fragment.*;
+import com.sensu.android.zimaogou.activity.login.LoginActivity;
+import com.sensu.android.zimaogou.activity.mycenter.MessageActivity;
+import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.utils.AppInfoUtils;
 import com.sensu.android.zimaogou.utils.DisplayUtils;
 import com.sensu.android.zimaogou.utils.HttpUtil;
@@ -71,7 +75,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mPushAgent.onAppStart();
 
         //开启推送并设置注册的回调处理
-        mPushAgent.enable(mRegisterCallback);
+//        mPushAgent.enable(mRegisterCallback);
+        //暂时关闭推送
+        mPushAgent.disable();
+
         initViews();
     }
     public Handler handler = new Handler();
@@ -115,6 +122,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
+        if(BaseApplication.isGetPush){
+            BaseApplication.isGetPush = false;
+            if(GDUserInfoHelper.getInstance(this).getUserInfo() == null){
+                PromptUtils.showToast("请先登录");
+                startActivity(new Intent(this, LoginActivity.class));
+            }else {
+                startActivity(new Intent(this, MessageActivity.class));
+            }
+        }
     }
 
     @Override

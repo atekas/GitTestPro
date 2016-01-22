@@ -119,11 +119,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="15dp"
                         android:src="@drawable/drawable_pay_way_select"/>
-                <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:background="@color/home_line"
-                        android:layout_alignParentBottom="true"/>
+
             </RelativeLayout>
             <RelativeLayout
                     android:onClick="RefundReasonClick"

@@ -16,10 +16,13 @@ import com.sensu.android.zimaogou.ReqResponse.UserInfoResponse;
 import com.sensu.android.zimaogou.activity.BaseActivity;
 import com.sensu.android.zimaogou.encrypt.MD5Utils;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
+import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.utils.LogUtils;
 import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.sensu.android.zimaogou.utils.TextUtils;
+import com.umeng.common.message.UmengMessageDeviceConfig;
+import com.umeng.message.UmengRegistrar;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -40,12 +43,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private UMShareAPI mShareAPI = null;
     SHARE_MEDIA platform = null;
     String loginType = "";
+    String device_token = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.login_activity);
         mShareAPI = UMShareAPI.get( this );
+
+        device_token = UmengRegistrar.getRegistrationId(this);
         initViews();
     }
 
@@ -134,8 +140,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     UserInfoResponse userInfoResponse = JSON.parseObject(response.toString(), UserInfoResponse.class);
                     userInfoResponse.data.setIsLogin("true");
                     GDUserInfoHelper.getInstance(LoginActivity.this).insertUserInfo(userInfoResponse.data);
-                    PromptUtils.showToast("登录成功");
-                    finish();
+                    postDeviceToken();
                 }
 
                 @Override
@@ -225,8 +230,40 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 UserInfoResponse userInfoResponse = JSON.parseObject(response.toString(), UserInfoResponse.class);
                 userInfoResponse.data.setIsLogin("true");
                 GDUserInfoHelper.getInstance(LoginActivity.this).insertUserInfo(userInfoResponse.data);
-                PromptUtils.showToast("登录成功");
-                finish();
+                postDeviceToken();
+            }
+        });
+    }
+
+    /**
+     * 传deviceToken给后台
+     */
+    private void postDeviceToken(){
+        UserInfo userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
+        if(userInfo == null){
+            PromptUtils.showToast("保存用户信息失败，请重新登录");
+            return;
+        }
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("uid",userInfo.getUid());
+        requestParams.put("app_name","android");
+        requestParams.put("app_version", UmengMessageDeviceConfig.getAppVersionCode(this)+"");
+        requestParams.put("device_token",device_token);
+        requestParams.put("push_badge","1");
+        requestParams.put("push_alert","1");
+        requestParams.put("push_alert","1");
+        requestParams.put("status","1");
+        HttpUtil.post(IConstants.sPostDeviceToken,requestParams,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                LogUtils.d("提交设备号返回：",response.toString());
+                if(response.optInt("ret")<0){
+                    PromptUtils.showToast(response.optString("msg"));
+                }else{
+                    PromptUtils.showToast("登录成功");
+                    finish();
+                }
             }
         });
     }

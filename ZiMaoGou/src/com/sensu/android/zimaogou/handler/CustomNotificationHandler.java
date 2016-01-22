@@ -1,6 +1,8 @@
 package com.sensu.android.zimaogou.handler;
 
 import android.content.Context;
+import com.sensu.android.zimaogou.BaseApplication;
+import com.sensu.android.zimaogou.utils.LogUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.common.message.Log;
 import com.umeng.message.UmengNotificationClickHandler;
@@ -23,9 +25,11 @@ public class CustomNotificationHandler extends UmengNotificationClickHandler {
 	@Override
 	public void launchApp(Context context, UMessage msg) {
 		Log.d(TAG, "launchApp");
+		BaseApplication.isGetPush = true;
 		super.launchApp(context, msg);
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("action", "launch_app");
+
 		MobclickAgent.onEvent(context, "click_notification", map);
 	}
 	

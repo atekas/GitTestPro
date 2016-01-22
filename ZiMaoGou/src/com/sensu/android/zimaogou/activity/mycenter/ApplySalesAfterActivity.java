@@ -67,7 +67,7 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
     TourPicAdapter mTourPicAdapter;
     MyOrderMode orderMode = new MyOrderMode();
     MyOrderGoodsMode goodsMode = new MyOrderGoodsMode();
-
+    double maxRefundMoney =0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +76,7 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
         if (getIntent().getExtras() != null) {
             orderMode = (MyOrderMode) getIntent().getExtras().get("order");
             goodsMode = (MyOrderGoodsMode) getIntent().getExtras().get("goods");
+            maxRefundMoney = Double.parseDouble(goodsMode.getPrice())*Integer.parseInt(goodsMode.getNum());
         }
         findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +106,7 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
         mRefundGoodsImageView.setSelected(!isJustRefundMoney);
         mSubmitTextView = (TextView) findViewById(R.id.submit);
         mSubmitTextView.setOnClickListener(this);
-
+        mRefundMoneyEditText.setHint("退款金额不能大于"+maxRefundMoney+"元");
         flushImages();
     }
 
@@ -280,6 +281,7 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
                 String reason = mRefundReasonTextView.getText().toString().trim();
                 String content = mRefundInstructionsEditText.getText().toString().trim();
                 String money = mRefundMoneyEditText.getText().toString().trim();
+
                 if (TextUtils.isEmpty(reason)) {
                     PromptUtils.showToast("请选择退货原因");
                     return;
@@ -289,6 +291,11 @@ public class ApplySalesAfterActivity extends BaseActivity implements View.OnClic
                     PromptUtils.showToast("请输入退款金额");
                     return;
                 }
+                if(Double.parseDouble(money)>maxRefundMoney){
+                    PromptUtils.showToast("退款金额不能大于商品总金额");
+                    return;
+                }
+
                 mServiceImages.clear();
                 mSendSuccess = 0;
                 showLoading();

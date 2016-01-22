@@ -7,9 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.*;
 import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -59,6 +57,7 @@ public class OrderActivity extends BaseActivity {
     String CANCEL_ORDER = "1";//取消订单
     String SURE_ORDER = "2";//确认收货
 
+    MyOrderMode chooseOrderMode = new MyOrderMode();//付款的订单
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -237,7 +236,8 @@ public class OrderActivity extends BaseActivity {
                         updateOrderDialog(orderState,myOrderMode);
                     }
                 });
-                viewHolder.bt_submit.setOnClickListener(new PayClickListener());
+                viewHolder.bt_submit.setOnClickListener(new PayClickListener(myOrderMode));
+
             } else if (state == IConstants.sUnreceived) {
                 viewHolder.bt_cancel.setVisibility(View.GONE);
                 viewHolder.bt_cancel.setText("查看物流");
@@ -307,11 +307,13 @@ public class OrderActivity extends BaseActivity {
     /**
      * 去付款接口
      */
-    private void goPay() {
+    private void goPay(String payType,MyOrderMode myOrderMode) {
 
         RequestParams requestParams = new RequestParams();
         requestParams.put("uid", userInfo.getUid());
-        HttpUtil.postWithSign(GDUserInfoHelper.getInstance(this).getUserInfo().getToken(), IConstants.sGetPayCharge, requestParams, new JsonHttpResponseHandler() {
+        requestParams.put("order_no",myOrderMode.getOrder_no());
+        requestParams.put("pay_type",payType);
+        HttpUtil.postWithSign(GDUserInfoHelper.getInstance(this).getUserInfo().getToken(), IConstants.sOrderPay, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -379,13 +381,20 @@ public class OrderActivity extends BaseActivity {
     }
 
     private class PayClickListener implements View.OnClickListener {
+        MyOrderMode myOrderMode;
 
+        public PayClickListener(MyOrderMode myOrderMode) {
+            this.myOrderMode = myOrderMode;
+
+        }
 
         @Override
         public void onClick(View view) {
             mPayButton = (Button) view;
             mPayButton.setOnClickListener(null);//防止重复点击
-            goPay();
+            chooseOrderMode = myOrderMode;
+            choosePayTypeDialog(myOrderMode);
+
         }
     }
 
@@ -404,7 +413,7 @@ public class OrderActivity extends BaseActivity {
                 String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
                 String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
                 PromptUtils.showToast("支付返回：" + result + "  " + errorMsg + "  " + extraMsg);
-                mPayButton.setOnClickListener(new PayClickListener());
+                mPayButton.setOnClickListener(new PayClickListener(chooseOrderMode));
             }
         }
     }
@@ -496,5 +505,61 @@ public class OrderActivity extends BaseActivity {
         mUpdateOrderDialog.show();
     }
 
+    Dialog mPayTypeChooseDialog;
+    boolean isAlipay = true;
+    private void choosePayTypeDialog(final MyOrderMode myOrderMode){
+        mPayTypeChooseDialog = new Dialog(this,R.style.notParentDialog);
+        mPayTypeChooseDialog.setCancelable(true);
+        mPayTypeChooseDialog.setContentView(R.layout.pay_type_choose_dialog);
+        TextView tv_money = (TextView) mPayTypeChooseDialog.findViewById(R.id.tv_money);
+        RelativeLayout rl_alipay = (RelativeLayout) mPayTypeChooseDialog.findViewById(R.id.rl_alipay);
+        RelativeLayout rl_wxpay = (RelativeLayout) mPayTypeChooseDialog.findViewById(R.id.rl_wxpay);
+        TextView tv_submit = (TextView) mPayTypeChooseDialog.findViewById(R.id.submit);
+        final ImageView img_alipay = (ImageView) mPayTypeChooseDialog.findViewById(R.id.img_alipay);
+        final ImageView img_wxpay  = (ImageView) mPayTypeChooseDialog.findViewById(R.id.img_wxpay);
 
+
+        img_alipay.setSelected(isAlipay);
+        img_wxpay.setSelected(!isAlipay);
+        tv_money.setText("支付金额：￥"+myOrderMode.getAmount_total());
+        rl_alipay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isAlipay = !isAlipay;
+                img_alipay.setSelected(isAlipay);
+                img_wxpay.setSelected(!isAlipay);
+            }
+        });
+        rl_wxpay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isAlipay = !isAlipay;
+                img_alipay.setSelected(isAlipay);
+                img_wxpay.setSelected(!isAlipay);
+            }
+        });
+        tv_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goPay(isAlipay?"1":"2",myOrderMode);
+                mPayTypeChooseDialog.dismiss();
+            }
+        });
+
+        WindowManager m = this.getWindowManager();
+
+        Window dialogWindow = mPayTypeChooseDialog.getWindow();
+
+//        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+//        dialogWindow.setGravity(Gravity.TOP);
+//        lp.y = DisplayUtils.dp2px(50);
+//        dialogWindow.setAttributes(lp);
+
+        Display d = m.getDefaultDisplay(); // 获取屏幕宽、高用
+        WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 获取对话框当前的参数值
+//        p.height = (int) d.getHeight() ; // 高度设置为屏幕
+        p.width = (int) d.getWidth() ; // 宽度设置为屏幕
+        dialogWindow.setAttributes(p);
+        mPayTypeChooseDialog.show();
+    }
 }

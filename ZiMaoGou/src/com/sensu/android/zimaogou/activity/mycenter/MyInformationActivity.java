@@ -46,7 +46,7 @@ public class MyInformationActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_infor_activity);
-        userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
+
         initView();
     }
 
@@ -61,7 +61,16 @@ public class MyInformationActivity extends BaseActivity {
                 onBackPressed();
             }
         });
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
         if (TextUtils.isEmpty(userInfo.getName())) {
+
             mNicknameEditText.setText("");
         } else {
             mNicknameEditText.setText(userInfo.getName());
@@ -72,8 +81,13 @@ public class MyInformationActivity extends BaseActivity {
             mSexTextView.setText(userInfo.getSex());
         }
         mPhoneTextView.setText(userInfo.getMobile());
-        ImageUtils.displayImage(userInfo.getAvatar(), mHeadImageView,ImageUtils.mHeadDefaultOptions);
+        if(TextUtils.isEmpty(userInfo.getMobile())){
+            bindPhone = false;
 
+        }else{
+            bindPhone = true;
+        }
+        ImageUtils.displayImage(userInfo.getAvatar(), mHeadImageView,ImageUtils.mHeadDefaultOptions);
     }
 
     /**
@@ -94,7 +108,7 @@ public class MyInformationActivity extends BaseActivity {
      * 手机
      * @param v
      */
-    boolean bindPhone = true;//为了测试绑定手机号的两个页面
+    boolean bindPhone = true;
     public void PhoneClick(View v){
 //        if(TextUtils.isEmpty(userInfo.getMobile())){
 //            startActivity(new Intent(this,BindPhoneActivity.class));
@@ -103,12 +117,12 @@ public class MyInformationActivity extends BaseActivity {
 //            startActivity(new Intent(this,UpdatePasswordActivity.class));
 //        }
         if(bindPhone){
-            startActivity(new Intent(this,BindPhoneActivity.class));
-            bindPhone = !bindPhone;
+            startActivity(new Intent(this,UpdateBindPhoneActivity.class));
+
 
         }else{
-            startActivity(new Intent(this,UpdateBindPhoneActivity.class));
-            bindPhone = !bindPhone;
+            startActivity(new Intent(this,BindPhoneActivity.class));
+
         }
 
     }

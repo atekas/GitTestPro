@@ -17,7 +17,7 @@
                 android:gravity="center"
                 android:padding="15dp"
                 android:layout_weight="1">
-            <Button android:layout_width="35dp"
+            <ImageView android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:background="@drawable/wx_img"/>
             <TextView
@@ -37,7 +37,7 @@
                 android:gravity="center"
                 android:padding="15dp"
                 android:layout_weight="1">
-            <Button android:layout_width="35dp"
+            <ImageView android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_marginLeft="45dp"
                     android:layout_marginRight="45dp"
@@ -59,7 +59,7 @@
                 android:gravity="center"
                 android:padding="15dp"
                 android:layout_weight="1">
-            <Button android:layout_width="35dp"
+            <ImageView android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:background="@drawable/wb_img"/>
             <TextView

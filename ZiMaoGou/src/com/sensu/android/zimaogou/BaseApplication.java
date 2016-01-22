@@ -51,6 +51,7 @@ public class BaseApplication extends Application{
 
     public static AddressResponse addressResponse;
 
+    public static boolean isGetPush = false;
 
 
     @Override
@@ -111,6 +112,7 @@ public class BaseApplication extends Application{
                         // TODO Auto-generated method stub
                         // 对自定义消息的处理方式，点击或者忽略
                         boolean isClickOrDismissed = true;
+
                         if(isClickOrDismissed) {
                             //自定义消息的点击统计
                             UTrack.getInstance(getApplicationContext()).trackMsgClick(msg);
@@ -131,6 +133,7 @@ public class BaseApplication extends Application{
             @Override
             public Notification getNotification(Context context,
                                                 UMessage msg) {
+                isGetPush = true;
                 switch (msg.builder_id) {
                     case 1:
                         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);

@@ -61,6 +61,9 @@ public class IConstants {
     public static final String sGetRegisterCode = "comm/recode/register";
     //获取忘记密码验证码
     public static final String sGetForgetPassCode = "comm/recode/password_forget";
+    //获取绑定手机号验证码
+    public static final String sGetBindPhoneCode = "comm/recode/register";
+
     //获取物流公司
     public static final String sGetLogisticsCompany = "conf/express_company";
     //登录
@@ -71,6 +74,9 @@ public class IConstants {
     public static final String sGetTimestamp = "comm/timestamp";
     //获签名
     public static final String sGetSign = "comm/generate/sign";
+    //提交设备号
+    public static final String sPostDeviceToken = "user/device";
+
     //退出登录
     public static final String sLoginOut = "user/logout";
     //忘记密码
@@ -121,6 +127,8 @@ public class IConstants {
     public static final String sGetBanner = "comm/banner";
     //订单
     public static final String sOrder = "order";
+    //订单支付
+    public static final String sOrderPay = "order/pay";
     //订单数量
     public static final String sOrderNum = "my/order/num";
     //退款订单

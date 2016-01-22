@@ -73,13 +73,16 @@ public class BindPhoneActivity extends BaseActivity {
    }
 
 
+    /**
+     * 获取验证码
+     */
     private void getCode() {
         final String phoneNum = mPhoneEditText.getText().toString().trim();
 
         RequestParams requestParams = new RequestParams();
         requestParams.put("mobile", phoneNum);
 
-        HttpUtil.post(IConstants.sGetForgetPassCode, requestParams, new JsonHttpResponseHandler() {
+        HttpUtil.post(IConstants.sGetBindPhoneCode, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -97,7 +100,7 @@ public class BindPhoneActivity extends BaseActivity {
 
 
     private void bindMobile(){
-        String phone = mPhoneEditText.getText().toString().trim();
+        final String phone = mPhoneEditText.getText().toString().trim();
         String recode = mAuthCodeEditText.getText().toString().trim();
         String password = mPasswordEditText.getText().toString().trim();
         if(TextUtils.isEmpty(phone)){
@@ -131,6 +134,8 @@ public class BindPhoneActivity extends BaseActivity {
                     PromptUtils.showToast(response.optString("msg"));
                 }else{
                     PromptUtils.showToast("保存成功！");
+                    userInfo.setMobile(phone);
+                    GDUserInfoHelper.getInstance(BindPhoneActivity.this).updateUserInfo(userInfo);
                     finish();
                 }
             }

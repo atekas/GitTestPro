@@ -14,28 +14,32 @@
 
 
         <TextView
+                android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
+                android:singleLine="true"
                 android:textColor="@color/black_222222"
                 android:layout_marginTop="19dp"
-                android:text="订单物流通知"/>
+                android:text=""/>
             <TextView
+                    android:id="@+id/tv_createTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="13sp"
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="18dp"
                     android:textColor="@color/gray_9b9b9b"
-                    android:text="2015-12-16"/>
+                    android:text=""/>
         </RelativeLayout>
         <TextView
+                android:id="@+id/tv_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:layout_marginTop="12dp"
                 android:textColor="@color/black_666666"
-                android:text="简单点 说话的方式简单点 你又不是个演员 分开就平淡些 该配合你演出的我演视而不见 别逼一个最爱你的人即兴表演"/>
+                android:text=""/>
     </LinearLayout>
     <View
             android:layout_width="match_parent"
