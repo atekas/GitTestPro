@@ -145,9 +145,10 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
 			public void onClick(View view) {
 				UMImage image = new UMImage(WebViewActivity.this, "http://www.umeng.com/images/pic/social/integrated_3.png");
 				new ShareAction(WebViewActivity.this).setPlatform(SHARE_MEDIA.SINA).setCallback(umShareListener)
-						.withText("hello umeng video")
+						.withText(title)
+						.withTitle(title)
 						.withTargetUrl(URL)
-						.withMedia(image)
+						.withMedia(new UMImage(WebViewActivity.this, R.drawable.zimaogou_icon))
 						.share();
 				mShareDialog.dismiss();
 			}
@@ -156,7 +157,10 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
 			@Override
 			public void onClick(View view) {
 				new ShareAction(WebViewActivity.this).setPlatform(SHARE_MEDIA.WEIXIN).setCallback(umShareListener)
-						.withText("hello wx" + URL)
+						.withTitle(title)
+						.withText(title)
+						.withTargetUrl(URL)
+						.withMedia(new UMImage(WebViewActivity.this, R.drawable.zimaogou_icon))
 						.share();
 				mShareDialog.dismiss();
 			}
@@ -165,7 +169,10 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
 			@Override
 			public void onClick(View view) {
 				new ShareAction(WebViewActivity.this).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).setCallback(umShareListener)
-						.withText("hello umeng" + URL)
+						.withTitle(title)
+						.withText(title)
+						.withTargetUrl(URL)
+						.withMedia(new UMImage(WebViewActivity.this, R.drawable.zimaogou_icon))
 						.share();
 				mShareDialog.dismiss();
 			}
