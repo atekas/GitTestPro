@@ -24,12 +24,8 @@ public class PhotoView extends FrameLayout implements View.OnClickListener {
 
     private String mImageUrl;
 
-    private VideoLinearLayout mVideoLinearLayout;
-
     public PhotoView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mVideoLinearLayout = (VideoLinearLayout) LayoutInflater.from(context).inflate(R.layout.video_linearlayout, null);
-        mVideoLinearLayout.setLayoutParams(new LinearLayout.LayoutParams(DisplayUtils.getDisplayWidth(), DisplayUtils.getDisplayWidth()));
     }
 
     public DisplayImageOptions mProductDetailOptions = new DisplayImageOptions.Builder()
@@ -48,7 +44,6 @@ public class PhotoView extends FrameLayout implements View.OnClickListener {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-//        findViewById(R.id.video_play).setOnClickListener(this);
         findViewById(R.id.photo).setOnClickListener(this);
     }
 
@@ -57,9 +52,12 @@ public class PhotoView extends FrameLayout implements View.OnClickListener {
 
         //todo 有数据时进行逻辑处理
         if (isVideo) {
-            addView(mVideoLinearLayout);
-            mVideoLinearLayout.setURL(imagePath, videoPath);
+            findViewById(R.id.video_layout).setVisibility(VISIBLE);
+            findViewById(R.id.photo).setVisibility(GONE);
+            ((VideoLinearLayout) findViewById(R.id.video_layout)).setURL(imagePath, videoPath);
         } else {
+            findViewById(R.id.photo).setVisibility(VISIBLE);
+            findViewById(R.id.video_layout).setVisibility(GONE);
             ImageUtils.displayImage(imagePath, ((ImageView) findViewById(R.id.photo)), mProductDetailOptions);
         }
     }

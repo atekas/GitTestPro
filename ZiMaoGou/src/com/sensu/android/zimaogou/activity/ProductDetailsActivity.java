@@ -5,12 +5,10 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.view.Display;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.*;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.webkit.WebSettings;
@@ -30,9 +28,11 @@ import com.sensu.android.zimaogou.activity.login.LoginActivity;
 import com.sensu.android.zimaogou.activity.video.ProductShopCarActivity;
 import com.sensu.android.zimaogou.adapter.ProductEvaluateAdapter;
 import com.sensu.android.zimaogou.adapter.ProductSpecificationAdapter;
+import com.sensu.android.zimaogou.adapter.ViewPagerAdapter;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.*;
+import com.sensu.android.zimaogou.view.PhotoView;
 import com.sensu.android.zimaogou.view.ProductTypeLinearLayout;
 import com.sensu.android.zimaogou.widget.PullPushScrollView;
 import com.sensu.android.zimaogou.widget.ScrollViewContainer;
@@ -76,6 +76,11 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
     private ProductEvaluateAdapter mProductEvaluateAdapter;
 
     private ProductDetailsResponse mProductDetailsResponse;
+
+    private List<PhotoView> mPhotoViewList = new ArrayList<PhotoView>();
+    private ViewPager mViewPager;
+    private ViewPagerAdapter mViewPagerAdapter;
+    private PullPushScrollView mPullPushScrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -193,6 +198,18 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
     }
 
     private void initViews() {
+
+        mPullPushScrollView = (PullPushScrollView) findViewById(R.id.product_detail_top);
+        mViewPager = (ViewPager) mPullPushScrollView.findViewById(R.id.viewpager);
+
+        PhotoView photoView = (PhotoView) LayoutInflater.from(this).inflate(R.layout.photo_view_pager_item, null);
+        photoView.setPhotoData("", false, "");
+        photoView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        mPhotoViewList.add(photoView);
+        mViewPagerAdapter = new ViewPagerAdapter(mPhotoViewList);
+        mViewPagerAdapter.setShowPageCount(10);
+        mViewPager.setAdapter(mViewPagerAdapter);
+
         mUserInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
         mProductId = getIntent().getStringExtra(PRODUCT_ID);
         mSource = getIntent().getStringExtra(FROM_SOURCE);
@@ -490,7 +507,8 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         }
 
 
-        ((PullPushScrollView) findViewById(R.id.product_detail_top)).setProductDetailsResponse(mProductDetailsResponse);
+        ((PullPushScrollView) findViewById(R.id.product_detail_top)).setProductDetailsResponse(mProductDetailsResponse
+                , mViewPager, mViewPagerAdapter, mPhotoViewList);
         mProductSpecificationAdapter.setProductDetailData(mProductDetailsResponse.data);
         UiUtils.setListViewHeightBasedOnChilds(mProductSpecificationListView);
 

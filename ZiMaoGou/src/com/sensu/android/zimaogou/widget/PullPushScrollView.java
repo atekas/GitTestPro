@@ -49,11 +49,16 @@ public class PullPushScrollView extends ScrollView implements View.OnClickListen
         super.onFinishInflate();
         findViewById(R.id.is_collect).setOnClickListener(this);
         findViewById(R.id.video_icon).setOnClickListener(this);
-        mViewPager = (ViewPager) findViewById(R.id.viewpager);
+//        mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mLayoutInflater = LayoutInflater.from(getContext());
     }
 
-    public void setProductDetailsResponse(ProductDetailsResponse productDetailsResponse) {
+    public void setProductDetailsResponse(ProductDetailsResponse productDetailsResponse, ViewPager viewPager
+            , ViewPagerAdapter viewPagerAdapter, List<PhotoView> photoViewList) {
+        mViewPager = viewPager;
+        mViewPagerAdapter = viewPagerAdapter;
+        mPhotoViewList = photoViewList;
+        mPhotoViewList.clear();
         ProductDetailsResponse.ProductDetailData productDetailData = productDetailsResponse.data;
         mProductDetailData = productDetailData;
         ((TextView) findViewById(R.id.product_name)).setText(productDetailData.name);
@@ -104,7 +109,7 @@ public class PullPushScrollView extends ScrollView implements View.OnClickListen
             mViews = new View[count];
         }
 
-        mViewPagerAdapter = new ViewPagerAdapter(mPhotoViewList);
+        mViewPagerAdapter.setData(mPhotoViewList);
         mViewPagerAdapter.setShowPageCount(mPhotoViewList.size());
         mViewPager.setAdapter(mViewPagerAdapter);
         mViewPager.setOnPageChangeListener(this);
