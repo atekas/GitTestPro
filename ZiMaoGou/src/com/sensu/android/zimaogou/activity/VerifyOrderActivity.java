@@ -217,6 +217,7 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void createOrder() {
+        findViewById(R.id.verify_order).setEnabled(false);
         UserInfo userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
         RequestParams requestParams = new RequestParams();
         requestParams.put("uid", userInfo.getUid());
@@ -234,6 +235,8 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
+
+                findViewById(R.id.verify_order).setEnabled(true);
 
                 if (response.optString("ret").equals("-1")) {
                     PromptUtils.showToast(response.optString("msg"));
@@ -256,6 +259,7 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
+                findViewById(R.id.verify_order).setEnabled(true);
                 PromptUtils.showToast("生成订单失败");
             }
         });
