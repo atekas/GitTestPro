@@ -19,6 +19,7 @@ import org.apache.http.Header;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by zhangwentao on 2015/11/12.
@@ -44,6 +45,10 @@ public class TourBuyAdapter extends SimpleBaseAdapter {
 
     public void clearData() {
         this.travelModes.clear();
+    }
+
+    public List<TravelMode> getData() {
+        return travelModes;
     }
 
     @Override

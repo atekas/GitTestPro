@@ -42,6 +42,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by zhangwentao on 2015/11/10.
@@ -222,8 +223,11 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+        List<TravelMode> travelModeList = mTourBuyAdapter.getData();
+
         if (i > 0 ) {
-            startActivity(new Intent(mParentActivity, TourBuyDetailsActivity.class).putExtra("travel",travelModes.data.get(i-1)));
+            startActivity(new Intent(mParentActivity, TourBuyDetailsActivity.class).putExtra("travel",travelModeList.get(i - 1)));
         }
     }
 
