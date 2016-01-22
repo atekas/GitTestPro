@@ -754,10 +754,11 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         ll_sina.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UMImage image = new UMImage(ProductDetailsActivity.this, "http://www.umeng.com/images/pic/social/integrated_3.png");
                 new ShareAction(ProductDetailsActivity.this).setPlatform(SHARE_MEDIA.SINA).setCallback(umShareListener)
-                        .withText("自贸购新品")
+                        .withText(mProductDetailsResponse.data.sale_title)
+                        .withTitle(mProductDetailsResponse.data.name)
                         .withTargetUrl("http://139.196.108.137:80/v1/share/goods/" + mProductDetailsResponse.data.id)
+                        .withMedia(new UMImage(ProductDetailsActivity.this, mProductDetailsResponse.data.media.image.get(0)))
                         .share();
                 mShareDialog.dismiss();
             }
@@ -766,7 +767,10 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
             @Override
             public void onClick(View view) {
                 new ShareAction(ProductDetailsActivity.this).setPlatform(SHARE_MEDIA.WEIXIN).setCallback(umShareListener)
-                        .withText("自贸购新品" + "http://139.196.108.137:80/v1/share/goods/" + mProductDetailsResponse.data.id)
+                        .withTitle(mProductDetailsResponse.data.name)
+                        .withText(mProductDetailsResponse.data.sale_title)
+                        .withTargetUrl("http://139.196.108.137:80/v1/share/goods/" + mProductDetailsResponse.data.id)
+                        .withMedia(new UMImage(ProductDetailsActivity.this, mProductDetailsResponse.data.media.image.get(0)))
                         .share();
                 mShareDialog.dismiss();
             }
@@ -775,7 +779,10 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
             @Override
             public void onClick(View view) {
                 new ShareAction(ProductDetailsActivity.this).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).setCallback(umShareListener)
-                        .withText("自贸购新品" + "http://139.196.108.137:80/v1/share/goods/" + mProductDetailsResponse.data.id)
+                        .withTitle(mProductDetailsResponse.data.name)
+                        .withText(mProductDetailsResponse.data.sale_title)
+                        .withTargetUrl("http://139.196.108.137:80/v1/share/goods/" + mProductDetailsResponse.data.id)
+                        .withMedia(new UMImage(ProductDetailsActivity.this, mProductDetailsResponse.data.media.image.get(0)))
                         .share();
                 mShareDialog.dismiss();
             }
