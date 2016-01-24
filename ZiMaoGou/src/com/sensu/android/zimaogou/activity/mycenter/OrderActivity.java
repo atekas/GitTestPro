@@ -518,6 +518,13 @@ public class OrderActivity extends BaseActivity {
         final ImageView img_alipay = (ImageView) mPayTypeChooseDialog.findViewById(R.id.img_alipay);
         final ImageView img_wxpay  = (ImageView) mPayTypeChooseDialog.findViewById(R.id.img_wxpay);
 
+        LinearLayout ll_top = (LinearLayout) mPayTypeChooseDialog.findViewById(R.id.ll_top);
+        ll_top.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPayTypeChooseDialog.dismiss();
+            }
+        });
 
         img_alipay.setSelected(isAlipay);
         img_wxpay.setSelected(!isAlipay);

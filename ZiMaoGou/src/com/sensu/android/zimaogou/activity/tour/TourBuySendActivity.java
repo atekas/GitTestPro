@@ -108,7 +108,7 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
             MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
             mediaMetadataRetriever.setDataSource(mVideoPath);
             Bitmap bitmap = mediaMetadataRetriever.getFrameAtTime(1);
-
+//            PromptUtils.showToast("接收video地址:"+mVideoPath);
             try {
                 coverUrl = BitmapUtils.saveImg(bitmap,"cover");
             } catch (Exception e) {
@@ -455,6 +455,9 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void uploadImage(String url) {
+        if(TextUtils.isEmpty(url)){
+            PromptUtils.showToast("封面图保存失败");
+        }
         HttpUtil.postImage(userInfo.getUid(), userInfo.getToken(), url, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

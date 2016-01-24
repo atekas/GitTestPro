@@ -1,19 +1,26 @@
 package com.sensu.android.zimaogou;
 
 import android.app.Application;
+import android.app.Dialog;
 import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
+import android.view.View;
+import android.widget.Button;
 import android.widget.RemoteViews;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.sensu.android.zimaogou.Mode.ProvinceMode;
 import com.sensu.android.zimaogou.ReqResponse.AddressResponse;
 import com.sensu.android.zimaogou.activity.BaseActivity;
+import com.sensu.android.zimaogou.activity.login.LoginActivity;
+import com.sensu.android.zimaogou.activity.mycenter.MessageActivity;
 import com.sensu.android.zimaogou.external.greendao.dao.DaoMaster;
 import com.sensu.android.zimaogou.external.greendao.dao.DaoSession;
+import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.handler.CustomNotificationHandler;
 import com.sensu.android.zimaogou.utils.*;
 import com.umeng.message.PushAgent;
@@ -21,6 +28,8 @@ import com.umeng.message.UTrack;
 import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.entity.UMessage;
 import com.umeng.socialize.PlatformConfig;
+import com.yixia.camera.VCamera;
+import com.yixia.camera.util.DeviceUtils;
 
 
 import java.io.File;
@@ -53,7 +62,7 @@ public class BaseApplication extends Application{
 
     public static boolean isGetPush = false;
 
-
+    public static Context activityContext = null;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -134,6 +143,7 @@ public class BaseApplication extends Application{
             public Notification getNotification(Context context,
                                                 UMessage msg) {
                 isGetPush = true;
+                showMessageDialog();
                 switch (msg.builder_id) {
                     case 1:
                         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
@@ -219,7 +229,22 @@ public class BaseApplication extends Application{
 //                        .show();
 //            }
 //        });
-
+        //VCamera视频集成初始化
+        // 设置拍摄视频缓存路径
+        File dcim = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+        if (DeviceUtils.isZte()) {
+            if (dcim.exists()) {
+                VCamera.setVideoCachePath(dcim + "/Camera/VCameraDemo/");
+            } else {
+                VCamera.setVideoCachePath(dcim.getPath().replace("/sdcard/", "/sdcard-ext/") + "/Camera/VCameraDemo/");
+            }
+        } else {
+            VCamera.setVideoCachePath(dcim + "/Camera/VCameraDemo/");
+        }
+        // 开启log输出,ffmpeg输出到logcat
+        VCamera.setDebugMode(true);
+        // 初始化拍摄SDK，必须
+        VCamera.initialize(this);
     }
     public static void setChooseProvince(ProvinceMode provinceMode){
         mChooseAddress.data = provinceMode.data;
@@ -306,5 +331,44 @@ public class BaseApplication extends Application{
     @Override
     public void onLowMemory() {
         super.onLowMemory();
+    }
+
+
+    private void showMessageDialog(){
+        if(activityContext == null){
+            return;
+        }
+        final Dialog dialog = new Dialog(activityContext,R.style.dialog);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.delete_address_dialog);
+        TextView tv_tip = (TextView) dialog.findViewById(R.id.tv_tip);
+        Button bt_sure = (Button) dialog.findViewById(R.id.bt_sure);
+        Button bt_cancel = (Button) dialog.findViewById(R.id.bt_cancel);
+        tv_tip.setText("您有一条新的消息");
+        bt_sure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isGetPush = false;
+
+                if(GDUserInfoHelper.getInstance(activityContext).getUserInfo() == null){
+
+                    PromptUtils.showToast("请先登录");
+                    startActivity(new Intent(activityContext, LoginActivity.class));
+                }else {
+                    Intent intent = new Intent(activityContext, MessageActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+                dialog.dismiss();
+            }
+        });
+        bt_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isGetPush = false;
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 }

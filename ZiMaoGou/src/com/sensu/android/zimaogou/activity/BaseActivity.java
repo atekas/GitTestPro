@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.*;
 import android.widget.ImageView;
 import android.widget.Toast;
+import com.sensu.android.zimaogou.BaseApplication;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.utils.NetworkTypeUtils;
 import com.sensu.android.zimaogou.widget.ExceptionLinearLayout;
@@ -26,7 +27,7 @@ public class BaseActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        BaseApplication.activityContext = this;
         //去掉头
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         /**

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -65,6 +66,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         updateApp();
+
+
         mPushAgent = PushAgent.getInstance(this);
 		mPushAgent.setPushCheck(true);    //默认不检查集成配置文件
 //		mPushAgent.setLocalNotificationIntervalLimit(false);  //默认本地通知间隔最少是10分钟
@@ -75,12 +78,51 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mPushAgent.onAppStart();
 
         //开启推送并设置注册的回调处理
-//        mPushAgent.enable(mRegisterCallback);
+        mPushAgent.enable(mRegisterCallback);
         //暂时关闭推送
-        mPushAgent.disable();
+//        mPushAgent.disable();
 
+        BaseApplication.activityContext = this;
         initViews();
+        showMessageDialog();
     }
+    private void showMessageDialog(){
+        if(!BaseApplication.isGetPush){
+            return;
+        }
+        final Dialog dialog = new Dialog(this,R.style.dialog);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.delete_address_dialog);
+        TextView tv_tip = (TextView) dialog.findViewById(R.id.tv_tip);
+        Button bt_sure = (Button) dialog.findViewById(R.id.bt_sure);
+        Button bt_cancel = (Button) dialog.findViewById(R.id.bt_cancel);
+        tv_tip.setText("您有一条新的消息");
+        bt_sure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BaseApplication.isGetPush = false;
+                if(GDUserInfoHelper.getInstance(MainActivity.this).getUserInfo() == null){
+                    PromptUtils.showToast("请先登录");
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                }else {
+                    Intent intent = new Intent(MainActivity.this, MessageActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+                dialog.dismiss();
+            }
+        });
+        bt_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BaseApplication.isGetPush = false;
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+
     public Handler handler = new Handler();
 
     //此处是注册的回调处理
@@ -122,15 +164,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
-        if(BaseApplication.isGetPush){
-            BaseApplication.isGetPush = false;
-            if(GDUserInfoHelper.getInstance(this).getUserInfo() == null){
-                PromptUtils.showToast("请先登录");
-                startActivity(new Intent(this, LoginActivity.class));
-            }else {
-                startActivity(new Intent(this, MessageActivity.class));
-            }
-        }
+
     }
 
     @Override

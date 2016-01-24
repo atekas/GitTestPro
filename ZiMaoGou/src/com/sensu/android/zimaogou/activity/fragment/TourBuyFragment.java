@@ -24,11 +24,14 @@ import com.sensu.android.zimaogou.*;
 import com.sensu.android.zimaogou.Mode.TravelMode;
 import com.sensu.android.zimaogou.ReqResponse.TravelResponse;
 import com.sensu.android.zimaogou.activity.LocalPhotoActivity;
+import com.sensu.android.zimaogou.activity.login.LoginActivity;
 import com.sensu.android.zimaogou.activity.tour.TourBuyDetailsActivity;
 import com.sensu.android.zimaogou.activity.tour.TourBuySendActivity;
 import com.sensu.android.zimaogou.activity.tour.TourSendData;
 import com.sensu.android.zimaogou.activity.video.CameraActivity;
 import com.sensu.android.zimaogou.adapter.TourBuyAdapter;
+import com.sensu.android.zimaogou.demo.ui.record.MediaRecorderActivity;
+import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.photoalbum.PhotoInfo;
 import com.sensu.android.zimaogou.utils.AppConfig;
 import com.sensu.android.zimaogou.utils.HttpUtil;
@@ -187,10 +190,16 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tour_buy_send:
-                chooseDialog();
+                if(GDUserInfoHelper.getInstance(mParentActivity).getUserInfo() == null){
+                    PromptUtils.showToast("请先登录");
+                    startActivity(new Intent(mParentActivity, LoginActivity.class));
+                }else {
+                    chooseDialog();
+                }
                 break;
             case R.id.take_video:
-                mParentActivity.startActivity(new Intent(mParentActivity, CameraActivity.class));
+
+                mParentActivity.startActivity(new Intent(mParentActivity, MediaRecorderActivity.class));
                 mTourBuyChooseDialog.dismiss();
                 break;
             case R.id.take_photo:
