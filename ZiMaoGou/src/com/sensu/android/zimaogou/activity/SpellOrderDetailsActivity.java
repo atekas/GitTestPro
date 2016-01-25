@@ -25,6 +25,7 @@ import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
@@ -223,7 +224,7 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
                 } else if (mRightButtonStatue.equals("2")) {
                     commandGroup();
                 } else if (mRightButtonStatue.equals("3")) {
-
+                    shareDialog();
                 }
                 break;
             case R.id.command_input:
@@ -272,16 +273,75 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
                 break;
             case R.id.share_friend_circle:
                 new ShareAction(this).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).setCallback(umShareListener)
-                        .withText("自贸购分享码" + mGroupDetailsResponse.data.code)
+                        .withTitle(mGroupDetailsResponse.data.name)
+                        .withText(mGroupDetailsResponse.data.description)
+                        .withTargetUrl("http://139.196.108.137:80/v1/share/tb/" + mTbId)
+                        .withMedia(new UMImage(SpellOrderDetailsActivity.this, mGroupDetailsResponse.data.media))
                         .share();
                 break;
             case R.id.share_friends:
                 new ShareAction(this).setPlatform(SHARE_MEDIA.WEIXIN).setCallback(umShareListener)
-                        .withText("自贸购分享码" + mGroupDetailsResponse.data.code)
-                        .share();
+                    .withTitle(mGroupDetailsResponse.data.name)
+                    .withText(mGroupDetailsResponse.data.description)
+                    .withTargetUrl("http://139.196.108.137:80/v1/share/tb/" + mTbId)
+                    .withMedia(new UMImage(SpellOrderDetailsActivity.this, mGroupDetailsResponse.data.media))
+                    .share();
                 break;
         }
     }
+
+    /**
+     * 分享
+     */
+    Dialog mShareDialog;
+
+    private void shareDialog() {
+        mShareDialog = new Dialog(this, R.style.dialog);
+        mShareDialog.setCancelable(true);
+        mShareDialog.setContentView(R.layout.share_dialog);
+        LinearLayout ll_wx = (LinearLayout) mShareDialog.findViewById(R.id.ll_wx);
+        LinearLayout ll_friends = (LinearLayout) mShareDialog.findViewById(R.id.ll_friends);
+        LinearLayout ll_sina = (LinearLayout) mShareDialog.findViewById(R.id.ll_sina);
+        ll_sina.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ShareAction(SpellOrderDetailsActivity.this).setPlatform(SHARE_MEDIA.SINA).setCallback(umShareListener)
+                        .withTitle(mGroupDetailsResponse.data.name)
+                        .withText(mGroupDetailsResponse.data.description)
+                        .withTargetUrl("http://139.196.108.137:80/v1/share/tb/" + mTbId)
+                        .withMedia(new UMImage(SpellOrderDetailsActivity.this, mGroupDetailsResponse.data.media))
+                        .share();
+                mShareDialog.dismiss();
+            }
+        });
+        ll_wx.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ShareAction(SpellOrderDetailsActivity.this).setPlatform(SHARE_MEDIA.WEIXIN).setCallback(umShareListener)
+                        .withTitle(mGroupDetailsResponse.data.name)
+                        .withText(mGroupDetailsResponse.data.description)
+                        .withTargetUrl("http://139.196.108.137:80/v1/share/tb/" + mTbId)
+                        .withMedia(new UMImage(SpellOrderDetailsActivity.this, mGroupDetailsResponse.data.media))
+                        .share();
+                mShareDialog.dismiss();
+            }
+        });
+        ll_friends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ShareAction(SpellOrderDetailsActivity.this).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).setCallback(umShareListener)
+                        .withTitle(mGroupDetailsResponse.data.name)
+                        .withText(mGroupDetailsResponse.data.description)
+                        .withTargetUrl("http://139.196.108.137:80/v1/share/tb/" + mTbId)
+                        .withMedia(new UMImage(SpellOrderDetailsActivity.this, mGroupDetailsResponse.data.media))
+                        .share();
+                mShareDialog.dismiss();
+            }
+        });
+
+        mShareDialog.show();
+    }
+
 
     private UMShareListener umShareListener = new UMShareListener() {
         @Override
