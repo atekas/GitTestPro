@@ -235,7 +235,7 @@ public class RefundOrderActivity extends BaseActivity {
 
             viewHolder.tv_showNum.setText("共" + getProductsNum(mOrders.get(i)) + "件商品，合计:");
             viewHolder.tv_amount.setText(mOrders.get(i).getAmount_total());
-            viewHolder.tv_orderNo.setText(mOrders.get(i).getOrder_no());
+            viewHolder.tv_orderNo.setText(mOrders.get(i).getReturn_no());
             viewHolder.tv_freight.setText("(含运费：￥" + mOrders.get(i).getAmount_express() + ")");
 
             OrderChildListAdapter adapter = new OrderChildListAdapter(mContext, mOrders.get(i).getGoods(), mOrders.get(i).getState());

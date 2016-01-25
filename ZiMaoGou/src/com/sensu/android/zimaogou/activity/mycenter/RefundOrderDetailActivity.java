@@ -2,6 +2,7 @@ package com.sensu.android.zimaogou.activity.mycenter;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -28,7 +29,7 @@ public class RefundOrderDetailActivity extends BaseActivity {
     UserInfo userInfo;
     String id = "";
     MyOrderMode myOrderMode = new MyOrderMode();
-
+    RelativeLayout mRefundRealRelativeLayout,mRefundTimeRelativeLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +50,8 @@ public class RefundOrderDetailActivity extends BaseActivity {
     }
 
     private void initView() {
+        mRefundRealRelativeLayout = (RelativeLayout) findViewById(R.id.rl_refundReal);
+        mRefundTimeRelativeLayout = (RelativeLayout) findViewById(R.id.rl_refundTime);
         mRefundState = (TextView) findViewById(R.id.tv_refundState);
         mRefundMoney = (TextView) findViewById(R.id.tv_refundMoney);
         mRefundTime = (TextView) findViewById(R.id.tv_refundTime);
@@ -79,6 +82,14 @@ public class RefundOrderDetailActivity extends BaseActivity {
                 mRefundInstruction.setText(myOrderMode.getReturn_content());
                 mRefundNo.setText(myOrderMode.getReturn_no());
                 mApplyTime.setText(myOrderMode.getCreated_at());
+                double refundRealMoney = Double.parseDouble(myOrderMode.getAmount_real());
+                if(refundRealMoney == 0){
+                    mRefundTimeRelativeLayout.setVisibility(View.GONE);
+                    mRefundRealRelativeLayout.setVisibility(View.GONE);
+                }else{
+                    mRefundTimeRelativeLayout.setVisibility(View.VISIBLE);
+                    mRefundRealRelativeLayout.setVisibility(View.VISIBLE);
+                }
 
             }
         });

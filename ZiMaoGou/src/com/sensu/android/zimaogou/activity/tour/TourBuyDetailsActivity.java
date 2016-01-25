@@ -1,5 +1,6 @@
 package com.sensu.android.zimaogou.activity.tour;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -29,7 +30,11 @@ import com.sensu.android.zimaogou.utils.*;
 import com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout;
 import com.sensu.android.zimaogou.widget.RoundImageView;
 import com.sensu.android.zimaogou.widget.VideoLinearLayout;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -435,7 +440,14 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
                 finish();
                 break;
             case R.id.share:
+                String imageUrl = "";
+                if(travelMode.getCategory().equals("2")){
+                    imageUrl = travelMode.getMedia().cover;
+                }else{
+                    imageUrl = travelMode.getMedia().image.get(0);
+                }
 
+                ShareDialog("足迹",travelMode.getContent(),imageUrl,"http://m.ftzgo365.com"+"/share/travel/"+travelMode.getId());
                 break;
         }
     }
@@ -446,5 +458,84 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
             return false;
         }
         return true;
+    }
+    private UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            Toast.makeText(TourBuyDetailsActivity.this, platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            Toast.makeText(TourBuyDetailsActivity.this,platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            Toast.makeText(TourBuyDetailsActivity.this,platform + " 分享取消了", Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        /** attention to this below ,must add this**/
+        UMShareAPI.get(TourBuyDetailsActivity.this).onActivityResult(requestCode, resultCode, data);
+        /**使用SSO授权必须添加如下代码 */
+    }
+
+    /**
+     * 分享
+     */
+    Dialog mShareDialog;
+
+    private void ShareDialog(final String title, final String content,String imageUrl, final String targetUrl) {
+        mShareDialog = new Dialog(this, R.style.dialog);
+        mShareDialog.setCancelable(true);
+        mShareDialog.setContentView(R.layout.share_dialog);
+        LinearLayout ll_wx = (LinearLayout) mShareDialog.findViewById(R.id.ll_wx);
+        LinearLayout ll_friends = (LinearLayout) mShareDialog.findViewById(R.id.ll_friends);
+        LinearLayout ll_sina = (LinearLayout) mShareDialog.findViewById(R.id.ll_sina);
+        final UMImage image = new UMImage(TourBuyDetailsActivity.this, imageUrl);
+
+        ll_sina.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                new ShareAction(TourBuyDetailsActivity.this).setPlatform(SHARE_MEDIA.SINA).setCallback(umShareListener)
+                        .withText(content)
+                        .withTitle(title)
+                        .withTargetUrl(targetUrl)
+                        .withMedia(image)
+                        .share();
+                mShareDialog.dismiss();
+            }
+        });
+        ll_wx.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ShareAction(TourBuyDetailsActivity.this).setPlatform(SHARE_MEDIA.WEIXIN).setCallback(umShareListener)
+                        .withText(content)
+                        .withTitle(title)
+                        .withTargetUrl(targetUrl)
+                        .withMedia(image)
+                        .share();
+                mShareDialog.dismiss();
+            }
+        });
+        ll_friends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ShareAction(TourBuyDetailsActivity.this).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).setCallback(umShareListener)
+                        .withText(content)
+                        .withTitle(title)
+                        .withTargetUrl(targetUrl)
+                        .withMedia(image)
+                        .share();
+                mShareDialog.dismiss();
+            }
+        });
+
+        mShareDialog.show();
     }
 }

@@ -114,17 +114,21 @@
                                 android:layout_marginRight="15dp"
                                 android:textColor="@color/black_222222"
                                 android:background="@null"/>
+
+                </RelativeLayout>
+                <RelativeLayout
+                        android:id="@+id/rl_refundReal"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:paddingLeft="15dp"
+                        android:visibility="gone"
+                        android:background="@drawable/drawable_me_click">
+
                         <View
                                 android:layout_width="match_parent"
                                 android:layout_height="1px"
                                 android:background="@color/home_line"
-                                android:layout_alignParentBottom="true"/>
-                </RelativeLayout>
-                <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="55dp"
-                        android:paddingLeft="15dp"
-                        android:background="@drawable/drawable_me_click">
+                                android:layout_alignParentTop="true"/>
                         <TextView
                                 android:id="@+id/tv_refundtip2"
                                 android:layout_width="wrap_content"
@@ -147,18 +151,20 @@
                                 android:layout_marginRight="15dp"
                                 android:textColor="@color/black_222222"
                                 android:background="@null"/>
-                        <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1px"
-                                android:background="@color/home_line"
-                                android:layout_alignParentBottom="true"/>
+
                 </RelativeLayout>
             <RelativeLayout
+                    android:id="@+id/rl_refundTime"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:paddingLeft="15dp"
-                    android:layout_marginBottom="10dp"
+                    android:visibility="gone"
                     android:background="@drawable/drawable_me_click">
+                    <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:background="@color/home_line"
+                            android:layout_alignParentTop="true"/>
                 <TextView
                         android:id="@+id/tv_refundtip3"
                         android:layout_width="wrap_content"
@@ -190,6 +196,7 @@
             <RelativeLayout
                     android:onClick="RefundReasonClick"
                     android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
                     android:layout_height="55dp"
                     android:paddingLeft="15dp"
                     android:background="@drawable/drawable_me_click">

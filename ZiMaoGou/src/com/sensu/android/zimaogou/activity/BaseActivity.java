@@ -2,18 +2,26 @@ package com.sensu.android.zimaogou.activity;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.sensu.android.zimaogou.BaseApplication;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.utils.NetworkTypeUtils;
 import com.sensu.android.zimaogou.widget.ExceptionLinearLayout;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 
 /**
  * Created by winter on 2015/9/23.
@@ -23,6 +31,9 @@ import com.umeng.analytics.MobclickAgent;
 public class BaseActivity extends Activity {
     public View ExceptionView;
     public ExceptionLinearLayout exceptionLinearLayout;
+    public Context mContext;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,28 +51,30 @@ public class BaseActivity extends Activity {
 //            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 //            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 //        }
-        ExceptionView = View.inflate(this, R.layout.exception_layout,null);
+        ExceptionView = View.inflate(this, R.layout.exception_layout, null);
         exceptionLinearLayout = (ExceptionLinearLayout) ExceptionView.findViewById(R.id.ll_exception);
-        if(!NetworkTypeUtils.isNetWorkAvailable()){
-            Toast toast = Toast.makeText(this,"您的网络开了小差哦！",Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER,0,0);
+        if (!NetworkTypeUtils.isNetWorkAvailable()) {
+            Toast toast = Toast.makeText(this, "您的网络开了小差哦！", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
         }
     }
+
     Dialog loadingDialog;
     ImageView infoOperatingIV;
     boolean isLoading = false;
-    public void showLoading(){
+
+    public void showLoading() {
         isLoading = true;
-        loadingDialog = new Dialog(this,R.style.dialog);
+        loadingDialog = new Dialog(this, R.style.dialog);
         loadingDialog.setCancelable(false);
         loadingDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
 
             @Override
             public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                if(keyCode==KeyEvent.KEYCODE_BACK){
-                    if(isLoading){
-                        isLoading=false;
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    if (isLoading) {
+                        isLoading = false;
                         loadingDialog.dismiss();
                     }
                 }
@@ -95,8 +108,9 @@ public class BaseActivity extends Activity {
 
         loadingDialog.show();
     }
-    public void cancelLoading(){
-        if(!isLoading){
+
+    public void cancelLoading() {
+        if (!isLoading) {
             return;
         }
         isLoading = false;
@@ -117,6 +131,7 @@ public class BaseActivity extends Activity {
 //        }
 //        return super.onKeyDown(keyCode, event);
 //    }
+
 
     @Override
     protected void onResume() {

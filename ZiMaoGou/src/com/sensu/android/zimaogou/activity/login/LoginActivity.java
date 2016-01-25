@@ -163,7 +163,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
         @Override
         public void onError(SHARE_MEDIA platform, int action, Throwable t) {
-            Toast.makeText( getApplicationContext(), "Authorize fail", Toast.LENGTH_SHORT).show();
+            Toast.makeText( getApplicationContext(), "获取登录授权失败", Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -183,12 +183,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
         @Override
         public void onError(SHARE_MEDIA platform, int action, Throwable t) {
-            Toast.makeText( getApplicationContext(), "get fail", Toast.LENGTH_SHORT).show();
+            Toast.makeText( getApplicationContext(), "获取登录授权失败", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onCancel(SHARE_MEDIA platform, int action) {
-            Toast.makeText( getApplicationContext(), "get cancel", Toast.LENGTH_SHORT).show();
+            Toast.makeText( getApplicationContext(), "取消第三方登录", Toast.LENGTH_SHORT).show();
         }
     };
     @Override
@@ -220,8 +220,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                LogUtils.d("第三方登录返回：",response.toString());
-                PromptUtils.showToast("第三方登录返回:"+response.toString());
+                LogUtils.d("第三方登录返回：", response.toString());
                 if (response.optInt("ret")<0) {
                     PromptUtils.showToast(response.optString("msg"));
                     return;

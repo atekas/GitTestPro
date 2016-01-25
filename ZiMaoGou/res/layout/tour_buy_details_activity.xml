@@ -24,7 +24,7 @@
                 android:textColor="@color/black_222222"
                 android:layout_centerInParent="true"
                 android:textSize="18sp"
-                android:text="@string/pic_details"/>
+                android:text="详情"/>
 
         <ImageView
                 android:id="@+id/share"
