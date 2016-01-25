@@ -50,7 +50,7 @@ public class LaunchActivity extends BaseActivity {
             switch (msg.what) {
                 case GO_GUIDE:
                     //进入引导页
-                    Intent intent = new Intent(LaunchActivity.this, MainActivity.class);
+                    Intent intent = new Intent(LaunchActivity.this, GuidePageActivity.class);
                     startActivity(intent);
                     finish();
                     break;

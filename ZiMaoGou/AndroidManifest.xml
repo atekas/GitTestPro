@@ -225,6 +225,8 @@
 
         <activity android:name=".activity.video.ProductShopCarActivity" android:screenOrientation="portrait" />
 
+        <activity android:name=".activity.GuidePageActivity" android:screenOrientation="portrait" />
+
         <!--###################################### 友盟分享 ############################################-->
 
         <!--测试  -->
