@@ -91,7 +91,7 @@
             <TextView
                     android:id="@+id/tv_productDetail"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:textColor="@color/black_444444"
                     android:gravity="center"
@@ -100,7 +100,7 @@
             <TextView
                     android:id="@+id/tv_productSpecification"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:textColor="@color/black_444444"
                     android:gravity="center"
@@ -109,7 +109,7 @@
             <TextView
                     android:id="@+id/tv_productComment"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:textColor="@color/black_444444"
                     android:gravity="center"
