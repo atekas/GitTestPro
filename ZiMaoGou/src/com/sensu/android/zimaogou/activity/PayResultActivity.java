@@ -141,11 +141,11 @@ public class PayResultActivity extends BaseActivity implements View.OnClickListe
         mDialog.setCancelable(true);
         mDialog.setContentView(R.layout.delete_address_dialog);
 
-        ((TextView) mDialog.findViewById(R.id.tv_tip)).setText("确认取消订单");
+        ((TextView) mDialog.findViewById(R.id.tv_tip)).setText("确认取消支付");
         mDialog.findViewById(R.id.bt_sure).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cancelOrder();
+                finish();
             }
         });
         mDialog.show();

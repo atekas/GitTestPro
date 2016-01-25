@@ -189,6 +189,9 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
             case CHOOSE_ADDRESS_CODE:
                 mAddressDefault = (ReceiverAddressMode) data.getSerializableExtra("address");
 
+                findViewById(R.id.phone_num).setVisibility(View.VISIBLE);
+                findViewById(R.id.address).setVisibility(View.VISIBLE);
+
                 ((TextView) findViewById(R.id.name)).setText(mAddressDefault.getName());
                 ((TextView) findViewById(R.id.phone_num)).setText(mAddressDefault.getMobile());
                 ((TextView) findViewById(R.id.address)).setText(mAddressDefault.getProvince() + mAddressDefault.getCity() + mAddressDefault.getAddress());
