@@ -757,7 +757,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 new ShareAction(ProductDetailsActivity.this).setPlatform(SHARE_MEDIA.SINA).setCallback(umShareListener)
                         .withText(mProductDetailsResponse.data.sale_title)
                         .withTitle(mProductDetailsResponse.data.name)
-                        .withTargetUrl("http://139.196.108.137:80/v1/share/goods/" + mProductDetailsResponse.data.id)
+                        .withTargetUrl("http://m.ftzgo365.com/v1/share/goods/" + mProductDetailsResponse.data.id)
                         .withMedia(new UMImage(ProductDetailsActivity.this, mProductDetailsResponse.data.media.image.get(0)))
                         .share();
                 mShareDialog.dismiss();
@@ -769,7 +769,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 new ShareAction(ProductDetailsActivity.this).setPlatform(SHARE_MEDIA.WEIXIN).setCallback(umShareListener)
                         .withTitle(mProductDetailsResponse.data.name)
                         .withText(mProductDetailsResponse.data.sale_title)
-                        .withTargetUrl("http://139.196.108.137:80/v1/share/goods/" + mProductDetailsResponse.data.id)
+                        .withTargetUrl("http://m.ftzgo365.com/v1/share/goods/" + mProductDetailsResponse.data.id)
                         .withMedia(new UMImage(ProductDetailsActivity.this, mProductDetailsResponse.data.media.image.get(0)))
                         .share();
                 mShareDialog.dismiss();
@@ -781,7 +781,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 new ShareAction(ProductDetailsActivity.this).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).setCallback(umShareListener)
                         .withTitle(mProductDetailsResponse.data.name)
                         .withText(mProductDetailsResponse.data.sale_title)
-                        .withTargetUrl("http://139.196.108.137:80/v1/share/goods/" + mProductDetailsResponse.data.id)
+                        .withTargetUrl("http://m.ftzgo365.com/v1/share/goods/" + mProductDetailsResponse.data.id)
                         .withMedia(new UMImage(ProductDetailsActivity.this, mProductDetailsResponse.data.media.image.get(0)))
                         .share();
                 mShareDialog.dismiss();

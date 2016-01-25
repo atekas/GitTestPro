@@ -222,9 +222,9 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
                 if (mRightButtonStatue.equals("1")) {
                     createGroup();
                 } else if (mRightButtonStatue.equals("2")) {
-                    commandGroup();
-                } else if (mRightButtonStatue.equals("3")) {
                     shareDialog();
+                } else if (mRightButtonStatue.equals("3")) {
+
                 }
                 break;
             case R.id.command_input:
@@ -308,7 +308,7 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
                 new ShareAction(SpellOrderDetailsActivity.this).setPlatform(SHARE_MEDIA.SINA).setCallback(umShareListener)
                         .withTitle(mGroupDetailsResponse.data.name)
                         .withText(mGroupDetailsResponse.data.description)
-                        .withTargetUrl("http://139.196.108.137:80/v1/share/tb/" + mTbId)
+                        .withTargetUrl("http://m.ftzgo365.com/v1/share/tb/" + mTbId)
                         .withMedia(new UMImage(SpellOrderDetailsActivity.this, mGroupDetailsResponse.data.media))
                         .share();
                 mShareDialog.dismiss();
@@ -320,7 +320,7 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
                 new ShareAction(SpellOrderDetailsActivity.this).setPlatform(SHARE_MEDIA.WEIXIN).setCallback(umShareListener)
                         .withTitle(mGroupDetailsResponse.data.name)
                         .withText(mGroupDetailsResponse.data.description)
-                        .withTargetUrl("http://139.196.108.137:80/v1/share/tb/" + mTbId)
+                        .withTargetUrl("http://m.ftzgo365.com/v1/share/tb/" + mTbId)
                         .withMedia(new UMImage(SpellOrderDetailsActivity.this, mGroupDetailsResponse.data.media))
                         .share();
                 mShareDialog.dismiss();
@@ -332,7 +332,7 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
                 new ShareAction(SpellOrderDetailsActivity.this).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).setCallback(umShareListener)
                         .withTitle(mGroupDetailsResponse.data.name)
                         .withText(mGroupDetailsResponse.data.description)
-                        .withTargetUrl("http://139.196.108.137:80/v1/share/tb/" + mTbId)
+                        .withTargetUrl("http://m.ftzgo365.com/v1/share/tb/" + mTbId)
                         .withMedia(new UMImage(SpellOrderDetailsActivity.this, mGroupDetailsResponse.data.media))
                         .share();
                 mShareDialog.dismiss();
