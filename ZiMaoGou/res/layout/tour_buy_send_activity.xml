@@ -59,7 +59,7 @@
                     android:paddingBottom="5dp"
                     android:textSize="@dimen/text_size_13"
                     android:textColor="@color/black"
-                    android:hint="@string/release_hint"
+                    android:hint="这一刻的想法..."
                     android:textColorHint="@color/release_hint_color"
                     android:background="@null"/>
 

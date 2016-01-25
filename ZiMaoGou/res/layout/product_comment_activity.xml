@@ -137,7 +137,7 @@
                     android:layout_marginLeft="@dimen/dip_20"
                     android:layout_marginRight="@dimen/dip_20"
                     android:layout_marginTop="20dp"
-                    android:hint="@string/release_hint"
+                    android:hint="写下购买体会或使用过程中带来的帮助可以为其他小伙伴提供参考~"
                     android:textColorHint="@color/release_hint_color"
                     android:background="@null"/>
 

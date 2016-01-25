@@ -175,9 +175,9 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onResume() {
         super.onResume();
-        if (NetworkTypeUtils.isNetWorkAvailable()) {
-            getTravelData();
-        }
+        mPostId = "0";
+        getTravelData();
+
     }
 
     @Override
