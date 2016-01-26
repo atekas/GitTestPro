@@ -151,6 +151,7 @@ public class ReceiverAddressEditActivity extends BaseActivity {
             PromptUtils.showToast("请填写收货人联系电话");
             return;
         }
+
         if(TextUtils.isEmpty(mReceiverIDEditText.getText().toString())){
             PromptUtils.showToast("请填写收货人身份证号码");
             return;

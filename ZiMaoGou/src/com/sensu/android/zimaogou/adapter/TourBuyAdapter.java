@@ -42,7 +42,14 @@ public class TourBuyAdapter extends SimpleBaseAdapter {
         }
         notifyDataSetChanged();
     }
-
+    public void reFlush(ArrayList<TravelMode> travelModes){
+        if (travelModes != null) {
+            this.travelModes = travelModes;
+        }else{
+            this.travelModes.clear();
+        }
+        notifyDataSetChanged();
+    }
     public void clearData() {
         this.travelModes.clear();
     }

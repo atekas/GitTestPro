@@ -63,6 +63,8 @@ public class CollectActivity extends BaseActivity {
     LinearLayout ll_noDataTour;
     ArrayList<TravelMode> travelModes = new ArrayList<TravelMode>();
     ArrayList<ProductListResponse.ProductListData> productListDatas = new ArrayList<ProductListResponse.ProductListData>();
+    ProductsDetailsAdapter mProductsDetailsAdapter = new ProductsDetailsAdapter(this);
+    TourBuyAdapter mTourBuyAdapter = new TourBuyAdapter(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,14 +89,14 @@ public class CollectActivity extends BaseActivity {
 
         mProductTitle.setOnClickListener(new MyOnClickListener(0));
         mTourTitle.setOnClickListener(new MyOnClickListener(1));
-
+        InitViewPager();
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        InitViewPager();
+        setData(mProductsDetailsAdapter,mTourBuyAdapter);
     }
 
     /**
@@ -128,7 +130,7 @@ public class CollectActivity extends BaseActivity {
         View productView = LayoutInflater.from(this).inflate(R.layout.collect_product_view,null);
         ll_NoDataShop = (LinearLayout) productView.findViewById(R.id.ll_noData);
         GridView mGridView = (GridView) productView.findViewById(R.id.product_list);
-        ProductsDetailsAdapter mProductsDetailsAdapter = new ProductsDetailsAdapter(this);
+
         mGridView.setColumnWidth(DisplayUtils.getDisplayWidth() / 2);
         mGridView.setAdapter(mProductsDetailsAdapter);
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -145,7 +147,7 @@ public class CollectActivity extends BaseActivity {
         ll_noDataTour = (LinearLayout) tourView.findViewById(R.id.ll_noData);
 
         mTourBuyListView = (RefreshListView) tourView.findViewById(R.id.tour_list);
-        TourBuyAdapter mTourBuyAdapter = new TourBuyAdapter(this);
+
         mTourBuyListView.setAdapter(mTourBuyAdapter);
         mTourBuyListView.setOnRefreshListener(mOnRefreshListener);
         mTourBuyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -174,7 +176,6 @@ public class CollectActivity extends BaseActivity {
 
             }
         });
-        setData(mProductsDetailsAdapter,mTourBuyAdapter);
     }
     private OnRefreshListener mOnRefreshListener = new OnRefreshListener() {
         @Override
@@ -331,7 +332,7 @@ public class CollectActivity extends BaseActivity {
                 LogUtils.d("获取我的收藏（商品）:", response.toString());
                 productListResponse = JSON.parseObject(response.toString(),ProductListResponse.class);
                 productListDatas = (ArrayList<ProductListResponse.ProductListData>) productListResponse.data;
-                productsDetailsAdapter.setProductList(productListResponse);
+                productsDetailsAdapter.reFlushProductList(productListResponse);
                 if(productListResponse.data.size() == 0){
                     ll_NoDataShop.setVisibility(View.VISIBLE);
                     View ExceptionView = View.inflate(CollectActivity.this, R.layout.exception_layout,null);
@@ -353,7 +354,7 @@ public class CollectActivity extends BaseActivity {
                 LogUtils.d("获取我的收藏（游购）:", response.toString());
                 travelResponse = JSON.parseObject(response.toString(),TravelResponse.class);
                 travelModes = travelResponse.data;
-                tourBuyAdapter.flush(travelModes);
+                tourBuyAdapter.reFlush(travelModes);
                 if(travelResponse.data.size() == 0){
                     ll_noDataTour.setVisibility(View.VISIBLE);
                     View ExceptionView = View.inflate(CollectActivity.this, R.layout.exception_layout,null);

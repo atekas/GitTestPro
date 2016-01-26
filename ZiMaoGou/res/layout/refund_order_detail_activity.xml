@@ -194,7 +194,6 @@
                         android:layout_alignParentBottom="true"/>
             </RelativeLayout>
             <RelativeLayout
-                    android:onClick="RefundReasonClick"
                     android:layout_width="match_parent"
                     android:layout_marginTop="10dp"
                     android:layout_height="55dp"

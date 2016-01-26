@@ -56,7 +56,8 @@ public class OrderActivity extends BaseActivity {
     LinearLayout ll_content;
     String CANCEL_ORDER = "1";//取消订单
     String SURE_ORDER = "2";//确认收货
-
+    int page = 0;
+    boolean canLoadMore = true;
     MyOrderMode chooseOrderMode = new MyOrderMode();//付款的订单
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +75,7 @@ public class OrderActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        page = 0;
         getOrder();
     }
 
@@ -84,6 +86,8 @@ public class OrderActivity extends BaseActivity {
         mTitleTextView = (TextView) findViewById(R.id.tv_title);
         mOrderListView.setDivider(null);
         mOrderListView.setOnRefreshListener(mOnRefreshListener);
+        adapter = new OrderListAdapter1(OrderActivity.this, mOrders);
+        mOrderListView.setAdapter(adapter);
         ll_content = (LinearLayout) findViewById(R.id.ll_content);
         mBackImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +120,8 @@ public class OrderActivity extends BaseActivity {
                     mOrderListView.hideHeaderView();
                 }
             }, 2000);
+            page =0;
+            getOrder();
         }
 
         @Override
@@ -127,24 +133,40 @@ public class OrderActivity extends BaseActivity {
                     mOrderListView.hideFooterView();
                 }
             }, 2000);
+            if(canLoadMore){
+                page++;
+                getOrder();
+            }
         }
     };
 
     private void getOrder() {
-        mOrders.clear();
         UserInfo userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
         RequestParams requestParams = new RequestParams();
         requestParams.put("uid", userInfo.getUid());
         requestParams.put("state", type + "");
+        requestParams.put("page_num",page+"");
+        requestParams.put("limit",10+"");
         HttpUtil.getWithSign(userInfo.getToken(), IConstants.sGetMyOrder, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 LogUtils.d("获取我的订单返回：", response.toString());
+                if(page == 0){
+                    mOrders.clear();
+                }
                 myOrderResponse = JSON.parseObject(response.toString(), MyOrderResponse.class);
-                mOrders = myOrderResponse.data;
-                adapter = new OrderListAdapter1(OrderActivity.this, mOrders);
-                mOrderListView.setAdapter(adapter);
+                ArrayList<MyOrderMode> myOrderModes  = myOrderResponse.data;
+                if(myOrderModes!= null&& myOrderModes.size()>0){
+                    canLoadMore = true;
+                    for(MyOrderMode myOrderMode:myOrderModes){
+                        mOrders.add(myOrderMode);
+                    }
+                }else{
+                    canLoadMore = false;
+                }
+
+                adapter.flush(mOrders);
                 if (myOrderResponse.data.size() == 0) {
                     exceptionLinearLayout.setException(IConstants.EXCEPTION_ORDER_IS_NULL);
                     ll_content.addView(ExceptionView);

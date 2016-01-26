@@ -165,6 +165,52 @@
         </RelativeLayout>
 
     </LinearLayout>
-
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="match_parent"
+                  android:textSize="@dimen/text_size_large"
+                  android:textColor="@color/red"
+                  android:layout_marginTop="30dp"
+                  android:layout_marginBottom="20dp"
+                  android:textColorHint="@color/gray_9b9b9b"
+                  android:gravity="center_vertical"
+                  android:text="温馨提示"
+                  android:background="@null"
+                />
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="match_parent"
+                  android:textSize="@dimen/text_size_normal"
+                  android:textColor="@color/black_444444"
+                  android:layout_marginLeft="20dp"
+                  android:layout_marginRight="20dp"
+                  android:textColorHint="@color/gray_9b9b9b"
+                  android:gravity="center_vertical"
+                  android:text="1.收货人姓名与身份证信息一致，否则将无法通过海关检查"
+                  android:background="@null"
+                />
+        <View
+                android:layout_width="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="8dp"
+                android:layout_height="1px"
+                android:background="@color/home_line"/>
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="match_parent"
+                  android:textSize="@dimen/text_size_normal"
+                  android:textColor="@color/black_444444"
+                  android:layout_marginLeft="20dp"
+                  android:layout_marginRight="20dp"
+                  android:textColorHint="@color/gray_9b9b9b"
+                  android:gravity="center_vertical"
+                  android:text="2.身份证信息只会用于办理海关清关手续，您的个人信息绝对不会用于他用，请放心验证"
+                  android:background="@null"
+                />
+    </LinearLayout>
 
 </LinearLayout>

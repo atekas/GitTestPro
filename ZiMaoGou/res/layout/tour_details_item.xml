@@ -6,8 +6,8 @@
 
      <com.sensu.android.zimaogou.widget.RoundImageView
             android:id="@+id/review_user_head_pic"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="@dimen/dip_10"
             android:src="@drawable/head_pic_default"/>
@@ -51,7 +51,7 @@
             android:layout_height="2px"
             android:layout_toRightOf="@+id/review_user_head_pic"
             android:layout_below="@+id/review_content"
-            android:layout_marginLeft="@dimen/dip_20"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:background="#e5e5e5"/>
 

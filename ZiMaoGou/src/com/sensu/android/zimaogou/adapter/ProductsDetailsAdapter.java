@@ -16,6 +16,7 @@ import com.sensu.android.zimaogou.ReqResponse.ProductListResponse;
 import com.sensu.android.zimaogou.utils.DisplayUtils;
 import com.sensu.android.zimaogou.utils.ImageUtils;
 import com.sensu.android.zimaogou.utils.StringUtils;
+import com.sensu.android.zimaogou.utils.TextUtils;
 
 /**
  * Created by zhangwentao on 2015/11/18.
@@ -52,7 +53,15 @@ public class ProductsDetailsAdapter extends SimpleBaseAdapter {
         }
         notifyDataSetChanged();
     }
-
+    public void reFlushProductList(ProductListResponse productListResponse) {
+        if(productListResponse == null) {
+            mProductListResponse.data.clear();
+            return;
+        }else {
+            mProductListResponse = productListResponse;
+        }
+        notifyDataSetChanged();
+    }
     public void clearData() {
         if (mProductListResponse != null) {
             mProductListResponse.data.clear();
@@ -93,7 +102,10 @@ public class ProductsDetailsAdapter extends SimpleBaseAdapter {
             ImageUtils.displayImage(productListData.media.image.get(0), viewHolder.mProductPic, mProductOptions);
         } else {
             viewHolder.mVideoIcon.setVisibility(View.GONE);
-            ImageUtils.displayImage(productListData.media.image.get(0), viewHolder.mProductPic, mProductOptions);
+            if(productListData.media.image!=null && productListData.media.image.size()>0){
+                ImageUtils.displayImage(productListData.media.image.get(0), viewHolder.mProductPic, mProductOptions);
+            }
+
         }
         if(productListData.num>0){
             viewHolder.mSellout.setVisibility(View.GONE);

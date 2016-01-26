@@ -91,7 +91,9 @@ public class GoodShopActivity extends BaseActivity implements AdapterView.OnItem
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        startActivity(new Intent(this, TourBuyDetailsActivity.class));
+        if(i > 0) {
+            startActivity(new Intent(this, TourBuyDetailsActivity.class).putExtra("travel", travelModes.data.get(i-1)));
+        }
     }
 
 

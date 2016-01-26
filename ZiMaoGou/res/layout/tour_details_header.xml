@@ -57,10 +57,10 @@
                 android:id="@+id/tv_browsers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:textColor="@color/gray_9b9b9b"
                 android:layout_marginRight="@dimen/dip_10"
+                android:layout_margin="10dp"
                 android:text="0人看过"/>
     </RelativeLayout>
     <LinearLayout
@@ -148,7 +148,7 @@
             android:background="#e5e5e5"/>
     <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="68dp"
             android:scrollbars="none">
 
         <LinearLayout
@@ -156,7 +156,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:gravity="center_vertical"
-                android:layout_height="50dp">
+                android:layout_height="match_parent">
             <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
