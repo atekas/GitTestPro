@@ -2,6 +2,7 @@ package com.sensu.android.zimaogou.activity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.utils.ImageUtils;
 import com.sensu.android.zimaogou.widget.CropImageView;
@@ -11,7 +12,7 @@ import com.sensu.android.zimaogou.widget.CropImageView;
  *
  * 展示图片可进行放大查看
  */
-public class ShowImageActivity extends BaseActivity {
+public class ShowImageActivity extends BaseActivity implements View.OnClickListener {
 
     public static final String IMAGE_URL = "image_url";
     private CropImageView mCropImageView;
@@ -24,9 +25,19 @@ public class ShowImageActivity extends BaseActivity {
         String url = getIntent().getStringExtra(IMAGE_URL);
 
         mCropImageView = (CropImageView) findViewById(R.id.scalable_watch_pic);
+        mCropImageView.setOnClickListener(this);
 
         if (!TextUtils.isEmpty(url)) {
             ImageUtils.displayImage(url, mCropImageView);
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.scalable_watch_pic:
+                finish();
+                break;
         }
     }
 }

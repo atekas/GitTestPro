@@ -146,25 +146,21 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
                 finish();
                 break;
             case R.id.into_address_list:
-                PromptUtils.showToast("修改收货地址,进入地址列表页面");
                 Intent intent = new Intent(this, ReceiverAddressActivity.class);
                 intent.putExtra(ReceiverAddressActivity.IS_NO_EDIT, true);
                 startActivityForResult(intent, CHOOSE_ADDRESS_CODE);
                 break;
             case R.id.zhifubao_pay:
-                PromptUtils.showToast("支付宝支付");
                 findViewById(R.id.alipay_select).setSelected(true);
                 findViewById(R.id.we_chat_pay_select).setSelected(false);
                 mPayWay = ZFB_PAY;
                 break;
             case R.id.we_chat_pay:
-                PromptUtils.showToast("微信支付");
                 findViewById(R.id.alipay_select).setSelected(false);
                 findViewById(R.id.we_chat_pay_select).setSelected(true);
                 mPayWay = WE_CHAT_PAY;
                 break;
             case R.id.coupon:
-                PromptUtils.showToast("进入到我的优惠券页面");
                 Intent intent1 = new Intent(this, CouponActivity.class);
                 intent1.putExtra(CouponActivity.TOTAL_AMOUNT, String.valueOf(mSelectProductModel.getTotalMoney()));
                 startActivityForResult(intent1, CHOOSE_COUPON_CODE);

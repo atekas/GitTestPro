@@ -157,7 +157,6 @@ public class CartLinearLayout extends LinearLayout {
             childView.findViewById(R.id.img_choose).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    PromptUtils.showToast("点击了" + position + "个选择");
                     if (mCartDataGroup.data.get(position).getIsSelect()) {
                         mCartDataGroup.data.get(position).setIsSelect(false);
                     } else {
@@ -170,7 +169,6 @@ public class CartLinearLayout extends LinearLayout {
             childView.findViewById(R.id.bt_subtract).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    PromptUtils.showToast("点击了第" + position + "项减号");
                     String num = ((EditText) childView.findViewById(R.id.et_productNum)).getText().toString();
                     int productNum = Integer.parseInt(num);
                     if (productNum > 1) {
@@ -183,7 +181,6 @@ public class CartLinearLayout extends LinearLayout {
             childView.findViewById(R.id.bt_add).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    PromptUtils.showToast("点击了第" + position + "项加号");
                     String num = ((EditText) childView.findViewById(R.id.et_productNum)).getText().toString();
                     int productNum = Integer.parseInt(num);
                     productNum++;
@@ -194,7 +191,6 @@ public class CartLinearLayout extends LinearLayout {
             childView.findViewById(R.id.delete).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    PromptUtils.showToast("删除第" + position + "项");
                     deleteProduct(mCartDataGroup.data.get(position).id, position);
                 }
             });

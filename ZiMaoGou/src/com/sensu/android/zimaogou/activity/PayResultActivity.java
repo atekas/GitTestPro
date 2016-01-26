@@ -93,7 +93,7 @@ public class PayResultActivity extends BaseActivity implements View.OnClickListe
                     findViewById(R.id.pay_success_layout).setVisibility(View.GONE);
                 }
 
-                PromptUtils.showToast("支付返回：" + result + "  " + errorMsg + "  " + extraMsg);
+//                PromptUtils.showToast("支付返回：" + result + "  " + errorMsg + "  " + extraMsg);
                 break;
         }
     }

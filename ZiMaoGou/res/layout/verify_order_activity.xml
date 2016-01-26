@@ -281,7 +281,7 @@
                         android:layout_marginLeft="@dimen/dip_20"
                         android:textSize="@dimen/text_size_15"
                         android:textColor="@color/gray_9b9b9b"
-                        android:text="@string/discount_coupon"/>
+                        android:text="暂不使用优惠券"/>
 
                 <ImageView
                         android:id="@+id/into_coupon_list"
@@ -361,6 +361,7 @@
                         android:id="@+id/rate_toast"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:textSize="@dimen/text_size_15"
                         android:layout_marginRight="@dimen/dip_5"
                         android:textColor="@color/red"
@@ -488,7 +489,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_17"
                 android:background="@color/red"
-                android:text="@string/verify_order"/>
+                android:text="提交订单"/>
 
     </LinearLayout>
 </RelativeLayout>
