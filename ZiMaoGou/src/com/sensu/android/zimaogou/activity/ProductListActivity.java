@@ -63,19 +63,16 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
 
         mIsNoTitle = getIntent().getBooleanExtra(IS_NO_TITLE, false);
         mKeyword = getIntent().getStringExtra(PRODUCT_LIST_KEYWORD);
-        mKeyword = mKeyword == null ? "" : mKeyword;
         mTag = getIntent().getStringExtra(PRODUCT_LIST_TAG);
-        mTag = mTag == null ? "" : mTag;
         mCategory = getIntent().getStringExtra(PRODUCT_LIST_CATEGORY);
-        mCategory = mCategory == null ? "" : mCategory;
         mOrderBy = getIntent().getStringExtra(PRODUCT_LIST_ORDER_BY);
-        mOrderBy = mOrderBy == null ? "" : mOrderBy;
         mTitle = getIntent().getStringExtra(PRODUCT_LIST_TITLE);
         mTitle = mTitle == null ? "" : mTitle;
         if (mIsNoTitle) {
             findViewById(R.id.sort_rules_layout).setVisibility(View.GONE);
         } else {
             findViewById(R.id.sort_rules_layout).setVisibility(View.VISIBLE);
+            mOrderBy = "11";
         }
 
         mNoProductView = (LinearLayout) findViewById(R.id.no_product);
@@ -106,14 +103,20 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
             case R.id.newest:
                 findViewById(R.id.moods_text).setSelected(false);
                 findViewById(R.id.newest_text).setSelected(true);
-                mOrderBy = "2";
-                getProductList();
+                if (!mOrderBy.equals("2")) {
+                    mPageNum = 0;
+                    mOrderBy = "2";
+                    getProductList();
+                }
                 break;
             case R.id.moods:
                 findViewById(R.id.moods_text).setSelected(true);
                 findViewById(R.id.newest_text).setSelected(false);
-                mOrderBy = "1";
-                getProductList();
+                if (!mOrderBy.equals("11")) {
+                    mPageNum = 0;
+                    mOrderBy = "11";
+                    getProductList();
+                }
                 break;
         }
     }
@@ -129,10 +132,21 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
 
     private void getProductList() {
         RequestParams requestParams = new RequestParams();
-        requestParams.put("tag", mTag);
-        requestParams.put("category", mCategory);
-        requestParams.put("q", mKeyword);
-        requestParams.put("order_by", mOrderBy);
+        if (null != mTag) {
+            requestParams.put("tag", mTag);
+        }
+
+        if (null != mCategory) {
+            requestParams.put("category", mCategory);
+        }
+
+        if (null != mKeyword) {
+            requestParams.put("q", mKeyword);
+        }
+
+        if (null != mOrderBy) {
+            requestParams.put("order_by", mOrderBy);
+        }
         requestParams.put("page_num", mPageNum);
         requestParams.put("limit", mLimit);
         HttpUtil.get(IConstants.sGoodList, requestParams, new JsonHttpResponseHandler() {

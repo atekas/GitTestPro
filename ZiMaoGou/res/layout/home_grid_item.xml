@@ -40,10 +40,10 @@
             <ImageView
                     android:id="@+id/image_1"
                     android:layout_width="85dp"
-                    android:layout_height="75dp"
+                    android:layout_height="85dp"
                     android:layout_below="@+id/type_1"
                     android:layout_marginTop="13dp"
-                    android:scaleType="centerCrop"
+                    android:scaleType="fitCenter"
                     android:layout_centerHorizontal="true"
                     android:src="@drawable/home_item_top_default"/>
 
@@ -86,10 +86,10 @@
             <ImageView
                     android:id="@+id/image_2"
                     android:layout_width="85dp"
-                    android:layout_height="75dp"
+                    android:layout_height="85dp"
                     android:layout_below="@+id/type_2"
                     android:layout_marginTop="13dp"
-                    android:scaleType="centerCrop"
+                    android:scaleType="fitCenter"
                     android:layout_centerHorizontal="true"
                     android:src="@drawable/home_item_top_default"/>
 
@@ -132,10 +132,10 @@
             <ImageView
                     android:id="@+id/image_3"
                     android:layout_width="85dp"
-                    android:layout_height="75dp"
+                    android:layout_height="85dp"
                     android:layout_below="@+id/type_3"
                     android:layout_marginTop="13dp"
-                    android:scaleType="centerCrop"
+                    android:scaleType="fitCenter"
                     android:layout_centerHorizontal="true"
                     android:src="@drawable/home_item_top_default"/>
 

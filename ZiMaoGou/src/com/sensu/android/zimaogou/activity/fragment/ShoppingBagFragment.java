@@ -65,6 +65,12 @@ public class ShoppingBagFragment extends BaseFragment implements View.OnClickLis
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        initView();
+    }
+
+    @Override
     protected void initView() {
 
         mUserInfo = GDUserInfoHelper.getInstance(mParentActivity).getUserInfo();

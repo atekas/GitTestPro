@@ -50,7 +50,6 @@ public class ProductsDetailsAdapter extends SimpleBaseAdapter {
                 mProductListResponse.data.addAll(productListResponse.data);
             }
         }
-
         notifyDataSetChanged();
     }
 
