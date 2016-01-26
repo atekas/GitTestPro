@@ -122,7 +122,7 @@
                     android:background="@color/home_line"/>
 
             <LinearLayout
-                    android:onClick="ChooseTypeAndColorClick"
+                    android:id="@+id/choose_color_size"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"

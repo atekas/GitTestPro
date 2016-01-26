@@ -14,11 +14,12 @@
     <TextView
             android:id="@+id/name"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dip_10"
+            android:layout_marginRight="@dimen/dip_10"
+            android:layout_marginTop="@dimen/dip_10"
             android:textColor="@color/black_222222"
             android:textSize="@dimen/text_size_16"
-            android:gravity="center_vertical"
             android:text="橄榄月桂手工皂"/>
 
     <com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout
@@ -26,6 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dip_10"
             android:layout_marginRight="@dimen/dip_10"
+            android:layout_marginTop="@dimen/dip_10"
             app:aspectRatio="1">
 
         <ImageView

@@ -53,6 +53,11 @@ public class SpecialDetailsAdapter extends SimpleBaseAdapter {
         }
 
         ThemeDetailResponse.ThemeDetailData themeDetailData = mThemeDetailResponse.data.get(i);
+        if (themeDetailData.media.type.equals("12")) {
+            viewHolder.mVideoIcon.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.mVideoIcon.setVisibility(View.GONE);
+        }
         ImageUtils.displayImage(themeDetailData.media.image.get(0), viewHolder.mPic);
         viewHolder.mName.setText(themeDetailData.name);
         viewHolder.mNewPrice.setText("¥" + StringUtils.deleteZero(themeDetailData.price));

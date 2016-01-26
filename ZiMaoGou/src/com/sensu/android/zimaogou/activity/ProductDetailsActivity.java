@@ -210,6 +210,8 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         mViewPagerAdapter.setShowPageCount(10);
         mViewPager.setAdapter(mViewPagerAdapter);
 
+        mPullPushScrollView.findViewById(R.id.choose_color_size).setOnClickListener(this);
+
         mUserInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
         mProductId = getIntent().getStringExtra(PRODUCT_ID);
         mSource = getIntent().getStringExtra(FROM_SOURCE);
@@ -288,6 +290,20 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
             case R.id.back:
                 finish();
                 break;
+            case R.id.choose_color_size:
+                if (mProductDetailsResponse != null) {
+                    if (mProductDetailsResponse.data.state.equals("1") && mSaveNum > 0) {
+                        ChooseTypeAndColorClick();
+                        if (mChooseDialog != null) {
+                            if (mProductDetailsResponse.data.spec.size() == 1) {
+                                mChooseDialog.findViewById(R.id.dialog_line).setVisibility(View.GONE);
+                            } else {
+                                mChooseDialog.findViewById(R.id.dialog_line).setVisibility(View.VISIBLE);
+                            }
+                        }
+                    }
+                }
+                break;
             case R.id.shopping_bag:
                 if (mUserInfo == null) {
                     startActivity(new Intent(this, LoginActivity.class));
@@ -345,7 +361,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                         addToCart(mProductDetailsResponse.data.spec.get(0).id, "1");
                     }
                 } else {
-                    ChooseTypeAndColorClick(findViewById(R.id.add_to_buy_bag));
+                    ChooseTypeAndColorClick();
                 }
                 break;
             case R.id.pay:
@@ -360,7 +376,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                             intent1.putExtra(VerifyOrderActivity.PRODUCT_FOR_PAY, selectProductModel);
                             startActivity(intent1);
                         } else {
-                            ChooseTypeAndColorClick(findViewById(R.id.add_to_buy_bag));
+                            ChooseTypeAndColorClick();
                             mIsBuyDirectly = "1";
                         }
                     } else {
@@ -429,7 +445,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
      */
     Dialog mChooseDialog;
 
-    public void ChooseTypeAndColorClick(View v) {
+    public void ChooseTypeAndColorClick() {
         mChooseDialog = new Dialog(this, R.style.dialog);
         mChooseDialog.setCancelable(true);
         mChooseDialog.setContentView(R.layout.product_details_choose_dialog);
@@ -802,7 +818,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
 
         @Override
         public void onError(SHARE_MEDIA platform, Throwable t) {
-            Toast.makeText(ProductDetailsActivity.this,platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ProductDetailsActivity.this, platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
             if (mShareDialog != null) {
                 mShareDialog.dismiss();
             }
@@ -810,7 +826,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
 
         @Override
         public void onCancel(SHARE_MEDIA platform) {
-            Toast.makeText(ProductDetailsActivity.this,platform + " 分享取消了", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ProductDetailsActivity.this, platform + " 分享取消了", Toast.LENGTH_SHORT).show();
             if (mShareDialog != null) {
                 mShareDialog.dismiss();
             }

@@ -22,8 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
+                android:paddingLeft="10dp">
 
             <RelativeLayout
                     android:layout_width="match_parent"
@@ -66,10 +65,10 @@
                         android:layout_alignParentRight="true"
                         android:padding="@dimen/dip_10"
                         android:layout_marginTop="4dp"
-                        android:layout_marginRight="5dp"
-                        android:src="@drawable/close"/>
+                        android:src="@drawable/finish"/>
 
                 <View
+                        android:id="@+id/dialog_line"
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:layout_alignParentBottom="true"
@@ -154,6 +153,7 @@
 
                     <RelativeLayout
                             android:layout_width="match_parent"
+                            android:paddingRight="@dimen/dip_10"
                             android:layout_height="70dp">
 
                         <TextView
