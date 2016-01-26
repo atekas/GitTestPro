@@ -314,7 +314,6 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 startActivity(intent);
                 break;
             case R.id.product_share:
-                PromptUtils.showToast("分享");
                 if (mProductDetailsResponse != null) {
                     shareDialog();
                 }

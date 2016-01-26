@@ -126,7 +126,6 @@ public class ForgetPasswordSureActivity extends BaseActivity implements View.OnC
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 AuthCodeResponse authCodeResponse = JSON.parseObject(response.toString(), AuthCodeResponse.class);
-                PromptUtils.showToast(authCodeResponse.data.recode);
             }
         });
     }

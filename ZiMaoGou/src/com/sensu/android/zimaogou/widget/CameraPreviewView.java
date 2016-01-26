@@ -66,7 +66,6 @@ public class CameraPreviewView extends SurfaceView implements SurfaceHolder.Call
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        PromptUtils.showTestToast("surfaceCreated");
         mHasSurface = true;
         open();
         setWillNotDraw(false);
@@ -79,19 +78,16 @@ public class CameraPreviewView extends SurfaceView implements SurfaceHolder.Call
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        PromptUtils.showTestToast("surfaceDestroyed");
         mHasSurface = false;
         close();
     }
 
     public void onResume() {
-        PromptUtils.showTestToast("onResume");
         mIsResume = true;
         open();
     }
 
     public void onPause() {
-        PromptUtils.showTestToast("onPause");
         mIsResume = false;
         close();
     }

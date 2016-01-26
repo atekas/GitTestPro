@@ -237,7 +237,6 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
                     commandInput();
                 } else if (mButtonStatue.equals("1")) {
                     //todo 去付款
-                    PromptUtils.showToast("去付款");
                     SelectProductModel selectProductModel = new SelectProductModel();
                     selectProductModel.setDeliverAddress(mGroupDetailsResponse.data.deliver_address);
                     selectProductModel.setTotalMoney(Double.parseDouble(mGroupDetailsResponse.data.price));

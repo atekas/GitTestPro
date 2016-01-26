@@ -84,7 +84,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
                     AuthCodeResponse authCodeResponse = JSON.parseObject(response.toString(), AuthCodeResponse.class);
-                    PromptUtils.showToast(authCodeResponse.data.recode);
                     mAuthCodeEditText.setText(authCodeResponse.data.recode);
                 }
 
@@ -112,7 +111,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 CheckCodeResponse checkCodeResponse = JSON.parseObject(response.toString(), CheckCodeResponse.class);
-                PromptUtils.showToast(checkCodeResponse.getMsg() + checkCodeResponse.data.is_pass);
                 if((checkCodeResponse.data.is_pass).equals("1")){
                     startActivity(new Intent(RegisterActivity.this,InputPasswordActivity.class)
                             .putExtra("recode",mAuthCodeEditText.getText().toString())

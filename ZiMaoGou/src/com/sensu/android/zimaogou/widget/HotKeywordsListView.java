@@ -47,7 +47,6 @@ public class HotKeywordsListView extends FlowLayout {
         textView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                PromptUtils.showToast("click" + hotKeywordsData.name);
                 Intent intent = new Intent(getContext(), ProductListActivity.class);
                 intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
                 intent.putExtra(ProductListActivity.PRODUCT_LIST_KEYWORD, hotKeywordsData.name);
