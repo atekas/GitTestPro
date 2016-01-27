@@ -336,6 +336,10 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                         addToCart(mSpecId, num);
                     } else if (mIsBuyDirectly.equals("1")) {
                         SelectProductModel selectProductModel = getSelectProduct(num);
+                        if (Integer.parseInt(num) > 1 && selectProductModel.getTotalMoney() > 1000.00) {
+                            PromptUtils.showToast("海关规定购买多件的总价不能超过¥1000,请您分多次购买");
+                            return;
+                        }
                         Intent intent1 = new Intent(this, VerifyOrderActivity.class);
                         intent1.putExtra(VerifyOrderActivity.PRODUCT_FOR_PAY, selectProductModel);
                         startActivity(intent1);
