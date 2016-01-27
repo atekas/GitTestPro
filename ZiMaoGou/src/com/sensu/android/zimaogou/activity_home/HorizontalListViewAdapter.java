@@ -101,11 +101,11 @@ public class HorizontalListViewAdapter extends BaseAdapter {
             holder.mTitle.setText(pros.get(position).name);
             if(pros.get(position).media.type.equals("1")){
                 holder.mVideoImage.setVisibility(View.GONE);
-                ImageUtils.displayImage(pros.get(position).media.image.get(0),holder.mImage, ImageUtils.mItemTopOptions);
             }else{
                 holder.mVideoImage.setVisibility(View.VISIBLE);
-                ImageUtils.displayImage(pros.get(position).media.cover,holder.mImage, ImageUtils.mItemTopOptions);
+//                ImageUtils.displayImage(pros.get(position).media.cover,holder.mImage, ImageUtils.mItemTopOptions);
             }
+            ImageUtils.displayImage(pros.get(position).media.image.get(0),holder.mImage, ImageUtils.mItemTopOptions);
             holder.mSalePrice.setText(StringUtils.deleteZero(pros.get(position).price));
             holder.mOrigPrice.setText("￥"+ StringUtils.deleteZero(pros.get(position).price_market));
 //		iconBitmap = getPropThumnail(mIconIDs[position]);
