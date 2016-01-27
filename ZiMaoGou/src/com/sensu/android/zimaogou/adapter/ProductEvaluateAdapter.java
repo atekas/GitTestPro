@@ -111,6 +111,11 @@ public class ProductEvaluateAdapter extends SimpleBaseAdapter {
 
         }
         int score = Integer.parseInt(commentModes.get(i).getScore());
+
+        for (int u = 0; u < viewHolder.scoreImages.size(); u++) {
+            viewHolder.scoreImages.get(u).setSelected(false);
+        }
+
         for (int k = 0; k < score; k++) {
             viewHolder.scoreImages.get(k).setSelected(true);
         }
