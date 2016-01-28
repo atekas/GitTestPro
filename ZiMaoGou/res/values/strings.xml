@@ -184,4 +184,5 @@
     <string name="loading">正在加载...</string>
     <string name="load_succeed">加载成功</string>
     <string name="load_fail">加载失败</string>
+    <string name="product_detail_toast"><![CDATA[本商品使用税率50%,订单关税<=50免征]]></string>
 </resources>

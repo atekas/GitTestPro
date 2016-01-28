@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -17,6 +18,7 @@ import com.sensu.android.zimaogou.adapter.ViewPagerAdapter;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.HttpUtil;
+import com.sensu.android.zimaogou.utils.ImageUtils;
 import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.sensu.android.zimaogou.utils.StringUtils;
 import com.sensu.android.zimaogou.view.PhotoView;
@@ -62,6 +64,9 @@ public class PullPushScrollView extends ScrollView implements View.OnClickListen
         ProductDetailsResponse.ProductDetailData productDetailData = productDetailsResponse.data;
         mProductDetailData = productDetailData;
         ((TextView) findViewById(R.id.product_name)).setText(productDetailData.name);
+
+        ImageUtils.displayImage(productDetailData.country_icon, ((ImageView) findViewById(R.id.country_icon)));
+        ((TextView) findViewById(R.id.address)).setText(productDetailData.origin + " " + productDetailData.deliver_address);
 
         if (productDetailData.price_interval.min_price.equals(productDetailData.price_interval.max_price)) {
             ((TextView) findViewById(R.id.now_price)).setText(StringUtils.deleteZero(productDetailData.price_interval.min_price));
