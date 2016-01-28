@@ -20,6 +20,8 @@ public class ProductListResponse  {
         public String price_market;
         public Media media;
         public int num;//库存
+        public String country_icon;
+        public String broad_image;
     }
 
     public static class Media {

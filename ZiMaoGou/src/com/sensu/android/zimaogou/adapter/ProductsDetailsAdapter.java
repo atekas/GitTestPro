@@ -94,6 +94,7 @@ public class ProductsDetailsAdapter extends SimpleBaseAdapter {
         ProductListResponse.ProductListData productListData = mProductListResponse.data.get(i);
         viewHolder.mProductName.setText(productListData.name);
         viewHolder.mPrice.setText(StringUtils.deleteZero(productListData.price));
+        ImageUtils.displayImage(productListData.country_icon, viewHolder.mCountryIcon);
         if (productListData.media.type.equals("2")) {
             viewHolder.mVideoIcon.setVisibility(View.VISIBLE);
             ImageUtils.displayImage(productListData.media.cover, viewHolder.mProductPic, mProductOptions);
