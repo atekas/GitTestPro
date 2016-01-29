@@ -28,7 +28,7 @@
                 android:layout_centerInParent="true"
                 android:textSize="18sp"
                 android:textColor="@color/black"
-                android:text="一起来拼团"/>
+                android:text="团购详情"/>
 
     </RelativeLayout>
 
