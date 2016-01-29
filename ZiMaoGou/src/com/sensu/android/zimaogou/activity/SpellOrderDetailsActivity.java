@@ -428,7 +428,8 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
     private void getGroupDetail(String id) {
         RequestParams requestParams = new RequestParams();
         requestParams.put("uid", mUid);
-        HttpUtil.getWithSign(mToken, IConstants.sTb_detail + id, requestParams, new JsonHttpResponseHandler() {
+        requestParams.put("id", id);
+        HttpUtil.get(IConstants.sTb_detail + id, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
