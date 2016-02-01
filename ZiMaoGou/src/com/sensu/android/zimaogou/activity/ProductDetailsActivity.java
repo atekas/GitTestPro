@@ -586,6 +586,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
     }
 
     private String mSpecId = null;
+    private int mSpecProductNum = 0;
 
     @Override
     public void getProductColor() {
@@ -635,6 +636,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                     mSpecId = spec.id;
                     ((TextView) mChooseDialog.findViewById(R.id.stock)).setText("库存 " + spec.num);
                     ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText("¥" + spec.price);
+                    mSpecProductNum = Integer.parseInt(spec.num);
                     break;
                 }
             }
@@ -644,6 +646,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                     mSpecId = spec.id;
                     ((TextView) mChooseDialog.findViewById(R.id.stock)).setText("库存 " + spec.num);
                     ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText("¥" + spec.price);
+                    mSpecProductNum = Integer.parseInt(spec.num);
                     break;
                 }
             }
@@ -653,6 +656,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                     mSpecId = spec.id;
                     ((TextView) mChooseDialog.findViewById(R.id.stock)).setText("库存 " + spec.num);
                     ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText("¥" + spec.price);
+                    mSpecProductNum = Integer.parseInt(spec.num);
                     break;
                 }
             }
@@ -662,6 +666,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
             mSpecId = mProductDetailsResponse.data.spec.get(0).id;
             ((TextView) mChooseDialog.findViewById(R.id.stock)).setText("库存 " + mProductDetailsResponse.data.spec.get(0).num);
             ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText("¥" + mProductDetailsResponse.data.spec.get(0).price);
+            mSpecProductNum = Integer.parseInt(mProductDetailsResponse.data.spec.get(0).num);
         } else if (mProductDetailsResponse.data.spec_attr.size() == 1) {
             for (ProductDetailsResponse.Spec spec : mProductDetailsResponse.data.spec) {
                 if (!TextUtils.isEmpty(color)) {
@@ -669,18 +674,21 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                         mSpecId = spec.id;
                         ((TextView) mChooseDialog.findViewById(R.id.stock)).setText("库存 " + spec.num);
                         ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText("¥" + spec.price);
+                        mSpecProductNum = Integer.parseInt(spec.num);
                     }
                 } else if (!TextUtils.isEmpty(size)) {
                     if (spec.size.equals(size)) {
                         mSpecId = spec.id;
                         ((TextView) mChooseDialog.findViewById(R.id.stock)).setText("库存 " + spec.num);
                         ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText("¥" + spec.price);
+                        mSpecProductNum = Integer.parseInt(spec.num);
                     }
                 } else if (!TextUtils.isEmpty(capacity)) {
                     if (spec.capacity.equals(capacity)) {
                         mSpecId = spec.id;
                         ((TextView) mChooseDialog.findViewById(R.id.stock)).setText("库存 " + spec.num);
                         ((TextView) mChooseDialog.findViewById(R.id.tv_productPrice)).setText("¥" + spec.price);
+                        mSpecProductNum = Integer.parseInt(spec.num);
                     }
                 }
             }

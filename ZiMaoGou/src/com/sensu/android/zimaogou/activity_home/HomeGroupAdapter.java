@@ -73,8 +73,8 @@ public class HomeGroupAdapter extends BaseAdapter {
         }
         ImageUtils.displayImage(pros.get(position).goods_image,gsHolder.mImage, ImageUtils.mItemTopOptions);
         gsHolder.mTitle.setText(pros.get(position).content);
-        gsHolder.mPersons.setText(pros.get(position).max_num+"人成团");
-        gsHolder.mSalePrice.setText(StringUtils.deleteZero(pros.get(position).price));
+        gsHolder.mPersons.setText(pros.get(position).min_num+"人成团");
+        gsHolder.mSalePrice.setText("¥" + StringUtils.deleteZero(pros.get(position).price));
         gsHolder.mOrigPrice.setText("￥"+ StringUtils.deleteZero(pros.get(position).price_goods));
         gsHolder.mTitle.setText(pros.get(position).name);
 

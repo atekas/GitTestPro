@@ -80,16 +80,16 @@
                 android:singleLine="true"
                 android:text="拼单价："
                 />
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_medial"
-                android:layout_marginLeft="2dp"
-                android:textColor="@color/red"
-                android:gravity="bottom"
-                android:singleLine="true"
-                android:text="￥"
-                />
+        <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textSize="@dimen/text_size_medial"-->
+                <!--android:layout_marginLeft="2dp"-->
+                <!--android:textColor="@color/red"-->
+                <!--android:gravity="bottom"-->
+                <!--android:singleLine="true"-->
+                <!--android:text="￥"-->
+                <!--/>-->
         <TextView
                 android:id="@+id/tv_salePrice"
                 android:layout_width="wrap_content"
