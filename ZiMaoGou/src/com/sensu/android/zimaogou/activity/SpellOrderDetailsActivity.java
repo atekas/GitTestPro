@@ -2,6 +2,7 @@ package com.sensu.android.zimaogou.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.*;
@@ -10,6 +11,8 @@ import android.widget.*;
 import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.Mode.SelectProductModel;
 import com.sensu.android.zimaogou.R;
@@ -359,6 +362,19 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
         }
     };
 
+    private DisplayImageOptions mHeadDefaultOptions = new DisplayImageOptions.Builder()
+            .considerExifParams(true)
+            .imageScaleType(ImageScaleType.EXACTLY)
+            .bitmapConfig(Bitmap.Config.RGB_565)
+            .resetViewBeforeLoading(true)
+            .showImageOnLoading(R.drawable.head_pic_default)
+            .showImageOnFail(R.drawable.head_pic_default)
+            .showImageForEmptyUri(R.drawable.head_pic_default)
+            .cacheInMemory(true)
+            .resetViewBeforeLoading(true)
+            .cacheOnDisk(true)
+            .build();
+
     private void addUserPhoto(List<GroupMemberResponse.MemberInfo> memberInfoList) {
         mUserHeadContainer.removeAllViews();
         for (int i = 0; i < memberInfoList.size(); i++) {
@@ -367,7 +383,7 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
             int size = DisplayUtils.dp2px(50);
             roundImageView.setLayoutParams(new ViewGroup.LayoutParams(size, size));
             roundImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            ImageUtils.displayImage(memberInfoList.get(i).avatar, roundImageView);
+            ImageUtils.displayImage(memberInfoList.get(i).avatar, roundImageView, mHeadDefaultOptions);
             mUserHeadContainer.addView(roundImageView);
         }
     }
