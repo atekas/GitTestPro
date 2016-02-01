@@ -353,8 +353,10 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 }
                 break;
             case R.id.bt_add:
-                mProductCount++;
-                ((EditText) mChooseDialog.findViewById(R.id.product_num)).setText(mProductCount + "");
+                if (mProductCount < mCurrentNum) {
+                    mProductCount++;
+                    ((EditText) mChooseDialog.findViewById(R.id.product_num)).setText(mProductCount + "");
+                }
                 break;
             case R.id.add_to_buy_bag:
                 if (mProductDetailsResponse.data.spec.size() == 1) {
@@ -508,6 +510,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
 
     private void layoutUi() {
         mSaveNum = Integer.parseInt(mProductDetailsResponse.data.num);
+        mSpecProductNum = mSaveNum;
         if (mProductDetailsResponse.data.state.equals("1")) {
             if (mSaveNum < 1) {
                 findViewById(R.id.toast_num).setVisibility(View.VISIBLE);
@@ -587,6 +590,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
 
     private String mSpecId = null;
     private int mSpecProductNum = 0;
+    private int mCurrentNum = 0;
 
     @Override
     public void getProductColor() {
@@ -694,6 +698,10 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
             }
         }
 
+        if (mCurrentNum != mSpecProductNum) {
+            ((TextView) mChooseDialog.findViewById(R.id.product_num)).setText("1");
+        }
+
         if (mSpecId == null) {
             ((TextView) mChooseDialog.findViewById(R.id.stock)).setText("库存 " + mSaveNum);
             if (mProductDetailsResponse.data.price_interval.min_price.equals(mProductDetailsResponse.data.price_interval.max_price)) {
@@ -722,6 +730,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
             ImageUtils.displayImage(url, imageView);
         }
 
+        mCurrentNum = mSpecProductNum;
     }
 
     int mCartNum;
