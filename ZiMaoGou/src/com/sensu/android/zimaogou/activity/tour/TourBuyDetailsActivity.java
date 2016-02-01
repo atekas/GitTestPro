@@ -50,7 +50,7 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
 
     private ListView mTourDetailsListView;
     private TourBuyDetailsAdapter mTourBuyDetailsAdapter;
-    private LinearLayout mLikeUsersLinearLayout,mImageLinearLayout;
+    private LinearLayout mLikeUsersLinearLayout,mImageLinearLayout,mLikesLinearLayout;
     private View mHeaderView;
     private RelativeLayout mBottomRelativeLayout;
     private Button mCommentSureButton, mCloseButton;
@@ -65,7 +65,7 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
     UserInfo userInfo;
     boolean isLike = false;
     boolean isFavorite = false;
-
+    boolean isComment = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +74,7 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
         userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
         if (getIntent().getExtras() != null) {
             travelMode = (TravelMode) getIntent().getExtras().get("travel");
+            isComment = getIntent().getExtras().getBoolean("is_comment",false);
         }
         initViews();
     }
@@ -98,6 +99,10 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
         mCityTextView = (TextView) mHeaderView.findViewById(R.id.tv_city);
         mBrowsersTextView = (TextView) mHeaderView.findViewById(R.id.tv_browsers);
         mContentTextView = (TextView) mHeaderView.findViewById(R.id.content_text);
+        mLikesLinearLayout = (LinearLayout) mHeaderView.findViewById(R.id.ll_likes);
+        mLikesLinearLayout.setVisibility(View.GONE);
+
+
         mUserHeadPicImageView = (RoundImageView) mHeaderView.findViewById(R.id.user_head_pic);
 
         mVideoFrameLayout = (FixedAspectRatioFrameLayout) mHeaderView.findViewById(R.id.video_frameLayout);
@@ -127,6 +132,16 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
                 mBottomRelativeLayout.setVisibility(View.GONE);
             }
         });
+
+        if(isComment){
+            mBottomRelativeLayout.setVisibility(View.VISIBLE);
+            mCommentEditText.requestFocus();
+            mCommentEditText.setFocusable(true);
+            InputMethodManager imm = (InputMethodManager)TourBuyDetailsActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(mCommentEditText,InputMethodManager.RESULT_SHOWN);
+//            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+
         initHeader();
         getDataForLike();
         getDataForComment();
@@ -167,8 +182,10 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
                 LogUtils.d("游购点赞返回：", response.toString());
                 JSONArray data = response.optJSONArray("data");
                 if (data == null || data.length() == 0) {
+                    mLikesLinearLayout.setVisibility(View.GONE);
                     return;
                 }
+                mLikesLinearLayout.setVisibility(View.VISIBLE);
                 JSONObject item = null;
                 likeUsers.clear();
                 for (int i = 0; i < data.length(); i++) {

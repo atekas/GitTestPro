@@ -32,6 +32,7 @@ import com.sensu.android.zimaogou.activity.video.CameraActivity;
 import com.sensu.android.zimaogou.adapter.TourBuyAdapter;
 import com.sensu.android.zimaogou.demo.ui.record.MediaRecorderActivity;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
+import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.photoalbum.PhotoInfo;
 import com.sensu.android.zimaogou.utils.AppConfig;
 import com.sensu.android.zimaogou.utils.HttpUtil;
@@ -131,9 +132,11 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
      */
     private void getTravelData(){
         showLoading();
+        UserInfo userInfo = GDUserInfoHelper.getInstance(mParentActivity).getUserInfo();
         RequestParams requestParams = new RequestParams();
         requestParams.put("post_id", mPostId);
         requestParams.put("limit", "10");
+        requestParams.put("login_id",userInfo==null?"0":userInfo.getUid());
         HttpUtil.get(IConstants.sGetTravelList, requestParams, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

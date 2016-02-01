@@ -2,18 +2,23 @@ package com.sensu.android.zimaogou.adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.Mode.TravelMode;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.activity.login.LoginActivity;
+import com.sensu.android.zimaogou.activity.tour.TourBuyDetailsActivity;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
+import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.*;
 import org.apache.http.Header;
 import org.json.JSONObject;
@@ -64,7 +69,7 @@ public class TourBuyAdapter extends SimpleBaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         ViewHolder viewHolder;
         final int position = i;
         if (view == null) {
@@ -87,6 +92,8 @@ public class TourBuyAdapter extends SimpleBaseAdapter {
                     DeleteTravelDialog(position);
                 }
             });
+            viewHolder.rl_praise_layout = (RelativeLayout) view.findViewById(R.id.praise_layout);
+            viewHolder.rl_review_layout = (RelativeLayout) view.findViewById(R.id.review_layout);
             if(isFromMy){
                 viewHolder.img_delete.setVisibility(View.VISIBLE);
             }else{
@@ -97,7 +104,23 @@ public class TourBuyAdapter extends SimpleBaseAdapter {
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
-
+        viewHolder.rl_praise_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LikeClick(travelModes.get(position), travelModes.get(position).getIs_like().equals("1"));
+            }
+        });
+        viewHolder.rl_review_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(checkLogin()) {
+                    mContext.startActivity(new Intent(mContext, TourBuyDetailsActivity.class).putExtra("travel", travelModes.get(i))
+                            .putExtra("is_comment", true));
+                }else{
+                    mContext.startActivity(new Intent(mContext, LoginActivity.class));
+                }
+            }
+        });
         ImageUtils.displayImage(travelModes.get(i).getAvatar(),viewHolder.img_userHead,ImageUtils.mHeadDefaultOptions);
         viewHolder.tv_userName.setText(travelModes.get(i).getName());
         viewHolder.tv_sendTime.setText(DateUtils.getTimeAgo(travelModes.get(i).getCreated_at()));
@@ -115,6 +138,11 @@ public class TourBuyAdapter extends SimpleBaseAdapter {
             ImageUtils.displayImage(travelModes.get(i).getMedia().cover,viewHolder.img_contentPic,ImageUtils.mItemTopOptions);
         }
         viewHolder.tv_marks.setText(travelModes.get(i).getCountry()+tag);
+        if(travelModes.get(i).getIs_like().equals("1")){
+            viewHolder.tv_praiseCount.setSelected(true);
+        }else{
+            viewHolder.tv_praiseCount.setSelected(false);
+        }
         viewHolder.tv_praiseCount.setText(travelModes.get(i).getLike_num());
         viewHolder.tv_reviewCount.setText(travelModes.get(i).getComment_num());
         viewHolder.tv_location.setText(travelModes.get(i).getLocation());
@@ -125,6 +153,7 @@ public class TourBuyAdapter extends SimpleBaseAdapter {
     private static class ViewHolder {
         ImageView img_userHead,img_contentPic,img_videoPic,img_delete;
         TextView tv_userName,tv_sendTime,tv_location,tv_content,tv_marks,tv_reviewCount,tv_praiseCount;
+        RelativeLayout rl_praise_layout,rl_review_layout;
     }
 
     /**
@@ -176,5 +205,61 @@ public class TourBuyAdapter extends SimpleBaseAdapter {
                 }
             }
         });
+    }
+
+    /**
+     * 点赞
+     *
+     * @param
+     */
+    public void LikeClick(TravelMode travelMode,boolean isLike) {
+        if(checkLogin()){
+            if(isLike == true){
+                return;
+            }
+            likeSubmit(travelMode);
+        }else{
+            mContext.startActivity(new Intent(mContext, LoginActivity.class));
+        }
+
+
+    }
+
+    /**
+     * 提交点赞
+     * @param travelMode
+     */
+    private void likeSubmit(final TravelMode travelMode) {
+
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("uid", GDUserInfoHelper.getInstance(mContext).getUserInfo().getUid());
+        requestParams.put("tid", travelMode.getId());
+        HttpUtil.postWithSign(GDUserInfoHelper.getInstance(mContext).getUserInfo().getToken(), IConstants.sTravelLike, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                LogUtils.d("提交点赞返回：", response.toString());
+                if(response.optInt("ret")>=0) {
+                    travelMode.setLike_num((Integer.parseInt(travelMode.getLike_num()) + 1) + "");
+                    travelMode.setIs_like("1");
+                    flush();
+                }
+
+            }
+        });
+
+    }
+    private boolean checkLogin(){
+        if(GDUserInfoHelper.getInstance(mContext).getUserInfo() == null){
+            PromptUtils.showToast("请先登录");
+            return false;
+        }
+        return true;
+    }
+    /**
+     * 刷新
+     */
+    private void flush(){
+        this.notifyDataSetChanged();
     }
 }

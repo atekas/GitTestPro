@@ -135,57 +135,65 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
             android:textColor="@color/black_333333"
             android:textSize="15sp"
             android:text=""/>
-
-    <View
+    <LinearLayout
+            android:id="@+id/ll_likes"
             android:layout_width="match_parent"
-            android:layout_height="2px"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:background="#e5e5e5"/>
-    <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="68dp"
-            android:scrollbars="none">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <LinearLayout
 
-                android:orientation="horizontal"
+        <View
                 android:layout_width="match_parent"
-                android:gravity="center_vertical"
-                android:layout_height="match_parent">
+                android:layout_height="2px"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="#e5e5e5"/>
+        <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:scrollbars="none">
+
             <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dip_25"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
-                <ImageView
+
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_height="match_parent">
+                <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dip_25"
+                        android:visibility="gone"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
 
-                        android:src="@drawable/praise_red_select_40"/>
-                <TextView
-                        android:id="@+id/tv_likeNum"
+                            android:src="@drawable/praise_red_select_40"/>
+                    <TextView
+                            android:id="@+id/tv_likeNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textColor="@color/red"
+                            android:text="0"/>
+                </LinearLayout>
+                <LinearLayout
+                        android:id="@+id/ll_likeUser"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_size_normal"
-                        android:textColor="@color/red"
-                        android:text="0"/>
-            </LinearLayout>
-            <LinearLayout
-                    android:id="@+id/ll_likeUser"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                        android:paddingLeft="5dp"
+                        android:orientation="horizontal">
 
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </HorizontalScrollView>
-
+        </HorizontalScrollView>
+    </LinearLayout>
     <View
             android:layout_width="match_parent"
             android:layout_height="10dp"

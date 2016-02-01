@@ -216,11 +216,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             requestParams.put("avatar",data.get("profile_image_url"));
             requestParams.put("userdata",data.toString());
         }
+        if(loginType.equals("wx")){
+            requestParams.put("sex",data.get("sex").equals("1")?"1":"2");
+            requestParams.put("openid",data.get("openid"));
+            requestParams.put("nickname",data.get("nickname"));
+            requestParams.put("avatar",data.get("headimgurl"));
+            requestParams.put("userdata",data.toString());
+        }
         HttpUtil.post(IConstants.sThirdLogin,requestParams,new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 LogUtils.d("第三方登录返回：", response.toString());
+
                 if (response.optInt("ret")<0) {
                     PromptUtils.showToast(response.optString("msg"));
                     return;
@@ -230,6 +238,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 userInfoResponse.data.setIsLogin("true");
                 GDUserInfoHelper.getInstance(LoginActivity.this).insertUserInfo(userInfoResponse.data);
                 postDeviceToken();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                PromptUtils.showToast("请求失败");
             }
         });
     }
