@@ -72,7 +72,7 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
             findViewById(R.id.sort_rules_layout).setVisibility(View.GONE);
         } else {
             findViewById(R.id.sort_rules_layout).setVisibility(View.VISIBLE);
-            mOrderBy = "11";
+            mOrderBy = "2";
         }
 
         mNoProductView = (LinearLayout) findViewById(R.id.no_product);
@@ -81,7 +81,7 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
         findViewById(R.id.newest).setOnClickListener(this);
         findViewById(R.id.moods).setOnClickListener(this);
         findViewById(R.id.back).setOnClickListener(this);
-        findViewById(R.id.moods_text).setSelected(true);
+        findViewById(R.id.newest).setSelected(true);
 
         mGridView = (GridView) findViewById(R.id.product_list);
         mProductsDetailsAdapter = new ProductsDetailsAdapter(this);
