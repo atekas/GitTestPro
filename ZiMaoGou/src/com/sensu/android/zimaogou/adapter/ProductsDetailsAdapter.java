@@ -68,6 +68,10 @@ public class ProductsDetailsAdapter extends SimpleBaseAdapter {
         }
     }
 
+    public ProductListResponse getData() {
+        return mProductListResponse;
+    }
+
     @Override
     public int getCount() {
         return mProductListResponse == null ? 0 : mProductListResponse.data.size();

@@ -231,6 +231,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
 
         mProductWebView = (WebView) findViewById(R.id.productDetail_webView);
         mProductSpecificationListView = (ListView) findViewById(R.id.product_specification_list);
+        mProductSpecificationListView.setEmptyView(findViewById(R.id.no_review));
         mProductSpecificationAdapter = new ProductSpecificationAdapter(this);
         mProductSpecificationListView.setAdapter(mProductSpecificationAdapter);
 
@@ -548,6 +549,8 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         });
         mProductWebView.loadUrl(mProductDetailsResponse.data.description);
         mProductWebView.setVisibility(View.VISIBLE);
+        mProductWebView.getContentHeight();
+
 
         mProductEvaluateAdapter = new ProductEvaluateAdapter(ProductDetailsActivity.this, mProductDetailsResponse.data.comment);
         listView.setAdapter(mProductEvaluateAdapter);

@@ -123,7 +123,7 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        ProductListResponse.ProductListData productListData = mProductListResponse.data.get(i);
+        ProductListResponse.ProductListData productListData = mProductsDetailsAdapter.getData().data.get(i);
         Intent intent = new Intent(this, ProductDetailsActivity.class);
         intent.putExtra(ProductDetailsActivity.PRODUCT_ID, productListData.id);
         intent.putExtra(ProductDetailsActivity.FROM_SOURCE, "0");
