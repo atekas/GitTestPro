@@ -552,6 +552,14 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 view.loadUrl(url);
                 return true;
             }
+
+            @Override
+            public void onLoadResource(WebView view, String url) {
+                super.onLoadResource(view, url);
+                int height = view.getContentHeight();
+                height += view.getContentHeight();
+                view.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
+            }
         });
         mProductWebView.loadUrl(mProductDetailsResponse.data.description);
         mProductWebView.setVisibility(View.VISIBLE);
