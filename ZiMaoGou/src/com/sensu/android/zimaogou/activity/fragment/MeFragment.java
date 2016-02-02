@@ -347,7 +347,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         final String title = "自贸购  购全球，新人注册红包来袭，抢到即赚到！";
         final String content = "设立在中国天津自由贸易区空港片区内的首家跨境电商平台，以境外直供、全场直营、本土服务、境内维保模式为用户提供优质的海外正品以及后续服务。";
         final UMImage image = new UMImage(mParentActivity, R.drawable.zimaogou_icon);
-        final String downloadUrl = "http://m.ftzgo365.com/share/download";
+        final String downloadUrl = "http://m.ftzgo365.com/v1/share/download";
         ll_sina.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

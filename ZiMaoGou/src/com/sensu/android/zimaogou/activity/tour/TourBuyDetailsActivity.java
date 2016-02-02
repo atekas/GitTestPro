@@ -464,7 +464,7 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
                     imageUrl = travelMode.getMedia().image.get(0);
                 }
 
-                ShareDialog("足迹",travelMode.getContent(),imageUrl,"http://m.ftzgo365.com"+"/share/travel/"+travelMode.getId());
+                ShareDialog("足迹",travelMode.getContent(),imageUrl,"http://m.ftzgo365.com"+"/v1/share/travel/"+travelMode.getId());
                 break;
         }
     }
