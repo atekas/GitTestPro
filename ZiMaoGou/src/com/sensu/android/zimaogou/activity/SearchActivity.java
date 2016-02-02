@@ -79,21 +79,11 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         }
     );
 
-    mClearHistoryText=(TextView)
+    mClearHistoryText=(TextView) findViewById(R.id.clear_history);
 
-    findViewById(R.id.clear_history);
+    findViewById(R.id.back).setOnClickListener(this);
 
-    findViewById(R.id.back)
-
-    .
-
-    setOnClickListener(this);
-
-    findViewById(R.id.search)
-
-    .
-
-    setOnClickListener(this);
+    findViewById(R.id.search).setOnClickListener(this);
 
     mClearHistoryText.setOnClickListener(this);
 
@@ -141,6 +131,10 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 break;
             case R.id.search:
                 String keyword = mSearchEdit.getText().toString().trim();
+                if (TextUtils.isEmpty(keyword)) {
+                    keyword = mSearchEdit.getHint().toString();
+                }
+                
                 if (!TextUtils.isEmpty(keyword)) {
                     Intent intent = new Intent(this, ProductListActivity.class);
                     intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
@@ -168,6 +162,9 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 super.onSuccess(statusCode, headers, response);
                 HotKeywordsResponse hotKeywordsResponse = JSON.parseObject(response.toString(), HotKeywordsResponse.class);
                 ((HotKeywordsListView) findViewById(R.id.gv_hot_search)).setHotKeywords(hotKeywordsResponse);
+                if (hotKeywordsResponse.data.size() > 0) {
+                    mSearchEdit.setHint(hotKeywordsResponse.data.get(0).name);
+                }
             }
 
             @Override
