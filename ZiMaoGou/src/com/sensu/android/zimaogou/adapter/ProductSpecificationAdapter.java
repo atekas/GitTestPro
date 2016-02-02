@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.ProductDetailsResponse;
+import com.sensu.android.zimaogou.utils.TextUtils;
 
 /**
  * Created by qi.yang on 2015/12/3.
@@ -20,6 +21,11 @@ public class ProductSpecificationAdapter extends SimpleBaseAdapter {
     }
 
     public void setProductDetailData(ProductDetailsResponse.ProductDetailData productDetailData) {
+        for (int i = 0; i < productDetailData.normal_spec.size(); i++) {
+            if (TextUtils.isEmpty(productDetailData.normal_spec.get(i).value)) {
+                productDetailData.normal_spec.remove(i);
+            }
+        }
         mProductDetailData = productDetailData;
         notifyDataSetChanged();
     }

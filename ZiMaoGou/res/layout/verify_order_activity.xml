@@ -112,20 +112,20 @@
 
             </RelativeLayout>
 
-                <View
-                        android:layout_width="match_parent"
-                        android:layout_height="2px"
-                        android:background="@color/home_line"/>
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="@color/home_line"/>
 
-                <View
-                        android:layout_width="match_parent"
-                        android:layout_height="10dp"
-                        android:background="#eff3f5"/>
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="#eff3f5"/>
 
-                <View
-                        android:layout_width="match_parent"
-                        android:layout_height="2px"
-                        android:background="@color/home_line"/>
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="@color/home_line"/>
 
             <TextView
                     android:layout_width="match_parent"
@@ -365,6 +365,8 @@
                         android:layout_marginRight="@dimen/dip_5"
                         android:textColor="@color/red"
                         android:text="@string/rate_toast"/>
+
+                <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1"/>
 
                 <TextView
                         android:id="@+id/rate"
