@@ -14,6 +14,7 @@ import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.sensu.android.zimaogou.Mode.ProvinceMode;
+import com.sensu.android.zimaogou.Mode.TravelMode;
 import com.sensu.android.zimaogou.ReqResponse.AddressResponse;
 import com.sensu.android.zimaogou.activity.BaseActivity;
 import com.sensu.android.zimaogou.activity.login.LoginActivity;
@@ -61,8 +62,9 @@ public class BaseApplication extends Application{
     public static AddressResponse addressResponse;
 
     public static boolean isGetPush = false;
-
+    public static boolean isSendTravel = false;
     public static Context activityContext = null;
+    public static TravelMode tempTravel = null;
     @Override
     public void onCreate() {
         super.onCreate();

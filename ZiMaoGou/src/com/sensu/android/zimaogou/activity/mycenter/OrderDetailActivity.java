@@ -88,14 +88,8 @@ public class OrderDetailActivity extends BaseActivity {
         bt_cancel = (Button) findViewById(R.id.bt_cancel);
         bt_submit = (Button) findViewById(R.id.bt_submit);
         rl_button = (RelativeLayout) findViewById(R.id.rl_button);
-        if (state == IConstants.sCancel) {
-            rl_button.setVisibility(View.GONE);
-        } else {
-            rl_button.setVisibility(View.VISIBLE);
-        }
-
-
         mOrderListView.setDivider(null);
+
         adapter = new OrderDetailListAdapter(this, mOrders, state);
         mOrderListView.setAdapter(adapter);
 
@@ -149,6 +143,9 @@ public class OrderDetailActivity extends BaseActivity {
                     case IConstants.sReceived:
                         tv_orderState.setText("交易成功");
                         break;
+                    case IConstants.sCancel:
+                        tv_orderState.setText("已取消");
+                        break;
                 }
                 if (state == IConstants.sUnpaid) {
                     bt_cancel.setVisibility(View.VISIBLE);
@@ -172,6 +169,8 @@ public class OrderDetailActivity extends BaseActivity {
                             updateOrderDialog(orderState, myOrderMode);
                         }
                     });
+                }else if(state == IConstants.sCancel){
+                    rl_button.setVisibility(View.GONE);
                 } else {
                     bt_cancel.setVisibility(View.GONE);
                     if (checkCommentState(myOrderMode)) {
@@ -196,7 +195,7 @@ public class OrderDetailActivity extends BaseActivity {
                 }
 
                 tv_nameAndMobile.setText(myOrderMode.getReceiver_info().getName() + " " + myOrderMode.getReceiver_info().getMobile());
-                tv_receiverAddress.setText(myOrderMode.getReceiver_info().getAddress());
+                tv_receiverAddress.setText(myOrderMode.getReceiver_info().getProvince()+myOrderMode.getReceiver_info().getCity()+myOrderMode.getReceiver_info().getAddress());
                 mOrders.add(myOrderMode);
                 adapter.flush(mOrders, state);
                 UiUtils.setListViewHeightBasedOnChilds(mOrderListView);

@@ -17,6 +17,7 @@ import com.loopj.android.http.RequestParams;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UploadManager;
+import com.sensu.android.zimaogou.BaseApplication;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.Mode.LandMode;
 import com.sensu.android.zimaogou.Mode.TravelTagMode;
@@ -537,6 +538,8 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
                 try {
                     if (response.getString("ret").equals("0")) {
                         PromptUtils.showToast(response.getString("msg"));
+                        BaseApplication.isSendTravel = true;
+
                         finish();
                     }
                 } catch (JSONException e) {

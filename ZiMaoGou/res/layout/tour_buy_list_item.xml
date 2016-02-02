@@ -148,6 +148,7 @@
                     android:drawableLeft="@drawable/review_icon"
                     android:drawablePadding="5dp"
                     android:gravity="center"
+                    android:textColor="@color/gray_999999"
                     android:text="3"/>
         </RelativeLayout>
 
@@ -173,6 +174,7 @@
                     android:gravity="center"
                     android:drawablePadding="5dp"
                     android:drawableLeft="@drawable/drawable_praise_select"
+                    android:textColor="@color/gray_999999"
                     android:text="10"/>
         </RelativeLayout>
     </LinearLayout>

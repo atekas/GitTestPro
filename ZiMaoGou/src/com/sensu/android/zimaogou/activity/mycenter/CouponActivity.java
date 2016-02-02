@@ -136,7 +136,7 @@ public class CouponActivity extends BaseActivity implements AdapterView.OnItemCl
             public void onClick(View view) {
                 String couponCode = et_couponCode.getText().toString().trim();
                 if(TextUtils.isEmpty(couponCode)){
-                    PromptUtils.showToast("请输入优惠券兑换码");
+                    PromptUtils.showToast("请输入您的优惠券号码");
                     return;
                 }else{
                     invokeCoupon(couponCode);

@@ -224,6 +224,7 @@
             android:id="@+id/rl_button"
             android:layout_width="fill_parent"
             android:background="@color/white"
+            android:visibility="gone"
             android:layout_alignParentBottom="true"
             android:layout_height="55dp">
 
@@ -235,6 +236,7 @@
         <LinearLayout
                 android:id="@+id/ll_button"
                 android:layout_width="fill_parent"
+
                 android:layout_height="55dp"
                 android:gravity="center_vertical|right">
 

@@ -18,11 +18,13 @@ import com.loopj.android.http.RequestParams;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.sensu.android.zimaogou.BaseApplication;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.Mode.CommentMode;
 import com.sensu.android.zimaogou.Mode.TravelMode;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.BaseActivity;
+import com.sensu.android.zimaogou.activity.MainActivity;
 import com.sensu.android.zimaogou.activity.login.LoginActivity;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
@@ -55,7 +57,7 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
     private RelativeLayout mBottomRelativeLayout;
     private Button mCommentSureButton, mCloseButton;
     private TravelMode travelMode = new TravelMode();
-    private TextView mLikeNumTextView, mCommentNum, mLikeTextView,mFavoriteTextView,mUserNameTextView,mSendTimeTextView,mCityTextView,mBrowsersTextView,mContentTextView;
+    private TextView mLikeNumTextView, mCommentNum, mLikeTextView,mFavoriteTextView,mUserNameTextView,mSendTimeTextView,mCityTextView,mBrowsersTextView,mContentTextView,mNoCommentTextView;
     private EditText mCommentEditText;
     private RoundImageView mUserHeadPicImageView;
     ArrayList<UserInfo> likeUsers = new ArrayList<UserInfo>();
@@ -77,6 +79,12 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
             isComment = getIntent().getExtras().getBoolean("is_comment",false);
         }
         initViews();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
     }
 
     private void initViews() {
@@ -101,7 +109,7 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
         mContentTextView = (TextView) mHeaderView.findViewById(R.id.content_text);
         mLikesLinearLayout = (LinearLayout) mHeaderView.findViewById(R.id.ll_likes);
         mLikesLinearLayout.setVisibility(View.GONE);
-
+        mNoCommentTextView  = (TextView) mHeaderView.findViewById(R.id.tv_noComment);
 
         mUserHeadPicImageView = (RoundImageView) mHeaderView.findViewById(R.id.user_head_pic);
 
@@ -220,9 +228,10 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
                 JSONArray data = response.optJSONArray("data");
 
                 if (data == null || data.length() == 0) {
-
+                    mNoCommentTextView.setVisibility(View.VISIBLE);
                     return;
                 }
+                mNoCommentTextView.setVisibility(View.GONE);
                 JSONObject item = null;
                 for (int i = 0; i < data.length(); i++) {
                     try {
@@ -237,6 +246,8 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
                 }
 
                 mCommentNum.setText(commentModes.size() + "");
+                travelMode.setComment_num(commentModes.size() + "");
+                BaseApplication.tempTravel = travelMode;
             }
         });
     }
@@ -316,7 +327,9 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
                 LogUtils.d("提交点赞返回：", response.toString());
                 isLike = true;
                 mLikeTextView.setSelected(true);
-                travelMode.setLike_num((Integer.parseInt(travelMode.getLike_num())+1)+"");
+                travelMode.setLike_num((Integer.parseInt(travelMode.getLike_num()) + 1) + "");
+                travelMode.setIs_like("1");
+                BaseApplication.tempTravel = travelMode;
                 getDataForLike();
             }
         });
@@ -469,6 +482,8 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
         }
     }
 
+
+
     private boolean checkLogin(){
         if(userInfo == null){
             PromptUtils.showToast("请先登录");
@@ -500,6 +515,8 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
         UMShareAPI.get(TourBuyDetailsActivity.this).onActivityResult(requestCode, resultCode, data);
         /**使用SSO授权必须添加如下代码 */
     }
+
+
 
     /**
      * 分享

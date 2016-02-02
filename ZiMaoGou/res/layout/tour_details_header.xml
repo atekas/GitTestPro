@@ -235,5 +235,15 @@
             android:layout_width="match_parent"
             android:layout_height="2px"
             android:background="#e5e5e5"/>
+    <TextView
+            android:id="@+id/tv_noComment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray_9b9b9b"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:text="还没有评论哦"/>
 
 </LinearLayout>

@@ -9,7 +9,9 @@ import android.widget.AdapterView;
 import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.sensu.android.zimaogou.BaseApplication;
 import com.sensu.android.zimaogou.IConstants;
+import com.sensu.android.zimaogou.Mode.TravelMode;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.TravelResponse;
 import com.sensu.android.zimaogou.activity.tour.TourBuyDetailsActivity;
@@ -41,13 +43,26 @@ public class GoodShopActivity extends BaseActivity implements AdapterView.OnItem
         setContentView(R.layout.good_shop_activity);
 
         initViews();
-
+        getTravelData();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        getTravelData();
+        if(BaseApplication.tempTravel !=null){
+            TravelMode travelMode = BaseApplication.tempTravel;
+            for(int i = 0;i<travelModes.data.size();i++){
+                if(travelMode.getId().equals(travelModes.data.get(i).getId())){
+                    travelModes.data.get(i).setLike_num(travelMode.getLike_num());
+                    travelModes.data.get(i).setComment_num(travelMode.getComment_num());
+                    travelModes.data.get(i).setBrowser_num(travelMode.getBrowser_num());
+                    travelModes.data.get(i).setIs_like(travelMode.getIs_like());
+                }
+
+            }
+            mGoodShopAdapter.reFlush(travelModes.data);
+            BaseApplication.tempTravel = null;
+        }
     }
 
     private void initViews() {
@@ -111,7 +126,7 @@ public class GoodShopActivity extends BaseActivity implements AdapterView.OnItem
                 super.onSuccess(statusCode, headers, response);
                 LogUtils.d("发现好店铺返回：", response.toString());
                 travelModes = JSON.parseObject(response.toString(), TravelResponse.class);
-                mGoodShopAdapter.flush(travelModes.data);
+                mGoodShopAdapter.reFlush(travelModes.data);
             }
         });
     }

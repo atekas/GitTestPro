@@ -18,7 +18,7 @@
                 android:gravity="center"
                 android:textSize="@dimen/text_size_x_large"
                 android:textColor="@color/black_111111"
-                android:text="兑换优惠券"
+                android:text="激活优惠券"
                 />
         <EditText
                 android:id="@+id/et_couponCode"
@@ -34,7 +34,7 @@
                 android:textColorHint="@color/command_hint_color"
                 android:textSize="@dimen/text_size_normal"
                 android:singleLine="true"
-                android:hint="输入优惠券兑换码"
+                android:hint="请输入您的优惠券号码"
                 />
         <View android:layout_width="match_parent" android:layout_height="1px"
               android:background="@color/command_line_color"/>

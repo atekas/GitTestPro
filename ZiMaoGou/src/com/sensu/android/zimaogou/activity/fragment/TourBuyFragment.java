@@ -97,6 +97,8 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
             ((ImageView) mNoNetView.findViewById(R.id.img_exception)).setImageResource(R.drawable.exception_internet);
             ((TextView) mNoNetView.findViewById(R.id.tv_exception)).setText("您的网络开了小差哦");
         }
+        mPostId = "0";
+        getTravelData();
     }
 
     private OnRefreshListener mOnRefreshListener = new OnRefreshListener() {
@@ -143,19 +145,26 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
                 super.onSuccess(statusCode, headers, response);
                 Log.d("游购列表返回：",response.toString());
                 cancelLoading();
-                if(travelModes.data != null && travelModes.data.size()>0) {
-                    travelModes.data.clear();
-                }
-                travelModes = JSON.parseObject(response.toString(),TravelResponse.class);
+
                 if (mPostId.equals("0")) {
-                    mTourBuyAdapter.clearData();
-                }
-                if (travelModes.data.size() > 0) {
-                    mPostId = travelModes.data.get(travelModes.data.size() - 1).getId();
+                    if(travelModes.data != null&&travelModes.data.size() > 0) {
+                        travelModes.data.clear();
+                    }
+                    travelModes = JSON.parseObject(response.toString(),TravelResponse.class);
+                    if (travelModes.data.size() > 0) {
+                        mPostId = travelModes.data.get(travelModes.data.size() - 1).getId();
+                    }
+                }else{
+                    TravelResponse travelResponse =  JSON.parseObject(response.toString(),TravelResponse.class);
+                    travelModes.data.addAll(travelResponse.data);
+                    if (travelResponse.data.size() > 0) {
+                        mPostId = travelResponse.data.get(travelResponse.data.size() - 1).getId();
+                    }
+
                 }
                 mTourBuyListView.hideHeaderView();
                 mTourBuyListView.hideFooterView();
-                mTourBuyAdapter.flush(travelModes.data);
+                mTourBuyAdapter.reFlush(travelModes.data);
             }
         });
 
@@ -178,8 +187,25 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onResume() {
         super.onResume();
-        mPostId = "0";
-        getTravelData();
+        if(BaseApplication.isSendTravel) {//如果是发布游购后才刷新 否则不刷新
+            BaseApplication.isSendTravel = false;
+            mPostId = "0";
+            getTravelData();
+        }
+        if(BaseApplication.tempTravel !=null){
+            TravelMode travelMode = BaseApplication.tempTravel;
+            for(int i = 0;i<travelModes.data.size();i++){
+                if(travelMode.getId().equals(travelModes.data.get(i).getId())){
+                    travelModes.data.get(i).setLike_num(travelMode.getLike_num());
+                    travelModes.data.get(i).setComment_num(travelMode.getComment_num());
+                    travelModes.data.get(i).setBrowser_num(travelMode.getBrowser_num());
+                    travelModes.data.get(i).setIs_like(travelMode.getIs_like());
+                }
+
+            }
+            mTourBuyAdapter.reFlush(travelModes.data);
+            BaseApplication.tempTravel = null;
+        }
 
     }
 
@@ -239,7 +265,9 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
         List<TravelMode> travelModeList = mTourBuyAdapter.getData();
 
         if (i > 0 ) {
-            startActivity(new Intent(mParentActivity, TourBuyDetailsActivity.class).putExtra("travel",travelModeList.get(i - 1)));
+            startActivityForResult(new Intent(mParentActivity, TourBuyDetailsActivity.class)
+                    .putExtra("travel", travelModeList.get(i - 1))
+                    , 999);
         }
     }
 
@@ -333,7 +361,10 @@ public class TourBuyFragment extends BaseFragment implements View.OnClickListene
 //            QupaiService qupaiService = AlibabaSDK
 //                    .getService(QupaiService.class);
 //            qupaiService.deleteDraft(getApplicationContext(),data);
-        }else {
+        }else{
+
+
+
 //            if (resultCode == RESULT_CANCELED) {
 //                Toast.makeText(MainActivity.this, "RESULT_CANCELED", Toast.LENGTH_LONG).show();
 //            }
