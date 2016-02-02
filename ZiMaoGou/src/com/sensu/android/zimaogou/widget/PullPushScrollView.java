@@ -11,6 +11,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.sensu.android.zimaogou.BaseApplication;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.ProductDetailsResponse;
@@ -66,7 +67,8 @@ public class PullPushScrollView extends ScrollView implements View.OnClickListen
         ((TextView) findViewById(R.id.product_name)).setText(productDetailData.name);
 
         ImageUtils.displayImage(productDetailData.country_icon, ((ImageView) findViewById(R.id.country_icon)));
-        ((TextView) findViewById(R.id.address)).setText(productDetailData.origin + " " + productDetailData.deliver_address);
+        ((TextView) findViewById(R.id.address)).setText(productDetailData.origin + " " + productDetailData.deliver_address + "发货");
+        ((TextView) findViewById(R.id.show_rate)).setText("本商品使用税率" + productDetailData.rate + ",订单关税<=50免征");
 
         if (productDetailData.price_interval.min_price.equals(productDetailData.price_interval.max_price)) {
             ((TextView) findViewById(R.id.now_price)).setText(StringUtils.deleteZero(productDetailData.price_interval.min_price));
