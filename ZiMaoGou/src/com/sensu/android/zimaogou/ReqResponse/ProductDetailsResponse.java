@@ -29,7 +29,7 @@ public class ProductDetailsResponse extends BaseReqResponse {
         public String capacity;
         public String category_sub;
         public String num;
-        public String country_icon;
+        public Country country;
 
         public PriceInterval price_interval;
         public MediaData media;
@@ -80,5 +80,10 @@ public class ProductDetailsResponse extends BaseReqResponse {
         public String max_price;
         public String min_price_market;
         public String max_price_market;
+    }
+
+    public static class Country {
+        public String icon;
+        public String name;
     }
 }
