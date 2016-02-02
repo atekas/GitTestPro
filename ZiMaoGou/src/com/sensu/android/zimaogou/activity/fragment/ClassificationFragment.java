@@ -10,10 +10,12 @@ import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.ReqResponse.HotKeywordsResponse;
 import com.sensu.android.zimaogou.ReqResponse.ProductClassificationResponse;
 import com.sensu.android.zimaogou.activity.*;
 import com.sensu.android.zimaogou.adapter.ClassificationGridAdapter;
 import com.sensu.android.zimaogou.utils.HttpUtil;
+import com.sensu.android.zimaogou.widget.HotKeywordsListView;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
@@ -73,6 +75,7 @@ public class ClassificationFragment extends BaseFragment implements AdapterView.
     @Override
     protected void initView() {
         getClassification();
+        getHotKeyword();
 
         mScrollView = (ScrollView) mParentActivity.findViewById(R.id.scroll_view);
         mParentActivity.findViewById(R.id.search).setOnClickListener(this);
@@ -151,6 +154,24 @@ public class ClassificationFragment extends BaseFragment implements AdapterView.
                 ProductClassificationResponse productClassificationResponse = JSON.parseObject(response.toString(), ProductClassificationResponse.class);
                 mProductClassificationResponse = productClassificationResponse;
                 layoutView(productClassificationResponse.data);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
+    }
+
+    private void getHotKeyword() {
+        HttpUtil.get(IConstants.sHotKeywords, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                HotKeywordsResponse hotKeywordsResponse = JSON.parseObject(response.toString(), HotKeywordsResponse.class);
+                if (hotKeywordsResponse.data.size() > 0) {
+                    ((TextView) mParentActivity.findViewById(R.id.search_keyword)).setText(hotKeywordsResponse.data.get(0).name);
+                }
             }
 
             @Override
