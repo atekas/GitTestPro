@@ -171,7 +171,7 @@
     <string name="cancelled">Cancelled</string>
     <string name="permission_not_granted">Unable to perform selected action because permissions were not granted.</string>
     <string name="facebook_app_id">487692214752558</string>
-    <string name="rate_toast"><![CDATA[(关税<=50，才能免征哦)]]></string>
+    <string name="rate_toast"><![CDATA[(关税≤50，才能免征哦)]]></string>
 
     <string name="head">这里是HeadView</string>
     <string name="pull_to_refresh">下拉刷新</string>
@@ -184,5 +184,5 @@
     <string name="loading">正在加载...</string>
     <string name="load_succeed">加载成功</string>
     <string name="load_fail">加载失败</string>
-    <string name="product_detail_toast"><![CDATA[本商品使用税率50%,订单关税<=50免征]]></string>
+    <string name="product_detail_toast"><![CDATA[本商品使用税率50%,订单关税≤50免征]]></string>
 </resources>

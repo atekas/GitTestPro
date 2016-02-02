@@ -68,7 +68,7 @@ public class PullPushScrollView extends ScrollView implements View.OnClickListen
 
         ImageUtils.displayImage(productDetailData.country.icon, ((ImageView) findViewById(R.id.country_icon)));
         ((TextView) findViewById(R.id.address)).setText(productDetailData.country.name + " " + productDetailData.deliver_address + "发货");
-        ((TextView) findViewById(R.id.show_rate)).setText("本商品使用税率" + productDetailData.rate + ",订单关税<=50免征");
+        ((TextView) findViewById(R.id.show_rate)).setText("本商品使用税率" + productDetailData.rate + ",订单关税≤50免征");
 
         if (productDetailData.price_interval.min_price.equals(productDetailData.price_interval.max_price)) {
             ((TextView) findViewById(R.id.now_price)).setText(StringUtils.deleteZero(productDetailData.price_interval.min_price));

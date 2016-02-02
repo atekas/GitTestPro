@@ -229,7 +229,7 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
         RequestParams requestParams = new RequestParams();
         requestParams.put("uid", userInfo.getUid());
         requestParams.put("amount_goods", mAmountMoney);
-        requestParams.put("amount_express", "0");
+        requestParams.put("amount_express", mExpressMoney);
         requestParams.put("amount_coupon", mCouponMoney);
         requestParams.put("coupon_id", mCouponId);
         requestParams.put("amount_tax", mRateMoney);
