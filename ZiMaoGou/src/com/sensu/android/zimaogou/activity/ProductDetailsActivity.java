@@ -154,6 +154,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 mProductWebView.setVisibility(View.VISIBLE);
                 mProductSpecificationListView.setVisibility(View.GONE);
                 listView.setVisibility(View.GONE);
+                findViewById(R.id.no_review).setVisibility(View.GONE);
                 mProductDetailTextView.setTextColor(getResources().getColor(R.color.red));
                 mProductSpecificationTextView.setTextColor(getResources().getColor(R.color.black_444444));
                 mProductCommentTextView.setTextColor(getResources().getColor(R.color.black_444444));
@@ -169,6 +170,7 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 mProductWebView.setVisibility(View.GONE);
                 mProductSpecificationListView.setVisibility(View.VISIBLE);
                 listView.setVisibility(View.GONE);
+                findViewById(R.id.no_review).setVisibility(View.GONE);
                 mProductDetailTextView.setTextColor(getResources().getColor(R.color.black_444444));
                 mProductSpecificationTextView.setTextColor(getResources().getColor(R.color.red));
                 mProductCommentTextView.setTextColor(getResources().getColor(R.color.black_444444));
@@ -184,6 +186,12 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 mProductWebView.setVisibility(View.GONE);
                 mProductSpecificationListView.setVisibility(View.GONE);
                 listView.setVisibility(View.VISIBLE);
+
+                if (listView.getCount() == 0) {
+                    findViewById(R.id.no_review).setVisibility(View.VISIBLE);
+                } else {
+                    findViewById(R.id.no_review).setVisibility(View.GONE);
+                }
 
                 mProductDetailTextView.setTextColor(getResources().getColor(R.color.black_444444));
                 mProductSpecificationTextView.setTextColor(getResources().getColor(R.color.black_444444));
@@ -231,7 +239,6 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
 
         mProductWebView = (WebView) findViewById(R.id.productDetail_webView);
         mProductSpecificationListView = (ListView) findViewById(R.id.product_specification_list);
-        mProductSpecificationListView.setEmptyView(findViewById(R.id.no_review));
         mProductSpecificationAdapter = new ProductSpecificationAdapter(this);
         mProductSpecificationListView.setAdapter(mProductSpecificationAdapter);
 
@@ -258,7 +265,6 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
         findViewById(R.id.online_service).setOnClickListener(this);
 
         listView = (ListView) findViewById(R.id.product_evaluate_list);
-
         mProductDetailTextView.setOnClickListener(new MyOnClickListener(0));
         mProductSpecificationTextView.setOnClickListener(new MyOnClickListener(1));
         mProductCommentTextView.setOnClickListener(new MyOnClickListener(2));

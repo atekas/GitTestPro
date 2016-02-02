@@ -147,16 +147,14 @@
                 android:layout_height="match_parent"
                 android:background="@color/white">
 
-            <LinearLayout
+            <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent">
+
                 <WebView
                         android:id="@+id/productDetail_webView"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                </WebView>
+                        android:layout_height="match_parent" />
 
                 <ListView
                         android:id="@+id/product_specification_list"
@@ -176,10 +174,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:visibility="gone"
+                        android:layout_marginTop="200dp"
                         android:drawableTop="@drawable/no_review"
                         android:layout_centerInParent="true"
                         android:text="暂无评论"/>
-            </LinearLayout>
+            </RelativeLayout>
 
         </ScrollView>
 
