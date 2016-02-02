@@ -62,6 +62,10 @@ public class PhotoView extends FrameLayout implements View.OnClickListener {
         }
     }
 
+    public void playVideo() {
+        ((VideoLinearLayout) findViewById(R.id.video_layout)).playing();
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {

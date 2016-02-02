@@ -148,6 +148,8 @@ public class PullPushScrollView extends ScrollView implements View.OnClickListen
         if (mProductDetailData.media.type.equals("12")) {
             if (i == mPhotoViewList.size() - 1) {
                 findViewById(R.id.video_icon).setVisibility(GONE);
+                PhotoView photoView = mPhotoViewList.get(i);
+                photoView.playVideo();
             } else {
                 findViewById(R.id.video_icon).setVisibility(VISIBLE);
             }
