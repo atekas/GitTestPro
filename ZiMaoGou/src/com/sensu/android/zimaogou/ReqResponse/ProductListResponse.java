@@ -20,7 +20,7 @@ public class ProductListResponse  {
         public String price_market;
         public Media media;
         public int num;//库存
-        public String country_icon;
+        public Country country;
         public String broad_image;
     }
 
@@ -30,6 +30,11 @@ public class ProductListResponse  {
         public String video;
         public String cover;
         public List<String> image;
+    }
+
+    public static class Country {
+        public String name;
+        public String icon;
     }
 
 }
