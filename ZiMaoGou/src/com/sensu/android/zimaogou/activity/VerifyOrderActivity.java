@@ -201,6 +201,9 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
                 ((TextView) findViewById(R.id.coupon_money)).setText("-¥ " + mCouponMoney);
 
                 mRateMoney = getAmountRateWithCoupon(mSelectProductModel.getTotalMoney(), Double.parseDouble(mCouponMoney));
+                if (mRateMoney <= 0) {
+                    mRateMoney = 0.00;
+                }
                 ((TextView) findViewById(R.id.rate)).setText("¥ " + StringUtils.getDoubleWithTwo(mRateMoney));
                 if (mRateMoney > 50.00) {
                     findViewById(R.id.rate_toast).setVisibility(View.VISIBLE);
@@ -210,6 +213,11 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
                     com.sensu.android.zimaogou.utils.TextUtils.addLineCenter(((TextView) findViewById(R.id.rate)));
                     mAmountMoney = mSelectProductModel.getTotalMoney() - Double.parseDouble(mCouponMoney) + mExpressMoney;
                 }
+
+                if (mAmountMoney <= 0) {
+                    mAmountMoney = 1.00;
+                }
+
                 mAmountMoneyView.setText("¥ " + StringUtils.getDoubleWithTwo(mAmountMoney));
                 break;
         }
