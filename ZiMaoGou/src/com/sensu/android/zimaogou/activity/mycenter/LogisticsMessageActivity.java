@@ -6,8 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import com.sensu.android.zimaogou.Mode.ExpressInfoMode;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.BaseActivity;
+
+import java.util.ArrayList;
 
 /**
  * 物流信息
@@ -15,6 +19,7 @@ import com.sensu.android.zimaogou.activity.BaseActivity;
  */
 public class LogisticsMessageActivity extends BaseActivity{
     ListView mLogisticsListView;
+    ArrayList<ExpressInfoMode> expressInfoModes = new ArrayList<ExpressInfoMode>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +34,9 @@ public class LogisticsMessageActivity extends BaseActivity{
     }
 
     private void initView(){
+        if(getIntent().getExtras() != null){
+            expressInfoModes = (ArrayList<ExpressInfoMode>) getIntent().getExtras().get("express_info");
+        }
         mLogisticsListView = (ListView) findViewById(R.id.lv_messages);
         mLogisticsListView.setAdapter(new LogisticsAdapter());
     }
@@ -37,7 +45,7 @@ public class LogisticsMessageActivity extends BaseActivity{
 
         @Override
         public int getCount() {
-            return 2;
+            return expressInfoModes.size();
         }
 
         @Override
@@ -52,8 +60,24 @@ public class LogisticsMessageActivity extends BaseActivity{
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            view = LayoutInflater.from(LogisticsMessageActivity.this).inflate(R.layout.logistics_message_item_list,null);
+            ExpressViewHolder holder;
+            if(view == null) {
+                view = LayoutInflater.from(LogisticsMessageActivity.this).inflate(R.layout.logistics_message_item_list, null);
+                holder = new ExpressViewHolder();
+                holder.tv_context = (TextView) view.findViewById(R.id.tv_context);
+                holder.tv_time = (TextView) view.findViewById(R.id.tv_time);
+
+                view.setTag(holder);
+            }else{
+                holder = (ExpressViewHolder) view.getTag();
+            }
+            holder.tv_context.setText(expressInfoModes.get(i).getContext());
+            holder.tv_time.setText(expressInfoModes.get(i).getTime());
             return view;
         }
+    }
+
+    class ExpressViewHolder{
+        TextView tv_context,tv_time;
     }
 }

@@ -104,6 +104,8 @@
             <View android:layout_width="match_parent" android:layout_height="1px"
                   android:background="@color/home_line"/>
             <RelativeLayout
+                    android:id="@+id/rl_express_info"
+                    android:visibility="gone"
                         android:onClick="LogisticsClick"
                     android:layout_width="match_parent"
                             android:layout_height="100dp"
@@ -124,7 +126,7 @@
                         android:layout_marginLeft="@dimen/order_detail_left_distance"
                         android:layout_marginTop="12dp"/>
                 <TextView
-                        android:id="@+id/tv_orderTime"
+                        android:id="@+id/tv_express_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_size_13"
@@ -132,8 +134,9 @@
                         android:layout_alignParentBottom="true"
                         android:layout_marginLeft="60dp"
                         android:layout_marginBottom="9dp"
-                        android:text="2015-12-04 18:00:00"/>
+                        android:text=""/>
                 <TextView
+                        android:id="@+id/tv_express_context"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_above="@+id/tv_orderTime"
@@ -145,7 +148,7 @@
                         android:gravity="left"
                         android:textSize="@dimen/text_size_14"
                         android:textColor="@color/black_222222"
-                        android:text="【上海市】在上海宝山区新江湾城公司进行签收扫描，快件已被拍照，期待再次为您服务"/>
+                        android:text=""/>
 
                 <ImageView
                         android:id="@+id/img_right"

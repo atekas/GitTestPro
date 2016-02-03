@@ -30,8 +30,15 @@ public class MyOrderMode implements Serializable {
     private String return_no;
     private String amount_apply;
     private String return_type;
+    private ArrayList<ExpressInfoMode> express_info;
 
+    public ArrayList<ExpressInfoMode> getExpress_info() {
+        return express_info;
+    }
 
+    public void setExpress_info(ArrayList<ExpressInfoMode> express_info) {
+        this.express_info = express_info;
+    }
 
     public String getReturn_reason() {
         return return_reason;

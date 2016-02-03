@@ -52,15 +52,15 @@ public class OrderDetailActivity extends BaseActivity {
     String SURE_ORDER = "2";//确认收货
 
 
-    TextView mTitleTextView, tv_orderNo, tv_orderState, tv_nameAndMobile, tv_receiverAddress;
+    TextView mTitleTextView, tv_orderNo, tv_orderState, tv_nameAndMobile, tv_receiverAddress,tv_express_context,tv_express_time;
     Button bt_cancel, bt_submit;
     String id = "";
     UserInfo userInfo;
     int state = 0;
     OrderDetailListAdapter adapter;
 
-    RelativeLayout rl_button;
-
+    RelativeLayout rl_button,rl_express_info;
+    MyOrderMode myOrderMode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +88,9 @@ public class OrderDetailActivity extends BaseActivity {
         bt_cancel = (Button) findViewById(R.id.bt_cancel);
         bt_submit = (Button) findViewById(R.id.bt_submit);
         rl_button = (RelativeLayout) findViewById(R.id.rl_button);
+        tv_express_context = (TextView) findViewById(R.id.tv_express_context);
+        tv_express_time = (TextView) findViewById(R.id.tv_express_time);
+        rl_express_info = (RelativeLayout) findViewById(R.id.rl_express_info);
         mOrderListView.setDivider(null);
 
         adapter = new OrderDetailListAdapter(this, mOrders, state);
@@ -107,7 +110,8 @@ public class OrderDetailActivity extends BaseActivity {
      * @param v
      */
     public void LogisticsClick(View v) {
-        startActivity(new Intent(this, LogisticsMessageActivity.class));
+
+        startActivity(new Intent(this, LogisticsMessageActivity.class).putExtra("express_info",myOrderMode.getExpress_info()));
     }
 
     @Override
@@ -128,8 +132,16 @@ public class OrderDetailActivity extends BaseActivity {
                 super.onSuccess(statusCode, headers, response);
                 LogUtils.d("订单详情返回：", response.toString());
                 cancelLoading();
-                final MyOrderMode myOrderMode = JSON.parseObject(response.optJSONObject("data").toString(), MyOrderMode.class);
+                myOrderMode = JSON.parseObject(response.optJSONObject("data").toString(), MyOrderMode.class);
                 tv_orderNo.setText(myOrderMode.getOrder_no());
+                if(myOrderMode.getExpress_info()!= null && myOrderMode.getExpress_info().size()>0){
+                    rl_express_info.setVisibility(View.VISIBLE);
+                    tv_express_time.setText(myOrderMode.getExpress_info().get(myOrderMode.getExpress_info().size()-1).getTime());
+                    tv_express_context.setText(myOrderMode.getExpress_info().get(myOrderMode.getExpress_info().size()-1).getContext());
+                }else{
+                    rl_express_info.setVisibility(View.GONE);
+                }
+
                 state = myOrderMode.getState();
                 state = divisiveState(state);
                 final int orderState = state;

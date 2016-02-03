@@ -143,8 +143,16 @@ public class TourBuyAdapter extends SimpleBaseAdapter {
         }else{
             viewHolder.tv_praiseCount.setSelected(false);
         }
-        viewHolder.tv_praiseCount.setText(travelModes.get(i).getLike_num());
-        viewHolder.tv_reviewCount.setText(travelModes.get(i).getComment_num());
+        if(Integer.parseInt(travelModes.get(i).getLike_num()) == 0){
+            viewHolder.tv_praiseCount.setText("点赞");
+        }else {
+            viewHolder.tv_praiseCount.setText(travelModes.get(i).getLike_num());
+        }
+        if(Integer.parseInt(travelModes.get(i).getComment_num()) == 0){
+            viewHolder.tv_reviewCount.setText("评论");
+        }else {
+            viewHolder.tv_reviewCount.setText(travelModes.get(i).getComment_num());
+        }
         viewHolder.tv_location.setText(travelModes.get(i).getLocation());
         viewHolder.tv_content.setText(travelModes.get(i).getContent());
         return view;
