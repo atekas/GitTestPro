@@ -12,6 +12,7 @@ import com.sensu.android.zimaogou.Mode.MyOrderMode;
 import com.sensu.android.zimaogou.Mode.OrderMode;
 import com.sensu.android.zimaogou.Mode.ProductMode;
 import com.sensu.android.zimaogou.R;
+import com.sensu.android.zimaogou.utils.TextUtils;
 import com.sensu.android.zimaogou.utils.UiUtils;
 
 import java.util.ArrayList;
@@ -59,6 +60,11 @@ public class OrderDetailListAdapter extends SimpleBaseAdapter {
         viewHolder.tv_warehouseName.setText(mOrders.get(i).getDeliver_address());
         viewHolder.tv_amount_coupon.setText("￥"+mOrders.get(i).getAmount_coupon());
         viewHolder.tv_amount_tax.setText("￥"+mOrders.get(i).getAmount_tax());
+
+        if (Double.parseDouble(mOrders.get(i).getAmount_tax()) <= 50) {
+            TextUtils.addLineCenter(viewHolder.tv_amount_tax);
+        }
+
         viewHolder.tv_amount_express.setText("￥"+mOrders.get(i).getAmount_express());
         viewHolder.tv_amount.setText("￥"+mOrders.get(i).getAmount_real());
         viewHolder.tv_orderTime.setText("下单时间："+mOrders.get(i).getCreated_at());

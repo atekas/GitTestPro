@@ -92,7 +92,7 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
         ((TextView) findViewById(R.id.product_describe)).setText(mGroupDetailsResponse.data.content);
         ((TextView) findViewById(R.id.group_min_size)).setText(mGroupDetailsResponse.data.min_num + "人成团");
         ((TextView) findViewById(R.id.group_buy_price)).setText("¥" + StringUtils.deleteZero(mGroupDetailsResponse.data.price));
-        ((TextView) findViewById(R.id.price_market)).setText("自贸购特价¥" + mGroupDetailsResponse.data.price_goods);
+        ((TextView) findViewById(R.id.price_market)).setText("自贸购特价¥" + StringUtils.deleteZero(mGroupDetailsResponse.data.price_goods));
         mOldPriceText.setText("¥" + StringUtils.deleteZero(mGroupDetailsResponse.data.price_goods));
         double saveMoney = Double.parseDouble(mGroupDetailsResponse.data.price_goods) - Double.parseDouble(mGroupDetailsResponse.data.price);
         ((TextView) findViewById(R.id.save_money)).setText("立省¥" + StringUtils.deleteZero(String.valueOf(StringUtils.getDoubleWithTwo(saveMoney))));
