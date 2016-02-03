@@ -276,16 +276,16 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
             case R.id.share_friend_circle:
                 new ShareAction(this).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).setCallback(umShareListener)
                         .withTitle(mGroupDetailsResponse.data.name)
-                        .withText(mGroupDetailsResponse.data.description)
-                        .withTargetUrl("http://139.196.108.137:80/v1/share/tb/" + mTbId)
+                        .withText(mGroupDetailsResponse.data.content)
+                        .withTargetUrl("http://m.ftzgo365.com/v1/share/tb/" + mTbId + "?code=" + mGroupDetailsResponse.data.code)
                         .withMedia(new UMImage(SpellOrderDetailsActivity.this, mGroupDetailsResponse.data.media))
                         .share();
                 break;
             case R.id.share_friends:
                 new ShareAction(this).setPlatform(SHARE_MEDIA.WEIXIN).setCallback(umShareListener)
                     .withTitle(mGroupDetailsResponse.data.name)
-                    .withText(mGroupDetailsResponse.data.description)
-                    .withTargetUrl("http://139.196.108.137:80/v1/share/tb/" + mTbId)
+                    .withText(mGroupDetailsResponse.data.content)
+                    .withTargetUrl("http://m.ftzgo365.com/v1/share/tb/" + mTbId + "?code=" + mGroupDetailsResponse.data.code)
                     .withMedia(new UMImage(SpellOrderDetailsActivity.this, mGroupDetailsResponse.data.media))
                     .share();
                 break;
@@ -309,8 +309,8 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
             public void onClick(View view) {
                 new ShareAction(SpellOrderDetailsActivity.this).setPlatform(SHARE_MEDIA.SINA).setCallback(umShareListener)
                         .withTitle(mGroupDetailsResponse.data.name)
-                        .withText(mGroupDetailsResponse.data.description)
-                        .withTargetUrl("http://m.ftzgo365.com/v1/share/tb/" + mTbId)
+                        .withText(mGroupDetailsResponse.data.content)
+                        .withTargetUrl("http://m.ftzgo365.com/v1/share/tb/" + mTbId + "?code=" + mGroupDetailsResponse.data.code)
                         .withMedia(new UMImage(SpellOrderDetailsActivity.this, mGroupDetailsResponse.data.media))
                         .share();
                 mShareDialog.dismiss();
@@ -321,8 +321,8 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
             public void onClick(View view) {
                 new ShareAction(SpellOrderDetailsActivity.this).setPlatform(SHARE_MEDIA.WEIXIN).setCallback(umShareListener)
                         .withTitle(mGroupDetailsResponse.data.name)
-                        .withText(mGroupDetailsResponse.data.description)
-                        .withTargetUrl("http://m.ftzgo365.com/v1/share/tb/" + mTbId)
+                        .withText(mGroupDetailsResponse.data.content)
+                        .withTargetUrl("http://m.ftzgo365.com/v1/share/tb/" + mTbId + "?code=" + mGroupDetailsResponse.data.code)
                         .withMedia(new UMImage(SpellOrderDetailsActivity.this, mGroupDetailsResponse.data.media))
                         .share();
                 mShareDialog.dismiss();
@@ -333,8 +333,8 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
             public void onClick(View view) {
                 new ShareAction(SpellOrderDetailsActivity.this).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).setCallback(umShareListener)
                         .withTitle(mGroupDetailsResponse.data.name)
-                        .withText(mGroupDetailsResponse.data.description)
-                        .withTargetUrl("http://m.ftzgo365.com/v1/share/tb/" + mTbId)
+                        .withText(mGroupDetailsResponse.data.content)
+                        .withTargetUrl("http://m.ftzgo365.com/v1/share/tb/" + mTbId + "?code=" + mGroupDetailsResponse.data.code)
                         .withMedia(new UMImage(SpellOrderDetailsActivity.this, mGroupDetailsResponse.data.media))
                         .share();
                 mShareDialog.dismiss();
