@@ -193,7 +193,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
                 intent = new Intent(mParentActivity, ProductListActivity.class);
                 intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
                 intent.putExtra(ProductListActivity.PRODUCT_LIST_TAG, "3");
-                intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, "限时优惠");
+                intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, "最新上架");
                 startActivity(intent);
                 break;
             case R.id.ll_featureVideos:
