@@ -163,6 +163,10 @@ public class CouponActivity extends BaseActivity implements AdapterView.OnItemCl
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
+                if (response.optString("ret").equals("-1")) {
+                    PromptUtils.showToast(response.optString("msg"));
+                    return;
+                }
                 CouponResponse couponResponse = JSON.parseObject(response.toString(), CouponResponse.class);
                 couponResponse.splitData();
                 mCouponValidListAdapter.setCouponData(couponResponse.mNoUseCouponList);

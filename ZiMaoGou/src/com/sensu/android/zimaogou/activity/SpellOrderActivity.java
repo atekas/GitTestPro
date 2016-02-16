@@ -211,11 +211,11 @@ public class SpellOrderActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                GroupBuyListResponse groupBuyListResponse = JSON.parseObject(response.toString(), GroupBuyListResponse.class);
-                if (groupBuyListResponse.getRet().equals("-1")) {
-                    PromptUtils.showToast(groupBuyListResponse.getMsg());
+                if (response.optString("ret").equals("-1")) {
+                    PromptUtils.showToast(response.optString("msg"));
                     return;
                 }
+                GroupBuyListResponse groupBuyListResponse = JSON.parseObject(response.toString(), GroupBuyListResponse.class);
                 mGroupBuyListResponse = groupBuyListResponse;
                 if (mIsMyTbList.equals("0") || mTbLListPageCount == 0) {
                     mSpellOrderAdapter.clearData();

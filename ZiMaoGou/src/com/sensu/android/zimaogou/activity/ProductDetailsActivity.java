@@ -760,6 +760,10 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 //todo 接口通,等数据
+                if (response.optString("ret").equals("-1")) {
+                    PromptUtils.showToast(response.optString("msg"));
+                    return;
+                }
                 CartDataResponse cartDataResponse = JSON.parseObject(response.toString(), CartDataResponse.class);
 
                 mCartNum = 0;

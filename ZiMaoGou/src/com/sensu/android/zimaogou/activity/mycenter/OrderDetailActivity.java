@@ -132,6 +132,10 @@ public class OrderDetailActivity extends BaseActivity {
                 super.onSuccess(statusCode, headers, response);
                 LogUtils.d("订单详情返回：", response.toString());
                 cancelLoading();
+                if (response.optString("ret").equals("-1")) {
+                    PromptUtils.showToast(response.optString("msg"));
+                    return;
+                }
                 myOrderMode = JSON.parseObject(response.optJSONObject("data").toString(), MyOrderMode.class);
                 tv_orderNo.setText(myOrderMode.getOrder_no());
                 if(myOrderMode.getExpress_info()!= null && myOrderMode.getExpress_info().size()>0){

@@ -23,6 +23,7 @@ import com.sensu.android.zimaogou.external.greendao.model.AddressDefault;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.utils.LogUtils;
+import com.sensu.android.zimaogou.utils.PromptUtils;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
@@ -86,6 +87,10 @@ public class ReceiverAddressActivity extends BaseActivity implements AdapterView
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 LogUtils.d("获取收货地址：", response.toString());
+                if (response.optString("ret").equals("-1")) {
+                    PromptUtils.showToast(response.optString("msg"));
+                    return;
+                }
                 receiverAddressResponse = JSON.parseObject(response.toString(), ReceiverAddressResponse.class);
                 saveAddress();
                 mReceiverAddressListView.setAdapter(new ReceiverListAdapter(ReceiverAddressActivity.this, mIsNoEdit, receiverAddressResponse.data));

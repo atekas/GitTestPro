@@ -32,6 +32,7 @@ import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
 import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.photoalbum.PhotoInfo;
 import com.sensu.android.zimaogou.utils.HttpUtil;
+import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.sensu.android.zimaogou.widget.OnRefreshListener;
 import com.sensu.android.zimaogou.widget.RefreshListView;
 import org.apache.http.Header;
@@ -121,6 +122,10 @@ public class MyTravelActivity extends BaseActivity {
                 super.onSuccess(statusCode, headers, response);
                 Log.d("我的游购列表返回：", response.toString());
 
+                if (response.optString("ret").equals("-1")) {
+                    PromptUtils.showToast(response.optString("msg"));
+                    return;
+                }
                 travelModes = JSON.parseObject(response.toString(), MyTravelResponse.class);
                 mTourBuyAdapter.flush(travelModes.data.travel);
                 if(travelModes.data.travel.size() == 0){

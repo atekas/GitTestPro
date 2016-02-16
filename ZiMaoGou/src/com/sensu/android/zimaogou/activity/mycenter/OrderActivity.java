@@ -152,6 +152,10 @@ public class OrderActivity extends BaseActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 LogUtils.d("获取我的订单返回：", response.toString());
+                if (response.optString("ret").equals("-1")) {
+                    PromptUtils.showToast(response.optString("msg"));
+                    return;
+                }
                 if(page == 0){
                     mOrders.clear();
                 }

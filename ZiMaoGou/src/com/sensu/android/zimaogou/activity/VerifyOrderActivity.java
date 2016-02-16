@@ -358,11 +358,11 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 boolean isHaveDefault = false;
-                ReceiverAddressResponse receiverAddressResponse = JSON.parseObject(response.toString(), ReceiverAddressResponse.class);
-                if (receiverAddressResponse.getRet().equals("-1")) {
-                    PromptUtils.showToast(receiverAddressResponse.getMsg());
+                if (response.optString("ret").equals("-1")) {
+                    PromptUtils.showToast(response.optString("msg"));
                     return;
                 }
+                ReceiverAddressResponse receiverAddressResponse = JSON.parseObject(response.toString(), ReceiverAddressResponse.class);
                 if (receiverAddressResponse.data.size() != 0) {
                     for (ReceiverAddressMode receiverAddressMode : receiverAddressResponse.data) {
                         if (receiverAddressMode.getIs_default().equals("1")) {

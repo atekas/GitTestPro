@@ -499,11 +499,11 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                GroupMemberResponse groupMemberResponse = JSON.parseObject(response.toString(), GroupMemberResponse.class);
-                if (groupMemberResponse.getRet().equals("-1")) {
-                    PromptUtils.showToast(groupMemberResponse.getMsg());
+                if (response.optString("ret").equals("-1")) {
+                    PromptUtils.showToast(response.optString("msg"));
                     return;
                 }
+                GroupMemberResponse groupMemberResponse = JSON.parseObject(response.toString(), GroupMemberResponse.class);
                 addUserPhoto(groupMemberResponse.data.list);
                 ((TextView) findViewById(R.id.group_info)).setText("已有" + groupMemberResponse.data.list.size() + "人参团 上限" + mGroupDetailsResponse.data.max_num + "人");
             }

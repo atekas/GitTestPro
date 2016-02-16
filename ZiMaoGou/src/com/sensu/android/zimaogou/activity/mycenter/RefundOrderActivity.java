@@ -128,6 +128,10 @@ public class RefundOrderActivity extends BaseActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 LogUtils.d("获取我的退货单返回：", response.toString());
+                if (response.optString("ret").equals("-1")) {
+                    PromptUtils.showToast(response.optString("msg"));
+                    return;
+                }
                 myOrderResponse = JSON.parseObject(response.toString(), MyOrderResponse.class);
                 mOrders = myOrderResponse.data;
                 updateState_cn(mOrders);//根据state修改订单状态显示

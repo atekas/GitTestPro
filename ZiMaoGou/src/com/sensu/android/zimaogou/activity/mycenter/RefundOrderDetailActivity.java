@@ -72,6 +72,10 @@ public class RefundOrderDetailActivity extends BaseActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 LogUtils.d("订单详情返回：", response.toString());
+                if (response.optString("ret").equals("-1")) {
+                    PromptUtils.showToast(response.optString("msg"));
+                    return;
+                }
                 myOrderMode = JSON.parseObject(response.optJSONObject("data").toString(), MyOrderMode.class);
                 updateState_cn(myOrderMode);
                 mRefundState.setText(myOrderMode.getState_cn());

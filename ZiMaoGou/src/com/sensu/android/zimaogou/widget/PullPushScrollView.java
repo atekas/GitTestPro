@@ -170,6 +170,10 @@ public class PullPushScrollView extends ScrollView implements View.OnClickListen
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
+                if (response.optString("ret").equals("-1")) {
+                    PromptUtils.showToast(response.optString("msg"));
+                    return;
+                }
                 PromptUtils.showToast("收藏成功");
                 findViewById(R.id.is_collect).setSelected(true);
                 mProductDetailData.favorite_id = "1";
@@ -191,6 +195,10 @@ public class PullPushScrollView extends ScrollView implements View.OnClickListen
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
+                if (response.optString("ret").equals("-1")) {
+                    PromptUtils.showToast(response.optString("msg"));
+                    return;
+                }
                 PromptUtils.showToast("取消收藏成功");
                 findViewById(R.id.is_collect).setSelected(false);
                 mProductDetailData.favorite_id = "0";

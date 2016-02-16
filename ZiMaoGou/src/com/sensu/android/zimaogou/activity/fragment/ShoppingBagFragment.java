@@ -118,11 +118,11 @@ public class ShoppingBagFragment extends BaseFragment implements View.OnClickLis
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 //todo 接口通,等数据
-                CartDataResponse cartDataResponse = JSON.parseObject(response.toString(), CartDataResponse.class);
-                if (cartDataResponse.getRet().equals("-1")) {
-                    PromptUtils.showToast(cartDataResponse.getMsg());
+                if (response.optString("ret").equals("-1")) {
+                    PromptUtils.showToast(response.optString("msg"));
                     return;
                 }
+                CartDataResponse cartDataResponse = JSON.parseObject(response.toString(), CartDataResponse.class);
                 mCartDataResponse = cartDataResponse;
                 mShoppingBagAdapter.setCartDataGroup(cartDataResponse);
                 if (cartDataResponse.data.size() == 0) {

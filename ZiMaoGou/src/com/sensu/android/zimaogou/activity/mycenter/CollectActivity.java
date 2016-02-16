@@ -32,6 +32,7 @@ import com.sensu.android.zimaogou.external.greendao.model.UserInfo;
 import com.sensu.android.zimaogou.utils.DisplayUtils;
 import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.utils.LogUtils;
+import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.sensu.android.zimaogou.widget.ExceptionLinearLayout;
 import com.sensu.android.zimaogou.widget.OnRefreshListener;
 import com.sensu.android.zimaogou.widget.RefreshListView;
@@ -330,6 +331,10 @@ public class CollectActivity extends BaseActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 LogUtils.d("获取我的收藏（商品）:", response.toString());
+                if (response.optString("ret").equals("-1")) {
+                    PromptUtils.showToast(response.optString("msg"));
+                    return;
+                }
                 productListResponse = JSON.parseObject(response.toString(),ProductListResponse.class);
                 productListDatas = (ArrayList<ProductListResponse.ProductListData>) productListResponse.data;
                 productsDetailsAdapter.reFlushProductList(productListResponse);
@@ -352,6 +357,10 @@ public class CollectActivity extends BaseActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 LogUtils.d("获取我的收藏（游购）:", response.toString());
+                if (response.optString("ret").equals("-1")) {
+                    PromptUtils.showToast(response.optString("msg"));
+                    return;
+                }
                 travelResponse = JSON.parseObject(response.toString(),TravelResponse.class);
                 travelModes = travelResponse.data;
                 tourBuyAdapter.reFlush(travelModes);
