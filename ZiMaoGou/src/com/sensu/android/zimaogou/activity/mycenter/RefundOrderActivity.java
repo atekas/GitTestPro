@@ -28,6 +28,7 @@ import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.utils.LogUtils;
 import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.sensu.android.zimaogou.utils.UiUtils;
+import com.sensu.android.zimaogou.widget.ExceptionLinearLayout;
 import com.sensu.android.zimaogou.widget.OnRefreshListener;
 import com.sensu.android.zimaogou.widget.RefreshListView;
 import org.apache.http.Header;
@@ -62,6 +63,8 @@ public class RefundOrderActivity extends BaseActivity {
     int agreeRefundGoods = 1;//同意退货
     int agreeRefundMoney = 12;//同意退款
 
+    private View exceptionLinearLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +92,8 @@ public class RefundOrderActivity extends BaseActivity {
                 onBackPressed();
             }
         });
+
+        exceptionLinearLayout = findViewById(R.id.no_order);
 
         mTitleTextView.setText("退货单");
     }
@@ -138,10 +143,12 @@ public class RefundOrderActivity extends BaseActivity {
                 adapter = new OrderListAdapter1(RefundOrderActivity.this, mOrders);
                 mOrderListView.setAdapter(adapter);
                 if (myOrderResponse.data.size() == 0) {
-                    exceptionLinearLayout.setException(IConstants.EXCEPTION_ORDER_IS_NULL);
-                    ll_content.addView(ExceptionView);
+                    exceptionLinearLayout.setVisibility(View.VISIBLE);
+                    ((ExceptionLinearLayout) exceptionLinearLayout.findViewById(R.id.ll_exception)).setException(IConstants.EXCEPTION_ORDER_IS_NULL);
+                    mOrderListView.setVisibility(View.GONE);
                 } else {
-                    ll_content.removeView(ExceptionView);
+                    exceptionLinearLayout.setVisibility(View.VISIBLE);
+                    mOrderListView.setVisibility(View.VISIBLE);
                 }
             }
         });
