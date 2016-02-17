@@ -147,7 +147,7 @@ public class RefundOrderActivity extends BaseActivity {
                     ((ExceptionLinearLayout) exceptionLinearLayout.findViewById(R.id.ll_exception)).setException(IConstants.EXCEPTION_ORDER_IS_NULL);
                     mOrderListView.setVisibility(View.GONE);
                 } else {
-                    exceptionLinearLayout.setVisibility(View.VISIBLE);
+                    exceptionLinearLayout.setVisibility(View.GONE);
                     mOrderListView.setVisibility(View.VISIBLE);
                 }
             }

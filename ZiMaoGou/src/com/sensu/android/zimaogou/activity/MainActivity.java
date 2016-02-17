@@ -1,9 +1,6 @@
 package com.sensu.android.zimaogou.activity;
 
-import android.app.Dialog;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.app.*;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -286,17 +283,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 showFragment(ME_FM_CODE);
                 mMeBottomView.setSelected(true);
                 break;
-            case R.id.update_now:
-                //todo 升级
-                if (dialog != null) {
-                    dialog.dismiss();
-                }
-                break;
-            case R.id.update_late:
-                if (dialog != null) {
-                    dialog.dismiss();
-                }
-                break;
         }
     }
 
@@ -362,7 +348,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 if (AppInfoUtils.getVersionName().equals(version)) {
                     //版本号一致
                 } else {
-                    PromptUtils.showToast("有新版本");
                     if (response.optJSONObject("data").optString("is_force_update").equals("1")) {
                         //需要强制升级
                         showUpdateAppInfo(false);
@@ -383,22 +368,29 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Dialog dialog;
 
     private void showUpdateAppInfo(final boolean isUpdate) {
-        dialog = new Dialog(this, R.style.dialog);
-        dialog.setContentView(R.layout.update_app_version);
-        dialog.setCancelable(isUpdate);
-        dialog.show();
-        dialog.findViewById(R.id.update_late).setOnClickListener(this);
-        dialog.findViewById(R.id.update_now).setOnClickListener(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("版本升级");
+        builder.setCancelable(isUpdate);
+        builder.setPositiveButton("立即升级", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+
         if (isUpdate) {
-            dialog.findViewById(R.id.update_late).setVisibility(View.VISIBLE);
-        } else {
-            dialog.findViewById(R.id.update_late).setVisibility(View.GONE);
+            builder.setNegativeButton("暂不升级", null);
         }
+
+        dialog = builder.show();
+        dialog.show();
+
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
                 if (!isUpdate) {
                     //程序退出
+                    finish();
                 }
             }
         });
