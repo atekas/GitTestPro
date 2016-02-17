@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.BaseActivity;
+import com.sensu.android.zimaogou.utils.PromptUtils;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -110,6 +111,8 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
 		webSettings.setSupportZoom(true);
 		webSettings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
 		webSettings.setBuiltInZoomControls(true);
+		webview.addJavascriptInterface(this, "js");
+		webview.loadUrl(URL);
 		webview.setWebViewClient(new WebViewClient() {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -197,4 +200,8 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
 			Toast.makeText(WebViewActivity.this,platform + " 分享取消了", Toast.LENGTH_SHORT).show();
 		}
 	};
+
+	public void method(String id) {
+		PromptUtils.showToast(id);
+	}
 }

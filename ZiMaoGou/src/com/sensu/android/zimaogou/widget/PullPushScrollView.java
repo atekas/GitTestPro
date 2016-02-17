@@ -66,6 +66,12 @@ public class PullPushScrollView extends ScrollView implements View.OnClickListen
         mProductDetailData = productDetailData;
         ((TextView) findViewById(R.id.product_name)).setText(productDetailData.name);
 
+        if (productDetailData.is_7d_return.equals("1")) {
+            ((TextView) findViewById(R.id.is_7day)).setText("7天无忧退货");
+        } else {
+            ((TextView) findViewById(R.id.is_7day)).setText("不支持7天无忧退货");
+        }
+
         ImageUtils.displayImage(productDetailData.country.icon, ((ImageView) findViewById(R.id.country_icon)));
         ((TextView) findViewById(R.id.address)).setText(productDetailData.country.name + " " + productDetailData.deliver_address + "发货");
         ((TextView) findViewById(R.id.show_rate)).setText("本商品使用税率" + productDetailData.rate + ",订单关税≤50免征");
