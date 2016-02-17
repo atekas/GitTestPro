@@ -437,10 +437,10 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
             PromptUtils.showToast("发表游购内容不能为空");
             return false;
         }
-        if (TextUtils.isEmpty(mCountryNameTextView.getText().toString())) {
-            PromptUtils.showToast("发表游购国家不能为空");
-            return false;
-        }
+//        if (TextUtils.isEmpty(mCountryNameTextView.getText().toString())) {
+//            PromptUtils.showToast("发表游购国家不能为空");
+//            return false;
+//        }
         boolean haveTag = false;
         for (TravelTagMode tagMode : travelTagModes) {
             if (tagMode.isCheck()) {

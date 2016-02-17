@@ -1,7 +1,6 @@
 package com.sensu.android.zimaogou.activity.fragment;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -163,13 +162,15 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.head_pic:
                 //TODO 登陆或者更换头像  判断是否登陆  登陆进入用户信息页面，未登陆进入登陆页面
-//                GDUserInfoHelper.getInstance(mParentActivity).insertUserInfo(userInfo);
-                startActivity(new Intent(mParentActivity, MyInformationActivity.class));
+                if (userInfo == null) {
+                    startActivity(new Intent(mParentActivity, LoginActivity.class));
+                } else {
+                    startActivity(new Intent(mParentActivity, MyInformationActivity.class));
+                }
                 break;
             case R.id.login_register:
 //                UserInfo userInfo1 = GDUserInfoHelper.getInstance(mParentActivity).getUserInfo();
                 mParentActivity.startActivity(new Intent(mParentActivity, LoginActivity.class));
-
                 break;
             case R.id.rl_message:
                 if(checkLogin()) {
