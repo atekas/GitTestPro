@@ -118,12 +118,13 @@
                 android:textColor="@color/black_666666"
                 android:text="用户协议"/>
     </RelativeLayout>
-    <View android:layout_width="match_parent" android:layout_height="1px" android:background="@color/home_line"/>
+    <!--<View android:layout_width="match_parent" android:layout_height="1px" android:background="@color/home_line"/>-->
     <RelativeLayout
             android:onClick="RatingClick"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:paddingLeft="15dp"
+            android:visibility="gone"
             android:background="@drawable/drawable_me_click">
         <TextView
                 android:layout_width="wrap_content"

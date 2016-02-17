@@ -13,6 +13,7 @@ import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.AuthCodeResponse;
 import com.sensu.android.zimaogou.ReqResponse.CheckCodeResponse;
 import com.sensu.android.zimaogou.activity.BaseActivity;
+import com.sensu.android.zimaogou.activity.mycenter.WebViewActivity;
 import com.sensu.android.zimaogou.handler.UpdateTimeHandler;
 import com.sensu.android.zimaogou.utils.HttpUtil;
 import com.sensu.android.zimaogou.utils.PromptUtils;
@@ -46,6 +47,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
         findViewById(R.id.finish).setOnClickListener(this);
         findViewById(R.id.next).setOnClickListener(this);
+        findViewById(R.id.rules).setOnClickListener(this);
         mGetAuthCode.setOnClickListener(this);
     }
 
@@ -68,6 +70,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 mGetAuthCode.setEnabled(false);
                 mUpdateTimeHandler.sendEmptyMessage(UpdateTimeHandler.UPDATE_TIME_CODE);
 
+                break;
+            case R.id.rules:
+                Intent intent = new Intent(this, WebViewActivity.class);
+                intent.putExtra("title", "用户协议");
+                intent.putExtra("url","http://139.196.108.137:80/v1/user/register_agreement");
+                startActivity(intent);
                 break;
         }
     }

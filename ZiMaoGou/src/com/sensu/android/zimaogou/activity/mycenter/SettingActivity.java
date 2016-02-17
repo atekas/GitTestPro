@@ -167,18 +167,22 @@ public class SettingActivity extends BaseActivity {
     }
 
     private void AboutUs() {
-        HttpUtil.get(IConstants.sAboutUs, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                JSONObject data = response.optJSONObject("data");
-                Intent intent = new Intent(SettingActivity.this, WebViewActivity.class);
-                intent.putExtra("title", data.optString("title"));
-                intent.putExtra("url",data.optString("url"));
-                startActivity(intent);
-
-            }
-        });
+        Intent intent = new Intent(SettingActivity.this, WebViewActivity.class);
+        intent.putExtra("title", "关于我们");
+        intent.putExtra("url",IConstants.sAboutUs);
+        startActivity(intent);
+//        HttpUtil.get(IConstants.sAboutUs, new JsonHttpResponseHandler() {
+//            @Override
+//            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+//                super.onSuccess(statusCode, headers, response);
+//                JSONObject data = response.optJSONObject("data");
+//                Intent intent = new Intent(SettingActivity.this, WebViewActivity.class);
+//                intent.putExtra("title", data.optString("title"));
+//                intent.putExtra("url",data.optString("url"));
+//                startActivity(intent);
+//
+//            }
+//        });
     }
 
     private void flushUi() {

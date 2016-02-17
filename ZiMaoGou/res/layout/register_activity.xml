@@ -153,6 +153,7 @@
                 android:text="注册代表同意"/>
 
         <TextView
+                android:id="@+id/rules"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_size_13"
