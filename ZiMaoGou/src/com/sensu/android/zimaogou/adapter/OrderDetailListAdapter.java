@@ -34,6 +34,11 @@ public class OrderDetailListAdapter extends SimpleBaseAdapter {
         this.state = state;
     }
 
+    String mIsOver7Day;
+    public void setIsOver7Day(String isOver7Day) {
+        mIsOver7Day = isOver7Day;
+    }
+
     @Override
     public int getCount() {
         return mOrders.size();
@@ -69,6 +74,7 @@ public class OrderDetailListAdapter extends SimpleBaseAdapter {
         viewHolder.tv_amount.setText("￥"+mOrders.get(i).getAmount_real());
         viewHolder.tv_orderTime.setText("下单时间："+mOrders.get(i).getCreated_at());
         OrderDetailChildListAdapter adapter = new OrderDetailChildListAdapter(mContext,mOrders.get(i),state);
+        adapter.setIsOver7Day(mIsOver7Day);
         viewHolder.lv_products.setDivider(null);
         viewHolder.lv_products.setAdapter(adapter);
         UiUtils.setListViewHeightBasedOnChilds(viewHolder.lv_products);

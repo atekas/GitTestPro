@@ -2,6 +2,7 @@ package com.sensu.android.zimaogou.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -45,6 +46,12 @@ public class OrderDetailChildListAdapter extends SimpleBaseAdapter {
         }
     }
 
+    String mIsOver7Day;
+
+    public void setIsOver7Day(String isOver7Day) {
+        mIsOver7Day = isOver7Day;
+    }
+
     @Override
     public int getCount() {
         return mProducts.size();
@@ -73,18 +80,22 @@ public class OrderDetailChildListAdapter extends SimpleBaseAdapter {
         productsViewHolder.tv_productPrice.setText(mProducts.get(i).getPrice());
         productsViewHolder.tv_spc.setText(mProducts.get(i).getSpec());
 
-        if (mProducts.get(position).getIs_returned().equals("0")) {
-            if (state == IConstants.sReceived) {
-                productsViewHolder.tv_refundMoney.setVisibility(View.VISIBLE);
-                productsViewHolder.tv_refundMoney.setText("退货退款");
-            } else if (state == IConstants.sUnreceived) {
-                productsViewHolder.tv_refundMoney.setVisibility(View.VISIBLE);
-                productsViewHolder.tv_refundMoney.setText("退款");
+        if (mIsOver7Day.equals("1")) {
+            productsViewHolder.tv_refundMoney.setVisibility(View.GONE);
+        } else {
+            if (mProducts.get(position).getIs_returned().equals("0")) {
+                if (state == IConstants.sReceived) {
+                    productsViewHolder.tv_refundMoney.setVisibility(View.VISIBLE);
+                    productsViewHolder.tv_refundMoney.setText("退货退款");
+                } else if (state == IConstants.sUnreceived) {
+                    productsViewHolder.tv_refundMoney.setVisibility(View.VISIBLE);
+                    productsViewHolder.tv_refundMoney.setText("退款");
+                } else {
+                    productsViewHolder.tv_refundMoney.setVisibility(View.GONE);
+                }
             } else {
                 productsViewHolder.tv_refundMoney.setVisibility(View.GONE);
             }
-        }else{
-            productsViewHolder.tv_refundMoney.setVisibility(View.GONE);
         }
         productsViewHolder.tv_refundMoney.setOnClickListener(new View.OnClickListener() {
             @Override

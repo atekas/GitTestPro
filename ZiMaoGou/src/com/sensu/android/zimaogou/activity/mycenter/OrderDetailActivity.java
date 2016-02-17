@@ -214,6 +214,7 @@ public class OrderDetailActivity extends BaseActivity {
                 tv_receiverAddress.setText(myOrderMode.getReceiver_info().getProvince()+myOrderMode.getReceiver_info().getCity()+myOrderMode.getReceiver_info().getAddress());
                 mOrders.add(myOrderMode);
                 adapter.flush(mOrders, state);
+                adapter.setIsOver7Day(myOrderMode.getIs_over_7day());
                 UiUtils.setListViewHeightBasedOnChilds(mOrderListView);
                 mOrderDetailScrollView.smoothScrollTo(0, 0);
 

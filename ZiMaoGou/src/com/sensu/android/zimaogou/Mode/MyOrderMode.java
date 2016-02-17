@@ -16,6 +16,7 @@ public class MyOrderMode implements Serializable {
     private String amount_real;
     private String amount_goods;
     private String deliver_address;
+    private String is_over_7day;
     private String created_at;
     private MyOrderReceiverInfo receiver_info;
     private ArrayList<MyOrderGoodsMode> goods;
@@ -214,5 +215,13 @@ public class MyOrderMode implements Serializable {
 
     public void setGoods(ArrayList<MyOrderGoodsMode> goods) {
         this.goods = goods;
+    }
+
+    public String getIs_over_7day() {
+        return is_over_7day;
+    }
+
+    public void setIs_over_7day(String is_over_7day) {
+        this.is_over_7day = is_over_7day;
     }
 }
