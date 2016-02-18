@@ -45,15 +45,14 @@ public class CartDataResponse extends BaseReqResponse {
         public String goods_id;
         public String source;
         public String rate;
+        public String is_selected;
 
-        private boolean mIsSelect;
-
-        public void setIsSelect(boolean isSelect) {
-            mIsSelect = isSelect;
+        public void setIsSelect(String isSelect) {
+            is_selected = isSelect;
         }
 
-        public boolean getIsSelect() {
-            return mIsSelect;
+        public String getIsSelect() {
+            return is_selected;
         }
     }
 

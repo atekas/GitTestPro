@@ -132,7 +132,7 @@ public class CartLinearLayout extends LinearLayout {
                 childView.findViewById(R.id.bt_add).setEnabled(false);
             }
 
-            if (cartDataGroup.data.get(i).getIsSelect()) {
+            if (cartDataGroup.data.get(i).getIsSelect().equals("1")) {
                 childView.findViewById(R.id.img_choose).setSelected(true);
             } else {
                 childView.findViewById(R.id.img_choose).setSelected(false);
@@ -157,12 +157,14 @@ public class CartLinearLayout extends LinearLayout {
             childView.findViewById(R.id.img_choose).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (mCartDataGroup.data.get(position).getIsSelect()) {
-                        mCartDataGroup.data.get(position).setIsSelect(false);
+                    if (mCartDataGroup.data.get(position).getIsSelect().equals("1")) {
+//                        mCartDataGroup.data.get(position).setIsSelect("0");
+                        changeStatues("0", mCartDataGroup.data.get(position).id, position);
                     } else {
-                        mCartDataGroup.data.get(position).setIsSelect(true);
+//                        mCartDataGroup.data.get(position).setIsSelect("1");
+                        changeStatues("1", mCartDataGroup.data.get(position).id, position);
                     }
-                    mShoppingBagAdapter.isAllSelect(mFlag);
+//                    mShoppingBagAdapter.isAllSelect(mFlag);
                 }
             });
 
@@ -206,7 +208,7 @@ public class CartLinearLayout extends LinearLayout {
         mSumPrice = (TextView) bottomView.findViewById(R.id.total_money);
 
         for (CartDataResponse.CartDataChild cartDataChild : cartDataGroup.data) {
-            if (cartDataChild.getIsSelect()) {
+            if (cartDataChild.getIsSelect().equals("1")) {
                 cartDataGroup.setEnable(true);
                 break;
             } else {
@@ -231,7 +233,7 @@ public class CartLinearLayout extends LinearLayout {
             public void onClick(View view) {
 
                 for (CartDataResponse.CartDataChild cartDataChild : mCartDataGroup.data) {
-                    if (cartDataChild.getIsSelect()) {
+                    if (cartDataChild.getIsSelect().equals("1")) {
                         if (Integer.parseInt(cartDataChild.num) > Integer.parseInt(cartDataChild.real_num)) {
                             PromptUtils.showToast(cartDataChild.title + "库存不足");
                             return;
@@ -242,7 +244,7 @@ public class CartLinearLayout extends LinearLayout {
                 SelectProductModel selectProductModel = new SelectProductModel();
                 List<SelectProductModel.GoodsInfo> goodsInfoList = new ArrayList<SelectProductModel.GoodsInfo>();
                 for (CartDataResponse.CartDataChild cartDataChild : mCartDataGroup.data) {
-                    if (cartDataChild.getIsSelect()) {
+                    if (cartDataChild.getIsSelect().equals("1")) {
                         SelectProductModel.GoodsInfo goodsInfo = new SelectProductModel.GoodsInfo();
                         goodsInfo.setGoodsId(cartDataChild.goods_id);
                         goodsInfo.setSpecId(cartDataChild.spec_id);
@@ -302,6 +304,31 @@ public class CartLinearLayout extends LinearLayout {
         });
     }
 
+    private void changeStatues(final String isSelect, String id, final int position) {
+        UserInfo userInfo = GDUserInfoHelper.getInstance(getContext()).getUserInfo();
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("uid", userInfo.getUid());
+        requestParams.put("id", id);
+        requestParams.put("is_selected", isSelect);
+        HttpUtil.postWithSign(userInfo.getToken(), IConstants.sCart + "/" + id, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                if (response.optString("ret").equals("-1")) {
+                    PromptUtils.showToast(response.optString("msg"));
+                    return;
+                }
+                mCartDataGroup.data.get(position).setIsSelect(isSelect);
+                mShoppingBagAdapter.isAllSelect(mFlag);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
+    }
+
     private void deleteProduct(String id, final int position) {
         UserInfo userInfo = GDUserInfoHelper.getInstance(getContext()).getUserInfo();
         RequestParams requestParams = new RequestParams();
@@ -331,7 +358,7 @@ public class CartLinearLayout extends LinearLayout {
     private int getSelectNum() {
         int num = 0;
         for (CartDataResponse.CartDataChild cartDataChild : mCartDataGroup.data) {
-            if (cartDataChild.getIsSelect()) {
+            if (cartDataChild.getIsSelect().equals("1")) {
                 num += Integer.parseInt(cartDataChild.num);
             }
         }
@@ -341,7 +368,7 @@ public class CartLinearLayout extends LinearLayout {
     private double getAllMoney() {
         double allMoney = 0.00;
         for (CartDataResponse.CartDataChild cartDataChild : mCartDataGroup.data) {
-            if (cartDataChild.getIsSelect()) {
+            if (cartDataChild.getIsSelect().equals("1")) {
                 double price = Double.parseDouble(cartDataChild.price);
                 double num = Double.parseDouble(cartDataChild.num);
                 allMoney += price * num;
