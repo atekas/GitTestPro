@@ -18,6 +18,7 @@ public class BannerMode implements Serializable {
     private String themename;
     private String themeimage;
     private String themecontent;
+    private String comment;
 
     public String getThemename() {
         return themename;
@@ -113,5 +114,9 @@ public class BannerMode implements Serializable {
 
     public void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public String getComment() {
+        return comment;
     }
 }

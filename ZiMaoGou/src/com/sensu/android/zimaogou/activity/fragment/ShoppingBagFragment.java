@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
 import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -38,9 +36,6 @@ public class ShoppingBagFragment extends BaseFragment implements View.OnClickLis
     private TextView mEditText;
 
     private CartDataResponse mCartDataResponse;
-    private LinearLayout ll_content;
-    public View ExceptionView;
-    public ExceptionLinearLayout exceptionLinearLayout;
 
     private LinearLayout mNoOrderView;
 
@@ -60,32 +55,35 @@ public class ShoppingBagFragment extends BaseFragment implements View.OnClickLis
         if (hidden) {
 
         } else {
-            getCart();
+            if (mUserInfo != null) {
+                getCart();
+            }
         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        if (mNoOrderView != null) {
+            mNoOrderView.setVisibility(View.GONE);
+        }
         initView();
     }
 
     @Override
     protected void initView() {
-
-        mUserInfo = GDUserInfoHelper.getInstance(mParentActivity).getUserInfo();
-        if (mUserInfo == null) {
-            mParentActivity.startActivity(new Intent(mParentActivity, LoginActivity.class));
-        } else {
-            getCart();
-        }
-
         mNoOrderView = (LinearLayout) mParentActivity.findViewById(R.id.no_order);
         mListView = (ListView) mParentActivity.findViewById(R.id.bag_goods_list);
-        ll_content = (LinearLayout) mParentActivity.findViewById(R.id.ll_content);
-        ExceptionView = View.inflate(mParentActivity, R.layout.exception_layout, null);
-        exceptionLinearLayout = (ExceptionLinearLayout) ExceptionView.findViewById(R.id.ll_exception);
-
+        mNoOrderView.findViewById(R.id.bt_reload).setOnClickListener(this);
+        mUserInfo = GDUserInfoHelper.getInstance(mParentActivity).getUserInfo();
+        if (mUserInfo == null) {
+            mNoOrderView.setVisibility(View.VISIBLE);
+            ((ImageView) mNoOrderView.findViewById(R.id.img_exception)).setImageResource(R.drawable.exception_internet);
+            ((TextView) mNoOrderView.findViewById(R.id.tv_exception)).setText("您还没有登录");
+            ((Button) mNoOrderView.findViewById(R.id.bt_reload)).setText("登录");
+            return;
+        }
+        getCart();
         mShoppingBagAdapter = new ShoppingBagAdapter(mParentActivity, mListView);
         mListView.setAdapter(mShoppingBagAdapter);
         mEditText = (TextView) mParentActivity.findViewById(R.id.goods_edit);
@@ -106,6 +104,9 @@ public class ShoppingBagFragment extends BaseFragment implements View.OnClickLis
                     mEditText.setText("完成");
                 }
                 mShoppingBagAdapter.setIsEditProduct(mIsEdit);
+                break;
+            case R.id.bt_reload:
+                mParentActivity.startActivity(new Intent(mParentActivity, LoginActivity.class));
                 break;
         }
     }

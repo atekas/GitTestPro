@@ -161,7 +161,8 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
                 } else {
                     startActivity(new Intent(mParentActivity, WebViewActivity.class)
                             .putExtra("title", bannerModes.get(position).getName())
-                            .putExtra("url", bannerModes.get(position).getValue()));
+                            .putExtra("url", bannerModes.get(position).getValue())
+                            .putExtra("comment", bannerModes.get(position).getComment()));
                 }
             }
         });

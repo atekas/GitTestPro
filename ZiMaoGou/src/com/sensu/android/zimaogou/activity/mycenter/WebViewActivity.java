@@ -33,6 +33,7 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
 	TextView mTitleTextView;
 	String title ="";
 	String URL = "";
+	String mComment;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -44,8 +45,8 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
 		// TODO Auto-generated method stub
 		if(getIntent().getExtras() != null){
 			title = getIntent().getExtras().getString("title");
-
 		}
+		mComment = getIntent().getExtras().getString("comment");
 		mTitleTextView = (TextView) findViewById(R.id.tv_title);
 		mBackImageView = (ImageView) findViewById(R.id.back);
 		mBackImageView.setOnClickListener(new View.OnClickListener() {
@@ -120,10 +121,9 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
 		ll_sina.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				UMImage image = new UMImage(WebViewActivity.this, "http://www.umeng.com/images/pic/social/integrated_3.png");
 				new ShareAction(WebViewActivity.this).setPlatform(SHARE_MEDIA.SINA).setCallback(umShareListener)
 						.withText(title)
-						.withTitle(title)
+						.withTitle(mComment)
 						.withTargetUrl(URL)
 						.withMedia(new UMImage(WebViewActivity.this, R.drawable.zimaogou_icon))
 						.share();
@@ -135,7 +135,7 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
 			public void onClick(View view) {
 				new ShareAction(WebViewActivity.this).setPlatform(SHARE_MEDIA.WEIXIN).setCallback(umShareListener)
 						.withTitle(title)
-						.withText(title)
+						.withText(mComment)
 						.withTargetUrl(URL)
 						.withMedia(new UMImage(WebViewActivity.this, R.drawable.zimaogou_icon))
 						.share();
@@ -147,7 +147,7 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
 			public void onClick(View view) {
 				new ShareAction(WebViewActivity.this).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).setCallback(umShareListener)
 						.withTitle(title)
-						.withText(title)
+						.withText(mComment)
 						.withTargetUrl(URL)
 						.withMedia(new UMImage(WebViewActivity.this, R.drawable.zimaogou_icon))
 						.share();
