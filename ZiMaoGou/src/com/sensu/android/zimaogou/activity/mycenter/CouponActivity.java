@@ -23,7 +23,6 @@ import com.sensu.android.zimaogou.utils.UiUtils;
 import com.sensu.android.zimaogou.widget.ExceptionLinearLayout;
 import org.apache.http.Header;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -53,7 +52,7 @@ public class CouponActivity extends BaseActivity implements AdapterView.OnItemCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.coupon_activity);
-        ExceptionView = View.inflate(CouponActivity.this,R.layout.exception_layout,null);
+
         initView();
         if(getIntent().getExtras() != null){
             sourceType = getIntent().getExtras().getString("type","");
@@ -66,7 +65,7 @@ public class CouponActivity extends BaseActivity implements AdapterView.OnItemCl
             mTotalAmount = "0";
         }
         getCoupon();
-
+        ExceptionView = findViewById(R.id.coupon_no);
         mValidListView = (ListView) findViewById(R.id.lv_valid);
         mInvalidListView = (ListView) findViewById(R.id.lv_invalid);
         mBackImageView = (ImageView) findViewById(R.id.back);
@@ -180,14 +179,14 @@ public class CouponActivity extends BaseActivity implements AdapterView.OnItemCl
                     mTipRelative.setVisibility(View.VISIBLE);
 
                 }
-                if(couponResponse.mNoUseCouponList.size() == 0 && couponResponse.mCannotUseCouponList.size() == 0){
 
-                    ExceptionLinearLayout exceptionLinearLayout = (ExceptionLinearLayout) ExceptionView.findViewById(R.id.ll_exception);
-                    exceptionLinearLayout.setException(IConstants.EXCEPTION_COUPON_IS_NULL);
-                    mContentLinearLayout.addView(ExceptionView);
-
-                }else{
-                    mContentLinearLayout.removeView(ExceptionView);
+                if (couponResponse.data.size() == 0) {
+                    exceptionLinearLayout.setVisibility(View.VISIBLE);
+                    ((ExceptionLinearLayout) exceptionLinearLayout.findViewById(R.id.ll_exception)).setException(IConstants.EXCEPTION_COUPON_IS_NULL);
+                    findViewById(R.id.content).setVisibility(View.GONE);
+                } else {
+                    exceptionLinearLayout.setVisibility(View.GONE);
+                    findViewById(R.id.content).setVisibility(View.VISIBLE);
                 }
             }
 

@@ -65,7 +65,7 @@ public class ExceptionLinearLayout extends LinearLayout {
                 break;
             case IConstants.EXCEPTION_COUPON_IS_NULL:
                 exceptionMessage = "您还没有优惠券";
-                exceptionImageResource = R.drawable.exception_order;
+                exceptionImageResource = R.drawable.no_coupon;
                 break;
             case IConstants.EXCEPTION_ADDRESS_IS_NULL:
                 exceptionMessage = "您还没有设置收货地址";

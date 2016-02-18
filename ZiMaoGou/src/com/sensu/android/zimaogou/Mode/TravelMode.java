@@ -24,6 +24,7 @@ public class TravelMode implements Serializable {
     private String is_like;
     private String is_favorite;
     private String location;
+    private String is_shop;
 
     private ArrayList<String> tag;
     public class TravelMedia implements Serializable{
@@ -166,5 +167,13 @@ public class TravelMode implements Serializable {
 
     public void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public void setIs_shop(String is_shop) {
+        this.is_shop = is_shop;
+    }
+
+    public String getIs_shop() {
+        return is_shop;
     }
 }
