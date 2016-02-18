@@ -3,8 +3,11 @@ package com.sensu.android.zimaogou.activity;
 import android.app.*;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,7 +32,18 @@ import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.MsgConstant;
 import com.umeng.message.PushAgent;
 import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -345,15 +359,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     return;
                 }
                 String version = response.optJSONObject("data").optString("version_number");
+                String url = response.optJSONObject("data").optString("version_url");
                 if (AppInfoUtils.getVersionName().equals(version)) {
                     //版本号一致
                 } else {
                     if (response.optJSONObject("data").optString("is_force_update").equals("1")) {
                         //需要强制升级
-                        showUpdateAppInfo(false);
+                        showUpdateAppInfo(false, version, url);
                     } else {
                         //用户选择升级
-                        showUpdateAppInfo(true);
+                        showUpdateAppInfo(true, version, url);
                     }
                 }
             }
@@ -367,14 +382,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private Dialog dialog;
 
-    private void showUpdateAppInfo(final boolean isUpdate) {
+    private void showUpdateAppInfo(final boolean isUpdate, final String version, final String url) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("版本升级");
         builder.setCancelable(isUpdate);
         builder.setPositiveButton("立即升级", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
+                if (!TextUtils.isEmpty(url)) {
+                    downFile(url, version);
+                }
             }
         });
 
@@ -392,6 +409,60 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     //程序退出
                     finish();
                 }
+            }
+        });
+    }
+
+    String filePath = BaseApplication.getBaseApplication().getBaseExternalCacheDir()
+            + File.separator + "temp/download/";
+
+    private void downFile(final String url, final String version) {
+        new Thread() {
+            public void run() {
+                HttpClient client = new DefaultHttpClient();
+                HttpGet get = new HttpGet(url);
+                HttpResponse response;
+                try {
+                    response = client.execute(get);
+                    HttpEntity entity = response.getEntity();
+                    long length = entity.getContentLength();
+                    InputStream is = entity.getContent();
+                    FileOutputStream fileOutputStream = null;
+                    if (is != null) {
+                        File file = new File(filePath + File.separator + "自贸购"+ version + ".jpg");
+                        fileOutputStream = new FileOutputStream(file);
+                        byte[] buf = new byte[1024];
+                        int ch = -1;
+                        int count = 0;
+                        while ((ch = is.read(buf)) != -1) {
+                            fileOutputStream.write(buf, 0, ch);
+                            count += ch;
+                            if (length > 0) {
+                            }
+                        }
+                    }
+                    fileOutputStream.flush();
+                    if (fileOutputStream != null) {
+                        fileOutputStream.close();
+                    }
+                    down(version);
+                } catch (ClientProtocolException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    private void down(final String version) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(Uri.fromFile(new File(filePath + File.separator + "自贸购"+ version + ".jpg")),
+                        "application/vnd.android.package-archive");
+                startActivity(intent);
             }
         });
     }
