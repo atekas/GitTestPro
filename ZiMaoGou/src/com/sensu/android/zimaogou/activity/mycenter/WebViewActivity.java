@@ -89,9 +89,7 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
 			 URL= "http://139.196.108.137:80/v1/user/register_agreement";
 			 webview.loadUrl(URL);
 		 }else if(title.indexOf("关于")>= 0){
-			 URL= "http://www.sensu-sh.com/";
-
-			 URL = "http://"+getIntent().getExtras().getString("url");
+			 URL = getIntent().getExtras().getString("url");
 			 webview.loadUrl(URL);
 		 }else if(title.indexOf("诞生秘密") >= 0){
 			 URL= "http://139.196.108.137:80/v1/user/shop_notice";
