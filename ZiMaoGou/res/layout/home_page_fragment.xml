@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -40,12 +41,17 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                <com.sensu.android.zimaogou.widget.ImageRollView
-                        android:id="@+id/banner"
+                <com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:aspectRatio="2.1">
 
-                        android:layout_width="fill_parent"
-                        android:layout_height="@dimen/home_banner_height"
-                        android:src="@drawable/category_default"/>
+                    <com.sensu.android.zimaogou.widget.ImageRollView
+                            android:id="@+id/banner"
+                            android:layout_width="fill_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/category_default"/>
+                </com.sensu.android.zimaogou.widget.FixedAspectRatioFrameLayout>
 
                 <View
                         android:layout_width="fill_parent"
