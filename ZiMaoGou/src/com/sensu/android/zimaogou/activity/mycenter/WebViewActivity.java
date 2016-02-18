@@ -1,27 +1,24 @@
 package com.sensu.android.zimaogou.activity.mycenter;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
-import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.BaseActivity;
-import com.sensu.android.zimaogou.utils.PromptUtils;
+import com.sensu.android.zimaogou.activity.ProductDetailsActivity;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * webview 展示页面
@@ -54,7 +51,7 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
 		mBackImageView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				onBackPressed();
+				finish();
 			}
 		});
 		findViewById(R.id.share).setOnClickListener(this);
@@ -62,55 +59,34 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
 		mTitleTextView.setText(title);
 		webview = (WebView) findViewById(R.id.webView);
 		
-//		webview.setSaveEnabled(true);
-//		webview.getSettings().setJavaScriptEnabled(true); // 设置支持javascript脚本
-//		webview.getSettings().setLoadWithOverviewMode(true);
-//		//webview_evacuation.getSettings().setUseWideViewPort(true);
-//
-//		 int   screenDensity   = this.getResources().getDisplayMetrics(). densityDpi ;
-//           WebSettings.ZoomDensity   zoomDensity   = WebSettings.ZoomDensity. MEDIUM ;
-//		      switch (screenDensity){
-//		       case   DisplayMetrics.DENSITY_LOW :
-//		           zoomDensity = WebSettings.ZoomDensity.CLOSE;
-//		          break ;
-//		      case   DisplayMetrics.DENSITY_MEDIUM :
-//		            zoomDensity = WebSettings.ZoomDensity.MEDIUM;
-//		         break ;
-//		        case   DisplayMetrics.DENSITY_HIGH :
-//		           zoomDensity = WebSettings.ZoomDensity.FAR;
-//		           break ;
-//
-//		       }
-//
-//		    //  webview_evacuation.setInitialScale(150);
-//		 webview.getSettings().setDefaultZoom(zoomDensity);
-//		 webview.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
 		 if(title.indexOf("用户协议")>=0){
 			 URL= "http://139.196.108.137:80/v1/user/register_agreement";
-			 webview.loadUrl(URL);
 		 }else if(title.indexOf("关于")>= 0){
 			 URL = getIntent().getExtras().getString("url");
-			 webview.loadUrl(URL);
 		 }else if(title.indexOf("诞生秘密") >= 0){
 			 URL= "http://139.196.108.137:80/v1/user/shop_notice";
-
-			 webview.loadUrl(URL);
 		 }else if(title.indexOf("专题")>=0){
 			 URL = getIntent().getExtras().getString("url");
-			 webview.loadUrl(URL);
 			 findViewById(R.id.share).setVisibility(View.VISIBLE);
 		 }else{
 			 URL = getIntent().getExtras().getString("url");
-			 webview.loadUrl(URL);
 			 findViewById(R.id.share).setVisibility(View.VISIBLE);
 		 }
+		webview.loadUrl(URL);
+
 		WebSettings webSettings = webview.getSettings();
 		webSettings.setJavaScriptEnabled(true);
 		webSettings.setSupportZoom(true);
 		webSettings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
 		webSettings.setBuiltInZoomControls(true);
-		webview.addJavascriptInterface(this, "js");
-		webview.loadUrl(URL);
+		webview.addJavascriptInterface(new Object() {
+			@JavascriptInterface
+			public void method(String str) {
+				Intent intent = new Intent(WebViewActivity.this, ProductDetailsActivity.class);
+				intent.putExtra(ProductDetailsActivity.PRODUCT_ID, str);
+				startActivity(intent);
+			}
+		},  "js");
 		webview.setWebViewClient(new WebViewClient() {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -199,7 +175,7 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
 		}
 	};
 
-	public void method(String id) {
-		PromptUtils.showToast(id);
-	}
+//	public void method(String str) {
+//		startActivity(new Intent(this, LoginActivity.class));
+//	}
 }
