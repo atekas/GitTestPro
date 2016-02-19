@@ -74,7 +74,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             case R.id.rules:
                 Intent intent = new Intent(this, WebViewActivity.class);
                 intent.putExtra("title", "用户协议");
-                intent.putExtra("url","http://139.196.108.137:80/v1/user/register_agreement");
+                intent.putExtra("url",IConstants.HOST_TEST + "user/register_agreement");
                 startActivity(intent);
                 break;
         }

@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.activity.BaseActivity;
 import com.sensu.android.zimaogou.activity.ProductDetailsActivity;
@@ -61,11 +62,11 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
 		webview = (WebView) findViewById(R.id.webView);
 		
 		 if(title.indexOf("用户协议")>=0){
-			 URL= "http://139.196.108.137:80/v1/user/register_agreement";
+			 URL= IConstants.HOST_TEST + "user/register_agreement";
 		 }else if(title.indexOf("关于")>= 0){
 			 URL = getIntent().getExtras().getString("url");
 		 }else if(title.indexOf("诞生秘密") >= 0){
-			 URL= "http://139.196.108.137:80/v1/user/shop_notice";
+			 URL= IConstants.HOST_TEST + "user/shop_notice";
 		 }else if(title.indexOf("专题")>=0){
 			 URL = getIntent().getExtras().getString("url");
 			 findViewById(R.id.share).setVisibility(View.VISIBLE);

@@ -14,9 +14,6 @@ public class HttpUtil {
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 
-    public static final String HOST = "http://139.196.108.137:80/v1/";
-    public static final String SIGN_HOST = "http://139.196.108.137/v1/";
-
     static {
         client.setTimeout(60000);//设置超时
     }
@@ -27,7 +24,7 @@ public class HttpUtil {
 
     //获取完整的url
     private static String getAbsoluteUrl(String relativeUrl) {
-        return HOST + relativeUrl;
+        return IConstants.HOST_TEST + relativeUrl;
     }
 
     /**
@@ -101,7 +98,7 @@ public class HttpUtil {
                 try {
                     final String timestamp = responseString.optJSONObject("data").optString("timestamp");
 
-                    String sign = MD5Utils.md5(SIGN_HOST + url + "||" + token + "||" + timestamp);
+                    String sign = MD5Utils.md5(IConstants.SIGN_HOST_TEST + url + "||" + token + "||" + timestamp);
                     requestParams.put("timestamp", timestamp);
                     requestParams.put("sign", sign);
 
@@ -121,7 +118,7 @@ public class HttpUtil {
                 super.onSuccess(statusCode, headers, responseString);
                 try {
                     final String timestamp = responseString.optJSONObject("data").optString("timestamp");
-                    String sign = MD5Utils.md5(SIGN_HOST + url + "||" + token + "||" + timestamp);
+                    String sign = MD5Utils.md5(IConstants.SIGN_HOST_TEST + url + "||" + token + "||" + timestamp);
                     requestParams.put("sign", sign);
                     requestParams.put("timestamp", timestamp);
 

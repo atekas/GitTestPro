@@ -7,6 +7,12 @@ import com.sensu.android.zimaogou.utils.FileUtils;
  */
 public class IConstants {
 
+    public static final String HOST_TEST = "http://139.196.108.137:80/v1/";
+
+    public static final String SIGN_HOST_TEST = "http://139.196.108.137/v1/";
+
+    public static final String HOST = "http://api.ftzgo365.com/v1/";
+
     /**
      * 默认时长
      */
@@ -84,7 +90,7 @@ public class IConstants {
     //修改用户信息
     public static final String sUpdateUserInfo = "user";
     //关于我们
-    public static final String sAboutUs = "http://139.196.108.137:80/v1/conf/about_us";
+    public static final String sAboutUs = HOST_TEST + "conf/about_us";
     //商品列表
     public static final String sGoodList = "goods/list";
     public static final String sProduct_classification = "goods/category";
