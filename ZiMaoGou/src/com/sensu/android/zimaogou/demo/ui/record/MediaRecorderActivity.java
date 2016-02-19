@@ -451,7 +451,8 @@ public class MediaRecorderActivity extends BaseActivity implements OnErrorListen
 				//下一步
 				if (mTitleNext.getVisibility() != View.VISIBLE) {
 					mTitleNext.setVisibility(View.VISIBLE);
-					mTitleNext.setText(R.string.record_camera_next);
+//					mTitleNext.setText(R.string.record_camera_next);
+					mTitleNext.setText("预览");
 				}
 			}
 		}
