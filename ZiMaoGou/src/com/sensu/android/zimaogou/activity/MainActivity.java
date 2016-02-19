@@ -429,7 +429,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     InputStream is = entity.getContent();
                     FileOutputStream fileOutputStream = null;
                     if (is != null) {
-                        File file = new File(filePath + File.separator + "自贸购"+ version + ".jpg");
+                        File file = new File(filePath + File.separator + "自贸购"+ version + ".apk");
+                        if (file.exists()) {
+                            file.delete();
+                        }
+
+                        if (!new File(filePath).exists()) {
+                            new File(filePath).mkdirs();
+                        }
+
+                        file.createNewFile();
                         fileOutputStream = new FileOutputStream(file);
                         byte[] buf = new byte[1024];
                         int ch = -1;
@@ -460,7 +469,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void run() {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setDataAndType(Uri.fromFile(new File(filePath + File.separator + "自贸购"+ version + ".jpg")),
+                intent.setDataAndType(Uri.fromFile(new File(filePath + File.separator + "自贸购"+ version + ".apk")),
                         "application/vnd.android.package-archive");
                 startActivity(intent);
             }
