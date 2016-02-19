@@ -58,7 +58,7 @@ public class LogUtils {
 
     public static void i(String tag, String message, String message2) {
         i(tag, message);
-        writeLog(message2);
+//        writeLog(message2);
     }
 
     public static void w(String tag, String message) {
@@ -70,7 +70,7 @@ public class LogUtils {
 
     public static void w(String tag, String message, String message2) {
         w(tag, message);
-        writeLog(message2);
+//        writeLog(message2);
     }
 
     public static void e(String tag, String message) {
@@ -82,7 +82,7 @@ public class LogUtils {
 
     public static void e(String tag, String message, String message2) {
         e(tag, message);
-        writeLog(message2);
+//        writeLog(message2);
     }
 
     /**Log文件名称*/

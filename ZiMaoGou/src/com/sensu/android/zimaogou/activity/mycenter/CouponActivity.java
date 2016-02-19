@@ -47,7 +47,7 @@ public class CouponActivity extends BaseActivity implements AdapterView.OnItemCl
     private CouponInvalidListAdapter mCouponInvalidListAdapter;
     private RelativeLayout mTipRelative;
     private List<CouponResponse.Coupon> mCanUseCouponList;
-    View ExceptionView;
+    View mExceptionView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +65,7 @@ public class CouponActivity extends BaseActivity implements AdapterView.OnItemCl
             mTotalAmount = "0";
         }
         getCoupon();
-        ExceptionView = findViewById(R.id.coupon_no);
+        mExceptionView = findViewById(R.id.coupon_no);
         mValidListView = (ListView) findViewById(R.id.lv_valid);
         mInvalidListView = (ListView) findViewById(R.id.lv_invalid);
         mBackImageView = (ImageView) findViewById(R.id.back);
@@ -181,11 +181,11 @@ public class CouponActivity extends BaseActivity implements AdapterView.OnItemCl
                 }
 
                 if (couponResponse.data.size() == 0) {
-                    exceptionLinearLayout.setVisibility(View.VISIBLE);
-                    ((ExceptionLinearLayout) exceptionLinearLayout.findViewById(R.id.ll_exception)).setException(IConstants.EXCEPTION_COUPON_IS_NULL);
+                    mExceptionView.setVisibility(View.VISIBLE);
+                    ((ExceptionLinearLayout) mExceptionView.findViewById(R.id.ll_exception)).setException(IConstants.EXCEPTION_COUPON_IS_NULL);
                     findViewById(R.id.content).setVisibility(View.GONE);
                 } else {
-                    exceptionLinearLayout.setVisibility(View.GONE);
+                    mExceptionView.setVisibility(View.GONE);
                     findViewById(R.id.content).setVisibility(View.VISIBLE);
                 }
             }
