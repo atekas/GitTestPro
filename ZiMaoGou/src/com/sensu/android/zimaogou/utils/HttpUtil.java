@@ -24,7 +24,7 @@ public class HttpUtil {
 
     //获取完整的url
     private static String getAbsoluteUrl(String relativeUrl) {
-        return IConstants.HOST_TEST + relativeUrl;
+        return IConstants.HOST + relativeUrl;
     }
 
     /**

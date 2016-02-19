@@ -90,7 +90,7 @@ public class IConstants {
     //修改用户信息
     public static final String sUpdateUserInfo = "user";
     //关于我们
-    public static final String sAboutUs = HOST_TEST + "conf/about_us";
+    public static final String sAboutUs = HOST + "conf/about_us";
     //商品列表
     public static final String sGoodList = "goods/list";
     public static final String sProduct_classification = "goods/category";

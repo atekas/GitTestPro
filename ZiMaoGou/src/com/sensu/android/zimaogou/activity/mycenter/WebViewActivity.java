@@ -62,11 +62,11 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
 		webview = (WebView) findViewById(R.id.webView);
 		
 		 if(title.indexOf("用户协议")>=0){
-			 URL= IConstants.HOST_TEST + "user/register_agreement";
+			 URL= IConstants.HOST + "user/register_agreement";
 		 }else if(title.indexOf("关于")>= 0){
 			 URL = getIntent().getExtras().getString("url");
 		 }else if(title.indexOf("诞生秘密") >= 0){
-			 URL= IConstants.HOST_TEST + "user/shop_notice";
+			 URL= IConstants.HOST + "user/shop_notice";
 		 }else if(title.indexOf("专题")>=0){
 			 URL = getIntent().getExtras().getString("url");
 			 findViewById(R.id.share).setVisibility(View.VISIBLE);
