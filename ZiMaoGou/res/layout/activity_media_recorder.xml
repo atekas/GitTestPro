@@ -26,7 +26,7 @@
         <TextView
             android:id="@+id/title_right"
             style="@style/TitleStyleRight"
-            android:text="@string/record_camera_next" >
+            android:text="预览" >
         </TextView>
     </LinearLayout>
 
