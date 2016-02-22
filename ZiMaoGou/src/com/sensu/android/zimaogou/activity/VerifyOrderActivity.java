@@ -228,7 +228,7 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
         UserInfo userInfo = GDUserInfoHelper.getInstance(this).getUserInfo();
         RequestParams requestParams = new RequestParams();
         requestParams.put("uid", userInfo.getUid());
-        requestParams.put("amount_goods", mAmountMoney);
+        requestParams.put("amount_goods", mSelectProductModel.getTotalMoney());
         requestParams.put("amount_express", mExpressMoney);
         requestParams.put("amount_coupon", mCouponMoney);
         requestParams.put("coupon_id", mCouponId);
