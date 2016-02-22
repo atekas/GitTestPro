@@ -3,6 +3,7 @@ package com.sensu.android.zimaogou.adapter;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.text.*;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -122,7 +123,13 @@ public class TourBuyAdapter extends SimpleBaseAdapter {
             }
         });
         ImageUtils.displayImage(travelModes.get(i).getAvatar(),viewHolder.img_userHead,ImageUtils.mHeadDefaultOptions);
-        viewHolder.tv_userName.setText(travelModes.get(i).getName());
+        String string;
+        if (android.text.TextUtils.isEmpty(travelModes.get(i).getName())) {
+            string = travelModes.get(i).getMobile().substring(0, 3) + "****" + travelModes.get(i).getMobile().substring(7);
+        } else {
+            string = travelModes.get(i).getName();
+        }
+        viewHolder.tv_userName.setText(string);
         viewHolder.tv_sendTime.setText(DateUtils.getTimeAgo(travelModes.get(i).getCreated_at()));
         String tag = "";
         for(int j = 0; j <travelModes.get(i).getTag().size(); j++){

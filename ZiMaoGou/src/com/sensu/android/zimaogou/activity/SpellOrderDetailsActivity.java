@@ -119,7 +119,7 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
             mJoinGroupView.setVisibility(View.VISIBLE);
             mWantGroupView.setVisibility(View.VISIBLE);
             if (mGroupDetailsResponse.data.is_join.equals("0")) {
-                ((TextView) findViewById(R.id.group_info)).setText("已有" + mGroupDetailsResponse.data.member_num + "人参团");
+//                ((TextView) findViewById(R.id.group_info)).setText("已有" + mGroupDetailsResponse.data.member_num + "人参团");
                 mButtonStatue = "0";
                 mRightButtonStatue = "1";
             } else if (mGroupDetailsResponse.data.is_join.equals("1")) {
@@ -142,7 +142,7 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
             }
 
         } else if (mGroupDetailsResponse.data.state.equals("2")) {
-            ((TextView) findViewById(R.id.group_info)).setText("已有" + mGroupDetailsResponse.data.member_num + "人参团");
+//            ((TextView) findViewById(R.id.group_info)).setText("已有" + mGroupDetailsResponse.data.member_num + "人参团");
             //todo 已结束
             findViewById(R.id.show_time_count).setVisibility(View.GONE);
             mHaveCodeView.setText("逛逛其他团");
@@ -154,7 +154,7 @@ public class SpellOrderDetailsActivity extends BaseActivity implements View.OnCl
             mButtonStatue = "3";
             mRightButtonStatue = "3";
         } else if (mGroupDetailsResponse.data.state.equals("3")) {
-            ((TextView) findViewById(R.id.group_info)).setText("已有" + mGroupDetailsResponse.data.member_num + "人参团");
+//            ((TextView) findViewById(R.id.group_info)).setText("已有" + mGroupDetailsResponse.data.member_num + "人参团");
             //todo 已抢光
             findViewById(R.id.show_time_count).setVisibility(View.GONE);
             mHaveCodeView.setText("逛逛其他团");

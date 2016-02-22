@@ -407,7 +407,13 @@ public class TourBuyDetailsActivity extends BaseActivity implements View.OnClick
                 mFavoriteTextView.setSelected(isFavorite);
                 ImageUtils.displayImage(travelMode.getAvatar(), mUserHeadPicImageView, ImageUtils.mHeadDefaultOptions);
 
-                mUserNameTextView.setText(travelMode.getName());
+                String string;
+                if (android.text.TextUtils.isEmpty(travelMode.getName())) {
+                    string = travelMode.getMobile().substring(0, 3) + "****" + travelMode.getMobile().substring(7);
+                } else {
+                    string = travelMode.getName();
+                }
+                mUserNameTextView.setText(string);
                 mSendTimeTextView.setText(DateUtils.getTimeAgo(travelMode.getCreated_at()));
                 mCityTextView.setText(travelMode.getLocation());
                 mBrowsersTextView.setText(travelMode.getBrowser_num()+"人看过");

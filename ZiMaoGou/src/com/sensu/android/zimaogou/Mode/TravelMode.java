@@ -25,6 +25,7 @@ public class TravelMode implements Serializable {
     private String is_favorite;
     private String location;
     private String is_shop;
+    private String mobile;
 
     private ArrayList<String> tag;
     public class TravelMedia implements Serializable{
@@ -175,5 +176,13 @@ public class TravelMode implements Serializable {
 
     public String getIs_shop() {
         return is_shop;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getMobile() {
+        return mobile;
     }
 }
