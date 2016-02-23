@@ -72,7 +72,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                         searchKeyword.setKeyword(keyword);
                         GDSearchKeywordHelper.getInstance(SearchActivity.this).insertKeyword(searchKeyword);
                     }
-                    return true;
+                    return false;
                 }
                 return false;
             }
