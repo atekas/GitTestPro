@@ -232,7 +232,7 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
         requestParams.put("amount_express", mExpressMoney);
         requestParams.put("amount_coupon", mCouponMoney);
         requestParams.put("coupon_id", mCouponId);
-        if (mRateMoney < 50) {
+        if (mRateMoney <= 50) {
             mRateMoney = 0.0;
         }
         requestParams.put("amount_tax", mRateMoney);
