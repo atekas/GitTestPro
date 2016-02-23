@@ -267,13 +267,14 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
         }
 
         @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
+        public View getView(final int i, View view, ViewGroup viewGroup) {
             ViewHolder viewHolder;
             if (view == null) {
                 view = LayoutInflater.from(TourBuySendActivity.this).inflate(R.layout.tour_send_grid_item, null);
                 viewHolder = new ViewHolder();
                 viewHolder.mImageView = (ImageView) view.findViewById(R.id.image);
-                viewHolder.mImageView.setLayoutParams(new LinearLayout.LayoutParams(mPicSize, mPicSize));
+                viewHolder.mImageView.setLayoutParams(new FrameLayout.LayoutParams(mPicSize, mPicSize));
+                viewHolder.mPicDelete = (ImageView) view.findViewById(R.id.pic_delete);
                 view.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) view.getTag();
@@ -283,8 +284,10 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
 
             if (object == mAdd) {
                 viewHolder.mImageView.setImageResource(R.drawable.add_photos);
+                viewHolder.mPicDelete.setVisibility(View.GONE);
             } else {
                 ImageUtils.displayImage(((PhotoInfo) object).getPicPath(), viewHolder.mImageView);
+                viewHolder.mPicDelete.setVisibility(View.VISIBLE);
             }
 
             viewHolder.mImageView.setOnClickListener(new View.OnClickListener() {
@@ -295,12 +298,22 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
                     }
                 }
             });
+
+            viewHolder.mPicDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mPhotoList.remove(i);
+                    mObjectList.clear();
+                    mTourPicAdapter.notifyDataSetChanged();
+                }
+            });
             return view;
         }
     }
 
     private class ViewHolder {
         ImageView mImageView;
+        ImageView mPicDelete;
     }
 
     /**
