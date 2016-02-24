@@ -74,7 +74,7 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
     private String mVideoPath;
     private MyTagListView mTagListView;
     private String mPhotoPath = Environment.getExternalStorageDirectory() + "/zimaogou/mobile/";
-    private ArrayList<String> mServiceImages = new ArrayList<String>();
+//    private ArrayList<String> mServiceImages = new ArrayList<String>();
 
     ArrayList<LandMode> landModes = new ArrayList<LandMode>();
     ArrayList<TravelTagMode> travelTagModes = new ArrayList<TravelTagMode>();
@@ -82,6 +82,8 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
     boolean mIsUpload = true;
     String location = "";
     String coverUrl = "";
+
+    private String mUrlString[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,17 +176,19 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
                 if (!checkInputData()) {//检查参数
                     return;
                 }
-                mServiceImages.clear();
+                mUrlString = null;
                 mSendSuccess = 0;
                 showLoading();
                 if (mIsVideo) {
-                    uploadImage(coverUrl);
+                    mUrlString = new String[1];
+                    uploadImage(coverUrl, 0);
                 }else {
                     if (mPhotoList.size() == 0) {
                         return;
                     }
+                    mUrlString = new String[mPhotoList.size()];
                     for (int i = 0; i < mPhotoList.size(); i++) {
-                        uploadImage(mPhotoList.get(i).getmUploadPath());
+                        uploadImage(mPhotoList.get(i).getmUploadPath(), i);
                     }
                 }
 
@@ -354,18 +358,6 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
         mTourBuyChooseDialog.show();
     }
 
-    public void qiniu() {
-        UploadManager uploadManager = new UploadManager();
-        String key = "";
-        String token = "";
-        uploadManager.put(mVideoPath, key, token, new UpCompletionHandler() {
-            @Override
-            public void complete(String s, ResponseInfo responseInfo, JSONObject jsonObject) {
-
-            }
-        }, null);
-    }
-
     /**
      * 获取国家,游购标签
      */
@@ -424,13 +416,13 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
         }
         requestParams.put("tags", jsonArray);
 
-        for (int j = 0; j < mServiceImages.size(); j++) {
-            jsonArray1.put(mServiceImages.get(j));
+        for (int j = 0; j < mUrlString.length; j++) {
+            jsonArray1.put(mUrlString[j]);
         }
         if (mIsVideo) {
             requestParams.put("category", "2");
             requestParams.put("images", "");
-            requestParams.put("cover", mServiceImages.get(0));
+            requestParams.put("cover", mUrlString[0]);
             requestParams.put("video",mServiceVideoPath);
         } else {
             requestParams.put("category", "1");
@@ -468,7 +460,7 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
         return true;
     }
 
-    private void uploadImage(String url) {
+    private void uploadImage(String url, final int i) {
         if(TextUtils.isEmpty(url)){
             PromptUtils.showToast("封面图保存失败");
         }
@@ -481,10 +473,15 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
                 String photoUrl = "";
                 try {
                     photoUrl = response.getJSONObject("data").getString("url");
+
+                    if (mUrlString != null) {
+                        mUrlString[i] = photoUrl;
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                mServiceImages.add(photoUrl);
+//                mServiceImages.add(photoUrl);
                 if (!mIsVideo) {
                     if (mSendSuccess != mPhotoList.size()) {
                         return;
