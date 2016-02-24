@@ -14,9 +14,6 @@ import android.widget.*;
 import com.alibaba.fastjson.JSON;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-import com.qiniu.android.http.ResponseInfo;
-import com.qiniu.android.storage.UpCompletionHandler;
-import com.qiniu.android.storage.UploadManager;
 import com.sensu.android.zimaogou.BaseApplication;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.Mode.LandMode;
@@ -113,7 +110,7 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
             Bitmap bitmap = mediaMetadataRetriever.getFrameAtTime(1);
 //            PromptUtils.showToast("接收video地址:"+mVideoPath);
             try {
-                coverUrl = BitmapUtils.saveImg(bitmap,"cover");
+                coverUrl = BitmapUtils.saveImg(bitmap, "cover");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -182,7 +179,7 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
                 if (mIsVideo) {
                     mUrlString = new String[1];
                     uploadImage(coverUrl, 0);
-                }else {
+                } else {
                     if (mPhotoList.size() == 0) {
                         return;
                     }
@@ -423,7 +420,7 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
             requestParams.put("category", "2");
             requestParams.put("images", "");
             requestParams.put("cover", mUrlString[0]);
-            requestParams.put("video",mServiceVideoPath);
+            requestParams.put("video", mServiceVideoPath);
         } else {
             requestParams.put("category", "1");
             requestParams.put("images", jsonArray1);
@@ -461,7 +458,7 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void uploadImage(String url, final int i) {
-        if(TextUtils.isEmpty(url)){
+        if (TextUtils.isEmpty(url)) {
             PromptUtils.showToast("封面图保存失败");
         }
         HttpUtil.postImage(userInfo.getUid(), userInfo.getToken(), url, new JsonHttpResponseHandler() {
@@ -508,7 +505,7 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
         requestParams.put("uid", userInfo.getUid());
         try {
 
-            requestParams.put("body",new File(mVideoPath),"application/mp4");
+            requestParams.put("body", new File(mVideoPath), "application/mp4");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -529,7 +526,7 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
-                LogUtils.d("上传视频失败",responseString.toString());
+                LogUtils.d("上传视频失败", responseString.toString());
                 cancelLoading();
             }
         });
@@ -565,7 +562,5 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
                 LogUtils.d("发布游购返回：", "ErrorCode:" + statusCode + "Html:" + responseString);
             }
         });
-
-
     }
 }
