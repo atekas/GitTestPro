@@ -239,6 +239,10 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
         requestParams.put("weight", "0");
         requestParams.put("pay_type", mPayWay);
         requestParams.put("deliver_address", mSelectProductModel.getDeliverAddress());
+        if (null == getAddressJson()) {
+            PromptUtils.showToast("请选择收货地址");
+            return;
+        }
         requestParams.put("receiver_info", getAddressJson());
         requestParams.put("goods", getGoodsJson());
         HttpUtil.postWithSign(userInfo.getToken(), IConstants.sOrder, requestParams, new JsonHttpResponseHandler() {
