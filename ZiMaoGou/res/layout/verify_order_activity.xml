@@ -280,8 +280,8 @@
                         android:gravity="center_vertical"
                         android:layout_marginLeft="@dimen/dip_20"
                         android:textSize="@dimen/text_size_15"
-                        android:textColor="@color/gray_9b9b9b"
-                        android:text="暂不使用优惠券"/>
+                        android:textColor="@color/red"
+                        android:text="使用优惠券"/>
 
                 <ImageView
                         android:id="@+id/into_coupon_list"
