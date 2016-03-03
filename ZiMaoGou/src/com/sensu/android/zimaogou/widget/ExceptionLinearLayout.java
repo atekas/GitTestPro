@@ -86,7 +86,9 @@ public class ExceptionLinearLayout extends LinearLayout {
                 exceptionMessage = "还没有团购商品";
                 exceptionImageResource = R.drawable.exception_bag;
                 break;
-
+            case IConstants.EXCEPTION_SEARCH_IS_NULL:
+                exceptionMessage = "没有找到合适的商品,换个搜索词试试吧";
+                exceptionImageResource = R.drawable.exception_bag;
         }
         mExceptionImageView.setImageResource(exceptionImageResource);
         mExceptionTextView.setText(exceptionMessage);

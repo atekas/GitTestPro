@@ -55,6 +55,8 @@ public class IConstants {
 
     public static final int EXCEPTION_MY_GROUP_IS_NULL = 9;//我的团购商品为空
 
+    public static final int EXCEPTION_SEARCH_IS_NULL = 10;
+
     public static final int sUnpaid = 1;//待付款
     public static final int sUnreceived = 2;//待收货
     public static final int sReceived = 3;//已收货

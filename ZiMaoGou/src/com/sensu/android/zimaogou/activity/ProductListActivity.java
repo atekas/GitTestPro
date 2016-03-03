@@ -50,6 +50,7 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
     private String mOrderBy;
     private int mPageNum = 0;
     private String mLimit = "20";
+    private boolean mIsSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +68,7 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
         mCategory = getIntent().getStringExtra(PRODUCT_LIST_CATEGORY);
         mOrderBy = getIntent().getStringExtra(PRODUCT_LIST_ORDER_BY);
         mTitle = getIntent().getStringExtra(PRODUCT_LIST_TITLE);
+        mIsSearch = getIntent().getBooleanExtra("is_search", false);
         mTitle = mTitle == null ? "" : mTitle;
         if (mIsNoTitle) {
             findViewById(R.id.sort_rules_layout).setVisibility(View.GONE);
@@ -165,7 +167,11 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
                 mProductsDetailsAdapter.setProductList(productListResponse);
                 if (mPageNum == 0) {
                     if (productListResponse.data.size() == 0) {
-                        ((ExceptionLinearLayout)mNoProductView.findViewById(R.id.ll_exception)).setException(IConstants.EXCEPTION_GOODS_IS_NULL);
+                        if (mIsSearch) {
+                            ((ExceptionLinearLayout)mNoProductView.findViewById(R.id.ll_exception)).setException(IConstants.EXCEPTION_SEARCH_IS_NULL);
+                        } else {
+                            ((ExceptionLinearLayout)mNoProductView.findViewById(R.id.ll_exception)).setException(IConstants.EXCEPTION_GOODS_IS_NULL);
+                        }
                         mNoProductView.setVisibility(View.VISIBLE);
                         mPullToRefreshLayout.setVisibility(View.GONE);
                     } else {
