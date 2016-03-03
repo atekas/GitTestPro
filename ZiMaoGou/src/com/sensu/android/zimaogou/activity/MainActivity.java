@@ -72,6 +72,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private TextView mShoppingBagBottomView;
     private TextView mMeBottomView;
     private PushAgent mPushAgent;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +81,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
         mPushAgent = PushAgent.getInstance(this);
-		mPushAgent.setPushCheck(true);    //默认不检查集成配置文件
+        mPushAgent.setPushCheck(true);    //默认不检查集成配置文件
 //		mPushAgent.setLocalNotificationIntervalLimit(false);  //默认本地通知间隔最少是10分钟
 
         //应用程序启动统计
@@ -97,11 +98,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         initViews();
         showMessageDialog();
     }
-    private void showMessageDialog(){
-        if(!BaseApplication.isGetPush){
+
+    private void showMessageDialog() {
+        if (!BaseApplication.isGetPush) {
             return;
         }
-        final Dialog dialog = new Dialog(this,R.style.dialog);
+        final Dialog dialog = new Dialog(this, R.style.dialog);
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.delete_address_dialog);
         TextView tv_tip = (TextView) dialog.findViewById(R.id.tv_tip);
@@ -112,10 +114,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void onClick(View view) {
                 BaseApplication.isGetPush = false;
-                if(GDUserInfoHelper.getInstance(MainActivity.this).getUserInfo() == null){
+                if (GDUserInfoHelper.getInstance(MainActivity.this).getUserInfo() == null) {
                     PromptUtils.showToast("请先登录");
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                }else {
+                } else {
                     Intent intent = new Intent(MainActivity.this, MessageActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
@@ -154,6 +156,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             });
         }
     };
+
     private void updateStatus() {
         String pkgName = getApplicationContext().getPackageName();
         String info = String.format("enabled:%s  isRegistered:%s  DeviceToken:%s " +
@@ -171,6 +174,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                mPushAgent.isEnabled(), mPushAgent.isRegistered()));
 //        Log.i(TAG, "=============================");
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -360,9 +364,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 }
                 String version = response.optJSONObject("data").optString("version_number");
                 String url = response.optJSONObject("data").optString("version_url");
-                if (AppInfoUtils.getVersionName().equals(version)) {
-                    //版本号一致
-                } else {
+
+                String[] getVersion = new String[3];
+                String[] localVersion = new String[3];
+
+                getVersion = version.split("\\.");
+                localVersion = AppInfoUtils.getVersionName().split("\\.");
+
+                if (Integer.parseInt(getVersion[0]) > Integer.parseInt(localVersion[0])
+                        || Integer.parseInt(getVersion[1]) > Integer.parseInt(localVersion[1])
+                        || Integer.parseInt(getVersion[2]) > Integer.parseInt(localVersion[2])) {
+
                     if (response.optJSONObject("data").optString("is_force_update").equals("1")) {
                         //需要强制升级
                         showUpdateAppInfo(false, version, url);
@@ -370,6 +382,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         //用户选择升级
                         showUpdateAppInfo(true, version, url);
                     }
+                } else {
+                    //版本号一致
                 }
             }
 
@@ -429,7 +443,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     InputStream is = entity.getContent();
                     FileOutputStream fileOutputStream = null;
                     if (is != null) {
-                        File file = new File(filePath + File.separator + "自贸购"+ version + ".apk");
+                        File file = new File(filePath + File.separator + "自贸购" + version + ".apk");
                         if (file.exists()) {
                             file.delete();
                         }
@@ -469,7 +483,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void run() {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setDataAndType(Uri.fromFile(new File(filePath + File.separator + "自贸购"+ version + ".apk")),
+                intent.setDataAndType(Uri.fromFile(new File(filePath + File.separator + "自贸购" + version + ".apk")),
                         "application/vnd.android.package-archive");
                 startActivity(intent);
             }
