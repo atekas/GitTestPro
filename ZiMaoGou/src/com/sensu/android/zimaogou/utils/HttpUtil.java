@@ -98,7 +98,7 @@ public class HttpUtil {
                 try {
                     final String timestamp = responseString.optJSONObject("data").optString("timestamp");
 
-                    String sign = MD5Utils.md5(IConstants.SIGN_HOST_TEST + url + "||" + token + "||" + timestamp);
+                    String sign = MD5Utils.md5(IConstants.SIGN_HOST + url + "||" + token + "||" + timestamp);
                     requestParams.put("timestamp", timestamp);
                     requestParams.put("sign", sign);
 
@@ -118,7 +118,7 @@ public class HttpUtil {
                 super.onSuccess(statusCode, headers, responseString);
                 try {
                     final String timestamp = responseString.optJSONObject("data").optString("timestamp");
-                    String sign = MD5Utils.md5(IConstants.SIGN_HOST_TEST + url + "||" + token + "||" + timestamp);
+                    String sign = MD5Utils.md5(IConstants.SIGN_HOST + url + "||" + token + "||" + timestamp);
                     requestParams.put("sign", sign);
                     requestParams.put("timestamp", timestamp);
 

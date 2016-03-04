@@ -9,7 +9,9 @@ public class IConstants {
 
     public static final String HOST_TEST = "http://139.196.108.137:80/v1/";
 
-    public static final String SIGN_HOST_TEST = "http://api.ftzgo365.com/v1/";
+    public static final String SIGN_HOST_TEST = "http://139.196.108.137/v1/";
+
+    public static final String SIGN_HOST = "http://api.ftzgo365.com/v1/";
 
     public static final String HOST = "http://api.ftzgo365.com/v1/";
 
