@@ -380,22 +380,31 @@ public class ProductDetailsActivity extends BaseActivity implements View.OnClick
                 if (mUserInfo == null) {
                     startActivity(new Intent(this, LoginActivity.class));
                 } else {
-                    if (mSpecId == null) {
+//                    if (mSpecId == null) {
+//                        if (mProductDetailsResponse.data.spec.size() == 1) {
+//                            mSpecId = mProductDetailsResponse.data.spec.get(0).id;
+//                            SelectProductModel selectProductModel = getSelectProduct("1");
+//                            Intent intent1 = new Intent(this, VerifyOrderActivity.class);
+//                            intent1.putExtra(VerifyOrderActivity.PRODUCT_FOR_PAY, selectProductModel);
+//                            startActivity(intent1);
+//                        } else {
+//                            ChooseTypeAndColorClick();
+//                            mIsBuyDirectly = "1";
+//                        }
+//                    } else {
+//                        SelectProductModel selectProductModel = getSelectProduct("1");
+//                        Intent intent1 = new Intent(this, VerifyOrderActivity.class);
+//                        intent1.putExtra(VerifyOrderActivity.PRODUCT_FOR_PAY, selectProductModel);
+//                        startActivity(intent1);
+//                    }
+                    mIsBuyDirectly = "1";
+                    ChooseTypeAndColorClick();
+                    if (mChooseDialog != null) {
                         if (mProductDetailsResponse.data.spec.size() == 1) {
-                            mSpecId = mProductDetailsResponse.data.spec.get(0).id;
-                            SelectProductModel selectProductModel = getSelectProduct("1");
-                            Intent intent1 = new Intent(this, VerifyOrderActivity.class);
-                            intent1.putExtra(VerifyOrderActivity.PRODUCT_FOR_PAY, selectProductModel);
-                            startActivity(intent1);
+                            mChooseDialog.findViewById(R.id.dialog_line).setVisibility(View.GONE);
                         } else {
-                            ChooseTypeAndColorClick();
-                            mIsBuyDirectly = "1";
+                            mChooseDialog.findViewById(R.id.dialog_line).setVisibility(View.VISIBLE);
                         }
-                    } else {
-                        SelectProductModel selectProductModel = getSelectProduct("1");
-                        Intent intent1 = new Intent(this, VerifyOrderActivity.class);
-                        intent1.putExtra(VerifyOrderActivity.PRODUCT_FOR_PAY, selectProductModel);
-                        startActivity(intent1);
                     }
                 }
                 break;
