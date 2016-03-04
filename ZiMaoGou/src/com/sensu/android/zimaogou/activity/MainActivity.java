@@ -3,6 +3,7 @@ package com.sensu.android.zimaogou.activity;
 import android.app.*;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -204,6 +205,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mFragmentManager = getFragmentManager();
 
         viewPerformClick();
+
+        final SharedPreferences preferences = getSharedPreferences("zimaogou_preferences", Activity.MODE_PRIVATE);
+        String isShow = preferences.getString("isShow", "true");
+        if (isShow.equals("true")) {
+            findViewById(R.id.page_image).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.page_image).setVisibility(View.GONE);
+        }
+        findViewById(R.id.page_image).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                findViewById(R.id.page_image).setVisibility(View.GONE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("isShow", "false");
+                editor.commit();
+            }
+        });
     }
 
     private void showFragment(int index) {
