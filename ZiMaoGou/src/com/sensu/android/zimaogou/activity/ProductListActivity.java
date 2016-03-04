@@ -34,6 +34,8 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
     public static final String PRODUCT_LIST_ORDER_BY = "product_list_order_by";
     public static final String PRODUCT_LIST_TITLE = "product_list_title";
 
+    public static final String PRODUCT_LIST_INTO = "product_list_into";
+
     private GridView mGridView;
     private ProductsDetailsAdapter mProductsDetailsAdapter;
     private boolean mIsNoTitle;
@@ -50,7 +52,7 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
     private String mOrderBy;
     private int mPageNum = 0;
     private String mLimit = "20";
-    private boolean mIsSearch;
+    private String mInto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +70,7 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
         mCategory = getIntent().getStringExtra(PRODUCT_LIST_CATEGORY);
         mOrderBy = getIntent().getStringExtra(PRODUCT_LIST_ORDER_BY);
         mTitle = getIntent().getStringExtra(PRODUCT_LIST_TITLE);
-        mIsSearch = getIntent().getBooleanExtra("is_search", false);
+        mInto = getIntent().getStringExtra(PRODUCT_LIST_INTO);
         mTitle = mTitle == null ? "" : mTitle;
         if (mIsNoTitle) {
             findViewById(R.id.sort_rules_layout).setVisibility(View.GONE);
@@ -167,8 +169,10 @@ public class ProductListActivity extends BaseActivity implements View.OnClickLis
                 mProductsDetailsAdapter.setProductList(productListResponse);
                 if (mPageNum == 0) {
                     if (productListResponse.data.size() == 0) {
-                        if (mIsSearch) {
+                        if (mInto.equals("1")) {
                             ((ExceptionLinearLayout)mNoProductView.findViewById(R.id.ll_exception)).setException(IConstants.EXCEPTION_SEARCH_IS_NULL);
+                        } else if (mInto.equals("2")) {
+                            ((ExceptionLinearLayout)mNoProductView.findViewById(R.id.ll_exception)).setException(IConstants.EXCEPTION_CLASSIFICATION_IS_NULL);
                         } else {
                             ((ExceptionLinearLayout)mNoProductView.findViewById(R.id.ll_exception)).setException(IConstants.EXCEPTION_GOODS_IS_NULL);
                         }

@@ -12,6 +12,7 @@ import com.loopj.android.http.RequestParams;
 import com.sensu.android.zimaogou.IConstants;
 import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.CartDataResponse;
+import com.sensu.android.zimaogou.activity.MainActivity;
 import com.sensu.android.zimaogou.activity.login.LoginActivity;
 import com.sensu.android.zimaogou.adapter.ShoppingBagAdapter;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
@@ -128,6 +129,14 @@ public class ShoppingBagFragment extends BaseFragment implements View.OnClickLis
                 mShoppingBagAdapter.setCartDataGroup(cartDataResponse);
                 if (cartDataResponse.data.size() == 0) {
                     ((ExceptionLinearLayout) mNoOrderView.findViewById(R.id.ll_exception)).setException(IConstants.EXCEPTION_SHOP_IS_NULL);
+                    mNoOrderView.findViewById(R.id.bt_reload).setVisibility(View.VISIBLE);
+                    ((Button) mNoOrderView.findViewById(R.id.bt_reload)).setText("去逛逛");
+                    mNoOrderView.findViewById(R.id.bt_reload).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            ((MainActivity) mParentActivity).viewPerformClick();
+                        }
+                    });
                     mNoOrderView.setVisibility(View.VISIBLE);
                     mEditText.setVisibility(View.GONE);
                 } else {

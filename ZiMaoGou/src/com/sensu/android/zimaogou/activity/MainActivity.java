@@ -312,7 +312,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mMeBottomView.setSelected(false);
     }
 
-    private void viewPerformClick() {
+    public void viewPerformClick() {
         mCurrentIndex = getIntent().getIntExtra(SELECT_TAB, HOME_PAGE_FM_CODE);
         switch (mCurrentIndex) {
             case HOME_PAGE_FM_CODE:

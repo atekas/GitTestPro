@@ -56,7 +56,7 @@ public class ExceptionLinearLayout extends LinearLayout {
                 exceptionImageResource = R.drawable.exception_internet;
                 break;
             case IConstants.EXCEPTION_SHOP_IS_NULL:
-                exceptionMessage = "您的购物车还没有商品";
+                exceptionMessage = "购物袋空空如也";
                 exceptionImageResource = R.drawable.exception_bag;
                 break;
             case IConstants.EXCEPTION_ORDER_IS_NULL:
@@ -89,6 +89,11 @@ public class ExceptionLinearLayout extends LinearLayout {
             case IConstants.EXCEPTION_SEARCH_IS_NULL:
                 exceptionMessage = "没有找到合适的商品,换个搜索词试试吧";
                 exceptionImageResource = R.drawable.exception_bag;
+                break;
+            case IConstants.EXCEPTION_CLASSIFICATION_IS_NULL:
+                exceptionMessage = "不要着急哦，我们正在补货中……";
+                exceptionImageResource = R.drawable.exception_bag;
+                break;
         }
         mExceptionImageView.setImageResource(exceptionImageResource);
         mExceptionTextView.setText(exceptionMessage);

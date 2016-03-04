@@ -67,7 +67,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                         intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
                         intent.putExtra(ProductListActivity.PRODUCT_LIST_KEYWORD, keyword);
                         intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, keyword);
-                        intent.putExtra("is_search", true);
+                        intent.putExtra(ProductListActivity.PRODUCT_LIST_INTO, "1");
                         startActivity(intent);
                         SearchKeyword searchKeyword = new SearchKeyword();
                         searchKeyword.setKeyword(keyword);
@@ -141,7 +141,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                     intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
                     intent.putExtra(ProductListActivity.PRODUCT_LIST_KEYWORD, keyword);
                     intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, keyword);
-                    intent.putExtra("is_search", true);
+                    intent.putExtra(ProductListActivity.PRODUCT_LIST_INTO, "1");
                     startActivity(intent);
                     SearchKeyword searchKeyword = new SearchKeyword();
                     searchKeyword.setKeyword(keyword);
@@ -186,7 +186,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         intent.putExtra(ProductListActivity.IS_NO_TITLE, true);
         intent.putExtra(ProductListActivity.PRODUCT_LIST_KEYWORD, keyword);
         intent.putExtra(ProductListActivity.PRODUCT_LIST_TITLE, keyword);
-        intent.putExtra("is_search", true);
+        intent.putExtra(ProductListActivity.PRODUCT_LIST_INTO, "1");
         startActivity(intent);
     }
 }
