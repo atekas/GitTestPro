@@ -147,7 +147,7 @@ public class VerifyOrderActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.into_address_list:
                 Intent intent = new Intent(this, ReceiverAddressActivity.class);
-                intent.putExtra(ReceiverAddressActivity.IS_NO_EDIT, true);
+                intent.putExtra(ReceiverAddressActivity.IS_NO_EDIT, false);
                 startActivityForResult(intent, CHOOSE_ADDRESS_CODE);
                 break;
             case R.id.zhifubao_pay:

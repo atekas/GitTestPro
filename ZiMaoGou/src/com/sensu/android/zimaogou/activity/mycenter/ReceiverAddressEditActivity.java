@@ -155,6 +155,9 @@ public class ReceiverAddressEditActivity extends BaseActivity {
         if(TextUtils.isEmpty(mReceiverIDEditText.getText().toString())){
             PromptUtils.showToast("请填写收货人身份证号码");
             return;
+        } else if (mReceiverIDEditText.getText().toString().length() != 15 || mReceiverIDEditText.getText().toString().length() != 18){
+            PromptUtils.showToast("身份证号码错误");
+            return;
         }
         if(TextUtils.isEmpty(mProvinceTextView.getText().toString())){
             PromptUtils.showToast("请选择省、市、区");

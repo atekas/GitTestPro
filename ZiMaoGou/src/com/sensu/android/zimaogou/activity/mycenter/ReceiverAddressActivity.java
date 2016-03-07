@@ -95,6 +95,7 @@ public class ReceiverAddressActivity extends BaseActivity implements AdapterView
                 saveAddress();
                 mReceiverAddressListView.setAdapter(new ReceiverListAdapter(ReceiverAddressActivity.this, mIsNoEdit, receiverAddressResponse.data));
                 if(receiverAddressResponse.data.size() == 0){
+                    rl_content.removeView(ExceptionView);
                     exceptionLinearLayout.setException(IConstants.EXCEPTION_ADDRESS_IS_NULL);
                     rl_content.addView(ExceptionView);
                 }else{
