@@ -50,22 +50,40 @@
                     android:layout_height="wrap_content"
                     android:paddingRight="20dp"
                     android:layout_marginTop="17dp"
-                    android:layout_toLeftOf="@+id/tv_productPrice"
+                    android:layout_toLeftOf="@+id/show_price"
                     android:layout_toRightOf="@+id/img_pro"
                     android:textColor="@color/color_cart_product_name_background"
                     android:textSize="14sp"
                     android:maxLines="2"
                     android:ellipsize="end"
                     android:text="MACROPUS 立体机理系列单肩款包"/>
-            <TextView
-                    android:id="@+id/tv_productPrice"
-                    android:layout_width="wrap_content"
+
+            <FrameLayout
+                    android:id="@+id/show_price"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_marginTop="18dp"
-                    android:textColor="@color/red"
-                    android:textSize="13sp"
-                    android:text="￥108"/>
+                    android:layout_marginTop="18dp">
+
+                <TextView
+                        android:id="@+id/tv_productPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/red"
+                        android:layout_gravity="right"
+                        android:textSize="13sp"
+                        android:text="￥108"/>
+
+                <ImageView
+                        android:id="@+id/product_delete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:layout_gravity="right"
+                        android:src="@drawable/travel_delete"/>
+
+            </FrameLayout>
+
 
             <RelativeLayout
                     android:id="@+id/rl_showType"

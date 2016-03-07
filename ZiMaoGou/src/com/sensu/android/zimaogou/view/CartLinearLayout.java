@@ -112,9 +112,13 @@ public class CartLinearLayout extends LinearLayout {
                         //编辑状态
                         childView.findViewById(R.id.rl_showType).setVisibility(GONE);
                         childView.findViewById(R.id.ll_editNum).setVisibility(VISIBLE);
+                        childView.findViewById(R.id.product_delete).setVisibility(VISIBLE);
+                        childView.findViewById(R.id.tv_productPrice).setVisibility(GONE);
                     } else {
                         childView.findViewById(R.id.rl_showType).setVisibility(VISIBLE);
                         childView.findViewById(R.id.ll_editNum).setVisibility(GONE);
+                        childView.findViewById(R.id.product_delete).setVisibility(GONE);
+                        childView.findViewById(R.id.tv_productPrice).setVisibility(VISIBLE);
                     }
                 }
             }
@@ -191,6 +195,13 @@ public class CartLinearLayout extends LinearLayout {
             });
 
             childView.findViewById(R.id.delete).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    deleteProduct(mCartDataGroup.data.get(position).id, position);
+                }
+            });
+
+            childView.findViewById(R.id.product_delete).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     deleteProduct(mCartDataGroup.data.get(position).id, position);

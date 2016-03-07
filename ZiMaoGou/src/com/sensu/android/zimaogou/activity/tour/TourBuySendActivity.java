@@ -22,6 +22,7 @@ import com.sensu.android.zimaogou.R;
 import com.sensu.android.zimaogou.ReqResponse.TravelSendResponse;
 import com.sensu.android.zimaogou.activity.BaseActivity;
 import com.sensu.android.zimaogou.activity.LocalPhotoActivity;
+import com.sensu.android.zimaogou.activity.ShowImageActivity;
 import com.sensu.android.zimaogou.activity.fragment.TourBuyFragment;
 import com.sensu.android.zimaogou.adapter.SimpleBaseAdapter;
 import com.sensu.android.zimaogou.external.greendao.helper.GDUserInfoHelper;
@@ -296,6 +297,10 @@ public class TourBuySendActivity extends BaseActivity implements View.OnClickLis
                 public void onClick(View view) {
                     if (object == mAdd) {
                         chooseDialog();
+                    } else {
+                        Intent intent = new Intent(TourBuySendActivity.this, ShowImageActivity.class);
+                        intent.putExtra(ShowImageActivity.IMAGE_URL, ((PhotoInfo) object).getPicPath());
+                        startActivity(intent);
                     }
                 }
             });
